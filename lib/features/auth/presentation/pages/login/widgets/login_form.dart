@@ -19,12 +19,17 @@ class LoginFormWidget extends StatelessWidget {
                       AppTranslations.get('login_tc_or_email_textfield_text'),
                   controller: controller.emailController),
               SizedBox(height: 20.h),
-              TextFieldWidget(
-                  obscureText: true,
-                  suffixIcon: Assets.icons.eyeSlashClosed.svg(),
-                  hintText:
-                      AppTranslations.get('login_password_textfield_text'),
-                  controller: controller.passwordController),
+              LoginObscurePasswordSelector(
+                builder: (obscure, icon) => TextFieldWidget(
+                    obscureText: obscure,
+                    suffixIcon: icon,
+                    onSuffixIconTap: () => context
+                        .read<LoginBloc>()
+                        .add(LoginEvent.togglePasswordVisibility()),
+                    hintText:
+                        AppTranslations.get('login_password_textfield_text'),
+                    controller: controller.passwordController),
+              ),
               SizedBox(height: 30.h),
               LoginForgotPasswordWidget(),
               SizedBox(height: 30.h),

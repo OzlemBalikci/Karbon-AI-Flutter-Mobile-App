@@ -3,8 +3,15 @@ import 'package:karbon/features/auth/domain/entities/app_user.dart';
 
 part 'login_state.freezed.dart';
 
-enum LoginStatus {
+enum LoginPageStatus {
   initial,
+  loading,
+  success,
+  failure,
+}
+
+enum LoginResultStatus {
+  idle,
   loading,
   success,
   failure,
@@ -14,10 +21,9 @@ enum LoginStatus {
 abstract class LoginState with _$LoginState {
   const LoginState._();
   const factory LoginState({
-    @Default('') String email,
-    @Default('') String password,
-    @Default(false) bool isLoading,
-    @Default(LoginStatus.initial) LoginStatus status,
+    @Default(LoginPageStatus.initial) LoginPageStatus pagestatus,
+    @Default(LoginResultStatus.idle) LoginResultStatus resultStatus,
+    // @Default(false) bool navigateToForgotPassword,
     String? error,
     AppUser? user,
     @Default(true) bool obscurePassword,

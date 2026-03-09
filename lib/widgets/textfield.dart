@@ -35,15 +35,19 @@ class TextFieldWidget extends StatelessWidget {
         focusedBorder: _border,
         hintText: hintText,
         suffixIcon: suffixIcon != null
-            ? Padding(
-                padding: EdgeInsets.only(right: 12.w),
-                child: suffixIcon,
-              )
+            ? onSuffixIconTap != null
+                ? IconButton(
+                    onPressed: onSuffixIconTap,
+                    icon: suffixIcon!,
+                    style: IconButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      minimumSize: Size.zero,
+                    ),
+                  )
+                : Padding(
+                    padding: EdgeInsets.only(right: 12.w), child: suffixIcon)
             : null,
-        suffixIconConstraints: BoxConstraints(
-          maxHeight: 40.h,
-          maxWidth: 40.w,
-        ),
         isDense: true,
         hintStyle: context.typographiesSp.bodySmall
             .copyWith(color: context.colors.textOnPrimary),

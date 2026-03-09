@@ -4,6 +4,8 @@ part 'login_event.freezed.dart';
 
 @freezed
 sealed class LoginEvent with _$LoginEvent {
+  const factory LoginEvent.pageStarted() = LoginPageStarted;
+
   const factory LoginEvent.loginButtonPressed({
     required String email,
     required String password,
@@ -11,4 +13,6 @@ sealed class LoginEvent with _$LoginEvent {
 
   const factory LoginEvent.togglePasswordVisibility() =
       LoginTogglePasswordVisibility;
+
+  //const factory LoginEvent.forgotPasswordPressed() = LoginForgotPasswordPressed;
 }

@@ -50,6 +50,7 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoginPageStarted value)? pageStarted,
     TResult Function(LoginButtonPressed value)? loginButtonPressed,
     TResult Function(LoginTogglePasswordVisibility value)?
         togglePasswordVisibility,
@@ -57,6 +58,8 @@ extension LoginEventPatterns on LoginEvent {
   }) {
     final _that = this;
     switch (_that) {
+      case LoginPageStarted() when pageStarted != null:
+        return pageStarted(_that);
       case LoginButtonPressed() when loginButtonPressed != null:
         return loginButtonPressed(_that);
       case LoginTogglePasswordVisibility()
@@ -82,12 +85,15 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(LoginPageStarted value) pageStarted,
     required TResult Function(LoginButtonPressed value) loginButtonPressed,
     required TResult Function(LoginTogglePasswordVisibility value)
         togglePasswordVisibility,
   }) {
     final _that = this;
     switch (_that) {
+      case LoginPageStarted():
+        return pageStarted(_that);
       case LoginButtonPressed():
         return loginButtonPressed(_that);
       case LoginTogglePasswordVisibility():
@@ -109,12 +115,15 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoginPageStarted value)? pageStarted,
     TResult? Function(LoginButtonPressed value)? loginButtonPressed,
     TResult? Function(LoginTogglePasswordVisibility value)?
         togglePasswordVisibility,
   }) {
     final _that = this;
     switch (_that) {
+      case LoginPageStarted() when pageStarted != null:
+        return pageStarted(_that);
       case LoginButtonPressed() when loginButtonPressed != null:
         return loginButtonPressed(_that);
       case LoginTogglePasswordVisibility()
@@ -139,12 +148,15 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pageStarted,
     TResult Function(String email, String password)? loginButtonPressed,
     TResult Function()? togglePasswordVisibility,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
+      case LoginPageStarted() when pageStarted != null:
+        return pageStarted();
       case LoginButtonPressed() when loginButtonPressed != null:
         return loginButtonPressed(_that.email, _that.password);
       case LoginTogglePasswordVisibility()
@@ -170,11 +182,14 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() pageStarted,
     required TResult Function(String email, String password) loginButtonPressed,
     required TResult Function() togglePasswordVisibility,
   }) {
     final _that = this;
     switch (_that) {
+      case LoginPageStarted():
+        return pageStarted();
       case LoginButtonPressed():
         return loginButtonPressed(_that.email, _that.password);
       case LoginTogglePasswordVisibility():
@@ -196,11 +211,14 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pageStarted,
     TResult? Function(String email, String password)? loginButtonPressed,
     TResult? Function()? togglePasswordVisibility,
   }) {
     final _that = this;
     switch (_that) {
+      case LoginPageStarted() when pageStarted != null:
+        return pageStarted();
       case LoginButtonPressed() when loginButtonPressed != null:
         return loginButtonPressed(_that.email, _that.password);
       case LoginTogglePasswordVisibility()
@@ -209,6 +227,26 @@ extension LoginEventPatterns on LoginEvent {
       case _:
         return null;
     }
+  }
+}
+
+/// @nodoc
+
+class LoginPageStarted implements LoginEvent {
+  const LoginPageStarted();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is LoginPageStarted);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'LoginEvent.pageStarted()';
   }
 }
 
