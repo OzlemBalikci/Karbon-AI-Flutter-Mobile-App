@@ -1,0 +1,16 @@
+import 'package:dartz/dartz.dart';
+import 'package:injectable/injectable.dart';
+import 'package:karbon/features/auth/domain/entities/app_user.dart';
+import 'package:karbon/features/auth/domain/repositories/auth_repository.dart';
+
+@injectable
+class LoginUseCase {
+  LoginUseCase(this._repository);
+  final AuthRepository _repository;
+
+  Future<Either<Exception, AppUser>> call({
+    required String email,
+    required String password,
+  }) =>
+      _repository.login(email: email, password: password);
+}

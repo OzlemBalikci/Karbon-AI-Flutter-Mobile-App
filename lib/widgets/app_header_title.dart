@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+import 'package:karbon/core/constants/extensions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class AppHeaderTitle extends StatelessWidget {
+  const AppHeaderTitle({super.key, required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(height: 10.h),
+        Text(
+          title,
+          style: context.typographiesSp.bodyExtraLarge
+              .copyWith(color: context.colors.textBlack),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+}

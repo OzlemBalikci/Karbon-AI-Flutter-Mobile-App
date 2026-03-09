@@ -1,0 +1,60 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:karbon/core/translations.dart';
+import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/features/auth/presentation/bloc/auth/auth_event.dart';
+import 'package:karbon/router/navigation.dart';
+import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:karbon/core/constants/spacing.dart';
+import 'package:karbon/widgets/primary_button.dart';
+import 'package:karbon/di/di.dart';
+
+part 'widgets/splash_bottom_register.dart';
+part 'widgets/splash_logo.dart';
+part 'widgets/splash_text.dart';
+
+@RoutePage()
+class SplashPage extends StatelessWidget {
+  const SplashPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          getIt.get<AuthBloc>()..add(const AuthEvent.appStarted()),
+      child: Scaffold(
+          body: Stack(
+        //fit: StackFit.expand,
+        children: [
+          Positioned.fill(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image(
+                  image: AssetImage(Assets.images.splash.path),
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  color: Colors.black.withValues(alpha: 0.4),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(height: 30.h),
+              SplashLogoSection(),
+              SplashTextWidget(),
+              SplashBottomRegisterSection(),
+            ],
+          ),
+        ],
+      )),
+    );
+  }
+}

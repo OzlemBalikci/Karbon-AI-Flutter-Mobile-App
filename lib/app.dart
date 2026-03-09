@@ -1,0 +1,43 @@
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:flutter_web_frame/flutter_web_frame.dart';
+import 'package:karbon/features/auth/presentation/bloc/settings/settings_selector.dart';
+import 'package:karbon/router/navigation.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:karbon/core/theme/themes.dart';
+
+class KarbonApp extends StatelessWidget {
+  final AppRouter _router = AppRouter();
+
+  KarbonApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FlutterWebFrame(
+      maximumSize: const Size(400, 800),
+      backgroundColor: Colors.black12,
+      enabled: MediaQuery.sizeOf(context).shortestSide > 600,
+      builder: (theme) => DevicePreview(
+        enabled: true,
+        builder: (context) => SettingsSelector<AppTheme>(
+          selector: (state) => state.theme,
+          builder: (theme) => MaterialApp.router(
+            title: 'FlutterKarbon',
+            theme: theme.themeData,
+            routerConfig: _router.config(),
+            scrollBehavior: AppScrollBehavior(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AppScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+      };
+}
