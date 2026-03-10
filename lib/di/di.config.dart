@@ -84,7 +84,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i614.SettingsBloc>(() => _i614.SettingsBloc());
     gh.singleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i205.CarbonCalculateRemote>(
-        () => _i205.CarbonCalculateRemoteImpl());
+        () => _i205.CarbonCalculateRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i102.AuthLocal>(
         () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i322.LeaderboardRepository>(
