@@ -13,7 +13,7 @@ class StatsCardRow extends StatelessWidget {
           StatsCards(
             title: AppTranslations.get('home_page_stats_card_1_title'),
             value: "670.000",
-            image: Assets.images.statsCard1.path,
+            image: Assets.images.homeStatsCard1,
             borderColor: context.colors.primary,
           ),
           StatsCards(
