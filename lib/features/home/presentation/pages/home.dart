@@ -5,6 +5,7 @@ import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/widgets/primary_button.dart';
+import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/bottom_navigation_bar.dart' as app_nav;
 import 'package:karbon/core/constants/spacing.dart';
@@ -13,6 +14,9 @@ import 'package:karbon/widgets/app_header_title.dart';
 
 part 'widgets/homefirstopen_bottom_button.dart';
 part 'widgets/home_text.dart';
+part 'widgets/stats_cards.dart';
+part 'widgets/stats_card_row.dart';
+part 'widgets/leader_card_widget.dart';
 part 'sections/homefirstopen_feature.dart';
 
 @RoutePage()

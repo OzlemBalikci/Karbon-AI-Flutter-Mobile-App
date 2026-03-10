@@ -29,8 +29,7 @@ class LoginController {
       return;
     }
 
-    context
-        .read<LoginBloc>()
-        .add(LoginEvent.loginButtonPressed(email: email, password: password));
+    context.read<LoginBloc>().add(LoginEvent.loginButtonPressed(
+        emailOrIdentityNumber: email, password: password));
   }
 }

@@ -9,74 +9,67 @@ class AuthRemoteImpl implements AuthRemote {
   final Dio _dio;
 
   @override
-  Future<UserModel> login({
-    required String email,
+  Future<LoginResponseModel> login({
+    required String emailOrIdentityNumber,
     required String password,
   }) async {
+    // TODO: final res = await _dio.post('/api/v1/users/login', data: { 'emailOrIdentityNumber': emailOrIdentityNumber, 'password': password });
+    // TODO: return LoginResponseModel.fromJson(res.data);
     await Future.delayed(const Duration(milliseconds: 500));
-    return UserModel(
-      id: 'mock_1',
-      email: email,
-      name: 'Mock',
-      surname: 'User',
-      tcNo: '',
-      phoneNumber: '',
-      birthDate: '',
-      password: '',
-    );
+    return const LoginResponseModel(token: 'mock_token');
   }
 
   @override
   Future<UserModel> register({
     required String email,
-    required String tcNo,
+    required String password,
     required String name,
     required String surname,
-    required String birthDate,
-    required String password,
+    required String identityNumber,
     required String phoneNumber,
+    required String birthDate,
   }) async {
+    // TODO: final res = await _dio.post('/api/v1/users/register', data: {...});
+    // TODO: return UserModel.fromJson(res.data);
     await Future.delayed(const Duration(milliseconds: 500));
     return UserModel(
       id: 'mock_1',
       email: email,
       name: name,
       surname: surname,
-      tcNo: tcNo,
+      identityNumber: identityNumber,
       phoneNumber: phoneNumber,
-      birthDate: birthDate,
-      password: password,
     );
   }
 
   @override
-  Future<UserModel> forgotPassword({required String phoneNumber}) async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    return UserModel(
-      id: '',
-      email: '',
-      name: '',
-      surname: '',
-      tcNo: '',
-      phoneNumber: phoneNumber,
-      birthDate: '',
-      password: '',
+  Future<UserModel> getProfile() async {
+    // TODO: final res = await _dio.get('/api/v1/users/profile');
+    // TODO: return UserModel.fromJson(res.data);
+    await Future.delayed(const Duration(milliseconds: 300));
+    return const UserModel(
+      id: 'mock_1',
+      email: 'mock@example.com',
+      name: 'Mock',
+      surname: 'User',
     );
   }
 
   @override
-  Future<UserModel> resetPassword({required String password}) async {
+  Future<void> forgotPassword({required String phoneNumber}) async {
+    // TODO: await _dio.post('/api/v1/users/password/forgot', data: { 'phoneNumber': phoneNumber });
     await Future.delayed(const Duration(milliseconds: 500));
-    return UserModel(
-      id: '',
-      email: '',
-      name: '',
-      surname: '',
-      tcNo: '',
-      phoneNumber: '',
-      birthDate: '',
-      password: password,
-    );
+  }
+
+  @override
+  Future<void> resetPassword({
+    required String phoneNumber,
+    required String resetCode,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) async {
+    // TODO: await _dio.post('/api/v1/users/password/reset', data: { 'phoneNumber': phoneNumber, 'resetCode': resetCode, 'newPassword': newPassword, 'confirmNewPassword': confirmNewPassword });
+    await Future.delayed(const Duration(milliseconds: 500));
   }
 
   @override

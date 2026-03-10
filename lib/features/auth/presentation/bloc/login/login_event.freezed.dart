@@ -54,6 +54,7 @@ extension LoginEventPatterns on LoginEvent {
     TResult Function(LoginButtonPressed value)? loginButtonPressed,
     TResult Function(LoginTogglePasswordVisibility value)?
         togglePasswordVisibility,
+    TResult Function(LoginForgotPasswordPressed value)? forgotPasswordPressed,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -65,6 +66,8 @@ extension LoginEventPatterns on LoginEvent {
       case LoginTogglePasswordVisibility()
           when togglePasswordVisibility != null:
         return togglePasswordVisibility(_that);
+      case LoginForgotPasswordPressed() when forgotPasswordPressed != null:
+        return forgotPasswordPressed(_that);
       case _:
         return orElse();
     }
@@ -89,6 +92,8 @@ extension LoginEventPatterns on LoginEvent {
     required TResult Function(LoginButtonPressed value) loginButtonPressed,
     required TResult Function(LoginTogglePasswordVisibility value)
         togglePasswordVisibility,
+    required TResult Function(LoginForgotPasswordPressed value)
+        forgotPasswordPressed,
   }) {
     final _that = this;
     switch (_that) {
@@ -98,6 +103,8 @@ extension LoginEventPatterns on LoginEvent {
         return loginButtonPressed(_that);
       case LoginTogglePasswordVisibility():
         return togglePasswordVisibility(_that);
+      case LoginForgotPasswordPressed():
+        return forgotPasswordPressed(_that);
     }
   }
 
@@ -119,6 +126,7 @@ extension LoginEventPatterns on LoginEvent {
     TResult? Function(LoginButtonPressed value)? loginButtonPressed,
     TResult? Function(LoginTogglePasswordVisibility value)?
         togglePasswordVisibility,
+    TResult? Function(LoginForgotPasswordPressed value)? forgotPasswordPressed,
   }) {
     final _that = this;
     switch (_that) {
@@ -129,6 +137,8 @@ extension LoginEventPatterns on LoginEvent {
       case LoginTogglePasswordVisibility()
           when togglePasswordVisibility != null:
         return togglePasswordVisibility(_that);
+      case LoginForgotPasswordPressed() when forgotPasswordPressed != null:
+        return forgotPasswordPressed(_that);
       case _:
         return null;
     }
@@ -149,8 +159,10 @@ extension LoginEventPatterns on LoginEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pageStarted,
-    TResult Function(String email, String password)? loginButtonPressed,
+    TResult Function(String emailOrIdentityNumber, String password)?
+        loginButtonPressed,
     TResult Function()? togglePasswordVisibility,
+    TResult Function()? forgotPasswordPressed,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -158,10 +170,12 @@ extension LoginEventPatterns on LoginEvent {
       case LoginPageStarted() when pageStarted != null:
         return pageStarted();
       case LoginButtonPressed() when loginButtonPressed != null:
-        return loginButtonPressed(_that.email, _that.password);
+        return loginButtonPressed(_that.emailOrIdentityNumber, _that.password);
       case LoginTogglePasswordVisibility()
           when togglePasswordVisibility != null:
         return togglePasswordVisibility();
+      case LoginForgotPasswordPressed() when forgotPasswordPressed != null:
+        return forgotPasswordPressed();
       case _:
         return orElse();
     }
@@ -183,17 +197,21 @@ extension LoginEventPatterns on LoginEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pageStarted,
-    required TResult Function(String email, String password) loginButtonPressed,
+    required TResult Function(String emailOrIdentityNumber, String password)
+        loginButtonPressed,
     required TResult Function() togglePasswordVisibility,
+    required TResult Function() forgotPasswordPressed,
   }) {
     final _that = this;
     switch (_that) {
       case LoginPageStarted():
         return pageStarted();
       case LoginButtonPressed():
-        return loginButtonPressed(_that.email, _that.password);
+        return loginButtonPressed(_that.emailOrIdentityNumber, _that.password);
       case LoginTogglePasswordVisibility():
         return togglePasswordVisibility();
+      case LoginForgotPasswordPressed():
+        return forgotPasswordPressed();
     }
   }
 
@@ -212,18 +230,22 @@ extension LoginEventPatterns on LoginEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pageStarted,
-    TResult? Function(String email, String password)? loginButtonPressed,
+    TResult? Function(String emailOrIdentityNumber, String password)?
+        loginButtonPressed,
     TResult? Function()? togglePasswordVisibility,
+    TResult? Function()? forgotPasswordPressed,
   }) {
     final _that = this;
     switch (_that) {
       case LoginPageStarted() when pageStarted != null:
         return pageStarted();
       case LoginButtonPressed() when loginButtonPressed != null:
-        return loginButtonPressed(_that.email, _that.password);
+        return loginButtonPressed(_that.emailOrIdentityNumber, _that.password);
       case LoginTogglePasswordVisibility()
           when togglePasswordVisibility != null:
         return togglePasswordVisibility();
+      case LoginForgotPasswordPressed() when forgotPasswordPressed != null:
+        return forgotPasswordPressed();
       case _:
         return null;
     }
@@ -253,9 +275,10 @@ class LoginPageStarted implements LoginEvent {
 /// @nodoc
 
 class LoginButtonPressed implements LoginEvent {
-  const LoginButtonPressed({required this.email, required this.password});
+  const LoginButtonPressed(
+      {required this.emailOrIdentityNumber, required this.password});
 
-  final String email;
+  final String emailOrIdentityNumber;
   final String password;
 
   /// Create a copy of LoginEvent
@@ -270,17 +293,18 @@ class LoginButtonPressed implements LoginEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is LoginButtonPressed &&
-            (identical(other.email, email) || other.email == email) &&
+            (identical(other.emailOrIdentityNumber, emailOrIdentityNumber) ||
+                other.emailOrIdentityNumber == emailOrIdentityNumber) &&
             (identical(other.password, password) ||
                 other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, password);
+  int get hashCode => Object.hash(runtimeType, emailOrIdentityNumber, password);
 
   @override
   String toString() {
-    return 'LoginEvent.loginButtonPressed(email: $email, password: $password)';
+    return 'LoginEvent.loginButtonPressed(emailOrIdentityNumber: $emailOrIdentityNumber, password: $password)';
   }
 }
 
@@ -291,7 +315,7 @@ abstract mixin class $LoginButtonPressedCopyWith<$Res>
           LoginButtonPressed value, $Res Function(LoginButtonPressed) _then) =
       _$LoginButtonPressedCopyWithImpl;
   @useResult
-  $Res call({String email, String password});
+  $Res call({String emailOrIdentityNumber, String password});
 }
 
 /// @nodoc
@@ -306,13 +330,13 @@ class _$LoginButtonPressedCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? email = null,
+    Object? emailOrIdentityNumber = null,
     Object? password = null,
   }) {
     return _then(LoginButtonPressed(
-      email: null == email
-          ? _self.email
-          : email // ignore: cast_nullable_to_non_nullable
+      emailOrIdentityNumber: null == emailOrIdentityNumber
+          ? _self.emailOrIdentityNumber
+          : emailOrIdentityNumber // ignore: cast_nullable_to_non_nullable
               as String,
       password: null == password
           ? _self.password
@@ -340,6 +364,27 @@ class LoginTogglePasswordVisibility implements LoginEvent {
   @override
   String toString() {
     return 'LoginEvent.togglePasswordVisibility()';
+  }
+}
+
+/// @nodoc
+
+class LoginForgotPasswordPressed implements LoginEvent {
+  const LoginForgotPasswordPressed();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is LoginForgotPasswordPressed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'LoginEvent.forgotPasswordPressed()';
   }
 }
 

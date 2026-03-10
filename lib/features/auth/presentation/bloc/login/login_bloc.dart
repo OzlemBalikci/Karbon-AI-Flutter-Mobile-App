@@ -10,7 +10,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginPageStarted>(_onLoginPageStarted);
     on<LoginTogglePasswordVisibility>(_onTogglePasswordVisibility);
     on<LoginButtonPressed>(_onLoginButtonPressed);
-    //on<LoginForgotPasswordPressed>(_onForgotPasswordPressed);
+    on<LoginForgotPasswordPressed>(_onForgotPasswordPressed);
   }
 
   final LoginUseCase _loginUseCase;
@@ -25,9 +25,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginButtonPressed event,
     Emitter<LoginState> emit,
   ) async {
-    emit(state.copyWith(resultStatus: LoginResultStatus.loading));
+    emit(state.copyWith(resultStatus: LoginResultStatus.loading, error: null));
     final result = await _loginUseCase(
-      email: event.email,
+      emailOrIdentityNumber: event.emailOrIdentityNumber,
       password: event.password,
     );
     result.fold(
@@ -46,8 +46,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(obscurePassword: !state.obscurePassword));
   }
 
-  //void _onForgotPasswordPressed(
-  //    LoginForgotPasswordPressed event, Emitter<LoginState> emit) {
-  //    emit(state.copyWith(navigateToForgotPassword: true));
-  //}
+  void _onForgotPasswordPressed(
+      LoginForgotPasswordPressed event, Emitter<LoginState> emit) {
+    emit(state.copyWith(navigateToForgotPassword: true));
+  }
 }

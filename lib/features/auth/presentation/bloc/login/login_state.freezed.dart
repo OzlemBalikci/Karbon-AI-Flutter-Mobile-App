@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$LoginState {
   LoginPageStatus get pagestatus;
   LoginResultStatus get resultStatus;
+  bool get navigateToForgotPassword;
   String? get error;
   AppUser? get user;
   bool get obscurePassword;
@@ -36,6 +37,9 @@ mixin _$LoginState {
                 other.pagestatus == pagestatus) &&
             (identical(other.resultStatus, resultStatus) ||
                 other.resultStatus == resultStatus) &&
+            (identical(
+                    other.navigateToForgotPassword, navigateToForgotPassword) ||
+                other.navigateToForgotPassword == navigateToForgotPassword) &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.obscurePassword, obscurePassword) ||
@@ -43,12 +47,12 @@ mixin _$LoginState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, pagestatus, resultStatus, error, user, obscurePassword);
+  int get hashCode => Object.hash(runtimeType, pagestatus, resultStatus,
+      navigateToForgotPassword, error, user, obscurePassword);
 
   @override
   String toString() {
-    return 'LoginState(pagestatus: $pagestatus, resultStatus: $resultStatus, error: $error, user: $user, obscurePassword: $obscurePassword)';
+    return 'LoginState(pagestatus: $pagestatus, resultStatus: $resultStatus, navigateToForgotPassword: $navigateToForgotPassword, error: $error, user: $user, obscurePassword: $obscurePassword)';
   }
 }
 
@@ -61,6 +65,7 @@ abstract mixin class $LoginStateCopyWith<$Res> {
   $Res call(
       {LoginPageStatus pagestatus,
       LoginResultStatus resultStatus,
+      bool navigateToForgotPassword,
       String? error,
       AppUser? user,
       bool obscurePassword});
@@ -80,6 +85,7 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
   $Res call({
     Object? pagestatus = null,
     Object? resultStatus = null,
+    Object? navigateToForgotPassword = null,
     Object? error = freezed,
     Object? user = freezed,
     Object? obscurePassword = null,
@@ -93,6 +99,10 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
           ? _self.resultStatus
           : resultStatus // ignore: cast_nullable_to_non_nullable
               as LoginResultStatus,
+      navigateToForgotPassword: null == navigateToForgotPassword
+          ? _self.navigateToForgotPassword
+          : navigateToForgotPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -202,16 +212,26 @@ extension LoginStatePatterns on LoginState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(LoginPageStatus pagestatus, LoginResultStatus resultStatus,
-            String? error, AppUser? user, bool obscurePassword)?
+    TResult Function(
+            LoginPageStatus pagestatus,
+            LoginResultStatus resultStatus,
+            bool navigateToForgotPassword,
+            String? error,
+            AppUser? user,
+            bool obscurePassword)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _LoginState() when $default != null:
-        return $default(_that.pagestatus, _that.resultStatus, _that.error,
-            _that.user, _that.obscurePassword);
+        return $default(
+            _that.pagestatus,
+            _that.resultStatus,
+            _that.navigateToForgotPassword,
+            _that.error,
+            _that.user,
+            _that.obscurePassword);
       case _:
         return orElse();
     }
@@ -232,15 +252,25 @@ extension LoginStatePatterns on LoginState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(LoginPageStatus pagestatus, LoginResultStatus resultStatus,
-            String? error, AppUser? user, bool obscurePassword)
+    TResult Function(
+            LoginPageStatus pagestatus,
+            LoginResultStatus resultStatus,
+            bool navigateToForgotPassword,
+            String? error,
+            AppUser? user,
+            bool obscurePassword)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _LoginState():
-        return $default(_that.pagestatus, _that.resultStatus, _that.error,
-            _that.user, _that.obscurePassword);
+        return $default(
+            _that.pagestatus,
+            _that.resultStatus,
+            _that.navigateToForgotPassword,
+            _that.error,
+            _that.user,
+            _that.obscurePassword);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -263,6 +293,7 @@ extension LoginStatePatterns on LoginState {
     TResult? Function(
             LoginPageStatus pagestatus,
             LoginResultStatus resultStatus,
+            bool navigateToForgotPassword,
             String? error,
             AppUser? user,
             bool obscurePassword)?
@@ -271,8 +302,13 @@ extension LoginStatePatterns on LoginState {
     final _that = this;
     switch (_that) {
       case _LoginState() when $default != null:
-        return $default(_that.pagestatus, _that.resultStatus, _that.error,
-            _that.user, _that.obscurePassword);
+        return $default(
+            _that.pagestatus,
+            _that.resultStatus,
+            _that.navigateToForgotPassword,
+            _that.error,
+            _that.user,
+            _that.obscurePassword);
       case _:
         return null;
     }
@@ -285,6 +321,7 @@ class _LoginState extends LoginState {
   const _LoginState(
       {this.pagestatus = LoginPageStatus.initial,
       this.resultStatus = LoginResultStatus.idle,
+      this.navigateToForgotPassword = false,
       this.error,
       this.user,
       this.obscurePassword = true})
@@ -296,6 +333,9 @@ class _LoginState extends LoginState {
   @override
   @JsonKey()
   final LoginResultStatus resultStatus;
+  @override
+  @JsonKey()
+  final bool navigateToForgotPassword;
   @override
   final String? error;
   @override
@@ -321,6 +361,9 @@ class _LoginState extends LoginState {
                 other.pagestatus == pagestatus) &&
             (identical(other.resultStatus, resultStatus) ||
                 other.resultStatus == resultStatus) &&
+            (identical(
+                    other.navigateToForgotPassword, navigateToForgotPassword) ||
+                other.navigateToForgotPassword == navigateToForgotPassword) &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.obscurePassword, obscurePassword) ||
@@ -328,12 +371,12 @@ class _LoginState extends LoginState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, pagestatus, resultStatus, error, user, obscurePassword);
+  int get hashCode => Object.hash(runtimeType, pagestatus, resultStatus,
+      navigateToForgotPassword, error, user, obscurePassword);
 
   @override
   String toString() {
-    return 'LoginState(pagestatus: $pagestatus, resultStatus: $resultStatus, error: $error, user: $user, obscurePassword: $obscurePassword)';
+    return 'LoginState(pagestatus: $pagestatus, resultStatus: $resultStatus, navigateToForgotPassword: $navigateToForgotPassword, error: $error, user: $user, obscurePassword: $obscurePassword)';
   }
 }
 
@@ -348,6 +391,7 @@ abstract mixin class _$LoginStateCopyWith<$Res>
   $Res call(
       {LoginPageStatus pagestatus,
       LoginResultStatus resultStatus,
+      bool navigateToForgotPassword,
       String? error,
       AppUser? user,
       bool obscurePassword});
@@ -367,6 +411,7 @@ class __$LoginStateCopyWithImpl<$Res> implements _$LoginStateCopyWith<$Res> {
   $Res call({
     Object? pagestatus = null,
     Object? resultStatus = null,
+    Object? navigateToForgotPassword = null,
     Object? error = freezed,
     Object? user = freezed,
     Object? obscurePassword = null,
@@ -380,6 +425,10 @@ class __$LoginStateCopyWithImpl<$Res> implements _$LoginStateCopyWith<$Res> {
           ? _self.resultStatus
           : resultStatus // ignore: cast_nullable_to_non_nullable
               as LoginResultStatus,
+      navigateToForgotPassword: null == navigateToForgotPassword
+          ? _self.navigateToForgotPassword
+          : navigateToForgotPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable

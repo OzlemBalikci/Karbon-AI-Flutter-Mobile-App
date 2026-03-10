@@ -23,7 +23,7 @@ abstract class LoginState with _$LoginState {
   const factory LoginState({
     @Default(LoginPageStatus.initial) LoginPageStatus pagestatus,
     @Default(LoginResultStatus.idle) LoginResultStatus resultStatus,
-    // @Default(false) bool navigateToForgotPassword,
+    @Default(false) bool navigateToForgotPassword,
     String? error,
     AppUser? user,
     @Default(true) bool obscurePassword,

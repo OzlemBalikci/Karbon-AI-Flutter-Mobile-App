@@ -73,6 +73,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/carbon_mask.png
   AssetGenImage get carbonMask => const AssetGenImage('assets/images/carbon_mask.png');
 
+  /// File path: assets/images/home_stats_card1.png
+  AssetGenImage get homeStatsCard1 => const AssetGenImage('assets/images/home_stats_card1.png');
+
   /// File path: assets/images/login_mask.png
   AssetGenImage get loginMask => const AssetGenImage('assets/images/login_mask.png');
 
@@ -80,8 +83,16 @@ class $AssetsImagesGen {
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
 
   /// List of all assets
-  List<AssetGenImage> get values =>
-      [appLogo, appLogoFront, karbonHesapla, recycle, carbonMask, loginMask, splash];
+  List<AssetGenImage> get values => [
+        appLogo,
+        appLogoFront,
+        karbonHesapla,
+        recycle,
+        carbonMask,
+        homeStatsCard1,
+        loginMask,
+        splash
+      ];
 }
 
 class $AssetsTranslationsGen {

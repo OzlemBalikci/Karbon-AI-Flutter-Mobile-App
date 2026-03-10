@@ -53,6 +53,10 @@ import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calcula
 import 'package:karbon/features/home/domain/repositories/home_repository_default.dart'
     as _i419;
 import 'package:karbon/features/home/presentation/bloc/home_bloc.dart' as _i591;
+import 'package:karbon/features/leaderofmont/data/repositories/leaderboard_repository_impl.dart'
+    as _i966;
+import 'package:karbon/features/leaderofmont/domain/repositories/leaderboard_repository_impl.dart'
+    as _i322;
 import 'package:karbon/features/usefulinfos/data/repositories/usefulinfo_repository_impl.dart'
     as _i233;
 import 'package:karbon/features/usefulinfos/domain/repositories/usefulinfo_repository.dart'
@@ -83,6 +87,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i205.CarbonCalculateRemoteImpl());
     gh.lazySingleton<_i102.AuthLocal>(
         () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
+    gh.lazySingleton<_i322.LeaderboardRepository>(
+        () => _i966.LeaderboardRepositoryImpl());
     gh.lazySingleton<_i419.HomeRepository>(() => _i419.HomeRepositoryImpl());
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));

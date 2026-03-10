@@ -7,21 +7,27 @@ class AuthLocalImpl implements AuthLocal {
   AuthLocalImpl(this._prefs);
   final SharedPreferences _prefs;
 
-  static const _keyUserId = 'auth_user_id';
+  static const _keyToken = 'auth_token';
 
   @override
   Future<bool> hasSession() async {
-    return _prefs.containsKey(_keyUserId) &&
-        (_prefs.getString(_keyUserId) ?? '').isNotEmpty;
+    return _prefs.containsKey(_keyToken) &&
+        (_prefs.getString(_keyToken) ?? '').isNotEmpty;
   }
 
   @override
-  Future<void> saveSession(String userId) async {
-    await _prefs.setString(_keyUserId, userId);
+  Future<String?> getToken() async {
+    final token = _prefs.getString(_keyToken);
+    return (token?.isEmpty ?? true) ? null : token;
+  }
+
+  @override
+  Future<void> saveToken(String token) async {
+    await _prefs.setString(_keyToken, token);
   }
 
   @override
   Future<void> clearSession() async {
-    await _prefs.remove(_keyUserId);
+    await _prefs.remove(_keyToken);
   }
 }

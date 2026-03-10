@@ -10,7 +10,7 @@ class RegisterUseCase {
 
   Future<Either<Exception, AppUser>> call({
     required String email,
-    required String tcNo,
+    required String identityNumber,
     required String name,
     required String surname,
     required String birthDate,
@@ -19,7 +19,7 @@ class RegisterUseCase {
   }) =>
       _repository.register(
         email: email,
-        tcNo: tcNo,
+        identityNumber: identityNumber,
         name: name,
         surname: surname,
         birthDate: birthDate,

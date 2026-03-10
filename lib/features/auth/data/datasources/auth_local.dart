@@ -1,5 +1,6 @@
 abstract class AuthLocal {
   Future<bool> hasSession();
-  Future<void> saveSession(String userId);
+  Future<String?> getToken();
+  Future<void> saveToken(String token);
   Future<void> clearSession();
 }

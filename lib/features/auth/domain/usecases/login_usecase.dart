@@ -9,8 +9,11 @@ class LoginUseCase {
   final AuthRepository _repository;
 
   Future<Either<Exception, AppUser>> call({
-    required String email,
+    required String emailOrIdentityNumber,
     required String password,
   }) =>
-      _repository.login(email: email, password: password);
+      _repository.login(
+        emailOrIdentityNumber: emailOrIdentityNumber,
+        password: password,
+      );
 }

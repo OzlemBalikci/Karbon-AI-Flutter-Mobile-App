@@ -7,12 +7,12 @@ sealed class LoginEvent with _$LoginEvent {
   const factory LoginEvent.pageStarted() = LoginPageStarted;
 
   const factory LoginEvent.loginButtonPressed({
-    required String email,
+    required String emailOrIdentityNumber,
     required String password,
   }) = LoginButtonPressed;
 
   const factory LoginEvent.togglePasswordVisibility() =
       LoginTogglePasswordVisibility;
 
-  //const factory LoginEvent.forgotPasswordPressed() = LoginForgotPasswordPressed;
+  const factory LoginEvent.forgotPasswordPressed() = LoginForgotPasswordPressed;
 }

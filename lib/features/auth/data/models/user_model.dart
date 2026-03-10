@@ -1,58 +1,84 @@
 import 'package:karbon/features/auth/domain/entities/app_user.dart';
 
+/// Login endpoint'inden dönen model: JWT token içerir.
+class LoginResponseModel {
+  final String token;
+
+  const LoginResponseModel({required this.token});
+
+  factory LoginResponseModel.fromJson(Map<String, dynamic> json) =>
+      LoginResponseModel(token: json['token'] as String? ?? '');
+}
+
+/// GET /profile endpoint'inden dönen kullanıcı profili modeli.
 class UserModel {
   final String id;
   final String email;
-  final String name;
-  final String surname;
-  final String tcNo;
-  final String phoneNumber;
-  final String birthDate;
-  final String password;
+  final String? name;
+  final String? surname;
+  final String? identityNumber;
+  final String? phoneNumber;
+  final DateTime? birthDate;
+  final double totalCarbonScore;
+  final double totalPoints;
+  final double lastCarbonScore;
+  final int donatedTreeCount;
+  final DateTime? lastLoginDate;
+  final bool isKvkkApproved;
+  final bool emailConfirmed;
 
   const UserModel({
     required this.id,
     required this.email,
-    required this.name,
-    required this.surname,
-    required this.tcNo,
-    required this.phoneNumber,
-    required this.birthDate,
-    required this.password,
+    this.name,
+    this.surname,
+    this.identityNumber,
+    this.phoneNumber,
+    this.birthDate,
+    this.totalCarbonScore = 0,
+    this.totalPoints = 0,
+    this.lastCarbonScore = 0,
+    this.donatedTreeCount = 0,
+    this.lastLoginDate,
+    this.isKvkkApproved = false,
+    this.emailConfirmed = false,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'] as String? ?? '',
-      email: json['email'] as String? ?? '',
-      name: json['name'] as String? ?? '',
-      surname: json['surname'] as String? ?? '',
-      tcNo: json['tcNo'] as String? ?? '',
-      phoneNumber: json['phoneNumber'] as String? ?? '',
-      birthDate: json['birthDate'] as String? ?? '',
-      password: json['password'] as String? ?? '',
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'email': email,
-        'name': name,
-        'surname': surname,
-        'tcNo': tcNo,
-        'phoneNumber': phoneNumber,
-        'birthDate': birthDate,
-        'password': password,
-      };
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        id: json['id'] as String? ?? '',
+        email: json['email'] as String? ?? '',
+        name: json['name'] as String?,
+        surname: json['surname'] as String?,
+        identityNumber: json['identityNumber'] as String?,
+        phoneNumber: json['phoneNumber'] as String?,
+        birthDate: json['birthDate'] != null
+            ? DateTime.tryParse(json['birthDate'] as String)
+            : null,
+        totalCarbonScore: (json['totalCarbonScore'] as num?)?.toDouble() ?? 0,
+        totalPoints: (json['totalPoints'] as num?)?.toDouble() ?? 0,
+        lastCarbonScore: (json['lastCarbonScore'] as num?)?.toDouble() ?? 0,
+        donatedTreeCount: json['donatedTreeCount'] as int? ?? 0,
+        lastLoginDate: json['lastLoginDate'] != null
+            ? DateTime.tryParse(json['lastLoginDate'] as String)
+            : null,
+        isKvkkApproved: json['isKvkkApproved'] as bool? ?? false,
+        emailConfirmed: json['emailConfirmed'] as bool? ?? false,
+      );
 
   AppUser toEntity() => AppUser(
         id: id,
         email: email,
         name: name,
         surname: surname,
-        tcNo: tcNo,
+        identityNumber: identityNumber,
         phoneNumber: phoneNumber,
         birthDate: birthDate,
-        password: password,
+        totalCarbonScore: totalCarbonScore,
+        totalPoints: totalPoints,
+        lastCarbonScore: lastCarbonScore,
+        donatedTreeCount: donatedTreeCount,
+        lastLoginDate: lastLoginDate,
+        isKvkkApproved: isKvkkApproved,
+        emailConfirmed: emailConfirmed,
       );
 }

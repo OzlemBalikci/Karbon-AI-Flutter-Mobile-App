@@ -28,7 +28,8 @@ dependencies:
   vector_graphics_codec: ^1.1.13
   flutter_svg: ^2.2.3
   # DI
-  get_it: ^8.0.3
+  #get_it: ^8.0.3    # ← geri alınacak
+  get_it: ^9.2.1
   injectable: ^2.5.0
   inner_shadow_widget: ^0.0.3
   mask_text_input_formatter: ^2.9.0
