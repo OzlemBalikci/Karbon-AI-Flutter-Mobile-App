@@ -13,6 +13,7 @@ import 'package:karbon/widgets/app_logo.dart';
 import 'package:karbon/widgets/screen_titles.dart';
 import 'package:karbon/features/auth/presentation/controllers/login_controller.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart';
+import 'package:karbon/features/auth/presentation/bloc/login/login_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_selector.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_event.dart';
@@ -51,47 +52,53 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
     final keyboardOpen = keyboardInset > 0;
-
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: context.colors.primary,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Image.asset(
-                Assets.images.loginMask.path,
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
+    return BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) {
+        if (state.resultStatus == LoginResultStatus.success) {
+          context.router.replace(const HomeRoute());
+        }
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: context.colors.primary,
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Image.asset(
+                  Assets.images.loginMask.path,
+                  width: double.infinity,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
             ),
-          ),
-          SafeArea(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  physics: keyboardOpen
-                      ? const ClampingScrollPhysics()
-                      : const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: keyboardInset),
-                  child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: constraints.maxHeight),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        LoginFeatureSection(controller: _logincontroller),
-                        LoginBottomRegisterSection(),
-                      ],
+            SafeArea(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    physics: keyboardOpen
+                        ? const ClampingScrollPhysics()
+                        : const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: keyboardInset),
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints(minHeight: constraints.maxHeight),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          LoginFeatureSection(controller: _logincontroller),
+                          LoginBottomRegisterSection(),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

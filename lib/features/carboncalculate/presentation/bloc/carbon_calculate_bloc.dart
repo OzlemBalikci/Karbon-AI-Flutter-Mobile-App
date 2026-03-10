@@ -24,14 +24,26 @@ class CarbonCalculateBloc
 
   void _onLoadRequested(CarbonCalculateLoadRequested event,
       Emitter<CarbonCalculateState> emit) async {
-    try {
-      final questions = await _carbonCalculateRepository.getQuestions();
-      emit(state.copyWith(
-          isLoading: false,
-          questions: questions.map((question) => question.toJson()).toList()));
-    } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
-    }
+    emit(state.copyWith(isLoading: true));
+    final result = await _carbonCalculateRepository.getMonthlyPoll();
+    result.fold(
+      (e) => emit(state.copyWith(isLoading: false, error: e.toString())),
+      (poll) {
+        final questions = poll.questions
+            .map((q) => {
+                  'question': q.text,
+                  'options': q.options
+                      .map((o) => {
+                            'value': (o.carbonValue ?? 0).toInt(),
+                            'label': o.text,
+                          })
+                      .toList(),
+                  'infoText': poll.description,
+                })
+            .toList();
+        emit(state.copyWith(isLoading: false, questions: questions));
+      },
+    );
   }
 
   void _onLoadFailed(
@@ -42,7 +54,8 @@ class CarbonCalculateBloc
   void _onNextPressed(
       CarbonCalculateNextPressed event, Emitter<CarbonCalculateState> emit) {
     if (state.currentStep >= state.maxStep) return;
-    if (state.phase is CarbonQuestionPhase && !state.isCurrentQuestionAnswered) return;
+    if (state.phase is CarbonQuestionPhase && !state.isCurrentQuestionAnswered)
+      return;
     emit(state.copyWith(currentStep: state.currentStep + 1));
   }
 
