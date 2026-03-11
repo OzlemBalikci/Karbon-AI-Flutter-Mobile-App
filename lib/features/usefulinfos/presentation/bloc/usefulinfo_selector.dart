@@ -4,7 +4,7 @@ import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.da
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_state.dart';
 
 typedef UsefulinfoListSelector
-    = BlocSelector<UsefulinfoBloc, UsefulinfoState, List<UsefulInfo>>;
+    = BlocSelector<UsefulinfoBloc, UsefulinfoState, List<UsefulInfoEntity>>;
 
 typedef UsefulinfoStatusSelector
     = BlocSelector<UsefulinfoBloc, UsefulinfoState, UsefulinfoState>;

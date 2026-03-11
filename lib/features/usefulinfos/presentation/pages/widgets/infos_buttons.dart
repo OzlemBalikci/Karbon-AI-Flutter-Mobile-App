@@ -3,7 +3,7 @@ part of '../usefulinfos.dart';
 class InfosButtons extends StatelessWidget {
   const InfosButtons({super.key, required this.infos});
 
-  final List<UsefulInfo> infos;
+  final List<UsefulInfoEntity> infos;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class InfosButtons extends StatelessWidget {
 class _InfoButtonItem extends StatelessWidget {
   const _InfoButtonItem({required this.info});
 
-  final UsefulInfo info;
+  final UsefulInfoEntity info;
   @override
   Widget build(BuildContext context) {
     return PrimaryButton(

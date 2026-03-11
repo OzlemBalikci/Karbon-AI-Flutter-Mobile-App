@@ -15,7 +15,7 @@ abstract class UsefulinfoState with _$UsefulinfoState {
 
   const factory UsefulinfoState({
     @Default(UsefulinfoStatus.initial) UsefulinfoStatus status,
-    @Default([]) List<UsefulInfo> infos,
+    @Default([]) List<UsefulInfoEntity> infos,
     String? error,
   }) = _UsefulinfoState;
 

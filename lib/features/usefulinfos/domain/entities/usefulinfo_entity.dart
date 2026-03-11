@@ -1,20 +1,20 @@
-class UsefulInfo {
-  final String id;
-  final String title;
-  final String content;
-  final int order;
-
-  const UsefulInfo({
+class UsefulInfoEntity {
+  const UsefulInfoEntity({
     required this.id,
     required this.title,
     required this.content,
-    required this.order,
+    required this.displayOrder,
   });
+  final String id;
+  final String title;
+  final String content;
+  final int displayOrder;
 
-  factory UsefulInfo.fromJson(Map<String, dynamic> json) => UsefulInfo(
+  factory UsefulInfoEntity.fromJson(Map<String, dynamic> json) =>
+      UsefulInfoEntity(
         id: json['id'] as String? ?? '',
         title: json['title'] as String? ?? '',
         content: json['content'] as String? ?? '',
-        order: json['order'] as int? ?? 0,
+        displayOrder: json['order'] as int? ?? 0,
       );
 }

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UsefulinfoState {
   UsefulinfoStatus get status;
-  List<UsefulInfo> get infos;
+  List<UsefulInfoEntity> get infos;
   String? get error;
 
   /// Create a copy of UsefulinfoState
@@ -52,7 +52,8 @@ abstract mixin class $UsefulinfoStateCopyWith<$Res> {
           UsefulinfoState value, $Res Function(UsefulinfoState) _then) =
       _$UsefulinfoStateCopyWithImpl;
   @useResult
-  $Res call({UsefulinfoStatus status, List<UsefulInfo> infos, String? error});
+  $Res call(
+      {UsefulinfoStatus status, List<UsefulInfoEntity> infos, String? error});
 }
 
 /// @nodoc
@@ -80,7 +81,7 @@ class _$UsefulinfoStateCopyWithImpl<$Res>
       infos: null == infos
           ? _self.infos
           : infos // ignore: cast_nullable_to_non_nullable
-              as List<UsefulInfo>,
+              as List<UsefulInfoEntity>,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -182,8 +183,8 @@ extension UsefulinfoStatePatterns on UsefulinfoState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            UsefulinfoStatus status, List<UsefulInfo> infos, String? error)?
+    TResult Function(UsefulinfoStatus status, List<UsefulInfoEntity> infos,
+            String? error)?
         $default, {
     required TResult orElse(),
   }) {
@@ -211,8 +212,8 @@ extension UsefulinfoStatePatterns on UsefulinfoState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            UsefulinfoStatus status, List<UsefulInfo> infos, String? error)
+    TResult Function(UsefulinfoStatus status, List<UsefulInfoEntity> infos,
+            String? error)
         $default,
   ) {
     final _that = this;
@@ -238,8 +239,8 @@ extension UsefulinfoStatePatterns on UsefulinfoState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            UsefulinfoStatus status, List<UsefulInfo> infos, String? error)?
+    TResult? Function(UsefulinfoStatus status, List<UsefulInfoEntity> infos,
+            String? error)?
         $default,
   ) {
     final _that = this;
@@ -257,7 +258,7 @@ extension UsefulinfoStatePatterns on UsefulinfoState {
 class _UsefulinfoState extends UsefulinfoState {
   const _UsefulinfoState(
       {this.status = UsefulinfoStatus.initial,
-      final List<UsefulInfo> infos = const [],
+      final List<UsefulInfoEntity> infos = const [],
       this.error})
       : _infos = infos,
         super._();
@@ -265,10 +266,10 @@ class _UsefulinfoState extends UsefulinfoState {
   @override
   @JsonKey()
   final UsefulinfoStatus status;
-  final List<UsefulInfo> _infos;
+  final List<UsefulInfoEntity> _infos;
   @override
   @JsonKey()
-  List<UsefulInfo> get infos {
+  List<UsefulInfoEntity> get infos {
     if (_infos is EqualUnmodifiableListView) return _infos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_infos);
@@ -313,7 +314,8 @@ abstract mixin class _$UsefulinfoStateCopyWith<$Res>
       __$UsefulinfoStateCopyWithImpl;
   @override
   @useResult
-  $Res call({UsefulinfoStatus status, List<UsefulInfo> infos, String? error});
+  $Res call(
+      {UsefulinfoStatus status, List<UsefulInfoEntity> infos, String? error});
 }
 
 /// @nodoc
@@ -341,7 +343,7 @@ class __$UsefulinfoStateCopyWithImpl<$Res>
       infos: null == infos
           ? _self._infos
           : infos // ignore: cast_nullable_to_non_nullable
-              as List<UsefulInfo>,
+              as List<UsefulInfoEntity>,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable

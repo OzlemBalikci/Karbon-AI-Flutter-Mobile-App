@@ -53,10 +53,8 @@ import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calcula
 import 'package:karbon/features/home/domain/repositories/home_repository_default.dart'
     as _i419;
 import 'package:karbon/features/home/presentation/bloc/home_bloc.dart' as _i591;
-import 'package:karbon/features/leaderofmont/data/repositories/leaderboard_repository_impl.dart'
-    as _i966;
-import 'package:karbon/features/leaderofmont/domain/repositories/leaderboard_repository_impl.dart'
-    as _i322;
+import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart'
+    as _i505;
 import 'package:karbon/features/usefulinfos/data/repositories/usefulinfo_repository_impl.dart'
     as _i233;
 import 'package:karbon/features/usefulinfos/domain/repositories/usefulinfo_repository.dart'
@@ -83,31 +81,29 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i614.SettingsBloc>(() => _i614.SettingsBloc());
     gh.singleton<_i361.Dio>(() => registerModule.dio);
-    gh.lazySingleton<_i205.CarbonCalculateRemote>(
-        () => _i205.CarbonCalculateRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i505.UsefulinfoRemote>(
+        () => _i505.UsefulinfoRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i102.AuthLocal>(
         () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
-    //gh.lazySingleton<_i322.LeaderboardRepository>(
-    //() => _i966.LeaderboardRepositoryImpl());
+    gh.lazySingleton<_i205.CarbonCalculateRemote>(
+        () => _i205.CarbonCalculateRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i419.HomeRepository>(() => _i419.HomeRepositoryImpl());
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
-    gh.lazySingleton<_i233.IUsefulinfoRemote>(
-        () => _i233.UsefulinfoRemoteImpl());
+    gh.lazySingleton<_i71.UsefulinfoRepository>(
+        () => _i233.UsefulinfoRepositoryImpl(gh<_i505.UsefulinfoRemote>()));
     gh.lazySingleton<_i123.CarbonCalculateRepository>(() =>
         _i163.CarbonCalculateRepositoryImpl(gh<_i205.CarbonCalculateRemote>()));
-    gh.lazySingleton<_i71.IUsefulinfoRepository>(
-        () => _i233.UsefulinfoRepositoryImpl(gh<_i233.IUsefulinfoRemote>()));
     gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
           gh<_i413.AuthRemote>(),
           gh<_i102.AuthLocal>(),
         ));
+    gh.factory<_i434.UsefulinfoBloc>(
+        () => _i434.UsefulinfoBloc(gh<_i71.UsefulinfoRepository>()));
     gh.factory<_i959.CarbonCalculateBloc>(
         () => _i959.CarbonCalculateBloc(gh<_i123.CarbonCalculateRepository>()));
     gh.singleton<_i591.HomeBloc>(
         () => _i591.HomeBloc(gh<_i419.HomeRepository>()));
-    gh.factory<_i434.UsefulinfoBloc>(
-        () => _i434.UsefulinfoBloc(gh<_i71.IUsefulinfoRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i210.ForgotPasswordUseCase>(

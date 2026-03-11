@@ -3,7 +3,7 @@ part of '../usefulinfos.dart';
 class UsefulInfoContentSheet extends StatelessWidget {
   const UsefulInfoContentSheet({super.key, required this.info});
 
-  final UsefulInfo info;
+  final UsefulInfoEntity info;
 
   @override
   Widget build(BuildContext context) {

@@ -11,9 +11,7 @@ class UsefulInfoFeatureSection extends StatelessWidget {
       children: [
         AppHeaderTitle(
             title: AppTranslations.get('faydalı_bilgiler_header_text')),
-        SizedBox(height: 20.h),
         AppHero(),
-        SizedBox(height: 20.h),
         InfoText(),
       ],
     );

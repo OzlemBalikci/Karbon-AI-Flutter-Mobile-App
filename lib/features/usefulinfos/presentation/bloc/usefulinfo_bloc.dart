@@ -10,7 +10,7 @@ class UsefulinfoBloc extends Bloc<UsefulinfoEvent, UsefulinfoState> {
     on<UsefulinfoLoadRequested>(_onLoadRequested);
   }
 
-  final IUsefulinfoRepository _repository;
+  final UsefulinfoRepository _repository;
 
   Future<void> _onLoadRequested(
     UsefulinfoLoadRequested event,
@@ -19,9 +19,15 @@ class UsefulinfoBloc extends Bloc<UsefulinfoEvent, UsefulinfoState> {
     emit(state.copyWith(status: UsefulinfoStatus.loading, error: null));
 
     try {
-      final infos = await _repository.getUsefulInfos();
-      infos.sort((a, b) => a.order.compareTo(b.order));
-      emit(state.copyWith(status: UsefulinfoStatus.success, infos: infos));
+      final result = await _repository.getUsefulInfos();
+      result.fold(
+        (e) => emit(state.copyWith(
+            status: UsefulinfoStatus.error, error: e.toString())),
+        (infos) {
+          infos.sort((a, b) => a.displayOrder.compareTo(b.displayOrder));
+          emit(state.copyWith(status: UsefulinfoStatus.success, infos: infos));
+        },
+      );
     } on Exception catch (e) {
       emit(state.copyWith(status: UsefulinfoStatus.error, error: e.toString()));
     }
