@@ -1,7 +1,7 @@
 part of '../home.dart';
 
-class HomeFirstOpenBottomButton extends StatelessWidget {
-  const HomeFirstOpenBottomButton({super.key});
+class HomeInitialBottomButton extends StatelessWidget {
+  const HomeInitialBottomButton({super.key});
 
   @override
   Widget build(BuildContext context) {

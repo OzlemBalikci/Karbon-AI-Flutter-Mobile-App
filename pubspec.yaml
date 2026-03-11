@@ -27,6 +27,7 @@ dependencies:
   vector_graphics: ^1.1.19
   vector_graphics_codec: ^1.1.13
   flutter_svg: ^2.2.3
+  dotted_border: ^3.1.0
   # DI
   #get_it: ^8.0.3    # ← geri alınacak
   get_it: ^9.2.1

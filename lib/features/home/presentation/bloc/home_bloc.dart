@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/home/presentation/bloc/home_event.dart';
 import 'package:karbon/features/home/presentation/bloc/home_state.dart';
-import 'package:karbon/features/home/domain/repositories/home_repository_default.dart';
+import 'package:karbon/features/home/domain/repositories/home_repository.dart';
 
 @singleton
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
@@ -19,28 +19,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _onStarted(HomeStarted event, Emitter<HomeState> emit) async {
     try {
       emit(state.copyWith(status: HomeStatus.loading, error: null));
-
+      final now = DateTime.now();
       final lastDate = await _homeRepository.getLastSurveyDate();
-
-      final isNewMonth =
-          lastDate == null || _isDifferentMonth(lastDate, DateTime.now());
-
-      if (isNewMonth) {
-        emit(state.copyWith(
+      final isNewMonth = lastDate == null || _isDifferentMonth(lastDate, now);
+      final dashboardResult = await _homeRepository.getMonthlyLeaderboard(
+        month: now.month,
+        year: now.year,
+      );
+      dashboardResult.fold(
+        (e) => emit(state.copyWith(
+          status: HomeStatus.failed,
+          error: e.toString(),
+        )),
+        (dashboard) => emit(state.copyWith(
           status: HomeStatus.loaded,
-          viewType: HomeViewType.initial,
-        ));
-      } else {
-        emit(state.copyWith(
-          status: HomeStatus.loaded,
-          viewType: HomeViewType.main,
-        ));
-      }
+          viewType: isNewMonth ? HomeViewType.initial : HomeViewType.main,
+          yearlyTreeCount: dashboard.yearlyTreeCount,
+          monthlyTreeCount: dashboard.monthlyTreeCount,
+          leaders: dashboard.leaders,
+          currentUserRank: dashboard.currentUserRank,
+        )),
+      );
     } on Exception catch (e) {
-      emit(state.copyWith(
-        status: HomeStatus.failed,
-        error: e.toString(),
-      ));
+      emit(state.copyWith(status: HomeStatus.failed, error: e.toString()));
     }
   }
 

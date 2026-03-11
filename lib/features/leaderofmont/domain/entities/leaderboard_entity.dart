@@ -1,10 +1,10 @@
-class LeaderboardEntry {
+class LeaderboardEntity {
   final int rank;
   final String fullName;
   final int treeCount;
   final bool isCurrentUser;
 
-  const LeaderboardEntry({
+  const LeaderboardEntity({
     required this.rank,
     required this.fullName,
     required this.treeCount,
@@ -20,8 +20,8 @@ class LeaderboardEntry {
     return '$n Ağaç';
   }
 
-  factory LeaderboardEntry.fromJson(Map<String, dynamic> json) =>
-      LeaderboardEntry(
+  factory LeaderboardEntity.fromJson(Map<String, dynamic> json) =>
+      LeaderboardEntity(
         rank: json['rank'] as int? ?? 0,
         fullName: json['fullName'] as String? ?? '',
         treeCount: json['treeCount'] as int? ?? 0,

@@ -50,8 +50,11 @@ import 'package:karbon/features/carboncalculate/domain/repositories/carbon_calcu
     as _i123;
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart'
     as _i959;
-import 'package:karbon/features/home/domain/repositories/home_repository_default.dart'
-    as _i419;
+import 'package:karbon/features/home/data/datasources/home_remote.dart' as _i25;
+import 'package:karbon/features/home/data/repositories/home_repository_impl.dart'
+    as _i274;
+import 'package:karbon/features/home/domain/repositories/home_repository.dart'
+    as _i406;
 import 'package:karbon/features/home/presentation/bloc/home_bloc.dart' as _i591;
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart'
     as _i505;
@@ -87,13 +90,18 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i205.CarbonCalculateRemote>(
         () => _i205.CarbonCalculateRemoteImpl(gh<_i361.Dio>()));
-    gh.lazySingleton<_i419.HomeRepository>(() => _i419.HomeRepositoryImpl());
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i25.HomeRemote>(
+        () => _i25.HomeRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i71.UsefulinfoRepository>(
         () => _i233.UsefulinfoRepositoryImpl(gh<_i505.UsefulinfoRemote>()));
     gh.lazySingleton<_i123.CarbonCalculateRepository>(() =>
         _i163.CarbonCalculateRepositoryImpl(gh<_i205.CarbonCalculateRemote>()));
+    gh.lazySingleton<_i406.HomeRepository>(() => _i274.HomeRepositoryImpl(
+          gh<_i25.HomeRemote>(),
+          gh<_i460.SharedPreferences>(),
+        ));
     gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
           gh<_i413.AuthRemote>(),
           gh<_i102.AuthLocal>(),
@@ -103,7 +111,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i959.CarbonCalculateBloc>(
         () => _i959.CarbonCalculateBloc(gh<_i123.CarbonCalculateRepository>()));
     gh.singleton<_i591.HomeBloc>(
-        () => _i591.HomeBloc(gh<_i419.HomeRepository>()));
+        () => _i591.HomeBloc(gh<_i406.HomeRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i210.ForgotPasswordUseCase>(

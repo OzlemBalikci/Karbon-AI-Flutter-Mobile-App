@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:karbon/core/translations.dart';
+import 'package:karbon/features/home/presentation/bloc/home_state.dart';
+import 'package:karbon/features/home/presentation/bloc/home_selector.dart';
+import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
@@ -11,13 +14,23 @@ import 'package:karbon/widgets/bottom_navigation_bar.dart' as app_nav;
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/app_hero.dart';
 import 'package:karbon/widgets/app_header_title.dart';
+import 'dart:ui';
+import 'package:dotted_border/dotted_border.dart';
 
-part 'widgets/homefirstopen_bottom_button.dart';
-part 'widgets/home_text.dart';
+part 'widgets/home_initial_bottom_button.dart';
+part 'widgets/home_initial_text.dart';
 part 'widgets/stats_cards.dart';
 part 'widgets/stats_card_row.dart';
 part 'widgets/leader_card_widget.dart';
-part 'sections/homefirstopen_feature.dart';
+part 'widgets/leader_section_header.dart';
+part 'widgets/leader_card_row.dart';
+part 'widgets/see_others_card.dart';
+part 'widgets/home_main_bottom_button.dart';
+part 'sections/home_initial_feature.dart';
+part 'sections/home_main_feature.dart';
+part 'sections/home_main_header.dart';
+part 'view/home_initial.dart';
+part 'view/home_main.dart';
 
 @RoutePage()
 class HomePage extends StatefulWidget {
@@ -43,7 +56,14 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
               children: [
-                HomeFirstOpenFeatureSection(),
+                Expanded(
+                  child: HomeViewTypeSelector(
+                    builder: (viewType) => switch (viewType) {
+                      HomeViewType.initial => HomeInitialView(),
+                      HomeViewType.main => HomeMainView(),
+                    },
+                  ),
+                ),
                 app_nav.AppBottomNavigationBar(
                   selectedIndex: 0,
                   onTap: (index) {},

@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
 import 'package:dio/dio.dart';
-import 'package:karbon/core/translations.dart';
 
 abstract class UsefulinfoRemote {
   //GET /api/v1/useful-informations

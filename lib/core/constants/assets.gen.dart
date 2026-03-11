@@ -25,10 +25,12 @@ class $AssetsIconsGen {
       const SvgGenImage('assets/icons/calendar_month_outlined.svg');
 
   /// File path: assets/icons/eye_slash_closed.svg
-  SvgGenImage get eyeSlashClosed => const SvgGenImage('assets/icons/eye_slash_closed.svg');
+  SvgGenImage get eyeSlashClosed =>
+      const SvgGenImage('assets/icons/eye_slash_closed.svg');
 
   /// File path: assets/icons/eye_slash_opened.svg
-  SvgGenImage get eyeSlashOpened => const SvgGenImage('assets/icons/eye_slash_opened.svg');
+  SvgGenImage get eyeSlashOpened =>
+      const SvgGenImage('assets/icons/eye_slash_opened.svg');
 
   /// File path: assets/icons/favorites.svg
   SvgGenImage get favorites => const SvgGenImage('assets/icons/favorites.svg');
@@ -37,7 +39,8 @@ class $AssetsIconsGen {
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
   /// File path: assets/icons/iconbackbutton.svg
-  SvgGenImage get iconbackbutton => const SvgGenImage('assets/icons/iconbackbutton.svg');
+  SvgGenImage get iconbackbutton =>
+      const SvgGenImage('assets/icons/iconbackbutton.svg');
 
   /// File path: assets/icons/stats.svg
   SvgGenImage get stats => const SvgGenImage('assets/icons/stats.svg');
@@ -59,25 +62,43 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   /// File path: assets/images/App_logo.png
-  AssetGenImage get appLogo => const AssetGenImage('assets/images/App_logo.png');
+  AssetGenImage get appLogo =>
+      const AssetGenImage('assets/images/App_logo.png');
 
   /// File path: assets/images/App_logo_front.png
-  AssetGenImage get appLogoFront => const AssetGenImage('assets/images/App_logo_front.png');
+  AssetGenImage get appLogoFront =>
+      const AssetGenImage('assets/images/App_logo_front.png');
 
   /// File path: assets/images/Karbon_hesapla.png
-  AssetGenImage get karbonHesapla => const AssetGenImage('assets/images/Karbon_hesapla.png');
+  AssetGenImage get karbonHesapla =>
+      const AssetGenImage('assets/images/Karbon_hesapla.png');
 
   /// File path: assets/images/Recycle.png
   AssetGenImage get recycle => const AssetGenImage('assets/images/Recycle.png');
 
   /// File path: assets/images/carbon_mask.png
-  AssetGenImage get carbonMask => const AssetGenImage('assets/images/carbon_mask.png');
+  AssetGenImage get carbonMask =>
+      const AssetGenImage('assets/images/carbon_mask.png');
+
+  /// File path: assets/images/home_see_other.png
+  AssetGenImage get homeSeeOther =>
+      const AssetGenImage('assets/images/home_see_other.png');
 
   /// File path: assets/images/home_stats_card1.png
-  AssetGenImage get homeStatsCard1 => const AssetGenImage('assets/images/home_stats_card1.png');
+  AssetGenImage get homeStatsCard1 =>
+      const AssetGenImage('assets/images/home_stats_card1.png');
+
+  /// File path: assets/images/home_stats_card_2.png
+  AssetGenImage get homeStatsCard2 =>
+      const AssetGenImage('assets/images/home_stats_card_2.png');
+
+  /// File path: assets/images/home_main.png
+  AssetGenImage get homeMain =>
+      const AssetGenImage('assets/images/home_main.png');
 
   /// File path: assets/images/login_mask.png
-  AssetGenImage get loginMask => const AssetGenImage('assets/images/login_mask.png');
+  AssetGenImage get loginMask =>
+      const AssetGenImage('assets/images/login_mask.png');
 
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
@@ -89,7 +110,9 @@ class $AssetsImagesGen {
         karbonHesapla,
         recycle,
         carbonMask,
+        homeSeeOther,
         homeStatsCard1,
+        homeStatsCard2,
         loginMask,
         splash
       ];
@@ -275,7 +298,8 @@ class SvgGenImage {
       placeholderBuilder: placeholderBuilder,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
-      colorFilter: colorFilter ?? (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
+      colorFilter: colorFilter ??
+          (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
     );

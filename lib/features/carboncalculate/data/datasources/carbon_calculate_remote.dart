@@ -21,7 +21,45 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
   @override
   Future<MonthlyPollEntity> getMonthlyPoll() async {
     // TODO: await _dio.get('/api/v1/polls/daily')
-    throw UnimplementedError('Backend hazır olunca implement edilecek');
+    // throw UnimplementedError('Backend hazır olunca implement edilecek');
+    return _mockMonthlyPoll();
+  }
+
+  static PollQuestionsEntity _mockQuestion(int index) {
+    return PollQuestionsEntity(
+      id: 'q$index',
+      text: 'Mock soru #$index - Bu bir test sorusudur?',
+      displayOrder: index,
+      options: [
+        PollQuestionsEntity(
+            id: 'o${index}a',
+            text: 'Seçenek A',
+            displayOrder: 1,
+            options: const [],
+            carbonValue: 5),
+        PollQuestionsEntity(
+            id: 'o${index}b',
+            text: 'Seçenek B',
+            displayOrder: 2,
+            options: const [],
+            carbonValue: 15),
+        PollQuestionsEntity(
+            id: 'o${index}c',
+            text: 'Seçenek C',
+            displayOrder: 3,
+            options: const [],
+            carbonValue: 25),
+      ],
+    );
+  }
+
+  MonthlyPollEntity _mockMonthlyPoll() {
+    return MonthlyPollEntity(
+      pollSetId: 'mock-poll-001',
+      name: 'Karbon Ayak İzi Anketi',
+      description: 'Günlük alışkanlıklarınızı değerlendirin.',
+      questions: List.generate(13, (i) => _mockQuestion(i + 1)),
+    );
   }
 
   @override

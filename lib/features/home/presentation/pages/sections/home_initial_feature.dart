@@ -13,9 +13,9 @@ class HomeFirstOpenFeatureSection extends StatelessWidget {
         SizedBox(height: 25.h),
         AppHero(),
         SizedBox(height: 20.h),
-        HomeText(),
+        HomeFirstOpenText(),
         SizedBox(height: 50.h),
-        HomeFirstOpenBottomButton(),
+        HomeInitialBottomButton(),
       ],
     );
   }

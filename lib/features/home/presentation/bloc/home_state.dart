@@ -1,5 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
+import 'package:karbon/features/home/domain/entities/user_rank_entity.dart';
 
 part 'home_state.freezed.dart';
 
@@ -20,6 +22,10 @@ abstract class HomeState with _$HomeState {
   const factory HomeState({
     @Default(HomeStatus.loading) HomeStatus status,
     @Default(HomeViewType.initial) HomeViewType viewType,
+    @Default(0) int yearlyTreeCount,
+    @Default(0) int monthlyTreeCount,
+    @Default([]) List<LeaderboardEntity> leaders,
+    UserRankEntity? currentUserRank,
     double? totalCarbon,
     double? savedCarbon,
     String? error,

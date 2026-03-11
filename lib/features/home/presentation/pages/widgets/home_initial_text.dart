@@ -1,7 +1,7 @@
 part of '../home.dart';
 
-class HomeText extends StatelessWidget {
-  const HomeText({super.key});
+class HomeFirstOpenText extends StatelessWidget {
+  const HomeFirstOpenText({super.key});
 
   @override
   Widget build(BuildContext context) {
