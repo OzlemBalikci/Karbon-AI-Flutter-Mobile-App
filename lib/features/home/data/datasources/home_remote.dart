@@ -2,7 +2,6 @@ import 'package:injectable/injectable.dart';
 import 'package:dio/dio.dart';
 import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
-import 'package:karbon/features/home/domain/entities/user_rank_entity.dart';
 
 abstract class HomeRemote {
   // GET /api/v1/user-results/monthly-leaderboard
@@ -46,11 +45,6 @@ class HomeRemoteImpl implements HomeRemote {
           isCurrentUser: false,
         ),
       ],
-      currentUserRank: const UserRankEntity(
-        rank: 272,
-        treeCount: 120,
-        message: '120 Ağaç ile 272. sıradasınız.',
-      ),
     );
   }
 }

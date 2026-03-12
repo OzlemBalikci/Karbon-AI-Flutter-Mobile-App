@@ -6,7 +6,7 @@ class LeaderSectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           AppTranslations.get('home_page_leader_of_month_header_text'),
@@ -18,6 +18,8 @@ class LeaderSectionHeader extends StatelessWidget {
         SizedBox(height: 15.h),
         Text(
           AppTranslations.get('lorem_ipsum'),
+          maxLines: 3,
+          overflow: TextOverflow.clip,
         ),
       ],
     );

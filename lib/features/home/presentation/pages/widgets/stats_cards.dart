@@ -7,7 +7,7 @@ class StatsCards extends StatelessWidget {
     required this.value,
     required this.image,
     required this.borderColor,
-    this.hasBlur = false,
+    this.hasShadow = false,
     this.onTap,
   });
 
@@ -15,58 +15,95 @@ class StatsCards extends StatelessWidget {
   final String value;
   final AssetGenImage image;
   final Color borderColor;
-  final bool hasBlur;
   final VoidCallback? onTap;
+  final bool hasShadow;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Stack(
+        clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(15.r),
-            child: Container(
-              width: double.infinity,
-              height: 142.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.r),
-                border: Border.all(color: borderColor, width: 1.w),
-                image: DecorationImage(
-                  image: image.provider(),
-                  fit: BoxFit.cover,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.15),
-                    spreadRadius: 0,
-                    blurRadius: 25,
-                    offset: Offset(0, 4),
-                  ),
-                ],
+          Container(
+            width: double.infinity,
+            height: 142.h,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.r),
+              boxShadow: hasShadow
+                  ? [
+                      BoxShadow(
+                        color: Color(0x26000000),
+                        offset: Offset(0, 4),
+                        blurRadius: 25,
+                        spreadRadius: 0,
+                      ),
+                    ]
+                  : null,
+              color: context.colors.secondary,
+              border: Border.all(color: borderColor, width: 1.w),
+              image: DecorationImage(
+                image: image.provider(),
+                alignment: Alignment.bottomCenter,
+                fit: BoxFit.contain,
               ),
-              child: hasBlur
-                  ? BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
-                      child: _buildContent(context),
-                    )
-                  : _buildContent(context),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15.r),
+              child: Padding(
+                padding: EdgeInsets.only(top: 10.h),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10.w),
+                      child: Text(
+                        title,
+                        style: context.typographiesSp.bodyMediumSmall.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: context.colors.carbonQuestion,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      value,
+                      style: TextStyle(
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.w700,
+                        color: context.colors.carbonQuestion,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
           Positioned(
-            bottom: -6.h,
+            bottom: -16.h,
             left: 0,
             right: 0,
-            child: Container(
-              width: 131.w,
-              height: 44.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.r),
-                  bottomLeft: Radius.circular(10.r),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 11.w),
+              child: Container(
+                width: double.infinity,
+                height: 44.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                  border: Border.all(color: Color(0xFFA9C5B8), width: 1.w),
+                  color: Color(0xFFF1FBF6),
                 ),
-                color: context.colors.primary,
+                child: Center(
+                  child: Text(
+                    "12.0000 ağaç kaldı.",
+                    style: context.typographiesSp.bodyExtraSmall.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: context.colors.carbonQuestion,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -77,24 +114,27 @@ class StatsCards extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      padding: EdgeInsets.only(top: 10.h),
       child: Column(
         children: [
-          Text(
-            title,
-            style: context.typographiesSp.bodyMediumSmall.copyWith(
-              fontWeight: FontWeight.w600,
-              color: context.colors.carbonQuestion,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Text(
+              title,
+              style: context.typographiesSp.bodyMediumSmall.copyWith(
+                fontWeight: FontWeight.w600,
+                color: context.colors.carbonQuestion,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
-          SizedBox(height: 25.h),
+          SizedBox(height: 10.h),
           Text(
             value,
             style: TextStyle(
               fontSize: 30.sp,
               fontWeight: FontWeight.w700,
-              color: context.colors.textBlack,
+              color: context.colors.carbonQuestion,
             ),
             textAlign: TextAlign.center,
           )

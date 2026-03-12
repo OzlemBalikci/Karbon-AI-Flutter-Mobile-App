@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:karbon/core/translations.dart';
 import 'package:karbon/features/home/presentation/bloc/home_state.dart';
+import 'package:karbon/features/home/presentation/bloc/home_bloc.dart';
 import 'package:karbon/features/home/presentation/bloc/home_selector.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
@@ -51,25 +52,27 @@ class _HomePageState extends State<HomePage> {
             left: 25.w,
             child: BackIconButton(),
           ),
-          SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: HomeViewTypeSelector(
-                    builder: (viewType) => switch (viewType) {
-                      HomeViewType.initial => HomeInitialView(),
-                      HomeViewType.main => HomeMainView(),
-                    },
-                  ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: HomeViewTypeSelector(
+                  builder: (viewType) => switch (viewType) {
+                    HomeViewType.initial => HomeInitialView(),
+                    HomeViewType.main => HomeMainView(),
+                  },
                 ),
-                app_nav.AppBottomNavigationBar(
+              ),
+              SafeArea(
+                top: false,
+                bottom: true,
+                child: app_nav.AppBottomNavigationBar(
                   selectedIndex: 0,
                   onTap: (index) {},
                 ),
-              ],
-            ),
+              )
+            ],
           ),
         ],
       ),

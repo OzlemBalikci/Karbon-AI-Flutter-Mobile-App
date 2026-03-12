@@ -23,6 +23,22 @@ class HomeViewTypeSelector extends HomeSelector<HomeViewType> {
         );
 }
 
+// home_selector.dart - LeaderRankSelector
+const _mockLeaders = [
+  LeaderboardEntity(
+    rank: 1,
+    fullName: 'Ahmet Yılmaz',
+    treeCount: 100000000,
+    isCurrentUser: false,
+  ),
+  LeaderboardEntity(
+    rank: 2,
+    fullName: 'Ayşe Kaya',
+    treeCount: 95000000,
+    isCurrentUser: false,
+  ),
+];
+
 class LeaderRankSelector extends HomeSelector<List<LeaderboardEntity>> {
   LeaderRankSelector({
     super.key,
@@ -30,8 +46,8 @@ class LeaderRankSelector extends HomeSelector<List<LeaderboardEntity>> {
   }) : super(
           selector: (state) => state.leaders,
           builder: (leaders) {
-            if (leaders.length < 2) return const SizedBox.shrink();
-            return builder(leaders);
+            final displayLeaders = leaders.length >= 2 ? leaders : _mockLeaders;
+            return builder(displayLeaders);
           },
         );
 }

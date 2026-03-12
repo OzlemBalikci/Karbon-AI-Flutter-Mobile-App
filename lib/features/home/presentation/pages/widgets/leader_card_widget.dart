@@ -14,14 +14,15 @@ class LeaderCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 95.w,
       height: 119.h,
       decoration: BoxDecoration(
+        color: context.colors.secondary,
         borderRadius: BorderRadius.circular(10.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
+            color: Color(0x26000000).withValues(alpha: 0.15),
             offset: Offset(0, 4),
+            spreadRadius: 0,
             blurRadius: 25,
           ),
         ],
@@ -48,24 +49,30 @@ class LeaderCardWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  entity.fullName,
-                  style: context.typographiesSp.bodySmall.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF959595),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    entity.fullName,
+                    style: context.typographiesSp.bodySmall.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF959595),
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                ),
-                Text(
-                  "${entity.treeCount}B Ağaç",
-                  style: context.typographiesSp.bodySmall.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF0B7942),
+                  SizedBox(height: 4.h),
+                  Text(
+                    entity.valueDisplay,
+                    style: context.typographiesSp.bodySmall.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF0B7942),
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),

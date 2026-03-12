@@ -9,14 +9,15 @@ class HomeMainFeatureSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w25),
       child: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.min,
           children: [
             StatsCardRow(),
-            SizedBox(height: 25.h),
+            SizedBox(height: 30.h),
             LeaderSectionHeader(),
             SizedBox(height: 15.h),
             LeaderCardRow(),
+            SizedBox(height: 25.h),
+            HomeMainBottomButton(),
           ],
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:karbon/di/di.config.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart';
 import 'package:karbon/features/home/presentation/bloc/home_bloc.dart';
+import 'package:karbon/features/home/presentation/bloc/home_event.dart';
 import 'package:karbon/features/auth/presentation/bloc/settings/settings_bloc.dart';
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart';
@@ -49,7 +50,7 @@ class GlobalBlocProviders extends StatelessWidget {
           create: (context) => getIt.get<AuthBloc>(),
         ),
         BlocProvider<HomeBloc>(
-          create: (context) => getIt.get<HomeBloc>(),
+          create: (context) => getIt.get<HomeBloc>()..add(HomeStarted()),
         ),
         BlocProvider<CarbonCalculateBloc>(
           create: (context) => getIt.get<CarbonCalculateBloc>(),
