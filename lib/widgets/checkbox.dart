@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/constants/spacing.dart';
 
 class CheckboxWidget extends StatefulWidget {
   const CheckboxWidget({super.key});
@@ -21,8 +22,9 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
           _isChecked = value ?? false;
         });
       },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.r)),
-      side: BorderSide(color: Colors.white70, width: 2.w),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppThemeSpacing.r5.r)),
+      side: BorderSide(color: Colors.white70, width: AppThemeSpacing.s2.w),
       checkColor: context.colors.primary,
       fillColor: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {

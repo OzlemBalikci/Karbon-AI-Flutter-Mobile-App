@@ -6,15 +6,14 @@ class CarbonCalculateQuestionBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
             child: SecondaryButton(
-              text: AppTranslations.get(
-                  'karbon_ayak_izi_hesapla_question_back_button_title'),
+              text: context.text.carbon_calculate_question_back_button_title,
               onPressed: () => context.read<CarbonCalculateBloc>().add(
                     const CarbonCalculateEvent.backPressed(),
                   ),
@@ -23,14 +22,14 @@ class CarbonCalculateQuestionBottom extends StatelessWidget {
               borderColor: context.colors.primary,
             ),
           ),
-          SizedBox(width: 15.w),
+          SizedBox(width: AppThemeSpacing.s15.w),
           CarbonCalculateIsCurrentQuestionAnsweredSelector(
             builder: (isAnswered) => CarbonCalculateIsLastQuestionStepSelector(
               builder: (isLastQuestion) => Expanded(
                 child: SecondaryButton(
-                  text: AppTranslations.get(isLastQuestion
-                      ? 'karbon_ayak_izi_hesapla_last_question_button_title'
-                      : 'karbon_ayak_izi_hesapla_question_next_button_title'),
+                  text: isLastQuestion
+                      ? context.text.carbon_calculate_last_question_button_title
+                      : context.text.carbon_calculate_question_next_button_title,
                   onPressed: isAnswered
                       ? () => context.read<CarbonCalculateBloc>().add(
                             isLastQuestion

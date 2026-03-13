@@ -16,16 +16,16 @@ class CarbonCalculateProgressIndicator extends StatelessWidget {
         ? (current! / max!).clamp(0.0, 1.0).toDouble()
         : 0.0;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(5.r),
+        borderRadius: BorderRadius.circular(AppThemeSpacing.r5.r),
         child: TweenAnimationBuilder<double>(
           tween: Tween<double>(begin: 0, end: target),
           duration: const Duration(milliseconds: 350),
           curve: Curves.easeOutCubic,
           builder: (context, animatedValue, _) => LinearProgressIndicator(
             value: animatedValue,
-            borderRadius: BorderRadius.circular(5.r),
+            borderRadius: BorderRadius.circular(AppThemeSpacing.r5.r),
             backgroundColor: context.colors.primary.withValues(alpha: 0.2),
             valueColor: AlwaysStoppedAnimation<Color>(context.colors.primary),
             minHeight: 10.h,

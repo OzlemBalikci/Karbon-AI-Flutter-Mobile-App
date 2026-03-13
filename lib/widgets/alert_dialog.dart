@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
-import 'package:karbon/core/translations.dart';
+import 'package:karbon/core/constants/spacing.dart';
 
 class SnackBarMessage extends StatelessWidget {
   const SnackBarMessage({super.key});
@@ -13,14 +13,13 @@ class SnackBarMessage extends StatelessWidget {
       height: 200.h,
       decoration: BoxDecoration(
         color: context.colors.textOnQuestion.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
       ),
       child: Column(
         children: [
           SnackBar(
             content: Text(
-              AppTranslations.get(
-                  'karbon_ayak_izi_hesapla_question_next_warning_title'),
+              context.text.carbon_calculate_question_next_warning_title,
               style: context.typographiesSp.bodySmall
                   .copyWith(color: context.colors.textOnQuestion),
             ),

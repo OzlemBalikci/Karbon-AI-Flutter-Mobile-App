@@ -10,17 +10,17 @@ class StatsCardRow extends StatelessWidget {
       children: [
         Expanded(
           child: StatsCards(
-            title: AppTranslations.get('home_page_stats_card_1_title'),
+            title: context.text.home_page_stats_card_1_title,
             value: "670.000",
             image: Assets.images.homeStatsCard1,
             borderColor: context.colors.primary,
             hasShadow: false,
           ),
         ),
-        SizedBox(width: 20.w),
+        SizedBox(width: AppThemeSpacing.s20.w),
         Expanded(
           child: StatsCards(
-            title: AppTranslations.get('home_page_stats_card_2_title'),
+            title: context.text.home_page_stats_card_2_title,
             value: "67.000",
             image: Assets.images.homeStatsCard2,
             borderColor: Colors.transparent,

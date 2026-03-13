@@ -6,10 +6,10 @@ class CarbonScoreBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 26.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s26.w),
       child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.r),
+            borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
             border: Border.all(color: context.colors.primary, width: 1.w),
           ),
           width: double.infinity,
@@ -28,14 +28,15 @@ class CarbonScoreBoard extends StatelessWidget {
             Positioned.fill(
               child: SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.h),
+                  padding:
+                      EdgeInsets.symmetric(vertical: AppThemeSpacing.s10.h),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        AppTranslations.get('karbon_score_board_title'),
+                        context.text.carbon_score_board_title,
                         style: context.typographiesSp.bodyLarge.copyWith(
                           color: const Color(0xFF0B7942),
                           fontWeight: FontWeight.w800,

@@ -9,15 +9,15 @@ class LeaderSectionHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          AppTranslations.get('home_page_leader_of_month_header_text'),
+          context.text.home_page_leader_of_month_header_text,
           style: context.typographiesSp.bodyLarge.copyWith(
             fontWeight: FontWeight.w700,
             color: Color(0xFF191C24),
           ),
         ),
-        SizedBox(height: 15.h),
+        SizedBox(height: AppThemeSpacing.s15.h),
         Text(
-          AppTranslations.get('lorem_ipsum'),
+          context.text.lorem_ipsum,
           maxLines: 3,
           overflow: TextOverflow.clip,
         ),

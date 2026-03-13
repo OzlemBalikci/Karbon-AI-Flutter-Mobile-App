@@ -6,20 +6,20 @@ class CarbonScoreText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            AppTranslations.get('karbon_score_text_title'),
+            context.text.carbon_score_text_title,
             style: context.typographiesSp.bodyLarge.copyWith(
               color: context.colors.carbonQuestion,
             ),
           ),
-          SizedBox(height: 25.h),
+          SizedBox(height: AppThemeSpacing.s25.h),
           Text(
-            AppTranslations.get('karbon_score_text_description'),
+            context.text.carbon_score_text_description,
             style: context.typographiesSp.bodySmall.copyWith(
               color: context.colors.hint,
             ),

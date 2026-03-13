@@ -9,14 +9,13 @@ class ForgotPasswordFormWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w25),
+          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFieldWidget(
                   obscureText: false,
-                  hintText:
-                      AppTranslations.get('forgot_password_textfield_text'),
+                  hintText: context.text.forgot_password_textfield_text,
                   controller: TextEditingController()),
             ],
           ),

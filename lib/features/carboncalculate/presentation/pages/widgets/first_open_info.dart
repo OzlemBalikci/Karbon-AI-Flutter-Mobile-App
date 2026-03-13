@@ -6,7 +6,7 @@ class CarbonCalculateFirstOpenInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: 325.w,
@@ -15,20 +15,20 @@ class CarbonCalculateFirstOpenInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Text(AppTranslations.get('karbon_ayak_izi_hesapla_title'),
+            Text(context.text.carbon_calculate_title,
                 style: context.typographiesSp.bodyLarge
                     .copyWith(color: context.colors.carbonQuestion),
                 textAlign: TextAlign.center),
-            SizedBox(height: 30.h),
+            SizedBox(height: AppThemeSpacing.s30.h),
             Text(
-              AppTranslations.get('karbon_ayak_izi_hesapla_info_text'),
+              context.text.carbon_calculate_info_text,
               style: context.typographiesSp.bodySmall
                   .copyWith(color: context.colors.textOnQuestion),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 30.h),
+            SizedBox(height: AppThemeSpacing.s30.h),
             Text(
-              AppTranslations.get('karbon_ayak_izi_hesapla_idiom'),
+              context.text.carbon_calculate_idiom,
               style: context.typographiesSp.bodySmall
                   .copyWith(color: context.colors.carbonQuestion),
               textAlign: TextAlign.center,

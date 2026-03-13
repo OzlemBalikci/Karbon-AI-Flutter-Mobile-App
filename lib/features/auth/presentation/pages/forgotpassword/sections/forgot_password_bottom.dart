@@ -10,9 +10,9 @@ class ForgotPasswordBottomSendCodeSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w24),
+          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
           child: PrimaryButton(
-              text: AppTranslations.get('forgot_password_button_title'),
+              text: context.text.forgot_password_button_title,
               onPressed: () => context.router.push(const ResetPasswordRoute()),
               backgroundColor: context.colors.secondary,
               foregroundColor: context.colors.textOnSecondary,

@@ -6,7 +6,7 @@ class CarbonCalculateQuestionContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 31.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s30.w),
       child: CarbonQuestionContentSelector(
         builder: (questionData) => questionData != null
             ? CarbonCalculateQuestion(

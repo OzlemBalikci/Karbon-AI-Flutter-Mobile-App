@@ -12,13 +12,13 @@ class ResetPasswordFeatureSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(width: 208.w, height: 80.h, child: AppLogoWidget()),
-        SizedBox(height: 25.h),
+        SizedBox(height: AppThemeSpacing.s25.h),
         ResetPasswordInfoWidget(),
-        SizedBox(height: 25.h),
+        SizedBox(height: AppThemeSpacing.s25.h),
         ScreenTitlesWidget(text: 'forgot_password_title'),
-        SizedBox(height: 30.h),
+        SizedBox(height: AppThemeSpacing.s30.h),
         PinProgressField(controller: pinController),
-        SizedBox(height: 25.h),
+        SizedBox(height: AppThemeSpacing.s25.h),
         ResetPasswordForm(),
       ],
     );

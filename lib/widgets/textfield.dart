@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/constants/spacing.dart';
 
 class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget({
@@ -19,7 +20,7 @@ class TextFieldWidget extends StatelessWidget {
   final VoidCallback? onSuffixIconTap;
 
   static final _border = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
+    borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
     borderSide: const BorderSide(color: Colors.white70, width: 1),
   );
   @override
@@ -46,14 +47,16 @@ class TextFieldWidget extends StatelessWidget {
                     ),
                   )
                 : Padding(
-                    padding: EdgeInsets.only(right: 12.w), child: suffixIcon)
+                    padding: EdgeInsets.only(right: AppThemeSpacing.s12.w),
+                    child: suffixIcon)
             : null,
         isDense: true,
         hintStyle: context.typographiesSp.bodySmall
             .copyWith(color: context.colors.textOnPrimary),
         filled: true,
         fillColor: Colors.transparent,
-        contentPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
+        contentPadding: EdgeInsets.symmetric(
+            horizontal: AppThemeSpacing.s12.w, vertical: AppThemeSpacing.s14.h),
       ),
     );
   }

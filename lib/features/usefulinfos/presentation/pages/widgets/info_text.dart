@@ -6,13 +6,13 @@ class InfoText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            AppTranslations.get('lorem_ipsum'),
+            context.text.lorem_ipsum,
             style: context.typographiesSp.bodySmall
                 .copyWith(color: context.colors.textBlack),
             textAlign: TextAlign.center,

@@ -30,7 +30,7 @@ class StatsCards extends StatelessWidget {
             width: double.infinity,
             height: 142.h,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.r),
+              borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
               boxShadow: hasShadow
                   ? [
                       BoxShadow(
@@ -50,34 +50,10 @@ class StatsCards extends StatelessWidget {
               ),
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15.r),
+              borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
               child: Padding(
-                padding: EdgeInsets.only(top: 10.h),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w),
-                      child: Text(
-                        title,
-                        style: context.typographiesSp.bodyMediumSmall.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: context.colors.carbonQuestion,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      value,
-                      style: TextStyle(
-                        fontSize: 30.sp,
-                        fontWeight: FontWeight.w700,
-                        color: context.colors.carbonQuestion,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
+                padding: EdgeInsets.only(top: AppThemeSpacing.s10.h),
+                child: _buildContent(context),
               ),
             ),
           ),
@@ -86,12 +62,13 @@ class StatsCards extends StatelessWidget {
             left: 0,
             right: 0,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 11.w),
+              padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
               child: Container(
                 width: double.infinity,
                 height: 44.h,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(AppThemeSpacing.r10.r)),
                   border: Border.all(color: Color(0xFFA9C5B8), width: 1.w),
                   color: Color(0xFFF1FBF6),
                 ),
@@ -114,11 +91,11 @@ class StatsCards extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10.h),
+      padding: EdgeInsets.only(top: AppThemeSpacing.s10.h),
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
             child: Text(
               title,
               style: context.typographiesSp.bodyMediumSmall.copyWith(
@@ -128,11 +105,11 @@ class StatsCards extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: 10.h),
+          SizedBox(height: AppThemeSpacing.s10.h),
           Text(
             value,
             style: TextStyle(
-              fontSize: 30.sp,
+              fontSize: AppThemeSpacing.s30.sp,
               fontWeight: FontWeight.w700,
               color: context.colors.carbonQuestion,
             ),

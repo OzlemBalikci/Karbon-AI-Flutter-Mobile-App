@@ -6,13 +6,12 @@ class CarbonCalculateResultBottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           PrimaryButton(
-            text: AppTranslations.get(
-                'karbon_ayak_izi_hesapla_calculate_again_button_title'),
+            text: context.text.carbon_calculate_calculate_again_button_title,
             onPressed: () => context.read<CarbonCalculateBloc>().add(
                   const CarbonCalculateEvent.calculateAgainPressed(),
                 ),
@@ -20,10 +19,9 @@ class CarbonCalculateResultBottomButton extends StatelessWidget {
             foregroundColor: context.colors.textOnSecondary,
             borderColor: context.colors.primary,
           ),
-          SizedBox(height: 25.h),
+          SizedBox(height: AppThemeSpacing.s25.h),
           PrimaryButton(
-            text: AppTranslations.get(
-                'karbon_ayak_izi_hesapla_go_to_home_button_title'),
+            text: context.text.carbon_calculate_go_to_home_button_title,
             backgroundColor: context.colors.primary,
             foregroundColor: context.colors.textOnPrimary,
             borderColor: context.colors.primary,

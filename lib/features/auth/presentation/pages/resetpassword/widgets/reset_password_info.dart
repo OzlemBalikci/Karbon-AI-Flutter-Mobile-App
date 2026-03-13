@@ -9,9 +9,9 @@ class ResetPasswordInfoWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w24),
+          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
           child: Infocard(
-            text: AppTranslations.get('reset_password_info_text'),
+            text: context.text.reset_password_info_text,
             bgcolor: context.colors.backgroundDescription,
             style: context.typographiesSp.bodyExtraSmall
                 .copyWith(color: context.colors.textOnPrimary),

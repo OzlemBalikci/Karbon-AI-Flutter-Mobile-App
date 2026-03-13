@@ -5,6 +5,7 @@ import 'package:karbon/features/auth/presentation/bloc/settings/settings_selecto
 import 'package:karbon/router/navigation.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:karbon/core/theme/themes.dart';
+import 'package:karbon/l10n/app_localizations.dart';
 
 class KarbonApp extends StatelessWidget {
   final AppRouter _router = AppRouter();
@@ -26,6 +27,8 @@ class KarbonApp extends StatelessWidget {
             theme: theme.themeData,
             routerConfig: _router.config(),
             scrollBehavior: AppScrollBehavior(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
           ),
         ),
       ),

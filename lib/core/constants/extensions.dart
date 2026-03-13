@@ -4,6 +4,7 @@ import 'package:karbon/core/constants/styles.dart';
 import 'package:karbon/core/constants/typography.dart';
 import 'package:karbon/core/theme/themes.dart';
 import 'package:karbon/core/theme/themes.light.dart';
+import 'package:karbon/l10n/app_localizations.dart';
 
 extension AppThemeExtension on BuildContext {
   AppTheme get appTheme =>
@@ -27,4 +28,8 @@ extension TextStyleExtension on TextStyle {
 
   TextStyle withWeight(FontWeight? weight) =>
       merge(TextStyle(fontWeight: weight));
+}
+
+extension ContextL10n on BuildContext {
+  AppLocalizations get text => AppLocalizations.of(this)!;
 }

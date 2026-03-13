@@ -6,16 +6,16 @@ class RegisterKvkkWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w25),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           CheckboxWidget(),
-          SizedBox(width: 10.w),
+          SizedBox(width: AppThemeSpacing.s10.w),
           Text(
-            AppTranslations.get('kvkk_info_text'),
+            context.text.kvkk_info_text,
             style: context.typographiesSp.bodySmall
                 .withColor(context.colors.textOnPrimary),
           ),

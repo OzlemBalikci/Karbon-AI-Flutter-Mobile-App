@@ -21,11 +21,11 @@ class Infocard extends StatelessWidget {
       constraints: BoxConstraints(minHeight: 57.h),
       decoration: BoxDecoration(
         color: bgcolor.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: AppThemeSpacing().w15, vertical: AppThemeSpacing().h10),
+            horizontal: AppThemeSpacing.s15.w, vertical: AppThemeSpacing.s10.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,

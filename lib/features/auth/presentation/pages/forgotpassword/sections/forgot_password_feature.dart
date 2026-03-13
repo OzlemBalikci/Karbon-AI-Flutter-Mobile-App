@@ -10,9 +10,9 @@ class ForgotPasswordFeatureSection extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(width: 208.w, height: 80.h, child: AppLogoWidget()),
-        SizedBox(height: 30.h),
+        SizedBox(height: AppThemeSpacing.s30.h),
         ForgotPasswordInfoWidget(),
-        SizedBox(height: 30.h),
+        SizedBox(height: AppThemeSpacing.s30.h),
         ForgotPasswordFormWidget(),
       ],
     );

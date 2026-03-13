@@ -14,6 +14,7 @@ import 'package:karbon/widgets/screen_titles.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/services.dart';
+import 'package:karbon/l10n/app_localizations.dart';
 
 part 'widgets/pin_progress_field.dart';
 part 'widgets/reset_password_form.dart';

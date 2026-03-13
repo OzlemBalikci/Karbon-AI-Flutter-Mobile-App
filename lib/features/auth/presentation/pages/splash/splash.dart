@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:karbon/core/translations.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_event.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/primary_button.dart';
 import 'package:karbon/di/di.dart';
+import 'package:karbon/l10n/app_localizations.dart';
 
 part 'widgets/splash_bottom_register.dart';
 part 'widgets/splash_logo.dart';
@@ -47,7 +47,7 @@ class SplashPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(height: 30.h),
+              SizedBox(height: AppThemeSpacing.s30.h),
               SplashLogoSection(),
               SplashTextWidget(),
               SplashBottomRegisterSection(),

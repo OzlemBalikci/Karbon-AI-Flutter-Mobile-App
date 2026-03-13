@@ -6,9 +6,9 @@ class LoginBottomRegisterSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w24),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
       child: PrimaryButton(
-        text: AppTranslations.get('register_button_bizizmir'),
+        text: context.text.register_button_bizizmir,
         onPressed: () => context.router.replace(const RegisterRoute()),
         backgroundColor: context.colors.primary,
         foregroundColor: context.colors.textOnPrimary,

@@ -9,22 +9,20 @@ class ResetPasswordForm extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w25),
+          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFieldWidget(
                   obscureText: false,
                   suffixIcon: Assets.icons.eyeSlashOpened.svg(),
-                  hintText:
-                      AppTranslations.get('reset_password_textfield_text'),
+                  hintText: context.text.reset_password_textfield_text,
                   controller: TextEditingController()),
-              SizedBox(height: 25.h),
+              SizedBox(height: AppThemeSpacing.s25.h),
               TextFieldWidget(
                 obscureText: false,
                 suffixIcon: Assets.icons.eyeSlashOpened.svg(),
-                hintText: AppTranslations.get(
-                    'reset_password_confirm_password_textfield_text'),
+                hintText: context.text.reset_password_confirm_password_textfield_text,
                 controller: TextEditingController(),
               ),
             ],

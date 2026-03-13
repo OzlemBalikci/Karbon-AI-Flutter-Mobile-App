@@ -1,5 +1,6 @@
-[
+
   {
+    "@@locale": "tr",
     "splash_info_text": "Geleceği Şekillendirin, \nKarbon Ayak İzinizi \nKüçültün!",
     "login_button_title_bizizmir": "Bizizmir ile Giriş Yap",
     "register_button_bizizmir": "Bizizmir ile Kayıt Ol",
@@ -54,5 +55,5 @@
     "carbon_score_text_description": "Gezegen için uyguladığın bireysel adımlarınla sürdürülebilir bir çevre ve gelecek kuşaklar için fark yaratıyorsun. Karbon ayak izi farkındalığı ile ilgili uygulamalarını etrafınla paylaşabilir ve bu alışkanlıkların yayılmasına katkıda bulunabilirsin",
     "useful_infos_header_text": "Faydalı Bilgiler",
     "lorem_ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."
+    
   }
-]

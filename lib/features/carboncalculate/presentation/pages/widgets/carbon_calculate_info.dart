@@ -10,7 +10,7 @@ class CarbonCalculateInfo extends StatelessWidget {
         if (!isAnswered) return const SizedBox.shrink();
         return CarbonInfoTextSelector(
           builder: (infoText) => Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.w),
+            padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
             child: Infocard(
               text: infoText,
               style: context.typographiesSp.bodyExtraSmall

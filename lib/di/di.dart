@@ -19,7 +19,7 @@ final getIt = GetIt.instance;
 @InjectableInit()
 FutureOr<void> configureDependencies() async {
   await getIt.reset();
-  getIt.init();
+  await getIt.init();
 }
 
 @module

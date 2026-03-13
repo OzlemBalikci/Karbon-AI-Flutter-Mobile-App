@@ -14,7 +14,7 @@ class InfosButtons extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: infos.length,
-      separatorBuilder: (_, __) => SizedBox(height: 10.h),
+      separatorBuilder: (_, __) => SizedBox(height: AppThemeSpacing.s10.h),
       itemBuilder: (context, index) => _InfoButtonItem(info: infos[index]),
     );
   }
@@ -35,14 +35,16 @@ class _InfoButtonItem extends StatelessWidget {
           useSafeArea: true,
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+            borderRadius: BorderRadius.vertical(
+                top: Radius.circular(AppThemeSpacing.r15.r)),
           ),
           builder: (context) => Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w),
+            padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s15.w),
             child: Container(
               decoration: BoxDecoration(
                 color: context.colors.secondary,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
+                borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(AppThemeSpacing.r15.r)),
               ),
               child: UsefulInfoContentSheet(info: info),
             ),

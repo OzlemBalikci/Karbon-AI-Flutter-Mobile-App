@@ -7,9 +7,9 @@ class SeeOtherLeaderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DottedBorder(
       options: RoundedRectDottedBorderOptions(
-        radius: Radius.circular(15.r),
+        radius: Radius.circular(AppThemeSpacing.r15.r),
         color: context.colors.primary,
-        strokeWidth: 2.w,
+        strokeWidth: AppThemeSpacing.s2.w,
         dashPattern: const [6, 6],
       ),
       child: GestureDetector(
@@ -21,11 +21,11 @@ class SeeOtherLeaderCard extends StatelessWidget {
             children: [
               Image.asset(Assets.images.homeSeeOther.path,
                   width: 36.w, height: 36.h, fit: BoxFit.cover),
-              SizedBox(height: 4.h),
+              SizedBox(height: AppThemeSpacing.s4.h),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 4.w),
+                padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s4.w),
                 child: Text(
-                  AppTranslations.get('home_page_see_others_text'),
+                  context.text.home_page_see_others_text,
                   style: context.typographiesSp.bodyMediumSmall.copyWith(
                     fontWeight: FontWeight.w600,
                     color: context.colors.primary,

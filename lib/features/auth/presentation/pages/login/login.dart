@@ -17,6 +17,7 @@ import 'package:karbon/features/auth/presentation/bloc/login/login_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_selector.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_event.dart';
+import 'package:karbon/l10n/app_localizations.dart';
 
 part 'widgets/login_forgot_password.dart';
 part 'widgets/login_logo.dart';

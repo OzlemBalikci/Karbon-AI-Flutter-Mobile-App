@@ -17,7 +17,7 @@ class LeaderCardWidget extends StatelessWidget {
       height: 119.h,
       decoration: BoxDecoration(
         color: context.colors.secondary,
-        borderRadius: BorderRadius.circular(10.r),
+        borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
         boxShadow: [
           BoxShadow(
             color: Color(0x26000000).withValues(alpha: 0.15),
@@ -28,7 +28,7 @@ class LeaderCardWidget extends StatelessWidget {
         ],
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10.r),
+        borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
         child: Column(
           children: [
             Column(
@@ -62,7 +62,7 @@ class LeaderCardWidget extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 4.h),
+                  SizedBox(height: AppThemeSpacing.s4.h),
                   Text(
                     entity.valueDisplay,
                     style: context.typographiesSp.bodySmall.copyWith(

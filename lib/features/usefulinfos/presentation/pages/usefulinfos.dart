@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/di/di.dart';
+import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/primary_button.dart';
-import 'package:karbon/core/translations.dart';
+import 'package:karbon/l10n/app_localizations.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_state.dart';
 import 'package:karbon/widgets/app_hero.dart';
@@ -36,7 +37,7 @@ class _UsefulinfoPageState extends State<UsefulinfoPage> {
         children: [
           Positioned(
             top: MediaQuery.of(context).padding.top,
-            left: 25.w,
+            left: AppThemeSpacing.s25.w,
             child: BackIconButton(),
           ),
           SafeArea(

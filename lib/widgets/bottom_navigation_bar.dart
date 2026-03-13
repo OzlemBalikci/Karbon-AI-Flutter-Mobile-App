@@ -3,6 +3,7 @@ import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:inner_shadow_widget/inner_shadow_widget.dart';
+import 'package:karbon/core/constants/spacing.dart';
 
 class AppBottomNavigationBar extends StatelessWidget {
   const AppBottomNavigationBar({
@@ -24,7 +25,7 @@ class AppBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: InnerShadow(
         blur: 5,
         color: const Color(0x40000000), // %25 siyah
@@ -32,10 +33,11 @@ class AppBottomNavigationBar extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: 55.h,
-          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
+          padding: EdgeInsets.symmetric(
+              horizontal: AppThemeSpacing.s8.w, vertical: AppThemeSpacing.s6.h),
           decoration: BoxDecoration(
             color: context.colors.background,
-            borderRadius: BorderRadius.circular(15.r),
+            borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,7 +58,8 @@ class AppBottomNavigationBar extends StatelessWidget {
                     decoration: selected
                         ? BoxDecoration(
                             color: const Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.circular(12.r),
+                            borderRadius:
+                                BorderRadius.circular(AppThemeSpacing.r12.r),
                             boxShadow: const [
                               BoxShadow(
                                 color: Color(0x26000000),
@@ -69,8 +72,8 @@ class AppBottomNavigationBar extends StatelessWidget {
                         : null,
                     child: Center(
                       child: item.icon.svg(
-                        width: 24.w,
-                        height: 24.w,
+                        width: AppThemeSpacing.s24.w,
+                        height: AppThemeSpacing.s24.h,
                         colorFilter: selected
                             ? ColorFilter.mode(
                                 context.colors.primary, BlendMode.srcIn)

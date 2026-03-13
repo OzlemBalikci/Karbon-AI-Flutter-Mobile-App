@@ -20,13 +20,13 @@ class PinProgressField extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
         border: Border.all(color: Colors.white70, width: 1),
       ),
     );
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w25),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: SizedBox(
         width: double.infinity,
         child: Pinput(

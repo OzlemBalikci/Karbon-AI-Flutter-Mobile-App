@@ -6,11 +6,10 @@ class CarbonCalculateFirstQuestionBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
       child: CarbonCalculateIsCurrentQuestionAnsweredSelector(
         builder: (isAnswered) => PrimaryButton(
-          text: AppTranslations.get(
-              'karbon_ayak_izi_hesapla_first_question_button_title'),
+          text: context.text.carbon_calculate_first_question_button_title,
           onPressed: isAnswered
               ? () => context.read<CarbonCalculateBloc>().add(
                     const CarbonCalculateEvent.nextPressed(),

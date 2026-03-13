@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/constants/spacing.dart';
 
 class SecondaryButton extends StatelessWidget {
   const SecondaryButton({
@@ -23,7 +24,7 @@ class SecondaryButton extends StatelessWidget {
       width: double.infinity,
       height: 56.h,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
       ),
       child: OutlinedButton(
         onPressed: onPressed,

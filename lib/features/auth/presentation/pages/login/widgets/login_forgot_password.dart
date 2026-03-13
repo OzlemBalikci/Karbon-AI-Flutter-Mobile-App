@@ -12,7 +12,7 @@ class LoginForgotPasswordWidget extends StatelessWidget {
         GestureDetector(
           onTap: () => context.router.push(const ForgotPasswordRoute()),
           child: Text(
-            AppTranslations.get('login_forgot_password_text'),
+            context.text.login_forgot_password_text,
             style: context.typographiesSp.bodySmall.copyWith(
               color: context.colors.textOnPrimary,
               decoration: TextDecoration.underline,

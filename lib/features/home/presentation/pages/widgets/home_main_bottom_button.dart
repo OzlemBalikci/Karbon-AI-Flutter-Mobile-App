@@ -13,7 +13,7 @@ class HomeMainBottomButton extends StatelessWidget {
             width: double.infinity,
             height: 61.h,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
             ),
             child: OutlinedButton(
               onPressed: () => context.router.push(const UsefulinfoRoute()),
@@ -22,19 +22,20 @@ class HomeMainBottomButton extends StatelessWidget {
                 foregroundColor: context.colors.textOnSecondary,
                 side: BorderSide(color: context.colors.primary, width: 2),
               ),
-              child: Text(AppTranslations.get('faydalı_bilgiler_button_title'),
+              child: Text(
+                  context.text.useful_infos_button_title,
                   textAlign: TextAlign.center,
                   style: context.typographiesSp.bodyMedium),
             ),
           ),
         ),
-        SizedBox(width: 20.w),
+        SizedBox(width: AppThemeSpacing.s20.w),
         Expanded(
           child: Container(
             width: double.infinity,
             height: 61.h,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
             ),
             child: OutlinedButton(
               onPressed: () =>
@@ -45,7 +46,7 @@ class HomeMainBottomButton extends StatelessWidget {
                 side: BorderSide(color: context.colors.primary, width: 2),
               ),
               child: Text(
-                  AppTranslations.get('karbon_ayak_izi_hesapla_button_title'),
+                  context.text.carbon_calculate_button_title,
                   textAlign: TextAlign.center,
                   style: context.typographiesSp.bodyMedium),
             ),

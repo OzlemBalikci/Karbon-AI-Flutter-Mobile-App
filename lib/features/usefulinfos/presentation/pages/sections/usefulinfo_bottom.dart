@@ -6,7 +6,7 @@ class UsefulInfoBottomSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: BlocProvider(
         create: (context) => getIt.get<UsefulinfoBloc>()
           ..add(const UsefulinfoEvent.loadRequested()),

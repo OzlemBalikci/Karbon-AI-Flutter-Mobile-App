@@ -21,18 +21,18 @@ class RegisterBottomSection extends StatelessWidget {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 56.h),
+            SizedBox(height: AppThemeSpacing.s56.h),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w24),
+              padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
               child: PrimaryButton(
-                text: AppTranslations.get('register_button_title'),
+                text: context.text.register_button_title,
                 onPressed: () => context.router.replace(const HomeRoute()),
                 backgroundColor: context.colors.primary,
                 foregroundColor: context.colors.textOnPrimary,
                 borderColor: Colors.white70,
               ),
             ),
-            SizedBox(height: 20.h),
+            SizedBox(height: AppThemeSpacing.s20.h),
           ],
         ),
       ],

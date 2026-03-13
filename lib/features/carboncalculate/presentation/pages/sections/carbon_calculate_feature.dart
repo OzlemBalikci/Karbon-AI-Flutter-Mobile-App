@@ -12,11 +12,11 @@ class CarbonCalculateFeatureSection extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AppHeaderTitle(
-                        title: AppTranslations.get(
-                            'karbon_ayak_izi_hesapla_header_text')),
-                    SizedBox(height: 30.h),
+                      title: context.text.carbon_calculate_header_text,
+                    ),
+                    SizedBox(height: AppThemeSpacing.s30.h),
                     CarbonCalculateHero(),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: AppThemeSpacing.s30.h),
                     CarbonCalculateFirstOpenInfo(),
                   ],
                 ),
@@ -29,9 +29,9 @@ class CarbonCalculateFeatureSection extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         AppHeaderTitle(
-                            title: AppTranslations.get(
-                                'karbon_ayak_izi_hesapla_header_text')),
-                        SizedBox(height: 40.h),
+                          title: context.text.carbon_calculate_header_text,
+                        ),
+                        SizedBox(height: AppThemeSpacing.s40.h),
                         CarbonProgressSelector(
                           builder: (progress) =>
                               CarbonCalculateProgressIndicator(
@@ -39,7 +39,7 @@ class CarbonCalculateFeatureSection extends StatelessWidget {
                             max: progress.max,
                           ),
                         ),
-                        SizedBox(height: 22.h),
+                        SizedBox(height: AppThemeSpacing.s22.h),
                         CarbonCalculateQuestionContent(
                           key: ValueKey('q-$questionIndex'),
                         ),
@@ -53,11 +53,11 @@ class CarbonCalculateFeatureSection extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     AppHeaderTitle(
-                        title: AppTranslations.get(
-                            'karbon_ayak_izi_hesapla_result_header_text')),
-                    SizedBox(height: 40.h),
+                      title: context.text.carbon_calculate_result_header_text,
+                    ),
+                    SizedBox(height: AppThemeSpacing.s40.h),
                     CarbonScoreBoard(),
-                    SizedBox(height: 30.h),
+                    SizedBox(height: AppThemeSpacing.s30.h),
                     CarbonScoreText(),
                   ],
                 ),

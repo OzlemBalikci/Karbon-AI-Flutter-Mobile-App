@@ -10,15 +10,16 @@ class ForgotPasswordInfoWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w25),
+          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
           child: Infocard(
-              text: AppTranslations.get('forgot_password_info_text'),
+              text: context.text.forgot_password_info_text,
               bgcolor: context.colors.backgroundDescription,
               style: context.typographiesSp.bodyExtraSmall
                   .copyWith(color: context.colors.textOnPrimary)),
         ),
-        SizedBox(height: 30.h),
-        ScreenTitlesWidget(text: 'forgot_password_title'),
+        SizedBox(height: AppThemeSpacing.s30.h),
+        ScreenTitlesWidget(
+            text: context.text.forgot_password_title),
       ],
     );
   }

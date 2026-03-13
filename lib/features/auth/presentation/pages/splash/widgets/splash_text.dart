@@ -12,7 +12,7 @@ class SplashTextWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            AppTranslations.get('splash_info_text'),
+            context.text.splash_info_text,
             style: context.typographiesSp.headingSmall.copyWith(
                 color: context.colors.text,
                 height: 1.5,

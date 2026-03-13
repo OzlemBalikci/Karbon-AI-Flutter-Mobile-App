@@ -6,9 +6,9 @@ class ResetPasswordBottomSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w24),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
       child: PrimaryButton(
-        text: AppTranslations.get('reset_password_button_title'),
+        text: context.text.reset_password_button_title,
         onPressed: () => context.router.push(const LoginRoute()),
         backgroundColor: context.colors.secondary,
         foregroundColor: context.colors.textOnSecondary,

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:karbon/core/constants/extensions.dart';
-import 'package:karbon/core/translations.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 class LoginController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -21,7 +19,8 @@ class LoginController {
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text(AppTranslations.get('login_error_empty_fields'),
+            content: Text(
+                context.text.login_error_empty_fields,
                 style: context.typographiesSp.bodyMediumSmall
                     .copyWith(color: context.colors.textBlack)),
             backgroundColor: context.colors.textOnQuestion),

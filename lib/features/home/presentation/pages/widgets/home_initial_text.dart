@@ -6,12 +6,12 @@ class HomeFirstOpenText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w25),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: Column(
         children: [
           Text(
               textAlign: TextAlign.center,
-              AppTranslations.get('lorem_ipsum'),
+              context.text.lorem_ipsum,
               style: context.typographies.bodySmall
                   .copyWith(color: context.colors.textBlack)),
         ],

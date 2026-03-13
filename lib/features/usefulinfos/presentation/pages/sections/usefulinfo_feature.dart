@@ -10,7 +10,7 @@ class UsefulInfoFeatureSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         AppHeaderTitle(
-            title: AppTranslations.get('faydalı_bilgiler_header_text')),
+            title: context.text.useful_infos_header_text),
         AppHero(),
         InfoText(),
       ],

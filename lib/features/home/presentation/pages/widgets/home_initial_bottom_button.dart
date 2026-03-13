@@ -6,19 +6,19 @@ class HomeInitialBottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing().w24),
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: Column(
         children: [
           PrimaryButton(
-            text: AppTranslations.get('faydalı_bilgiler_button_title'),
+            text: context.text.useful_infos_button_title,
             onPressed: () => context.router.push(const UsefulinfoRoute()),
             backgroundColor: context.colors.secondary,
             foregroundColor: context.colors.textOnSecondary,
             borderColor: context.colors.primary,
           ),
-          SizedBox(height: 30.h),
+          SizedBox(height: AppThemeSpacing.s30.h),
           PrimaryButton(
-            text: AppTranslations.get('karbon_ayak_izi_hesapla_button_title'),
+            text: context.text.carbon_calculate_button_title,
             onPressed: () => context.router.push(const CarbonCalculateRoute()),
             backgroundColor: context.colors.primary,
             foregroundColor: context.colors.textOnPrimary,

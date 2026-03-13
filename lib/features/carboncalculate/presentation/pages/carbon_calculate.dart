@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/widgets/infocard.dart';
@@ -17,6 +18,7 @@ import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calcula
 import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/l10n/app_localizations.dart';
 
 part 'widgets/info_bottom_button.dart';
 part 'widgets/first_question_bottom_button.dart';
@@ -63,14 +65,14 @@ class _CarbonCalculatePageState extends State<CarbonCalculatePage> {
         children: [
           Positioned(
             top: MediaQuery.of(context).padding.top,
-            left: 25.w,
+            left: AppThemeSpacing.s25.w,
             child: BackIconButton(),
           ),
           SafeArea(
             child: Column(
               children: [
                 Expanded(child: CarbonCalculateFeatureSection()),
-                SizedBox(height: 30.h),
+                SizedBox(height: AppThemeSpacing.s30.h),
                 CarbonCalculateBottomSection(),
               ],
             ),

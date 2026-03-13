@@ -1,10 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/constants/spacing.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/utils/size.dart';
 
 class AppAppBar extends AppBar {
-  static const EdgeInsets padding = EdgeInsets.symmetric(horizontal: 28);
+  static EdgeInsets padding =
+      EdgeInsets.symmetric(horizontal: AppThemeSpacing.s28.w);
 
   AppAppBar({
     super.key,

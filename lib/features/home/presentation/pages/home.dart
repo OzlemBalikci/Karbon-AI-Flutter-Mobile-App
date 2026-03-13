@@ -17,6 +17,7 @@ import 'package:karbon/widgets/app_hero.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'dart:ui';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:karbon/l10n/app_localizations.dart';
 
 part 'widgets/home_initial_bottom_button.dart';
 part 'widgets/home_initial_text.dart';
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Positioned(
             top: MediaQuery.of(context).padding.top,
-            left: 25.w,
+            left: AppThemeSpacing.s25.w,
             child: BackIconButton(),
           ),
           Column(
