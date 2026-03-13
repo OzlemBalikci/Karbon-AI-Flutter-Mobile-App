@@ -115,7 +115,7 @@ abstract class AppLocalizations {
   /// No description provided for @login_info_text.
   ///
   /// In tr, this message translates to:
-  /// **'Giriş yapmak için Bizizmir kullanıcı bilgilerinizi doldurunuz.'**
+  /// **'Giriş yapmak için Bizizmir kullanıcı bilgilerinizi \ndoldurunuz.'**
   String get login_info_text;
 
   /// No description provided for @login_title.
@@ -151,7 +151,7 @@ abstract class AppLocalizations {
   /// No description provided for @forgot_password_info_text.
   ///
   /// In tr, this message translates to:
-  /// **'Şifrenizi yenilemek için kayıtlı telefon numaranızı girip “Kod Gönder” butpnuna basınız.'**
+  /// **'Şifrenizi yenilemek için kayıtlı telefon numaranızı \ngirip “Kod Gönder” butpnuna basınız.'**
   String get forgot_password_info_text;
 
   /// No description provided for @forgot_password_title.

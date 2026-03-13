@@ -21,10 +21,12 @@ class LoginFormWidget extends StatelessWidget {
               LoginObscurePasswordSelector(
                 builder: (obscure, icon) => TextFieldWidget(
                     obscureText: obscure,
-                    suffixIcon: icon,
-                    onSuffixIconTap: () => context
-                        .read<LoginBloc>()
-                        .add(LoginEvent.togglePasswordVisibility()),
+                    suffixIcon: GestureDetector(
+                      onTap: () => context
+                          .read<LoginBloc>()
+                          .add(LoginEvent.togglePasswordVisibility()),
+                      child: icon,
+                    ),
                     hintText: context.text.login_password_textfield_text,
                     controller: controller.passwordController),
               ),

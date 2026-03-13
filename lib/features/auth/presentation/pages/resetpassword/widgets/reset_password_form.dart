@@ -22,7 +22,8 @@ class ResetPasswordForm extends StatelessWidget {
               TextFieldWidget(
                 obscureText: false,
                 suffixIcon: Assets.icons.eyeSlashOpened.svg(),
-                hintText: context.text.reset_password_confirm_password_textfield_text,
+                hintText:
+                    context.text.reset_password_confirm_password_textfield_text,
                 controller: TextEditingController(),
               ),
             ],

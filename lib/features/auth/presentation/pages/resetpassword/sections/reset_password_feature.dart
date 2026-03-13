@@ -15,7 +15,7 @@ class ResetPasswordFeatureSection extends StatelessWidget {
         SizedBox(height: AppThemeSpacing.s25.h),
         ResetPasswordInfoWidget(),
         SizedBox(height: AppThemeSpacing.s25.h),
-        ScreenTitlesWidget(text: 'forgot_password_title'),
+        ScreenTitlesWidget(text: context.text.forgot_password_title),
         SizedBox(height: AppThemeSpacing.s30.h),
         PinProgressField(controller: pinController),
         SizedBox(height: AppThemeSpacing.s25.h),

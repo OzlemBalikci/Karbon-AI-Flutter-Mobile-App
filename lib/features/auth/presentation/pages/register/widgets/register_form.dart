@@ -45,13 +45,13 @@ class RegisterFormWidget extends StatelessWidget {
               SizedBox(height: AppThemeSpacing.s20.h),
               TextFieldWidget(
                   obscureText: false,
-                  hintText: context.text.register_confirm_password_textfield_text,
+                  hintText:
+                      context.text.register_confirm_password_textfield_text,
                   controller: TextEditingController()),
               SizedBox(height: AppThemeSpacing.s20.h),
               TextFieldWidget(
                 obscureText: false,
-                hintText:
-                    context.text.register_phone_textfield_text,
+                hintText: context.text.register_phone_textfield_text,
                 controller: TextEditingController(),
               ),
             ],

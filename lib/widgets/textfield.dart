@@ -10,14 +10,12 @@ class TextFieldWidget extends StatelessWidget {
     required this.controller,
     this.obscureText = false,
     this.suffixIcon,
-    this.onSuffixIconTap,
   });
 
   final String hintText;
   final TextEditingController controller;
   final bool obscureText;
   final Widget? suffixIcon;
-  final VoidCallback? onSuffixIconTap;
 
   static final _border = OutlineInputBorder(
     borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
@@ -36,19 +34,13 @@ class TextFieldWidget extends StatelessWidget {
         focusedBorder: _border,
         hintText: hintText,
         suffixIcon: suffixIcon != null
-            ? onSuffixIconTap != null
-                ? IconButton(
-                    onPressed: onSuffixIconTap,
-                    icon: suffixIcon!,
-                    style: IconButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      minimumSize: Size.zero,
-                    ),
-                  )
-                : Padding(
-                    padding: EdgeInsets.only(right: AppThemeSpacing.s12.w),
-                    child: suffixIcon)
+            ? Padding(
+                padding: EdgeInsets.only(right: AppThemeSpacing.s12.w),
+                child: suffixIcon!,
+              )
+            : null,
+        suffixIconConstraints: suffixIcon != null
+            ? BoxConstraints(maxWidth: 32.w, maxHeight: 32.h)
             : null,
         isDense: true,
         hintStyle: context.typographiesSp.bodySmall

@@ -20,7 +20,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get login_info_text =>
-      'Giriş yapmak için Bizizmir kullanıcı bilgilerinizi doldurunuz.';
+      'Giriş yapmak için Bizizmir kullanıcı bilgilerinizi \ndoldurunuz.';
 
   @override
   String get login_title => 'Geleceği Şekillendirmeye \nHoş Geldin!';
@@ -41,7 +41,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get forgot_password_info_text =>
-      'Şifrenizi yenilemek için kayıtlı telefon numaranızı girip “Kod Gönder” butpnuna basınız.';
+      'Şifrenizi yenilemek için kayıtlı telefon numaranızı \ngirip “Kod Gönder” butpnuna basınız.';
 
   @override
   String get forgot_password_title =>

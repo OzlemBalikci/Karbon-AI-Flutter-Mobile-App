@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/core/translations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ScreenTitlesWidget extends StatelessWidget {
@@ -28,7 +27,7 @@ class ScreenTitlesWidget extends StatelessWidget {
                   text: '${text.split('\n').first}\n',
                 ),
                 TextSpan(
-                  text: AppTranslations.get(text).split('\n').length > 1
+                  text: text.split('\n').length > 1
                       ? text.split('\n').sublist(1).join('\n')
                       : '',
                   style: context.typographiesSp.bodyExtraLarge.copyWith(

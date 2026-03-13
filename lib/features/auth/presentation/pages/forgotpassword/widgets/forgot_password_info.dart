@@ -18,8 +18,7 @@ class ForgotPasswordInfoWidget extends StatelessWidget {
                   .copyWith(color: context.colors.textOnPrimary)),
         ),
         SizedBox(height: AppThemeSpacing.s30.h),
-        ScreenTitlesWidget(
-            text: context.text.forgot_password_title),
+        ScreenTitlesWidget(text: context.text.forgot_password_title),
       ],
     );
   }
