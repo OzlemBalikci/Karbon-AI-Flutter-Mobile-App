@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:karbon/core/translations.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
@@ -14,7 +13,6 @@ import 'package:karbon/widgets/screen_titles.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/services.dart';
-import 'package:karbon/l10n/app_localizations.dart';
 
 part 'widgets/pin_progress_field.dart';
 part 'widgets/reset_password_form.dart';
