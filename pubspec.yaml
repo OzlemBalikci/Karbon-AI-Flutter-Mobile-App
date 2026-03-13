@@ -119,11 +119,14 @@ flutter:
         - asset: assets/fonts/izmir/Izmir-Medium.eot
           weight: 500
 
+        - asset: assets/fonts/izmir/Izmir-Extrabold.eot
+          weight: 800
+
+        - asset: assets/fonts/izmir/Izmir-Semibold.eot  
+          weight: 600
+
         - asset: assets/fonts/izmir/Izmir-Bold.eot
           weight: 700
-
-        - asset: assets/fonts/izmir/Izmir-Black.eot
-          weight: 900
 
 flutter_gen:
   output: lib/core/constants/

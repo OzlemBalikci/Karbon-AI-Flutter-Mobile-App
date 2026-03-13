@@ -16,7 +16,7 @@ class AppHeaderTitle extends StatelessWidget {
         SizedBox(height: AppThemeSpacing.s10.h),
         Text(
           title,
-          style: context.typographiesSp.bodyExtraLarge
+          style: context.typographiesSp.headingSmall
               .copyWith(color: context.colors.textBlack),
           textAlign: TextAlign.center,
         ),

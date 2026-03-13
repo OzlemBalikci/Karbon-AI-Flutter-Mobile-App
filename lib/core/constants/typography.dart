@@ -17,12 +17,12 @@ class AppThemeTypography {
 
   const AppThemeTypography({
     this.headingLarge = const TextStyle(
-      fontSize: 32,
-      fontWeight: FontWeight.w900,
+      fontSize: 36,
+      fontWeight: FontWeight.w800,
     ),
     this.headingMedium = const TextStyle(
       fontSize: 28,
-      fontWeight: FontWeight.w900,
+      fontWeight: FontWeight.w700,
     ),
     this.headingSmall = const TextStyle(
       fontSize: 24,
@@ -34,7 +34,7 @@ class AppThemeTypography {
     ),
     this.bodyLarge = const TextStyle(
       fontSize: 18,
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.w700,
     ),
     this.bodyMedium = const TextStyle(
       fontSize: 17,
@@ -58,7 +58,7 @@ class AppThemeTypography {
     ),
     this.captionMedium = const TextStyle(
       fontSize: 12,
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w400,
     ),
     this.captionSmall = const TextStyle(
       fontSize: 10,
