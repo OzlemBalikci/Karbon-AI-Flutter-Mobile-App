@@ -10,9 +10,7 @@ import 'package:karbon/widgets/infocard.dart';
 import 'package:karbon/widgets/app_logo.dart';
 import 'package:karbon/widgets/screen_titles.dart';
 import 'package:karbon/router/navigation.dart';
-import 'package:karbon/core/translations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:karbon/l10n/app_localizations.dart';
 
 part 'sections/forgot_password_bottom.dart';
 part 'sections/forgot_password_feature.dart';

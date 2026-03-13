@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:karbon/core/translations.dart';
 import 'package:karbon/features/home/presentation/bloc/home_state.dart';
-import 'package:karbon/features/home/presentation/bloc/home_bloc.dart';
 import 'package:karbon/features/home/presentation/bloc/home_selector.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
@@ -17,7 +15,6 @@ import 'package:karbon/widgets/app_hero.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'dart:ui';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:karbon/l10n/app_localizations.dart';
 
 part 'widgets/home_initial_bottom_button.dart';
 part 'widgets/home_initial_text.dart';

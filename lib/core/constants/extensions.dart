@@ -31,5 +31,5 @@ extension TextStyleExtension on TextStyle {
 }
 
 extension ContextL10n on BuildContext {
-  AppLocalizations get text => AppLocalizations.of(this)!;
+  AppLocalizations get text => AppLocalizations.of(this);
 }

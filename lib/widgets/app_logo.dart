@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:karbon/core/constants/assets.gen.dart';
-import 'package:karbon/core/constants/spacing.dart';
 
 class AppLogoWidget extends StatelessWidget {
   const AppLogoWidget({super.key});
