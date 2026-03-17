@@ -59,6 +59,22 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [LeaderofmonthPage]
+class LeaderofmonthRoute extends PageRouteInfo<void> {
+  const LeaderofmonthRoute({List<PageRouteInfo>? children})
+    : super(LeaderofmonthRoute.name, initialChildren: children);
+
+  static const String name = 'LeaderofmonthRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const LeaderofmonthPage();
+    },
+  );
+}
+
+/// generated route for
 /// [LoginPage]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})

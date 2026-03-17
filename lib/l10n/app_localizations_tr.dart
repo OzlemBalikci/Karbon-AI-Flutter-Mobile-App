@@ -182,6 +182,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get useful_infos_header_text => 'Faydalı Bilgiler';
 
   @override
+  String get leaderofmonth_header_text => 'Bu Hedefin Liderleri';
+
+  @override
+  String get leaderofmonth_bottom_footer_text =>
+      'Kazananları tebrik eder, sıralamaya giren her arkadaşımızın çabası için teşekkür ederiz. Unutmayın bu sırada yer alacak olan yarın sizsiniz!';
+
+  @override
   String get lorem_ipsum =>
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.';
 }

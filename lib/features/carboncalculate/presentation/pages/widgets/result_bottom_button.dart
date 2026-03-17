@@ -10,7 +10,7 @@ class CarbonCalculateResultBottomButton extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          PrimaryButton(
+          AppButton(
             text: context.text.carbon_calculate_calculate_again_button_title,
             onPressed: () => context.read<CarbonCalculateBloc>().add(
                   const CarbonCalculateEvent.calculateAgainPressed(),
@@ -20,7 +20,7 @@ class CarbonCalculateResultBottomButton extends StatelessWidget {
             borderColor: context.colors.primary,
           ),
           SizedBox(height: AppThemeSpacing.s25.h),
-          PrimaryButton(
+          AppButton(
             text: context.text.carbon_calculate_go_to_home_button_title,
             backgroundColor: context.colors.primary,
             foregroundColor: context.colors.textOnPrimary,

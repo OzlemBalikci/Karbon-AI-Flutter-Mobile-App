@@ -15,7 +15,9 @@ class HomeMainFeatureSection extends StatelessWidget {
             SizedBox(height: AppThemeSpacing.s30.h),
             LeaderSectionHeader(),
             SizedBox(height: AppThemeSpacing.s15.h),
-            LeaderCardRow(),
+            LeaderCardRow(
+                variant: LeaderCardVariant.compact,
+                seeOtherCard: SeeOtherLeaderCard()),
             SizedBox(height: AppThemeSpacing.s25.h),
             HomeMainBottomButton(),
           ],

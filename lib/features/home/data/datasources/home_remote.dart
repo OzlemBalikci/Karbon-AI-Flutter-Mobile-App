@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:dio/dio.dart';
 import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
-import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
 abstract class HomeRemote {
   // GET /api/v1/user-results/monthly-leaderboard
@@ -16,6 +15,7 @@ abstract class HomeRemote {
 class HomeRemoteImpl implements HomeRemote {
   HomeRemoteImpl(this._dio);
   final Dio _dio;
+
   @override
   Future<HomeDashboardEntity> getMonthlyLeaderboard({
     required int month,
@@ -31,20 +31,6 @@ class HomeRemoteImpl implements HomeRemote {
     return HomeDashboardEntity(
       yearlyTreeCount: 670000,
       monthlyTreeCount: 67000,
-      leaders: [
-        LeaderboardEntity(
-          rank: 1,
-          fullName: 'Ahmet Yılmaz',
-          treeCount: 100000000,
-          isCurrentUser: false,
-        ),
-        LeaderboardEntity(
-          rank: 2,
-          fullName: 'Ayşe Kaya',
-          treeCount: 95000000,
-          isCurrentUser: false,
-        ),
-      ],
     );
   }
 }

@@ -8,7 +8,7 @@ class CarbonCalculateFirstQuestionBottom extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
       child: CarbonCalculateIsCurrentQuestionAnsweredSelector(
-        builder: (isAnswered) => PrimaryButton(
+        builder: (isAnswered) => AppButton(
           text: context.text.carbon_calculate_first_question_button_title,
           onPressed: isAnswered
               ? () => context.read<CarbonCalculateBloc>().add(

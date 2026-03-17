@@ -13,7 +13,7 @@ class SeeOtherLeaderCard extends StatelessWidget {
         dashPattern: const [6, 6],
       ),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () => context.router.push(const LeaderofmonthRoute()),
         child: Container(
           height: 117.h,
           child: Column(

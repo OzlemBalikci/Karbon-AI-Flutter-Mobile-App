@@ -7,6 +7,7 @@ import 'package:karbon/features/auth/presentation/pages/resetpassword/reset_pass
 import 'package:karbon/features/home/presentation/pages/home.dart';
 import 'package:karbon/features/carboncalculate/presentation/pages/carbon_calculate.dart';
 import 'package:karbon/features/usefulinfos/presentation/pages/usefulinfos.dart';
+import 'package:karbon/features/leaderofmont/presentation/pages/leaderofmonth.dart';
 
 part 'navigation.gr.dart';
 
@@ -22,6 +23,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: '/home', page: HomeRoute.page),
         AutoRoute(path: '/carbon-calculate', page: CarbonCalculateRoute.page),
         AutoRoute(path: '/useful-info', page: UsefulinfoRoute.page),
+        AutoRoute(path: '/leaderofmonth', page: LeaderofmonthRoute.page),
       ];
 
   @override

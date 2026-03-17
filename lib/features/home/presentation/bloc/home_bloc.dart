@@ -36,8 +36,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           viewType: isNewMonth ? HomeViewType.initial : HomeViewType.main,
           yearlyTreeCount: dashboard.yearlyTreeCount,
           monthlyTreeCount: dashboard.monthlyTreeCount,
-          leaders: dashboard.leaders,
-          currentUserRank: dashboard.currentUserRank,
         )),
       );
     } on Exception catch (e) {

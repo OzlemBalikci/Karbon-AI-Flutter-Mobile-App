@@ -7,7 +7,7 @@ class CarbonCalculateInfoBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
-      child: PrimaryButton(
+      child: AppButton(
         text: context.text.carbon_calculate_first_step_button_title,
         onPressed: () => context.read<CarbonCalculateBloc>().add(
               const CarbonCalculateEvent.nextPressed(),

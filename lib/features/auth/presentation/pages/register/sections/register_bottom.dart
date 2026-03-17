@@ -24,7 +24,7 @@ class RegisterBottomSection extends StatelessWidget {
             SizedBox(height: AppThemeSpacing.s56.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
-              child: PrimaryButton(
+              child: AppButton(
                 text: context.text.register_button_title,
                 onPressed: () => context.router.replace(const HomeRoute()),
                 backgroundColor: context.colors.primary,

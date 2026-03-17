@@ -56,6 +56,14 @@ import 'package:karbon/features/home/data/repositories/home_repository_impl.dart
 import 'package:karbon/features/home/domain/repositories/home_repository.dart'
     as _i406;
 import 'package:karbon/features/home/presentation/bloc/home_bloc.dart' as _i591;
+import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote.dart'
+    as _i1036;
+import 'package:karbon/features/leaderofmont/data/repositories/leaderboard_repository_impl.dart'
+    as _i966;
+import 'package:karbon/features/leaderofmont/domain/repositories/leaderboard_repository_impl.dart'
+    as _i322;
+import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_bloc.dart'
+    as _i748;
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart'
     as _i505;
 import 'package:karbon/features/usefulinfos/data/repositories/usefulinfo_repository_impl.dart'
@@ -86,12 +94,16 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i505.UsefulinfoRemote>(
         () => _i505.UsefulinfoRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i1036.LeaderboardRemote>(
+        () => _i1036.LeaderboardRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i102.AuthLocal>(
         () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i205.CarbonCalculateRemote>(
         () => _i205.CarbonCalculateRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i322.LeaderboardRepository>(
+        () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
     gh.lazySingleton<_i25.HomeRemote>(
         () => _i25.HomeRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i71.UsefulinfoRepository>(
@@ -102,6 +114,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i25.HomeRemote>(),
           gh<_i460.SharedPreferences>(),
         ));
+    gh.singleton<_i748.LeaderofmonthBloc>(
+        () => _i748.LeaderofmonthBloc(gh<_i322.LeaderboardRepository>()));
     gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
           gh<_i413.AuthRemote>(),
           gh<_i102.AuthLocal>(),

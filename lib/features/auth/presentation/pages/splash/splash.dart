@@ -8,7 +8,7 @@ import 'package:karbon/router/navigation.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/widgets/primary_button.dart';
+import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/di/di.dart';
 import 'package:karbon/l10n/app_localizations.dart';
 

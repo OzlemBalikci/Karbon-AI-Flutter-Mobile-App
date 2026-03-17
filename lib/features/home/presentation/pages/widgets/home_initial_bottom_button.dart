@@ -9,7 +9,7 @@ class HomeInitialBottomButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: Column(
         children: [
-          PrimaryButton(
+          AppButton(
             text: context.text.useful_infos_button_title,
             onPressed: () => context.router.push(const UsefulinfoRoute()),
             backgroundColor: context.colors.secondary,
@@ -17,7 +17,7 @@ class HomeInitialBottomButton extends StatelessWidget {
             borderColor: context.colors.primary,
           ),
           SizedBox(height: AppThemeSpacing.s30.h),
-          PrimaryButton(
+          AppButton(
             text: context.text.carbon_calculate_button_title,
             onPressed: () => context.router.push(const CarbonCalculateRoute()),
             backgroundColor: context.colors.primary,

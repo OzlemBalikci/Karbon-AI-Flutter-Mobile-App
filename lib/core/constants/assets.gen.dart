@@ -20,6 +20,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Calendar.svg
   SvgGenImage get calendar => const SvgGenImage('assets/icons/Calendar.svg');
 
+  /// File path: assets/icons/Tree.svg
+  SvgGenImage get tree => const SvgGenImage('assets/icons/Tree.svg');
+
   /// File path: assets/icons/calendar_month_outlined.svg
   SvgGenImage get calendarMonthOutlined =>
       const SvgGenImage('assets/icons/calendar_month_outlined.svg');
@@ -45,6 +48,7 @@ class $AssetsIconsGen {
   /// List of all assets
   List<SvgGenImage> get values => [
         calendar,
+        tree,
         calendarMonthOutlined,
         eyeSlashClosed,
         eyeSlashOpened,
@@ -85,6 +89,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/home_stats_card_2.png
   AssetGenImage get homeStatsCard2 => const AssetGenImage('assets/images/home_stats_card_2.png');
 
+  /// File path: assets/images/leaderofmonth.png
+  AssetGenImage get leaderofmonth => const AssetGenImage('assets/images/leaderofmonth.png');
+
   /// File path: assets/images/login_mask.png
   AssetGenImage get loginMask => const AssetGenImage('assets/images/login_mask.png');
 
@@ -102,6 +109,7 @@ class $AssetsImagesGen {
         homeSeeOther,
         homeStatsCard1,
         homeStatsCard2,
+        leaderofmonth,
         loginMask,
         splash
       ];

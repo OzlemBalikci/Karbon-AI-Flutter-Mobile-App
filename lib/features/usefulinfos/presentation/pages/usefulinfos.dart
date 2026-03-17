@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/di/di.dart';
 import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/widgets/primary_button.dart';
+import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_state.dart';
 import 'package:karbon/widgets/app_hero.dart';

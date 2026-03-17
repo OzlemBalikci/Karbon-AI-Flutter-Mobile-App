@@ -12,7 +12,7 @@ class CarbonCalculateQuestionBottom extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: SecondaryButton(
+            child: AppButton(
               text: context.text.carbon_calculate_question_back_button_title,
               onPressed: () => context.read<CarbonCalculateBloc>().add(
                     const CarbonCalculateEvent.backPressed(),
@@ -26,10 +26,11 @@ class CarbonCalculateQuestionBottom extends StatelessWidget {
           CarbonCalculateIsCurrentQuestionAnsweredSelector(
             builder: (isAnswered) => CarbonCalculateIsLastQuestionStepSelector(
               builder: (isLastQuestion) => Expanded(
-                child: SecondaryButton(
+                child: AppButton(
                   text: isLastQuestion
                       ? context.text.carbon_calculate_last_question_button_title
-                      : context.text.carbon_calculate_question_next_button_title,
+                      : context
+                          .text.carbon_calculate_question_next_button_title,
                   onPressed: isAnswered
                       ? () => context.read<CarbonCalculateBloc>().add(
                             isLastQuestion

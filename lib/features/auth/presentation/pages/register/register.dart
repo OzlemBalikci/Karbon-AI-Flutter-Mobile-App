@@ -7,7 +7,7 @@ import 'package:karbon/widgets/textfield.dart';
 import 'package:karbon/widgets/birth_date_picker.dart';
 import 'package:karbon/widgets/app_logo.dart';
 import 'package:karbon/core/constants/extensions.dart';
-import 'package:karbon/widgets/primary_button.dart';
+import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/infocard.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:karbon/core/constants/assets.gen.dart';

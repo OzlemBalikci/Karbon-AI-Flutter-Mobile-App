@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/widgets/primary_button.dart';
+import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/widgets/textfield.dart';
 import 'package:karbon/widgets/infocard.dart';

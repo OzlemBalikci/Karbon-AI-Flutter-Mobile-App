@@ -20,72 +20,69 @@ class StatsCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.bottomCenter,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 142.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
-              boxShadow: hasShadow
-                  ? [
-                      BoxShadow(
-                        color: Color(0x26000000),
-                        offset: Offset(0, 4),
-                        blurRadius: 25,
-                        spreadRadius: 0,
-                      ),
-                    ]
-                  : null,
-              color: context.colors.secondary,
-              border: Border.all(color: borderColor, width: 1.w),
-              image: DecorationImage(
-                image: image.provider(),
-                alignment: Alignment.bottomCenter,
-                fit: BoxFit.contain,
-              ),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
-              child: Padding(
-                padding: EdgeInsets.only(top: AppThemeSpacing.s10.h),
-                child: _buildContent(context),
-              ),
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.bottomCenter,
+      children: [
+        Container(
+          width: double.infinity,
+          height: 142.h,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
+            boxShadow: hasShadow
+                ? [
+                    BoxShadow(
+                      color: Color(0x26000000),
+                      offset: Offset(0, 4),
+                      blurRadius: 25,
+                      spreadRadius: 0,
+                    ),
+                  ]
+                : null,
+            color: context.colors.secondary,
+            border: Border.all(color: borderColor, width: 1.w),
+            image: DecorationImage(
+              image: image.provider(),
+              alignment: Alignment.bottomCenter,
+              fit: BoxFit.contain,
             ),
           ),
-          Positioned(
-            bottom: -16.h,
-            left: 0,
-            right: 0,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
-              child: Container(
-                width: double.infinity,
-                height: 44.h,
-                decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(AppThemeSpacing.r10.r)),
-                  border: Border.all(color: Color(0xFFA9C5B8), width: 1.w),
-                  color: Color(0xFFF1FBF6),
-                ),
-                child: Center(
-                  child: Text(
-                    "12.0000 ağaç kaldı.",
-                    style: context.typographiesSp.bodyExtraSmall.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: context.colors.carbonQuestion,
-                    ),
+              padding: EdgeInsets.only(top: AppThemeSpacing.s10.h),
+              child: _buildContent(context),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: -16.h,
+          left: 0,
+          right: 0,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
+            child: Container(
+              width: double.infinity,
+              height: 44.h,
+              decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(AppThemeSpacing.r10.r)),
+                border: Border.all(color: Color(0xFFA9C5B8), width: 1.w),
+                color: Color(0xFFF1FBF6),
+              ),
+              child: Center(
+                child: Text(
+                  "12.0000 ağaç kaldı.",
+                  style: context.typographiesSp.bodyExtraSmall.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: context.colors.carbonQuestion,
                   ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

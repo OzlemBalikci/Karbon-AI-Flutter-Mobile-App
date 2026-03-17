@@ -412,6 +412,18 @@ abstract class AppLocalizations {
   /// **'Faydalı Bilgiler'**
   String get useful_infos_header_text;
 
+  /// No description provided for @leaderofmonth_header_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu Hedefin Liderleri'**
+  String get leaderofmonth_header_text;
+
+  /// No description provided for @leaderofmonth_bottom_footer_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kazananları tebrik eder, sıralamaya giren her arkadaşımızın çabası için teşekkür ederiz. Unutmayın bu sırada yer alacak olan yarın sizsiniz!'**
+  String get leaderofmonth_bottom_footer_text;
+
   /// No description provided for @lorem_ipsum.
   ///
   /// In tr, this message translates to:

@@ -33,7 +33,7 @@ class LoginFormWidget extends StatelessWidget {
               SizedBox(height: AppThemeSpacing.s30.h),
               LoginForgotPasswordWidget(),
               SizedBox(height: AppThemeSpacing.s30.h),
-              PrimaryButton(
+              AppButton(
                 text: context.text.login_button_title_bizizmir,
                 onPressed: () => controller.onLoginPressed(context),
                 backgroundColor: context.colors.secondary,

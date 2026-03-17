@@ -8,7 +8,7 @@ import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/widgets/textfield.dart';
 import 'package:karbon/widgets/infocard.dart';
 import 'package:karbon/widgets/app_logo.dart';
-import 'package:karbon/widgets/primary_button.dart';
+import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/screen_titles.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:pinput/pinput.dart';

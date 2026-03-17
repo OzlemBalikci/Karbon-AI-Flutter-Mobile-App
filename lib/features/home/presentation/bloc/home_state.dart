@@ -24,8 +24,6 @@ abstract class HomeState with _$HomeState {
     @Default(HomeViewType.initial) HomeViewType viewType,
     @Default(0) int yearlyTreeCount,
     @Default(0) int monthlyTreeCount,
-    @Default([]) List<LeaderboardEntity> leaders,
-    UserRankEntity? currentUserRank,
     double? totalCarbon,
     double? savedCarbon,
     String? error,

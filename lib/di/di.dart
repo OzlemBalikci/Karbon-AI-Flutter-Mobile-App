@@ -11,6 +11,8 @@ import 'package:karbon/features/home/presentation/bloc/home_bloc.dart';
 import 'package:karbon/features/home/presentation/bloc/home_event.dart';
 import 'package:karbon/features/auth/presentation/bloc/settings/settings_bloc.dart';
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart';
+import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_event.dart';
+import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_bloc.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -60,6 +62,10 @@ class GlobalBlocProviders extends StatelessWidget {
         ),
         BlocProvider<LoginBloc>(
           create: (context) => getIt.get<LoginBloc>(),
+        ),
+        BlocProvider<LeaderofmonthBloc>(
+          create: (context) =>
+              getIt.get<LeaderofmonthBloc>()..add(LeaderofmonthStarted()),
         ),
       ],
       child: child,

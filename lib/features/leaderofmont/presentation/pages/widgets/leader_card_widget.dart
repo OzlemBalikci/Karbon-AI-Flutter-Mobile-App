@@ -1,18 +1,32 @@
-part of '../home.dart';
+import 'package:flutter/material.dart';
+import 'package:karbon/core/constants/spacing.dart';
+import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_leader_entity.dart';
+import 'package:karbon/features/leaderofmont/presentation/models/leader_card_variant.dart';
+import 'package:karbon/core/constants/extensions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:karbon/core/constants/assets.gen.dart';
 
 class LeaderCardWidget extends StatelessWidget {
   const LeaderCardWidget({
     super.key,
+    this.rankBgColor,
+    this.rankTextColor,
+    required this.variant,
     required this.entity,
-    required this.rankBgColor,
-    required this.rankTextColor,
   });
-  final LeaderboardEntity entity;
-  final Color rankBgColor;
-  final Color rankTextColor;
+
+  final Color? rankBgColor;
+  final Color? rankTextColor;
+  final LeaderCardVariant variant;
+  final LeaderboardLeaderEntity entity;
 
   @override
   Widget build(BuildContext context) {
+    final (bg, text) = (
+      rankBgColor ?? entity.rank.leaderRankColors.$1,
+      rankTextColor ?? entity.rank.leaderRankColors.$2
+    );
+
     return Container(
       height: 119.h,
       decoration: BoxDecoration(
@@ -64,13 +78,18 @@ class LeaderCardWidget extends StatelessWidget {
                   ),
                   SizedBox(height: AppThemeSpacing.s4.h),
                   Text(
-                    entity.valueDisplay,
+                    variant == LeaderCardVariant.expanded
+                        ? '${entity.valueDisplay.split(' ')[0]} '
+                        : entity.valueDisplay,
                     style: context.typographiesSp.bodySmall.copyWith(
                       fontWeight: FontWeight.w600,
                       color: Color(0xFF0B7942),
                     ),
                     textAlign: TextAlign.center,
                   ),
+                  SizedBox(height: AppThemeSpacing.s4.h),
+                  if (variant == LeaderCardVariant.expanded)
+                    Assets.icons.tree.svg(width: 13.w, height: 20.h),
                 ],
               ),
             )

@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
 
-class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({
+class AppButton extends StatelessWidget {
+  const AppButton({
     super.key,
     required this.text,
     required this.onPressed,

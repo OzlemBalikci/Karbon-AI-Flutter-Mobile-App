@@ -26,7 +26,7 @@ class _InfoButtonItem extends StatelessWidget {
   final UsefulInfoEntity info;
   @override
   Widget build(BuildContext context) {
-    return PrimaryButton(
+    return AppButton(
       text: info.title,
       onPressed: () {
         showModalBottomSheet(

@@ -12,6 +12,7 @@ class AppHeaderTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(height: AppThemeSpacing.s10.h),
         Text(

@@ -15,7 +15,7 @@ class SplashBottomRegisterSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              PrimaryButton(
+              AppButton(
                 text: context.text.login_button_title_bizizmir,
                 backgroundColor: context.colors.secondary,
                 foregroundColor: context.colors.textOnSecondary,
@@ -23,7 +23,7 @@ class SplashBottomRegisterSection extends StatelessWidget {
                 onPressed: () => context.router.replace(const LoginRoute()),
               ),
               SizedBox(height: AppThemeSpacing.s30.h),
-              PrimaryButton(
+              AppButton(
                 text: context.text.register_button_bizizmir,
                 backgroundColor: Colors.transparent,
                 foregroundColor: context.colors.textOnPrimary,
