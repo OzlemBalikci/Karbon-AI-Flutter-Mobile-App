@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:karbon/features/home/presentation/bloc/home_state.dart';
 import 'package:karbon/features/home/presentation/bloc/home_selector.dart';
@@ -9,13 +8,12 @@ import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/features/leaderofmont/presentation/pages/widgets/leader_card_row.dart';
 import 'package:karbon/features/leaderofmont/presentation/models/leader_card_variant.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
-import 'package:karbon/router/navigation.dart';
-import 'package:karbon/widgets/bottom_navigation_bar.dart' as app_nav;
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/app_hero.dart';
 import 'package:karbon/widgets/app_header_title.dart';
-import 'dart:ui';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:karbon/router/navigation.dart';
+import 'package:auto_route/auto_route.dart';
 
 part 'widgets/home_initial_bottom_button.dart';
 part 'widgets/home_initial_text.dart';
@@ -61,14 +59,6 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-              SafeArea(
-                top: false,
-                bottom: true,
-                child: app_nav.AppBottomNavigationBar(
-                  selectedIndex: 0,
-                  onTap: (index) {},
-                ),
-              )
             ],
           ),
         ],

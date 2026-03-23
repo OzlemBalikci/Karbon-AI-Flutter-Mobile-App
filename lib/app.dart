@@ -8,9 +8,9 @@ import 'package:karbon/core/theme/themes.dart';
 import 'package:karbon/l10n/app_localizations.dart';
 
 class KarbonApp extends StatelessWidget {
-  final AppRouter _router = AppRouter();
-
-  KarbonApp({super.key});
+  //final AppRouter _router = AppRouter();
+  final AppRouter router;
+  KarbonApp({super.key, required this.router});
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +18,17 @@ class KarbonApp extends StatelessWidget {
       maximumSize: const Size(400, 800),
       backgroundColor: Colors.black12,
       enabled: MediaQuery.sizeOf(context).shortestSide > 600,
-      builder: (theme) => DevicePreview(
-        enabled: true,
-        builder: (context) => SettingsSelector<AppTheme>(
-          selector: (state) => state.theme,
-          builder: (theme) => MaterialApp.router(
-            title: 'FlutterKarbon',
-            theme: theme.themeData,
-            routerConfig: _router.config(),
-            scrollBehavior: AppScrollBehavior(),
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-          ),
+      builder: (_) => SettingsSelector<AppTheme>(
+        selector: (state) => state.theme,
+        builder: (theme) => MaterialApp.router(
+          title: 'FlutterKarbon',
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
+          theme: theme.themeData,
+          routerConfig: router.config(),
+          scrollBehavior: AppScrollBehavior(),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
         ),
       ),
     );

@@ -10,6 +10,7 @@ class HomeMainFeatureSection extends StatelessWidget {
       child: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             StatsCardRow(),
             SizedBox(height: AppThemeSpacing.s30.h),
@@ -20,6 +21,7 @@ class HomeMainFeatureSection extends StatelessWidget {
                 seeOtherCard: SeeOtherLeaderCard()),
             SizedBox(height: AppThemeSpacing.s25.h),
             HomeMainBottomButton(),
+            SizedBox(height: AppThemeSpacing.s25.h),
           ],
         ),
       ),

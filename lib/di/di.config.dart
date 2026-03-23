@@ -50,6 +50,14 @@ import 'package:karbon/features/carboncalculate/domain/repositories/carbon_calcu
     as _i123;
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart'
     as _i959;
+import 'package:karbon/features/dailyactivites/data/datasources/daily_activities_remote.dart'
+    as _i342;
+import 'package:karbon/features/dailyactivites/data/repositories/daily_activities_repository_impl.dart'
+    as _i449;
+import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart'
+    as _i320;
+import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart'
+    as _i391;
 import 'package:karbon/features/home/data/datasources/home_remote.dart' as _i25;
 import 'package:karbon/features/home/data/repositories/home_repository_impl.dart'
     as _i274;
@@ -96,6 +104,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i505.UsefulinfoRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i1036.LeaderboardRemote>(
         () => _i1036.LeaderboardRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i342.DailyActivitiesRemote>(
+        () => _i342.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i102.AuthLocal>(
         () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i205.CarbonCalculateRemote>(
@@ -114,6 +124,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i25.HomeRemote>(),
           gh<_i460.SharedPreferences>(),
         ));
+    gh.lazySingleton<_i320.DailyActivitiesRepository>(() =>
+        _i449.DailyActivitiesRepositoryImpl(gh<_i342.DailyActivitiesRemote>()));
     gh.singleton<_i748.LeaderofmonthBloc>(
         () => _i748.LeaderofmonthBloc(gh<_i322.LeaderboardRepository>()));
     gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
@@ -126,6 +138,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i959.CarbonCalculateBloc(gh<_i123.CarbonCalculateRepository>()));
     gh.singleton<_i591.HomeBloc>(
         () => _i591.HomeBloc(gh<_i406.HomeRepository>()));
+    gh.singleton<_i391.DailyActivitiesBloc>(
+        () => _i391.DailyActivitiesBloc(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i210.ForgotPasswordUseCase>(

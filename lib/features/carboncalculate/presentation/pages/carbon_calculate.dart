@@ -16,6 +16,7 @@ import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calcula
 import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:auto_route/auto_route.dart';
 
 part 'widgets/info_bottom_button.dart';
 part 'widgets/first_question_bottom_button.dart';

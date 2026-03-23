@@ -11,6 +11,22 @@
 part of 'navigation.dart';
 
 /// generated route for
+/// [AppShellPage]
+class AppShellRoute extends PageRouteInfo<void> {
+  const AppShellRoute({List<PageRouteInfo>? children})
+    : super(AppShellRoute.name, initialChildren: children);
+
+  static const String name = 'AppShellRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AppShellPage();
+    },
+  );
+}
+
+/// generated route for
 /// [CarbonCalculatePage]
 class CarbonCalculateRoute extends PageRouteInfo<void> {
   const CarbonCalculateRoute({List<PageRouteInfo>? children})
@@ -22,6 +38,22 @@ class CarbonCalculateRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const CarbonCalculatePage();
+    },
+  );
+}
+
+/// generated route for
+/// [DailyActivitiesPage]
+class DailyActivitiesRoute extends PageRouteInfo<void> {
+  const DailyActivitiesRoute({List<PageRouteInfo>? children})
+    : super(DailyActivitiesRoute.name, initialChildren: children);
+
+  static const String name = 'DailyActivitiesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const DailyActivitiesPage();
     },
   );
 }
