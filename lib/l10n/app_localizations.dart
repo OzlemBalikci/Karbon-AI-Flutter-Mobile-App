@@ -442,6 +442,12 @@ abstract class AppLocalizations {
   /// **'Bugün için soru bulunmuyor.'**
   String get daily_activities_empty_hint;
 
+  /// No description provided for @daily_activities_history_section_header_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önceki Cevaplarınız'**
+  String get daily_activities_history_section_header_text;
+
   /// No description provided for @lorem_ipsum.
   ///
   /// In tr, this message translates to:

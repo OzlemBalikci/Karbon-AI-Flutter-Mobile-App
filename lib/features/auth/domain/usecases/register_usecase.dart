@@ -16,6 +16,7 @@ class RegisterUseCase {
     required String birthDate,
     required String password,
     required String phoneNumber,
+    required bool isKvkkApproved,
   }) =>
       _repository.register(
         email: email,
@@ -25,5 +26,6 @@ class RegisterUseCase {
         birthDate: birthDate,
         password: password,
         phoneNumber: phoneNumber,
+        isKvkkApproved: isKvkkApproved,
       );
 }

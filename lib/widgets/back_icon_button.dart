@@ -5,7 +5,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:karbon/core/constants/spacing.dart';
 
 class BackIconButton extends StatelessWidget {
-  const BackIconButton({super.key});
+  const BackIconButton({super.key, this.color});
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +16,11 @@ class BackIconButton extends StatelessWidget {
           context.router.maybePop();
         }
       },
-      icon: Assets.icons.iconbackbutton
-          .svg(width: AppThemeSpacing.s24.w, height: AppThemeSpacing.s24.h),
+      icon: Assets.icons.iconbackbutton.svg(
+          width: AppThemeSpacing.s24.w,
+          height: AppThemeSpacing.s24.h,
+          colorFilter:
+              color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null),
     );
   }
 }

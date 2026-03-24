@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activity_answer_result_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_item_entity.dart';
 
 part 'dailyactivities_state.freezed.dart';
 
@@ -27,6 +29,9 @@ abstract class DailyActivitiesState with _$DailyActivitiesState {
     DailyActivitiesListStatus listStatus,
     @Default([]) List<DailyQuestionEntity> questions,
     String? listError,
+    DailyPendingEntity? pending,
+    @Default([]) List<DailyCalendarItemEntity> historyItems,
+    double? totalScore,
 
     /// null → ana ekran; dolu → "Seçili Soru" akışı
     DailyQuestionEntity? activeQuestion,

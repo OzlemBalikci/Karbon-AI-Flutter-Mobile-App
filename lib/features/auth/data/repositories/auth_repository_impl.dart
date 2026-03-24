@@ -41,6 +41,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String identityNumber,
     required String phoneNumber,
     required String birthDate,
+    required bool isKvkkApproved,
   }) async {
     try {
       final model = await _remote.register(
@@ -51,6 +52,7 @@ class AuthRepositoryImpl implements AuthRepository {
         identityNumber: identityNumber,
         phoneNumber: phoneNumber,
         birthDate: birthDate,
+        isKvkkApproved: isKvkkApproved,
       );
       return Right(model.toEntity());
     } on Exception catch (e) {

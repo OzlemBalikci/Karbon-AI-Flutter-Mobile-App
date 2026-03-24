@@ -17,6 +17,7 @@ abstract class AuthRepository {
     required String identityNumber,
     required String phoneNumber,
     required String birthDate,
+    required bool isKvkkApproved,
   });
 
   /// SMS kodu gönderir. Başarıysa Unit döner.

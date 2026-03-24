@@ -18,7 +18,7 @@ import 'package:karbon/features/auth/presentation/bloc/login/login_selector.dart
 import 'package:karbon/features/auth/presentation/bloc/login/login_event.dart';
 
 part 'widgets/login_forgot_password.dart';
-part 'widgets/login_logo.dart';
+
 part 'widgets/login_form.dart';
 part 'widgets/login_info.dart';
 part 'sections/login_bottom.dart';
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.resultStatus == LoginResultStatus.success) {
-          context.router.replace(const AppShellRoute());
+          context.router.replaceAll([const AppShellRoute()]);
         }
       },
       child: Scaffold(

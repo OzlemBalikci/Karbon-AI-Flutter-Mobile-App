@@ -9,7 +9,7 @@ class LoginBottomRegisterSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
       child: AppButton(
         text: context.text.register_button_bizizmir,
-        onPressed: () => context.router.replace(const RegisterRoute()),
+        onPressed: () => context.router.push(const RegisterRoute()),
         backgroundColor: context.colors.primary,
         foregroundColor: context.colors.textOnPrimary,
         borderColor: Colors.white70,

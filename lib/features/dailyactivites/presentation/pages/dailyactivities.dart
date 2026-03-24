@@ -9,11 +9,15 @@ import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/widgets/infocard.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_item_entity.dart';
+import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
 
 part 'widgets/section_header.dart';
 part 'widgets/question_card.dart';
+part 'widgets/score_badge.dart';
 part 'sections/today_section.dart';
 part 'sections/header_section.dart';
+part 'sections/history_section.dart';
 
 @RoutePage()
 class DailyActivitiesPage extends StatefulWidget {
@@ -35,6 +39,7 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
               children: [
                 HeaderSection(),
                 Expanded(child: TodaySection()),
+                Expanded(child: HistorySection()),
               ],
             ),
           ),

@@ -4,6 +4,8 @@ import 'package:karbon/features/dailyactivites/data/datasources/daily_activities
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activity_answer_result_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_entity.dart';
 
 @LazySingleton(as: DailyActivitiesRepository)
 class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
@@ -32,6 +34,29 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
           optionId: optionId,
         ),
       );
+    } on Exception catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  Future<Either<Exception, DailyPendingEntity>> getPendingStatus() async {
+    try {
+      return Right(await _remote.getPendingStatus());
+    } on Exception catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  Future<Either<Exception, DailyCalendarEntity>> getCalendar({
+    required int year,
+    int? month,
+    int? period,
+  }) async {
+    try {
+      return Right(
+          await _remote.getCalendar(year: year, month: month, period: period));
     } on Exception catch (e) {
       return Left(e);
     }

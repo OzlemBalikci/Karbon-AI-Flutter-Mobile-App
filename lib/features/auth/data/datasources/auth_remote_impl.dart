@@ -28,6 +28,7 @@ class AuthRemoteImpl implements AuthRemote {
     required String identityNumber,
     required String phoneNumber,
     required String birthDate,
+    required bool isKvkkApproved,
   }) async {
     // TODO: final res = await _dio.post('/api/v1/users/register', data: {...});
     // TODO: return UserModel.fromJson(res.data);
@@ -39,6 +40,8 @@ class AuthRemoteImpl implements AuthRemote {
       surname: surname,
       identityNumber: identityNumber,
       phoneNumber: phoneNumber,
+      birthDate: DateTime.tryParse(birthDate),
+      isKvkkApproved: isKvkkApproved,
     );
   }
 

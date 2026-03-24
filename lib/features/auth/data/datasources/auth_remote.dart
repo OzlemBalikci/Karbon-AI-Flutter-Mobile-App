@@ -16,6 +16,7 @@ abstract class AuthRemote {
     required String identityNumber,
     required String phoneNumber,
     required String birthDate,
+    required bool isKvkkApproved,
   });
 
   /// GET /api/v1/users/profile — Token'dan kullanıcı profili.

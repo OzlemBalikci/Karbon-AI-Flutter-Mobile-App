@@ -199,6 +199,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get daily_activities_empty_hint => 'Bugün için soru bulunmuyor.';
 
   @override
+  String get daily_activities_history_section_header_text =>
+      'Önceki Cevaplarınız';
+
+  @override
   String get lorem_ipsum =>
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.';
 }
