@@ -55,8 +55,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     TResult Function(DailyActivitiesLoadFailed value)? loadFailed,
     TResult Function(DailyActivitiesQuestionSelected value)? questionSelected,
     TResult Function(DailyActivitiesOptionSelected value)? optionSelected,
-    TResult Function(DailyActivitiesSubmitAnswerRequested value)?
-        submitAnswerRequested,
+    TResult Function(DailyActivitiesPostAnswerRequested value)?
+        postAnswerRequested,
     TResult Function(DailyActivitiesSuccessDismissed value)? successDismissed,
     TResult Function(DailyActivitiesDetailClosed value)? detailClosed,
     required TResult orElse(),
@@ -71,9 +71,9 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that);
       case DailyActivitiesOptionSelected() when optionSelected != null:
         return optionSelected(_that);
-      case DailyActivitiesSubmitAnswerRequested()
-          when submitAnswerRequested != null:
-        return submitAnswerRequested(_that);
+      case DailyActivitiesPostAnswerRequested()
+          when postAnswerRequested != null:
+        return postAnswerRequested(_that);
       case DailyActivitiesSuccessDismissed() when successDismissed != null:
         return successDismissed(_that);
       case DailyActivitiesDetailClosed() when detailClosed != null:
@@ -104,8 +104,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         questionSelected,
     required TResult Function(DailyActivitiesOptionSelected value)
         optionSelected,
-    required TResult Function(DailyActivitiesSubmitAnswerRequested value)
-        submitAnswerRequested,
+    required TResult Function(DailyActivitiesPostAnswerRequested value)
+        postAnswerRequested,
     required TResult Function(DailyActivitiesSuccessDismissed value)
         successDismissed,
     required TResult Function(DailyActivitiesDetailClosed value) detailClosed,
@@ -120,8 +120,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that);
       case DailyActivitiesOptionSelected():
         return optionSelected(_that);
-      case DailyActivitiesSubmitAnswerRequested():
-        return submitAnswerRequested(_that);
+      case DailyActivitiesPostAnswerRequested():
+        return postAnswerRequested(_that);
       case DailyActivitiesSuccessDismissed():
         return successDismissed(_that);
       case DailyActivitiesDetailClosed():
@@ -147,8 +147,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     TResult? Function(DailyActivitiesLoadFailed value)? loadFailed,
     TResult? Function(DailyActivitiesQuestionSelected value)? questionSelected,
     TResult? Function(DailyActivitiesOptionSelected value)? optionSelected,
-    TResult? Function(DailyActivitiesSubmitAnswerRequested value)?
-        submitAnswerRequested,
+    TResult? Function(DailyActivitiesPostAnswerRequested value)?
+        postAnswerRequested,
     TResult? Function(DailyActivitiesSuccessDismissed value)? successDismissed,
     TResult? Function(DailyActivitiesDetailClosed value)? detailClosed,
   }) {
@@ -162,9 +162,9 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that);
       case DailyActivitiesOptionSelected() when optionSelected != null:
         return optionSelected(_that);
-      case DailyActivitiesSubmitAnswerRequested()
-          when submitAnswerRequested != null:
-        return submitAnswerRequested(_that);
+      case DailyActivitiesPostAnswerRequested()
+          when postAnswerRequested != null:
+        return postAnswerRequested(_that);
       case DailyActivitiesSuccessDismissed() when successDismissed != null:
         return successDismissed(_that);
       case DailyActivitiesDetailClosed() when detailClosed != null:
@@ -192,7 +192,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     TResult Function(String error)? loadFailed,
     TResult Function(DailyQuestionEntity question)? questionSelected,
     TResult Function(String optionId)? optionSelected,
-    TResult Function()? submitAnswerRequested,
+    TResult Function()? postAnswerRequested,
     TResult Function()? successDismissed,
     TResult Function()? detailClosed,
     required TResult orElse(),
@@ -207,9 +207,9 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected() when optionSelected != null:
         return optionSelected(_that.optionId);
-      case DailyActivitiesSubmitAnswerRequested()
-          when submitAnswerRequested != null:
-        return submitAnswerRequested();
+      case DailyActivitiesPostAnswerRequested()
+          when postAnswerRequested != null:
+        return postAnswerRequested();
       case DailyActivitiesSuccessDismissed() when successDismissed != null:
         return successDismissed();
       case DailyActivitiesDetailClosed() when detailClosed != null:
@@ -238,7 +238,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     required TResult Function(String error) loadFailed,
     required TResult Function(DailyQuestionEntity question) questionSelected,
     required TResult Function(String optionId) optionSelected,
-    required TResult Function() submitAnswerRequested,
+    required TResult Function() postAnswerRequested,
     required TResult Function() successDismissed,
     required TResult Function() detailClosed,
   }) {
@@ -252,8 +252,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected():
         return optionSelected(_that.optionId);
-      case DailyActivitiesSubmitAnswerRequested():
-        return submitAnswerRequested();
+      case DailyActivitiesPostAnswerRequested():
+        return postAnswerRequested();
       case DailyActivitiesSuccessDismissed():
         return successDismissed();
       case DailyActivitiesDetailClosed():
@@ -279,7 +279,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     TResult? Function(String error)? loadFailed,
     TResult? Function(DailyQuestionEntity question)? questionSelected,
     TResult? Function(String optionId)? optionSelected,
-    TResult? Function()? submitAnswerRequested,
+    TResult? Function()? postAnswerRequested,
     TResult? Function()? successDismissed,
     TResult? Function()? detailClosed,
   }) {
@@ -293,9 +293,9 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected() when optionSelected != null:
         return optionSelected(_that.optionId);
-      case DailyActivitiesSubmitAnswerRequested()
-          when submitAnswerRequested != null:
-        return submitAnswerRequested();
+      case DailyActivitiesPostAnswerRequested()
+          when postAnswerRequested != null:
+        return postAnswerRequested();
       case DailyActivitiesSuccessDismissed() when successDismissed != null:
         return successDismissed();
       case DailyActivitiesDetailClosed() when detailClosed != null:
@@ -528,14 +528,14 @@ class _$DailyActivitiesOptionSelectedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class DailyActivitiesSubmitAnswerRequested implements DailyActivitiesEvent {
-  const DailyActivitiesSubmitAnswerRequested();
+class DailyActivitiesPostAnswerRequested implements DailyActivitiesEvent {
+  const DailyActivitiesPostAnswerRequested();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is DailyActivitiesSubmitAnswerRequested);
+            other is DailyActivitiesPostAnswerRequested);
   }
 
   @override
@@ -543,7 +543,7 @@ class DailyActivitiesSubmitAnswerRequested implements DailyActivitiesEvent {
 
   @override
   String toString() {
-    return 'DailyActivitiesEvent.submitAnswerRequested()';
+    return 'DailyActivitiesEvent.postAnswerRequested()';
   }
 }
 

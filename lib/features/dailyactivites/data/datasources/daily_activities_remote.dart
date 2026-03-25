@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_activity_answer_result_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_answer_result_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_question_option.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
@@ -9,12 +9,11 @@ import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_it
 
 abstract class DailyActivitiesRemote {
   Future<List<DailyQuestionEntity>> getTodayQuestions();
-
-  Future<DailyActivityAnswerResultEntity> submitAnswer({
+  Future<DailyAnswerResultEntity> getDetails({required String date});
+  Future<DailyAnswerResultEntity> postAnswer({
     required String questionId,
     required String optionId,
   });
-
   Future<DailyPendingEntity> getPendingStatus();
   Future<DailyCalendarEntity> getCalendar({
     required int year,
@@ -32,6 +31,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   static const _pathAnswers = '/daily-activities/answers';
   static const _pathPending = '/daily-activities/pending';
   static const _pathCalendar = '/daily-activities/calendar';
+  static const _pathDetails = '/daily-activities/details';
   @override
   Future<List<DailyQuestionEntity>> getTodayQuestions() async {
     await Future<void>.delayed(const Duration(milliseconds: 300));
@@ -68,7 +68,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   }
 
   @override
-  Future<DailyActivityAnswerResultEntity> submitAnswer({
+  Future<DailyAnswerResultEntity> postAnswer({
     required String questionId,
     required String optionId,
   }) async {
@@ -82,10 +82,17 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     // final data = res.data['data'] as Map<String, dynamic>;
     // return DailyActivityAnswerResultEntity.fromJson(data);
 
-    return const DailyActivityAnswerResultEntity(
+    return const DailyAnswerResultEntity(
       score: 4.5,
       nextQuestion: null,
     );
+  }
+
+  @override
+  Future<DailyAnswerResultEntity> getDetails({required String date}) async {
+    await Future<void>.delayed(const Duration(milliseconds: 150));
+    // TODO: _dio.get(_pathDetails, queryParameters: {'date': date});
+    return const DailyAnswerResultEntity(score: 4.5, nextQuestion: null);
   }
 
   /// API şekline uygun mock (birden fazla kök soru; UI’da take(2) kullanabilirsin).

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:karbon/core/constants/colors.dart';
-import 'package:karbon/core/constants/styles.dart';
 import 'package:karbon/core/constants/typography.dart';
 import 'package:karbon/core/theme/themes.dart';
 import 'package:karbon/core/theme/themes.light.dart';
@@ -15,8 +14,6 @@ extension AppThemeExtension on BuildContext {
   AppThemeTypography get typographiesSp => appTheme.typographies.spScaled;
 
   AppThemeColors get colors => appTheme.colors;
-
-  AppThemeStyles get styles => appTheme.styles;
 }
 
 extension TextStyleExtension on TextStyle {

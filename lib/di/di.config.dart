@@ -56,6 +56,16 @@ import 'package:karbon/features/dailyactivites/data/repositories/daily_activitie
     as _i449;
 import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart'
     as _i320;
+import 'package:karbon/features/dailyactivites/domain/usacases/get_calendar_usecase.dart'
+    as _i1025;
+import 'package:karbon/features/dailyactivites/domain/usacases/get_details_usecase.dart'
+    as _i715;
+import 'package:karbon/features/dailyactivites/domain/usacases/get_pending_status_usecase.dart'
+    as _i448;
+import 'package:karbon/features/dailyactivites/domain/usacases/get_today_questions_usacase.dart'
+    as _i671;
+import 'package:karbon/features/dailyactivites/domain/usacases/post_answer_usecase.dart'
+    as _i902;
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart'
     as _i391;
 import 'package:karbon/features/home/data/datasources/home_remote.dart' as _i25;
@@ -138,8 +148,16 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i959.CarbonCalculateBloc(gh<_i123.CarbonCalculateRepository>()));
     gh.singleton<_i591.HomeBloc>(
         () => _i591.HomeBloc(gh<_i406.HomeRepository>()));
-    gh.singleton<_i391.DailyActivitiesBloc>(
-        () => _i391.DailyActivitiesBloc(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i1025.GetCalendarUsecase>(
+        () => _i1025.GetCalendarUsecase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i715.GetDetailsUsecase>(
+        () => _i715.GetDetailsUsecase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i448.GetPendingStatusUsecase>(() =>
+        _i448.GetPendingStatusUsecase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i671.GetTodayQuestionsUsecase>(() =>
+        _i671.GetTodayQuestionsUsecase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i902.PostAnswerUsecase>(
+        () => _i902.PostAnswerUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i210.ForgotPasswordUseCase>(
@@ -157,6 +175,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i564.AuthBloc>(() => _i564.AuthBloc(
           gh<_i793.CheckSessionUseCase>(),
           gh<_i566.LogoutUseCase>(),
+        ));
+    gh.singleton<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
+          gh<_i671.GetTodayQuestionsUsecase>(),
+          gh<_i448.GetPendingStatusUsecase>(),
+          gh<_i1025.GetCalendarUsecase>(),
+          gh<_i902.PostAnswerUsecase>(),
+          gh<_i715.GetDetailsUsecase>(),
         ));
     return this;
   }

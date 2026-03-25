@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_activity_answer_result_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_answer_result_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_item_entity.dart';
@@ -15,7 +15,7 @@ enum DailyActivitiesListStatus {
 }
 
 /// Cevap gönderme (Puanı Al)
-enum DailyActivitiesSubmitStatus {
+enum DailyActivitiesPostAnswerStatus {
   idle,
   submitting,
   success,
@@ -31,15 +31,17 @@ abstract class DailyActivitiesState with _$DailyActivitiesState {
     String? listError,
     DailyPendingEntity? pending,
     @Default([]) List<DailyCalendarItemEntity> historyItems,
+    @Default({}) Map<String, DateTime> questionSolvedAt,
     double? totalScore,
 
     /// null → ana ekran; dolu → "Seçili Soru" akışı
     DailyQuestionEntity? activeQuestion,
     String? selectedOptionId,
-    @Default(DailyActivitiesSubmitStatus.idle)
-    DailyActivitiesSubmitStatus submitStatus,
-    String? submitError,
-    DailyActivityAnswerResultEntity? lastSubmitResult,
+    @Default(DailyActivitiesPostAnswerStatus.idle)
+    DailyActivitiesPostAnswerStatus postAnswerStatus,
+    String? postAnswerError,
+    DailyAnswerResultEntity? lastPostAnswerResult,
+    @Default({}) Map<String, double> questionScore,
 
     /// Başarı modalı (Tebrikler X puan)
     @Default(false) bool showSuccessDialog,

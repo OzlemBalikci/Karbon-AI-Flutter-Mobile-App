@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:karbon/core/constants/fonts.gen.dart';
 import 'package:karbon/core/constants/colors.dart';
-import 'package:karbon/core/constants/styles.dart';
 import 'package:karbon/core/constants/typography.dart';
+
+/// Eski `AppThemeStyles.buttonLarge` ile aynı; tema düğmeleri için ortak taban.
+const _kAppButtonLargeStyle = ButtonStyle(
+  minimumSize: WidgetStatePropertyAll(Size.zero),
+  shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(15)),
+  )),
+  textStyle: WidgetStatePropertyAll(TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+    height: 1,
+  )),
+);
 
 class AppTheme extends ThemeExtension<AppTheme> {
   final String name;
@@ -10,13 +22,11 @@ class AppTheme extends ThemeExtension<AppTheme> {
   final Brightness brightness;
   final AppThemeColors colors;
   final AppThemeTypography typographies;
-  final AppThemeStyles styles;
 
   const AppTheme({
     required this.name,
     required this.brightness,
     required this.colors,
-    this.styles = const AppThemeStyles(),
     this.typographies = const AppThemeTypography(),
     this.fontFamily = FontFamily.izmir,
   });
@@ -58,7 +68,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
           unselectedLabelColor: colors.text.withValues(alpha: 0.4),
         ),
         filledButtonTheme: FilledButtonThemeData(
-          style: styles.buttonLarge.copyWith(
+          style: _kAppButtonLargeStyle.copyWith(
             backgroundColor: WidgetStateProperty.resolveWith((states) {
               return states.contains(WidgetState.disabled) ? colors.hint : null;
             }),
@@ -68,7 +78,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
-          style: styles.buttonLarge.copyWith(
+          style: _kAppButtonLargeStyle.copyWith(
             backgroundColor: WidgetStateProperty.resolveWith((states) {
               return states.contains(WidgetState.disabled) ? colors.hint : null;
             }),
@@ -78,7 +88,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
-          style: styles.buttonLarge.copyWith(
+          style: _kAppButtonLargeStyle.copyWith(
             side: WidgetStateProperty.resolveWith((states) {
               return states.contains(WidgetState.disabled)
                   ? BorderSide(color: colors.hint)
@@ -92,7 +102,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
           ),
         ),
         textButtonTheme: TextButtonThemeData(
-          style: styles.buttonLarge.copyWith(
+          style: _kAppButtonLargeStyle.copyWith(
             backgroundColor:
                 WidgetStateProperty.resolveWith((Set<WidgetState> states) {
               return states.contains(WidgetState.disabled)
@@ -149,14 +159,12 @@ class AppTheme extends ThemeExtension<AppTheme> {
     Brightness? brightness,
     AppThemeColors? colors,
     AppThemeTypography? typographies,
-    AppThemeStyles? styles,
   }) {
     return AppTheme(
       brightness: brightness ?? this.brightness,
       name: name ?? this.name,
       colors: colors ?? this.colors,
       typographies: typographies ?? this.typographies,
-      styles: styles ?? this.styles,
     );
   }
 
@@ -170,7 +178,6 @@ class AppTheme extends ThemeExtension<AppTheme> {
       brightness: brightness,
       colors: colors.lerp(other.colors, t),
       typographies: typographies.lerp(other.typographies, t),
-      styles: styles,
     );
   }
 }

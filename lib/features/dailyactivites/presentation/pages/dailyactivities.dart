@@ -9,8 +9,8 @@ import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/widgets/infocard.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_item_entity.dart';
-import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
+import 'package:intl/intl.dart';
+import 'package:karbon/widgets/back_icon_button.dart';
 
 part 'widgets/section_header.dart';
 part 'widgets/question_card.dart';
@@ -33,6 +33,11 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
     return Scaffold(
       body: Stack(
         children: [
+          Positioned(
+            top: MediaQuery.of(context).padding.top,
+            left: AppThemeSpacing.s25.w,
+            child: BackIconButton(),
+          ),
           SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -22,8 +22,8 @@ sealed class DailyActivitiesEvent with _$DailyActivitiesEvent {
       DailyActivitiesOptionSelected;
 
   /// "Puanı Al" — seçenek seçiliyse cevabı gönder
-  const factory DailyActivitiesEvent.submitAnswerRequested() =
-      DailyActivitiesSubmitAnswerRequested;
+  const factory DailyActivitiesEvent.postAnswerRequested() =
+      DailyActivitiesPostAnswerRequested;
 
   /// Başarı modalı kapandı → detayı kapat, listeyi yenile
   const factory DailyActivitiesEvent.successDismissed() =

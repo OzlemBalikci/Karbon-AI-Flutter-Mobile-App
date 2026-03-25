@@ -19,14 +19,16 @@ mixin _$DailyActivitiesState {
   String? get listError;
   DailyPendingEntity? get pending;
   List<DailyCalendarItemEntity> get historyItems;
+  Map<String, DateTime> get questionSolvedAt;
   double? get totalScore;
 
   /// null → ana ekran; dolu → "Seçili Soru" akışı
   DailyQuestionEntity? get activeQuestion;
   String? get selectedOptionId;
-  DailyActivitiesSubmitStatus get submitStatus;
-  String? get submitError;
-  DailyActivityAnswerResultEntity? get lastSubmitResult;
+  DailyActivitiesPostAnswerStatus get postAnswerStatus;
+  String? get postAnswerError;
+  DailyAnswerResultEntity? get lastPostAnswerResult;
+  Map<String, double> get questionScore;
 
   /// Başarı modalı (Tebrikler X puan)
   bool get showSuccessDialog;
@@ -55,18 +57,22 @@ mixin _$DailyActivitiesState {
             (identical(other.pending, pending) || other.pending == pending) &&
             const DeepCollectionEquality()
                 .equals(other.historyItems, historyItems) &&
+            const DeepCollectionEquality()
+                .equals(other.questionSolvedAt, questionSolvedAt) &&
             (identical(other.totalScore, totalScore) ||
                 other.totalScore == totalScore) &&
             (identical(other.activeQuestion, activeQuestion) ||
                 other.activeQuestion == activeQuestion) &&
             (identical(other.selectedOptionId, selectedOptionId) ||
                 other.selectedOptionId == selectedOptionId) &&
-            (identical(other.submitStatus, submitStatus) ||
-                other.submitStatus == submitStatus) &&
-            (identical(other.submitError, submitError) ||
-                other.submitError == submitError) &&
-            (identical(other.lastSubmitResult, lastSubmitResult) ||
-                other.lastSubmitResult == lastSubmitResult) &&
+            (identical(other.postAnswerStatus, postAnswerStatus) ||
+                other.postAnswerStatus == postAnswerStatus) &&
+            (identical(other.postAnswerError, postAnswerError) ||
+                other.postAnswerError == postAnswerError) &&
+            (identical(other.lastPostAnswerResult, lastPostAnswerResult) ||
+                other.lastPostAnswerResult == lastPostAnswerResult) &&
+            const DeepCollectionEquality()
+                .equals(other.questionScore, questionScore) &&
             (identical(other.showSuccessDialog, showSuccessDialog) ||
                 other.showSuccessDialog == showSuccessDialog) &&
             const DeepCollectionEquality()
@@ -81,18 +87,20 @@ mixin _$DailyActivitiesState {
       listError,
       pending,
       const DeepCollectionEquality().hash(historyItems),
+      const DeepCollectionEquality().hash(questionSolvedAt),
       totalScore,
       activeQuestion,
       selectedOptionId,
-      submitStatus,
-      submitError,
-      lastSubmitResult,
+      postAnswerStatus,
+      postAnswerError,
+      lastPostAnswerResult,
+      const DeepCollectionEquality().hash(questionScore),
       showSuccessDialog,
       const DeepCollectionEquality().hash(answeredQuestionStubs));
 
   @override
   String toString() {
-    return 'DailyActivitiesState(listStatus: $listStatus, questions: $questions, listError: $listError, pending: $pending, historyItems: $historyItems, totalScore: $totalScore, activeQuestion: $activeQuestion, selectedOptionId: $selectedOptionId, submitStatus: $submitStatus, submitError: $submitError, lastSubmitResult: $lastSubmitResult, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs)';
+    return 'DailyActivitiesState(listStatus: $listStatus, questions: $questions, listError: $listError, pending: $pending, historyItems: $historyItems, questionSolvedAt: $questionSolvedAt, totalScore: $totalScore, activeQuestion: $activeQuestion, selectedOptionId: $selectedOptionId, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, questionScore: $questionScore, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs)';
   }
 }
 
@@ -108,12 +116,14 @@ abstract mixin class $DailyActivitiesStateCopyWith<$Res> {
       String? listError,
       DailyPendingEntity? pending,
       List<DailyCalendarItemEntity> historyItems,
+      Map<String, DateTime> questionSolvedAt,
       double? totalScore,
       DailyQuestionEntity? activeQuestion,
       String? selectedOptionId,
-      DailyActivitiesSubmitStatus submitStatus,
-      String? submitError,
-      DailyActivityAnswerResultEntity? lastSubmitResult,
+      DailyActivitiesPostAnswerStatus postAnswerStatus,
+      String? postAnswerError,
+      DailyAnswerResultEntity? lastPostAnswerResult,
+      Map<String, double> questionScore,
       bool showSuccessDialog,
       List<DailyQuestionEntity> answeredQuestionStubs});
 }
@@ -136,12 +146,14 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
     Object? listError = freezed,
     Object? pending = freezed,
     Object? historyItems = null,
+    Object? questionSolvedAt = null,
     Object? totalScore = freezed,
     Object? activeQuestion = freezed,
     Object? selectedOptionId = freezed,
-    Object? submitStatus = null,
-    Object? submitError = freezed,
-    Object? lastSubmitResult = freezed,
+    Object? postAnswerStatus = null,
+    Object? postAnswerError = freezed,
+    Object? lastPostAnswerResult = freezed,
+    Object? questionScore = null,
     Object? showSuccessDialog = null,
     Object? answeredQuestionStubs = null,
   }) {
@@ -166,6 +178,10 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self.historyItems
           : historyItems // ignore: cast_nullable_to_non_nullable
               as List<DailyCalendarItemEntity>,
+      questionSolvedAt: null == questionSolvedAt
+          ? _self.questionSolvedAt
+          : questionSolvedAt // ignore: cast_nullable_to_non_nullable
+              as Map<String, DateTime>,
       totalScore: freezed == totalScore
           ? _self.totalScore
           : totalScore // ignore: cast_nullable_to_non_nullable
@@ -178,18 +194,22 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self.selectedOptionId
           : selectedOptionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      submitStatus: null == submitStatus
-          ? _self.submitStatus
-          : submitStatus // ignore: cast_nullable_to_non_nullable
-              as DailyActivitiesSubmitStatus,
-      submitError: freezed == submitError
-          ? _self.submitError
-          : submitError // ignore: cast_nullable_to_non_nullable
+      postAnswerStatus: null == postAnswerStatus
+          ? _self.postAnswerStatus
+          : postAnswerStatus // ignore: cast_nullable_to_non_nullable
+              as DailyActivitiesPostAnswerStatus,
+      postAnswerError: freezed == postAnswerError
+          ? _self.postAnswerError
+          : postAnswerError // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastSubmitResult: freezed == lastSubmitResult
-          ? _self.lastSubmitResult
-          : lastSubmitResult // ignore: cast_nullable_to_non_nullable
-              as DailyActivityAnswerResultEntity?,
+      lastPostAnswerResult: freezed == lastPostAnswerResult
+          ? _self.lastPostAnswerResult
+          : lastPostAnswerResult // ignore: cast_nullable_to_non_nullable
+              as DailyAnswerResultEntity?,
+      questionScore: null == questionScore
+          ? _self.questionScore
+          : questionScore // ignore: cast_nullable_to_non_nullable
+              as Map<String, double>,
       showSuccessDialog: null == showSuccessDialog
           ? _self.showSuccessDialog
           : showSuccessDialog // ignore: cast_nullable_to_non_nullable
@@ -301,12 +321,14 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             String? listError,
             DailyPendingEntity? pending,
             List<DailyCalendarItemEntity> historyItems,
+            Map<String, DateTime> questionSolvedAt,
             double? totalScore,
             DailyQuestionEntity? activeQuestion,
             String? selectedOptionId,
-            DailyActivitiesSubmitStatus submitStatus,
-            String? submitError,
-            DailyActivityAnswerResultEntity? lastSubmitResult,
+            DailyActivitiesPostAnswerStatus postAnswerStatus,
+            String? postAnswerError,
+            DailyAnswerResultEntity? lastPostAnswerResult,
+            Map<String, double> questionScore,
             bool showSuccessDialog,
             List<DailyQuestionEntity> answeredQuestionStubs)?
         $default, {
@@ -321,12 +343,14 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             _that.listError,
             _that.pending,
             _that.historyItems,
+            _that.questionSolvedAt,
             _that.totalScore,
             _that.activeQuestion,
             _that.selectedOptionId,
-            _that.submitStatus,
-            _that.submitError,
-            _that.lastSubmitResult,
+            _that.postAnswerStatus,
+            _that.postAnswerError,
+            _that.lastPostAnswerResult,
+            _that.questionScore,
             _that.showSuccessDialog,
             _that.answeredQuestionStubs);
       case _:
@@ -355,12 +379,14 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             String? listError,
             DailyPendingEntity? pending,
             List<DailyCalendarItemEntity> historyItems,
+            Map<String, DateTime> questionSolvedAt,
             double? totalScore,
             DailyQuestionEntity? activeQuestion,
             String? selectedOptionId,
-            DailyActivitiesSubmitStatus submitStatus,
-            String? submitError,
-            DailyActivityAnswerResultEntity? lastSubmitResult,
+            DailyActivitiesPostAnswerStatus postAnswerStatus,
+            String? postAnswerError,
+            DailyAnswerResultEntity? lastPostAnswerResult,
+            Map<String, double> questionScore,
             bool showSuccessDialog,
             List<DailyQuestionEntity> answeredQuestionStubs)
         $default,
@@ -374,12 +400,14 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             _that.listError,
             _that.pending,
             _that.historyItems,
+            _that.questionSolvedAt,
             _that.totalScore,
             _that.activeQuestion,
             _that.selectedOptionId,
-            _that.submitStatus,
-            _that.submitError,
-            _that.lastSubmitResult,
+            _that.postAnswerStatus,
+            _that.postAnswerError,
+            _that.lastPostAnswerResult,
+            _that.questionScore,
             _that.showSuccessDialog,
             _that.answeredQuestionStubs);
       case _:
@@ -407,12 +435,14 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             String? listError,
             DailyPendingEntity? pending,
             List<DailyCalendarItemEntity> historyItems,
+            Map<String, DateTime> questionSolvedAt,
             double? totalScore,
             DailyQuestionEntity? activeQuestion,
             String? selectedOptionId,
-            DailyActivitiesSubmitStatus submitStatus,
-            String? submitError,
-            DailyActivityAnswerResultEntity? lastSubmitResult,
+            DailyActivitiesPostAnswerStatus postAnswerStatus,
+            String? postAnswerError,
+            DailyAnswerResultEntity? lastPostAnswerResult,
+            Map<String, double> questionScore,
             bool showSuccessDialog,
             List<DailyQuestionEntity> answeredQuestionStubs)?
         $default,
@@ -426,12 +456,14 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             _that.listError,
             _that.pending,
             _that.historyItems,
+            _that.questionSolvedAt,
             _that.totalScore,
             _that.activeQuestion,
             _that.selectedOptionId,
-            _that.submitStatus,
-            _that.submitError,
-            _that.lastSubmitResult,
+            _that.postAnswerStatus,
+            _that.postAnswerError,
+            _that.lastPostAnswerResult,
+            _that.questionScore,
             _that.showSuccessDialog,
             _that.answeredQuestionStubs);
       case _:
@@ -449,16 +481,20 @@ class _DailyActivitiesState implements DailyActivitiesState {
       this.listError,
       this.pending,
       final List<DailyCalendarItemEntity> historyItems = const [],
+      final Map<String, DateTime> questionSolvedAt = const {},
       this.totalScore,
       this.activeQuestion,
       this.selectedOptionId,
-      this.submitStatus = DailyActivitiesSubmitStatus.idle,
-      this.submitError,
-      this.lastSubmitResult,
+      this.postAnswerStatus = DailyActivitiesPostAnswerStatus.idle,
+      this.postAnswerError,
+      this.lastPostAnswerResult,
+      final Map<String, double> questionScore = const {},
       this.showSuccessDialog = false,
       final List<DailyQuestionEntity> answeredQuestionStubs = const []})
       : _questions = questions,
         _historyItems = historyItems,
+        _questionSolvedAt = questionSolvedAt,
+        _questionScore = questionScore,
         _answeredQuestionStubs = answeredQuestionStubs;
 
   @override
@@ -486,6 +522,15 @@ class _DailyActivitiesState implements DailyActivitiesState {
     return EqualUnmodifiableListView(_historyItems);
   }
 
+  final Map<String, DateTime> _questionSolvedAt;
+  @override
+  @JsonKey()
+  Map<String, DateTime> get questionSolvedAt {
+    if (_questionSolvedAt is EqualUnmodifiableMapView) return _questionSolvedAt;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_questionSolvedAt);
+  }
+
   @override
   final double? totalScore;
 
@@ -496,11 +541,19 @@ class _DailyActivitiesState implements DailyActivitiesState {
   final String? selectedOptionId;
   @override
   @JsonKey()
-  final DailyActivitiesSubmitStatus submitStatus;
+  final DailyActivitiesPostAnswerStatus postAnswerStatus;
   @override
-  final String? submitError;
+  final String? postAnswerError;
   @override
-  final DailyActivityAnswerResultEntity? lastSubmitResult;
+  final DailyAnswerResultEntity? lastPostAnswerResult;
+  final Map<String, double> _questionScore;
+  @override
+  @JsonKey()
+  Map<String, double> get questionScore {
+    if (_questionScore is EqualUnmodifiableMapView) return _questionScore;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_questionScore);
+  }
 
   /// Başarı modalı (Tebrikler X puan)
   @override
@@ -543,18 +596,22 @@ class _DailyActivitiesState implements DailyActivitiesState {
             (identical(other.pending, pending) || other.pending == pending) &&
             const DeepCollectionEquality()
                 .equals(other._historyItems, _historyItems) &&
+            const DeepCollectionEquality()
+                .equals(other._questionSolvedAt, _questionSolvedAt) &&
             (identical(other.totalScore, totalScore) ||
                 other.totalScore == totalScore) &&
             (identical(other.activeQuestion, activeQuestion) ||
                 other.activeQuestion == activeQuestion) &&
             (identical(other.selectedOptionId, selectedOptionId) ||
                 other.selectedOptionId == selectedOptionId) &&
-            (identical(other.submitStatus, submitStatus) ||
-                other.submitStatus == submitStatus) &&
-            (identical(other.submitError, submitError) ||
-                other.submitError == submitError) &&
-            (identical(other.lastSubmitResult, lastSubmitResult) ||
-                other.lastSubmitResult == lastSubmitResult) &&
+            (identical(other.postAnswerStatus, postAnswerStatus) ||
+                other.postAnswerStatus == postAnswerStatus) &&
+            (identical(other.postAnswerError, postAnswerError) ||
+                other.postAnswerError == postAnswerError) &&
+            (identical(other.lastPostAnswerResult, lastPostAnswerResult) ||
+                other.lastPostAnswerResult == lastPostAnswerResult) &&
+            const DeepCollectionEquality()
+                .equals(other._questionScore, _questionScore) &&
             (identical(other.showSuccessDialog, showSuccessDialog) ||
                 other.showSuccessDialog == showSuccessDialog) &&
             const DeepCollectionEquality()
@@ -569,18 +626,20 @@ class _DailyActivitiesState implements DailyActivitiesState {
       listError,
       pending,
       const DeepCollectionEquality().hash(_historyItems),
+      const DeepCollectionEquality().hash(_questionSolvedAt),
       totalScore,
       activeQuestion,
       selectedOptionId,
-      submitStatus,
-      submitError,
-      lastSubmitResult,
+      postAnswerStatus,
+      postAnswerError,
+      lastPostAnswerResult,
+      const DeepCollectionEquality().hash(_questionScore),
       showSuccessDialog,
       const DeepCollectionEquality().hash(_answeredQuestionStubs));
 
   @override
   String toString() {
-    return 'DailyActivitiesState(listStatus: $listStatus, questions: $questions, listError: $listError, pending: $pending, historyItems: $historyItems, totalScore: $totalScore, activeQuestion: $activeQuestion, selectedOptionId: $selectedOptionId, submitStatus: $submitStatus, submitError: $submitError, lastSubmitResult: $lastSubmitResult, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs)';
+    return 'DailyActivitiesState(listStatus: $listStatus, questions: $questions, listError: $listError, pending: $pending, historyItems: $historyItems, questionSolvedAt: $questionSolvedAt, totalScore: $totalScore, activeQuestion: $activeQuestion, selectedOptionId: $selectedOptionId, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, questionScore: $questionScore, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs)';
   }
 }
 
@@ -598,12 +657,14 @@ abstract mixin class _$DailyActivitiesStateCopyWith<$Res>
       String? listError,
       DailyPendingEntity? pending,
       List<DailyCalendarItemEntity> historyItems,
+      Map<String, DateTime> questionSolvedAt,
       double? totalScore,
       DailyQuestionEntity? activeQuestion,
       String? selectedOptionId,
-      DailyActivitiesSubmitStatus submitStatus,
-      String? submitError,
-      DailyActivityAnswerResultEntity? lastSubmitResult,
+      DailyActivitiesPostAnswerStatus postAnswerStatus,
+      String? postAnswerError,
+      DailyAnswerResultEntity? lastPostAnswerResult,
+      Map<String, double> questionScore,
       bool showSuccessDialog,
       List<DailyQuestionEntity> answeredQuestionStubs});
 }
@@ -626,12 +687,14 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
     Object? listError = freezed,
     Object? pending = freezed,
     Object? historyItems = null,
+    Object? questionSolvedAt = null,
     Object? totalScore = freezed,
     Object? activeQuestion = freezed,
     Object? selectedOptionId = freezed,
-    Object? submitStatus = null,
-    Object? submitError = freezed,
-    Object? lastSubmitResult = freezed,
+    Object? postAnswerStatus = null,
+    Object? postAnswerError = freezed,
+    Object? lastPostAnswerResult = freezed,
+    Object? questionScore = null,
     Object? showSuccessDialog = null,
     Object? answeredQuestionStubs = null,
   }) {
@@ -656,6 +719,10 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self._historyItems
           : historyItems // ignore: cast_nullable_to_non_nullable
               as List<DailyCalendarItemEntity>,
+      questionSolvedAt: null == questionSolvedAt
+          ? _self._questionSolvedAt
+          : questionSolvedAt // ignore: cast_nullable_to_non_nullable
+              as Map<String, DateTime>,
       totalScore: freezed == totalScore
           ? _self.totalScore
           : totalScore // ignore: cast_nullable_to_non_nullable
@@ -668,18 +735,22 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self.selectedOptionId
           : selectedOptionId // ignore: cast_nullable_to_non_nullable
               as String?,
-      submitStatus: null == submitStatus
-          ? _self.submitStatus
-          : submitStatus // ignore: cast_nullable_to_non_nullable
-              as DailyActivitiesSubmitStatus,
-      submitError: freezed == submitError
-          ? _self.submitError
-          : submitError // ignore: cast_nullable_to_non_nullable
+      postAnswerStatus: null == postAnswerStatus
+          ? _self.postAnswerStatus
+          : postAnswerStatus // ignore: cast_nullable_to_non_nullable
+              as DailyActivitiesPostAnswerStatus,
+      postAnswerError: freezed == postAnswerError
+          ? _self.postAnswerError
+          : postAnswerError // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastSubmitResult: freezed == lastSubmitResult
-          ? _self.lastSubmitResult
-          : lastSubmitResult // ignore: cast_nullable_to_non_nullable
-              as DailyActivityAnswerResultEntity?,
+      lastPostAnswerResult: freezed == lastPostAnswerResult
+          ? _self.lastPostAnswerResult
+          : lastPostAnswerResult // ignore: cast_nullable_to_non_nullable
+              as DailyAnswerResultEntity?,
+      questionScore: null == questionScore
+          ? _self._questionScore
+          : questionScore // ignore: cast_nullable_to_non_nullable
+              as Map<String, double>,
       showSuccessDialog: null == showSuccessDialog
           ? _self.showSuccessDialog
           : showSuccessDialog // ignore: cast_nullable_to_non_nullable

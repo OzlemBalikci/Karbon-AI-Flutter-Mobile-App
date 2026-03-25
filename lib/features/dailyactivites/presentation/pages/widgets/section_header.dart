@@ -4,11 +4,11 @@ class SectionHeader extends StatelessWidget {
   const SectionHeader({
     super.key,
     required this.title,
-    required this.type,
+    required this.variant,
   });
 
   final String title;
-  final QuestionCardType type;
+  final QuestionCardVariant variant;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,7 +19,7 @@ class SectionHeader extends StatelessWidget {
           style: context.typographiesSp.bodyMediumSmall
               .withColor(context.colors.textBlack),
         ),
-        if (type == QuestionCardType.today)
+        if (variant is QuestionCardToday)
           Text(
             '16 saat kaldı',
             style: context.typographiesSp.bodySmall

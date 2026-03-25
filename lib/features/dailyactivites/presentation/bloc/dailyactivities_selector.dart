@@ -9,6 +9,17 @@ typedef DailyActivitiesQuestionRowData = (
   DailyQuestionEntity entity
 );
 
+typedef DailyActivitiesHistoryData = ({
+  List<DailyQuestionEntity> solvedQuestions,
+  Map<String, DateTime> questionSolvedAt,
+});
+DailyActivitiesHistoryData selectHistoryData(DailyActivitiesState state) {
+  return (
+    solvedQuestions: state.answeredQuestionStubs,
+    questionSolvedAt: state.questionSolvedAt
+  );
+}
+
 class DailyActivitiesSelector<T>
     extends BlocSelector<DailyActivitiesBloc, DailyActivitiesState, T> {
   DailyActivitiesSelector({
@@ -67,6 +78,20 @@ class DailyActivitiesQuestionsSelector
         builder,
   }) : super(
           selector: (state) => state.questions,
+          builder: builder,
+        );
+}
+
+class DailyActivitiesHistorySelector
+    extends DailyActivitiesSelector<DailyActivitiesHistoryData> {
+  DailyActivitiesHistorySelector({
+    super.key,
+    required Widget Function(
+      BuildContext context,
+      DailyActivitiesHistoryData data,
+    ) builder,
+  }) : super(
+          selector: selectHistoryData,
           builder: builder,
         );
 }

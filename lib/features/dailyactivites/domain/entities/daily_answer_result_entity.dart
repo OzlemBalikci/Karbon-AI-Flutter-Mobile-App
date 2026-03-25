@@ -1,7 +1,7 @@
 import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
 
-class DailyActivityAnswerResultEntity {
-  const DailyActivityAnswerResultEntity({
+class DailyAnswerResultEntity {
+  const DailyAnswerResultEntity({
     required this.score,
     this.nextQuestion,
   });
@@ -10,9 +10,9 @@ class DailyActivityAnswerResultEntity {
 
   final DailyQuestionEntity? nextQuestion;
 
-  factory DailyActivityAnswerResultEntity.fromJson(Map<String, dynamic> json) {
+  factory DailyAnswerResultEntity.fromJson(Map<String, dynamic> json) {
     final next = json['nextQuestion'];
-    return DailyActivityAnswerResultEntity(
+    return DailyAnswerResultEntity(
       score: (json['score'] as num?)?.toDouble() ?? 0,
       nextQuestion: next is Map<String, dynamic>
           ? DailyQuestionEntity.fromJson(next)

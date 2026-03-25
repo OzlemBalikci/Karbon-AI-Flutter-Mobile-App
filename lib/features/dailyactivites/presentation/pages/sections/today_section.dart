@@ -14,7 +14,7 @@ class TodaySection extends StatelessWidget {
         children: [
           SectionHeader(
             title: context.text.daily_activities_today_section_header_text,
-            type: QuestionCardType.today,
+            variant: QuestionCardToday(questionId: ''),
           ),
           SizedBox(height: AppThemeSpacing.s20.h),
           Expanded(
@@ -31,8 +31,8 @@ class TodaySection extends StatelessWidget {
                   itemBuilder: (context, index) => Padding(
                     padding: EdgeInsets.only(bottom: AppThemeSpacing.s20.h),
                     child: QuestionCard(
-                      questionId: questions[index].id,
-                      type: QuestionCardType.today,
+                      variant:
+                          QuestionCardToday(questionId: questions[index].id),
                     ),
                   ),
                 );

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/dailyactivites/data/datasources/daily_activities_remote.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_activity_answer_result_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_answer_result_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
@@ -23,13 +23,13 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
   }
 
   @override
-  Future<Either<Exception, DailyActivityAnswerResultEntity>> submitAnswer({
+  Future<Either<Exception, DailyAnswerResultEntity>> postAnswer({
     required String questionId,
     required String optionId,
   }) async {
     try {
       return Right(
-        await _remote.submitAnswer(
+        await _remote.postAnswer(
           questionId: questionId,
           optionId: optionId,
         ),
@@ -57,6 +57,17 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
     try {
       return Right(
           await _remote.getCalendar(year: year, month: month, period: period));
+    } on Exception catch (e) {
+      return Left(e);
+    }
+  }
+
+  @override
+  Future<Either<Exception, DailyAnswerResultEntity>> getDetails({
+    required String date,
+  }) async {
+    try {
+      return Right(await _remote.getDetails(date: date));
     } on Exception catch (e) {
       return Left(e);
     }
