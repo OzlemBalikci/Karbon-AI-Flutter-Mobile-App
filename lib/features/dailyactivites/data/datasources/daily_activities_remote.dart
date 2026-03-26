@@ -74,17 +74,41 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 200));
 
-    // TODO:
+    // TODO: gerçek API
     // final res = await _dio.post(_pathAnswers, data: {
     //   'questionId': questionId,
     //   'optionId': optionId,
     // });
-    // final data = res.data['data'] as Map<String, dynamic>;
-    // return DailyActivityAnswerResultEntity.fromJson(data);
+    // return DailyAnswerResultEntity.fromJson(res.data['data'] as Map<String, dynamic>);
 
-    return const DailyAnswerResultEntity(
-      score: 4.5,
-      nextQuestion: null,
+    return _mockPostAnswer(questionId: questionId, optionId: optionId);
+  }
+
+  /// Seçilen seçeneğin [nextQuestionId] değerine göre sonraki soruyu mock listeden üretir.
+  static DailyAnswerResultEntity _mockPostAnswer({
+    required String questionId,
+    required String optionId,
+  }) {
+    final byId = allMockQuestionsById;
+    final question = byId[questionId];
+    if (question == null) {
+      return const DailyAnswerResultEntity(score: 0, nextQuestion: null);
+    }
+    DailyQuestionOptionEntity? selected;
+    for (final o in question.options) {
+      if (o.id == optionId) {
+        selected = o;
+        break;
+      }
+    }
+    if (selected == null) {
+      return const DailyAnswerResultEntity(score: 0, nextQuestion: null);
+    }
+    final nextId = selected.nextQuestionId;
+    final next = (nextId != null && nextId.isNotEmpty) ? byId[nextId] : null;
+    return DailyAnswerResultEntity(
+      score: selected.carbonValue,
+      nextQuestion: next,
     );
   }
 
@@ -103,15 +127,71 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       displayOrder: 1,
       options: [
         DailyQuestionOptionEntity(
-          id: 'o1',
+          id: 'q1-o1',
           text: 'Araba',
           carbonValue: 4.5,
           nextQuestionId: null,
         ),
         DailyQuestionOptionEntity(
-          id: 'o2',
+          id: 'q1-o2',
           text: 'Toplu taşıma',
           carbonValue: 2.0,
+          nextQuestionId: 'q1-option2-mock',
+        ),
+      ],
+    ),
+    DailyQuestionEntity(
+      id: 'q1-option2-mock',
+      text: 'Kullandığınız ulaşım aracını seçiniz.',
+      displayOrder: 2,
+      options: [
+        DailyQuestionOptionEntity(
+          id: 'q1-o2-o1',
+          text: 'Otobüs',
+          carbonValue: 1.5,
+          nextQuestionId: 'q1-option2-option1-mock',
+        ),
+        DailyQuestionOptionEntity(
+          id: 'q1-o2-o2',
+          text: 'Metro',
+          carbonValue: 3.5,
+          nextQuestionId: null,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'q1-o2-o3',
+          text: 'Bisiklet',
+          carbonValue: 4.5,
+          nextQuestionId: null,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'q1-o2-o4',
+          text: 'Vapur',
+          carbonValue: 2.5,
+          nextQuestionId: null,
+        ),
+      ],
+    ),
+    DailyQuestionEntity(
+      id: 'q1-option2-option1-mock',
+      text: 'Sefer Sayısı',
+      displayOrder: 2,
+      options: [
+        DailyQuestionOptionEntity(
+          id: 'q1-o2-o1-o1',
+          text: '1 Sefer',
+          carbonValue: 4.5,
+          nextQuestionId: null,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'q1-o2-o1-o2',
+          text: '2 Sefer',
+          carbonValue: 3.5,
+          nextQuestionId: null,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'q1-o2-o1-o3',
+          text: '3 Sefer',
+          carbonValue: 2.5,
           nextQuestionId: null,
         ),
       ],
@@ -152,4 +232,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       DailyCalendarItemEntity(date: '2026-03-08', score: 7.0, hasDetails: true),
     ],
   );
+
+  static Map<String, DailyQuestionEntity> get allMockQuestionsById =>
+      {for (final q in _mockTodayQuestions) q.id: q};
 }

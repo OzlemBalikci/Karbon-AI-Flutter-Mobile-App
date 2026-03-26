@@ -1,4 +1,4 @@
-part of '../dailyactivities.dart';
+part of '../screens/dailyactivities.dart';
 
 class SectionHeader extends StatelessWidget {
   const SectionHeader({

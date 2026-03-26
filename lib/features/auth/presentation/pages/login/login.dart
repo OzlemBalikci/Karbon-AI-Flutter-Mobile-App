@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state.resultStatus == LoginResultStatus.success) {
-          context.router.replaceAll([const AppShellRoute()]);
+          context.router.replaceAll([const HomeShellRoute()]);
         }
       },
       child: Scaffold(

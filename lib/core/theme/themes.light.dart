@@ -27,6 +27,7 @@ class LightAppTheme extends AppTheme {
             textBlack: Color(0xFF191C24),
             border: Color(0xFFEBEBEB),
             hint: Color(0xB2597165),
+            buttonDisabled: Color(0xFFB6B6B6),
           ),
         );
 }

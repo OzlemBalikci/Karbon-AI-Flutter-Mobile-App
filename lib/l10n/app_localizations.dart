@@ -448,6 +448,18 @@ abstract class AppLocalizations {
   /// **'Önceki Cevaplarınız'**
   String get daily_activities_history_section_header_text;
 
+  /// No description provided for @selected_question_header_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Seçili Soru Detayı'**
+  String get selected_question_header_text;
+
+  /// No description provided for @selected_question_bottom_button_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Puanı Al'**
+  String get selected_question_bottom_button_title;
+
   /// No description provided for @lorem_ipsum.
   ///
   /// In tr, this message translates to:

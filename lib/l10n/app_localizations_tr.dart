@@ -203,6 +203,12 @@ class AppLocalizationsTr extends AppLocalizations {
       'Önceki Cevaplarınız';
 
   @override
+  String get selected_question_header_text => 'Seçili Soru Detayı';
+
+  @override
+  String get selected_question_bottom_button_title => 'Puanı Al';
+
+  @override
   String get lorem_ipsum =>
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.';
 }

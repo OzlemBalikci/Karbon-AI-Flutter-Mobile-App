@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/branch_step.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
@@ -43,8 +43,8 @@ class DailyActivitiesBloc
   ) async {
     emit(
       state.copyWith(
-        listStatus: DailyActivitiesListStatus.loading,
-        listError: null,
+        screenStatus: DailyActivitiesScreenStatus.loading,
+        screenError: null,
       ),
     );
 
@@ -53,8 +53,8 @@ class DailyActivitiesBloc
       (e) {
         emit(
           state.copyWith(
-            listStatus: DailyActivitiesListStatus.error,
-            listError: e.toString(),
+            screenStatus: DailyActivitiesScreenStatus.error,
+            screenError: e.toString(),
           ),
         );
         return null;
@@ -67,8 +67,8 @@ class DailyActivitiesBloc
       (e) {
         emit(
           state.copyWith(
-            listStatus: DailyActivitiesListStatus.error,
-            listError: e.toString(),
+            screenStatus: DailyActivitiesScreenStatus.error,
+            screenError: e.toString(),
           ),
         );
         return null;
@@ -85,8 +85,8 @@ class DailyActivitiesBloc
       (e) {
         emit(
           state.copyWith(
-            listStatus: DailyActivitiesListStatus.error,
-            listError: e.toString(),
+            screenStatus: DailyActivitiesScreenStatus.error,
+            screenError: e.toString(),
           ),
         );
         return null;
@@ -96,7 +96,7 @@ class DailyActivitiesBloc
     if (calendar == null) return;
     emit(
       state.copyWith(
-        listStatus: DailyActivitiesListStatus.success,
+        screenStatus: DailyActivitiesScreenStatus.success,
         questions: questions,
         pending: pending,
         historyItems: calendar.items,
@@ -111,43 +111,46 @@ class DailyActivitiesBloc
   ) {
     emit(
       state.copyWith(
-        listStatus: DailyActivitiesListStatus.error,
-        listError: event.error,
+        screenStatus: DailyActivitiesScreenStatus.error,
+        screenError: event.error,
       ),
     );
   }
 
-  void _onQuestionSelected(
-    DailyActivitiesQuestionSelected event,
-    Emitter<DailyActivitiesState> emit,
-  ) {
-    emit(
-      state.copyWith(
-        activeQuestion: event.question,
-        selectedOptionId: null,
-        postAnswerStatus: DailyActivitiesPostAnswerStatus.idle,
-        postAnswerError: null,
-        lastPostAnswerResult: null,
-        showSuccessDialog: false,
-      ),
-    );
-  }
-
-  void _onOptionSelected(
-    DailyActivitiesOptionSelected event,
-    Emitter<DailyActivitiesState> emit,
-  ) {
+  // questionSelected → ilk adımı başlat
+  void _onQuestionSelected(DailyActivitiesQuestionSelected event,
+      Emitter<DailyActivitiesState> emit) {
     emit(state.copyWith(
-        selectedOptionId: event.optionId, postAnswerError: null));
+      branchPath: [BranchStep(question: event.question)],
+      postAnswerStatus: DailyActivitiesPostAnswerStatus.idle,
+      postAnswerError: null,
+      lastPostAnswerResult: null,
+      showSuccessDialog: false,
+    ));
+  }
+
+// optionSelected → aktif adıma seçimi yaz (freeze değil, yeni liste)
+  void _onOptionSelected(
+      DailyActivitiesOptionSelected event, Emitter<DailyActivitiesState> emit) {
+    final path = [...state.branchPath];
+    if (path.isEmpty) return;
+    final last = path.last;
+    final option = last.question.options.firstWhere(
+      (o) => o.id == event.optionId,
+      orElse: () => throw StateError('option not found'),
+    );
+    path[path.length - 1] = last.copyWithOption(option);
+    emit(state.copyWith(branchPath: path, postAnswerError: null));
   }
 
   Future<void> _onPostAnswerRequested(
     DailyActivitiesPostAnswerRequested event,
     Emitter<DailyActivitiesState> emit,
   ) async {
-    final q = state.activeQuestion;
-    final optionId = state.selectedOptionId;
-    if (q == null || optionId == null || optionId.isEmpty) {
+    final step = state.branchPath.isEmpty ? null : state.branchPath.last;
+    final q = step?.question;
+    final selectedOption = step?.selectedOption;
+    if (q == null || selectedOption == null) {
       emit(
         state.copyWith(
           postAnswerStatus: DailyActivitiesPostAnswerStatus.error,
@@ -170,7 +173,7 @@ class DailyActivitiesBloc
 
     final result = await _postAnswerUsecase(
       questionId: q.id,
-      optionId: optionId,
+      optionId: selectedOption.id,
     );
 
     result.fold(
@@ -186,16 +189,27 @@ class DailyActivitiesBloc
           ...state.answeredQuestionStubs,
           q,
         ];
-        emit(
-          state.copyWith(
-            postAnswerStatus: DailyActivitiesPostAnswerStatus.success,
-            lastPostAnswerResult: answer,
-            showSuccessDialog: true,
-            answeredQuestionStubs: updatedStubs,
-          ),
-        );
-        // Backend bir sonraki soruyu döndürüyorsa:
-        // answer.nextQuestion != null → questionSelected veya state’e göm
+        if (answer.nextQuestion != null) {
+          emit(
+            state.copyWith(
+              branchPath: [
+                ...state.branchPath,
+                BranchStep(question: answer.nextQuestion!)
+              ],
+              postAnswerStatus: DailyActivitiesPostAnswerStatus.idle,
+              postAnswerError: null,
+              showSuccessDialog: false,
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              postAnswerStatus: DailyActivitiesPostAnswerStatus.success,
+              showSuccessDialog: true,
+              answeredQuestionStubs: [...state.answeredQuestionStubs, q],
+            ),
+          );
+        }
       },
     );
   }
@@ -206,8 +220,7 @@ class DailyActivitiesBloc
   ) async {
     emit(
       state.copyWith(
-        activeQuestion: null,
-        selectedOptionId: null,
+        branchPath: [],
         postAnswerStatus: DailyActivitiesPostAnswerStatus.idle,
         lastPostAnswerResult: null,
         showSuccessDialog: false,
@@ -225,8 +238,7 @@ class DailyActivitiesBloc
       return;
     emit(
       state.copyWith(
-        activeQuestion: null,
-        selectedOptionId: null,
+        branchPath: [],
         postAnswerStatus: DailyActivitiesPostAnswerStatus.idle,
         postAnswerError: null,
       ),

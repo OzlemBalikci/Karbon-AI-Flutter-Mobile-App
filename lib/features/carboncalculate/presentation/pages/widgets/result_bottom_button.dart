@@ -29,7 +29,7 @@ class CarbonCalculateResultBottomButton extends StatelessWidget {
               context
                   .read<HomeBloc>()
                   .add(const HomeEvent.returnedFromCarbonCalculate());
-              context.router.replaceAll([const AppShellRoute()]);
+              context.router.replaceAll([const HomeShellRoute()]);
             },
           ),
         ],

@@ -1,4 +1,4 @@
-part of '../dailyactivities.dart';
+part of '../screens/dailyactivities.dart';
 
 class TodaySection extends StatelessWidget {
   const TodaySection({
@@ -19,24 +19,28 @@ class TodaySection extends StatelessWidget {
           SizedBox(height: AppThemeSpacing.s20.h),
           Expanded(
             child: DailyActivitiesQuestionsSelector(
-              builder: (context, questions) {
-                if (questions.isEmpty) {
-                  return Text(context.text.daily_activities_empty_hint,
+              builder: (questions) => Builder(
+                builder: (context) {
+                  if (questions.isEmpty) {
+                    return Text(
+                      context.text.daily_activities_empty_hint,
                       style: context.typographiesSp.bodySmall
-                          .withColor(context.colors.textBlack));
-                }
-                return ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: questions.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: EdgeInsets.only(bottom: AppThemeSpacing.s20.h),
-                    child: QuestionCard(
-                      variant:
-                          QuestionCardToday(questionId: questions[index].id),
+                          .withColor(context.colors.textBlack),
+                    );
+                  }
+                  return ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: questions.length,
+                    itemBuilder: (context, index) => Padding(
+                      padding: EdgeInsets.only(bottom: AppThemeSpacing.s20.h),
+                      child: QuestionCard(
+                        variant:
+                            QuestionCardToday(questionId: questions[index].id),
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           )
         ],

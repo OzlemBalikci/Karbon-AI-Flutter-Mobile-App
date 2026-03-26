@@ -3,11 +3,12 @@ import 'package:karbon/features/dailyactivites/domain/entities/daily_answer_resu
 import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_item_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/branch_step.dart';
 
 part 'dailyactivities_state.freezed.dart';
 
 /// Liste / ilk yükleme
-enum DailyActivitiesListStatus {
+enum DailyActivitiesScreenStatus {
   initial,
   loading,
   success,
@@ -25,18 +26,15 @@ enum DailyActivitiesPostAnswerStatus {
 @freezed
 abstract class DailyActivitiesState with _$DailyActivitiesState {
   const factory DailyActivitiesState({
-    @Default(DailyActivitiesListStatus.initial)
-    DailyActivitiesListStatus listStatus,
+    @Default(DailyActivitiesScreenStatus.initial)
+    DailyActivitiesScreenStatus screenStatus,
     @Default([]) List<DailyQuestionEntity> questions,
-    String? listError,
+    String? screenError,
     DailyPendingEntity? pending,
     @Default([]) List<DailyCalendarItemEntity> historyItems,
     @Default({}) Map<String, DateTime> questionSolvedAt,
     double? totalScore,
-
-    /// null → ana ekran; dolu → "Seçili Soru" akışı
-    DailyQuestionEntity? activeQuestion,
-    String? selectedOptionId,
+    @Default([]) List<BranchStep> branchPath,
     @Default(DailyActivitiesPostAnswerStatus.idle)
     DailyActivitiesPostAnswerStatus postAnswerStatus,
     String? postAnswerError,

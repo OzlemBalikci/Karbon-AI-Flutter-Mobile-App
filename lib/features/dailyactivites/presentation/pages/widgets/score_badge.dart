@@ -1,4 +1,4 @@
-part of '../dailyactivities.dart';
+part of '../screens/dailyactivities.dart';
 
 class ScoreBadge extends StatelessWidget {
   const ScoreBadge({super.key, required this.score});

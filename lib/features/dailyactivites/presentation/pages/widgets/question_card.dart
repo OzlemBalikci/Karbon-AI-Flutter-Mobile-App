@@ -1,4 +1,4 @@
-part of '../dailyactivities.dart';
+part of '../screens/dailyactivities.dart';
 
 // ─── Varyantlar ─────────────────────────────────────────────────────────────
 
@@ -55,18 +55,23 @@ class _TodayCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DailyActivitiesQuestionRowSelector(
       questionId: questionId,
-      builder: (context, data) {
+      builder: (data) {
         final (text, entity) = data;
-        return GestureDetector(
-          onTap: onTap ??
-              () => context.read<DailyActivitiesBloc>().add(
-                    DailyActivitiesEvent.questionSelected(entity),
-                  ),
-          child: _CardShell(
-            text: text,
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              size: AppThemeSpacing.s12.w,
+        return Builder(
+          builder: (context) => GestureDetector(
+            onTap: onTap ??
+                () {
+                  context.read<DailyActivitiesBloc>().add(
+                        DailyActivitiesEvent.questionSelected(entity),
+                      );
+                  context.router.push(const SelectedQuestionRoute());
+                },
+            child: _CardShell(
+              text: text,
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                size: AppThemeSpacing.s12.w,
+              ),
             ),
           ),
         );

@@ -27,6 +27,9 @@ class $AssetsIconsGen {
   SvgGenImage get calendarMonthOutlined =>
       const SvgGenImage('assets/icons/calendar_month_outlined.svg');
 
+  /// File path: assets/icons/dropdown.svg
+  SvgGenImage get dropdown => const SvgGenImage('assets/icons/dropdown.svg');
+
   /// File path: assets/icons/eye_slash_closed.svg
   SvgGenImage get eyeSlashClosed => const SvgGenImage('assets/icons/eye_slash_closed.svg');
 
@@ -50,6 +53,7 @@ class $AssetsIconsGen {
         calendar,
         tree,
         calendarMonthOutlined,
+        dropdown,
         eyeSlashClosed,
         eyeSlashOpened,
         favorites,

@@ -19,7 +19,7 @@ class AppThemeColors {
   final Color textBlack;
   final Color border;
   final Color hint;
-
+  final Color buttonDisabled;
   const AppThemeColors({
     required this.primarySwatch,
     required this.primary,
@@ -39,6 +39,7 @@ class AppThemeColors {
     required this.textBlack,
     required this.border,
     required this.hint,
+    required this.buttonDisabled,
   });
 
   AppThemeColors lerp(covariant dynamic other, double t) {
@@ -65,6 +66,7 @@ class AppThemeColors {
       textBlack: Color.lerp(textBlack, other.textBlack, t)!,
       border: Color.lerp(border, other.border, t)!,
       hint: Color.lerp(hint, other.hint, t)!,
+      buttonDisabled: Color.lerp(buttonDisabled, other.buttonDisabled, t)!,
     );
   }
 
@@ -87,6 +89,7 @@ class AppThemeColors {
     Color? textBlack,
     Color? border,
     Color? hint,
+    Color? buttonDisabled,
   }) {
     return AppThemeColors(
       primarySwatch: primarySwatch ?? this.primarySwatch,
@@ -108,6 +111,7 @@ class AppThemeColors {
       textBlack: textBlack ?? this.textBlack,
       border: border ?? this.border,
       hint: hint ?? this.hint,
+      buttonDisabled: buttonDisabled ?? this.buttonDisabled,
     );
   }
 }

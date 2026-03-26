@@ -11,22 +11,6 @@
 part of 'navigation.dart';
 
 /// generated route for
-/// [AppShellPage]
-class AppShellRoute extends PageRouteInfo<void> {
-  const AppShellRoute({List<PageRouteInfo>? children})
-    : super(AppShellRoute.name, initialChildren: children);
-
-  static const String name = 'AppShellRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const AppShellPage();
-    },
-  );
-}
-
-/// generated route for
 /// [CarbonCalculatePage]
 class CarbonCalculateRoute extends PageRouteInfo<void> {
   const CarbonCalculateRoute({List<PageRouteInfo>? children})
@@ -59,6 +43,22 @@ class DailyActivitiesRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DailyActivitiesShellPage]
+class DailyActivitiesShellRoute extends PageRouteInfo<void> {
+  const DailyActivitiesShellRoute({List<PageRouteInfo>? children})
+    : super(DailyActivitiesShellRoute.name, initialChildren: children);
+
+  static const String name = 'DailyActivitiesShellRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const DailyActivitiesShellPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ForgotPasswordPage]
 class ForgotPasswordRoute extends PageRouteInfo<void> {
   const ForgotPasswordRoute({List<PageRouteInfo>? children})
@@ -86,6 +86,22 @@ class HomeRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const HomePage();
+    },
+  );
+}
+
+/// generated route for
+/// [HomeShellPage]
+class HomeShellRoute extends PageRouteInfo<void> {
+  const HomeShellRoute({List<PageRouteInfo>? children})
+    : super(HomeShellRoute.name, initialChildren: children);
+
+  static const String name = 'HomeShellRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const HomeShellPage();
     },
   );
 }
@@ -150,6 +166,22 @@ class ResetPasswordRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ResetPasswordPage();
+    },
+  );
+}
+
+/// generated route for
+/// [SelectedQuestionPage]
+class SelectedQuestionRoute extends PageRouteInfo<void> {
+  const SelectedQuestionRoute({List<PageRouteInfo>? children})
+    : super(SelectedQuestionRoute.name, initialChildren: children);
+
+  static const String name = 'SelectedQuestionRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SelectedQuestionPage();
     },
   );
 }

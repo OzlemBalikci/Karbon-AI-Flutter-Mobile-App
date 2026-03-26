@@ -1,4 +1,4 @@
-part of '../dailyactivities.dart';
+part of '../screens/dailyactivities.dart';
 
 class HeaderSection extends StatelessWidget {
   const HeaderSection({super.key});

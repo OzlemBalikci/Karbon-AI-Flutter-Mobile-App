@@ -40,13 +40,11 @@ class CarbonCalculateQuestionBottom extends StatelessWidget {
                       : null,
                   backgroundColor: isAnswered
                       ? context.colors.primary
-                      : context.colors.primary.withValues(alpha: 0.7),
-                  foregroundColor: isAnswered
-                      ? context.colors.textOnPrimary
-                      : context.colors.textOnPrimary.withValues(alpha: 0.7),
+                      : context.colors.buttonDisabled,
+                  foregroundColor: context.colors.textOnPrimary,
                   borderColor: isAnswered
                       ? context.colors.primary
-                      : context.colors.primary.withValues(alpha: 0.7),
+                      : context.colors.buttonDisabled,
                 ),
               ),
             ),
