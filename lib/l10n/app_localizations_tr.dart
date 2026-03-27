@@ -73,7 +73,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get register_surname_textfield_text => 'Soyadınız';
 
   @override
-  String get register_dogum_tarihi_textfield_text => 'Doğum Tarihiniz';
+  String get register_birth_date_textfield_text => 'Doğum Tarihiniz';
 
   @override
   String get register_password_textfield_text => 'Şifrenizi Giriniz';
@@ -207,6 +207,26 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get selected_question_bottom_button_title => 'Puanı Al';
+
+  @override
+  String get profile_header_text => 'Profil';
+
+  @override
+  String get profile_logout_text => 'Çıkış Yap';
+
+  @override
+  String get profile_delete_account_text => 'Hesabımı Sil';
+
+  @override
+  String get profile_star_total_point_text => 'Toplam Kazandığınız Puan';
+
+  @override
+  String profile_star_text(String donatedTree) {
+    return 'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, $donatedTree ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin. /n/nHemen şimdi <strong>“Ağaç Bağışla”<strong> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!';
+  }
+
+  @override
+  String get profile_star_donate_button_text => 'Ağaç Bağışla';
 
   @override
   String get lorem_ipsum =>

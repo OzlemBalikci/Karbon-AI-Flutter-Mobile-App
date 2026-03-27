@@ -20,7 +20,7 @@
     "register_tcno_textfield_text": "T.C. Kimlik No",
     "register_name_textfield_text": "Adınız",
     "register_surname_textfield_text": "Soyadınız",
-    "register_dogum_tarihi_textfield_text": "Doğum Tarihiniz",
+    "register_birth_date_textfield_text": "Doğum Tarihiniz",
     "register_password_textfield_text": "Şifrenizi Giriniz",
     "register_confirm_password_textfield_text": "Şifreniz Tekrar Giriniz",
     "register_phone_textfield_text": "Cep Telefonu",
@@ -63,6 +63,19 @@
     "daily_activities_history_section_header_text" : "Önceki Cevaplarınız",
     "selected_question_header_text": "Seçili Soru Detayı",
     "selected_question_bottom_button_title": "Puanı Al",
+    "profile_header_text" : "Profil",
+    "profile_logout_text" : "Çıkış Yap",
+    "profile_delete_account_text" : "Hesabımı Sil",
+    "profile_star_total_point_text" : "Toplam Kazandığınız Puan",
+    "profile_star_text": "Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, {donatedTree} ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin. /n/nHemen şimdi <strong>“Ağaç Bağışla”<strong> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!",
+       "@profile_star_text": {
+        "placeholders": {
+            "donatedTree": {
+                "type": "String",
+                "example": "1.200"
+            }
+        }
+    },
+    "profile_star_donate_button_text": "Ağaç Bağışla",
     "lorem_ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."
-    
   }

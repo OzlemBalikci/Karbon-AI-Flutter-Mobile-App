@@ -31,10 +31,12 @@ class $AssetsIconsGen {
   SvgGenImage get dropdown => const SvgGenImage('assets/icons/dropdown.svg');
 
   /// File path: assets/icons/eye_slash_closed.svg
-  SvgGenImage get eyeSlashClosed => const SvgGenImage('assets/icons/eye_slash_closed.svg');
+  SvgGenImage get eyeSlashClosed =>
+      const SvgGenImage('assets/icons/eye_slash_closed.svg');
 
   /// File path: assets/icons/eye_slash_opened.svg
-  SvgGenImage get eyeSlashOpened => const SvgGenImage('assets/icons/eye_slash_opened.svg');
+  SvgGenImage get eyeSlashOpened =>
+      const SvgGenImage('assets/icons/eye_slash_opened.svg');
 
   /// File path: assets/icons/favorites.svg
   SvgGenImage get favorites => const SvgGenImage('assets/icons/favorites.svg');
@@ -43,10 +45,24 @@ class $AssetsIconsGen {
   SvgGenImage get home => const SvgGenImage('assets/icons/home.svg');
 
   /// File path: assets/icons/iconbackbutton.svg
-  SvgGenImage get iconbackbutton => const SvgGenImage('assets/icons/iconbackbutton.svg');
+  SvgGenImage get iconbackbutton =>
+      const SvgGenImage('assets/icons/iconbackbutton.svg');
+
+  /// File path: assets/icons/info.svg
+  SvgGenImage get info => const SvgGenImage('assets/icons/info.svg');
+
+  /// File path: assets/icons/logout.svg
+  SvgGenImage get logout => const SvgGenImage('assets/icons/logout.svg');
+
+  /// File path: assets/icons/profile.svg
+  SvgGenImage get profile => const SvgGenImage('assets/icons/profile.svg');
 
   /// File path: assets/icons/stats.svg
   SvgGenImage get stats => const SvgGenImage('assets/icons/stats.svg');
+
+  /// File path: assets/icons/tree_secondary.svg
+  SvgGenImage get treeSecondary =>
+      const SvgGenImage('assets/icons/tree_secondary.svg');
 
   /// List of all assets
   List<SvgGenImage> get values => [
@@ -59,7 +75,11 @@ class $AssetsIconsGen {
         favorites,
         home,
         iconbackbutton,
-        stats
+        info,
+        logout,
+        profile,
+        stats,
+        treeSecondary
       ];
 }
 
@@ -67,40 +87,62 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   /// File path: assets/images/App_logo.png
-  AssetGenImage get appLogo => const AssetGenImage('assets/images/App_logo.png');
+  AssetGenImage get appLogo =>
+      const AssetGenImage('assets/images/App_logo.png');
 
   /// File path: assets/images/App_logo_front.png
-  AssetGenImage get appLogoFront => const AssetGenImage('assets/images/App_logo_front.png');
+  AssetGenImage get appLogoFront =>
+      const AssetGenImage('assets/images/App_logo_front.png');
 
   /// File path: assets/images/Karbon_hesapla.png
-  AssetGenImage get karbonHesapla => const AssetGenImage('assets/images/Karbon_hesapla.png');
+  AssetGenImage get karbonHesapla =>
+      const AssetGenImage('assets/images/Karbon_hesapla.png');
 
   /// File path: assets/images/Recycle.png
   AssetGenImage get recycle => const AssetGenImage('assets/images/Recycle.png');
 
   /// File path: assets/images/carbon_mask.png
-  AssetGenImage get carbonMask => const AssetGenImage('assets/images/carbon_mask.png');
+  AssetGenImage get carbonMask =>
+      const AssetGenImage('assets/images/carbon_mask.png');
+
+  /// File path: assets/images/donate_button_mask.png
+  AssetGenImage get donateButtonMask =>
+      const AssetGenImage('assets/images/donate_button_mask.png');
 
   /// File path: assets/images/home_main.png
-  AssetGenImage get homeMain => const AssetGenImage('assets/images/home_main.png');
+  AssetGenImage get homeMain =>
+      const AssetGenImage('assets/images/home_main.png');
 
   /// File path: assets/images/home_see_other.png
-  AssetGenImage get homeSeeOther => const AssetGenImage('assets/images/home_see_other.png');
+  AssetGenImage get homeSeeOther =>
+      const AssetGenImage('assets/images/home_see_other.png');
 
   /// File path: assets/images/home_stats_card1.png
-  AssetGenImage get homeStatsCard1 => const AssetGenImage('assets/images/home_stats_card1.png');
+  AssetGenImage get homeStatsCard1 =>
+      const AssetGenImage('assets/images/home_stats_card1.png');
 
   /// File path: assets/images/home_stats_card_2.png
-  AssetGenImage get homeStatsCard2 => const AssetGenImage('assets/images/home_stats_card_2.png');
+  AssetGenImage get homeStatsCard2 =>
+      const AssetGenImage('assets/images/home_stats_card_2.png');
 
   /// File path: assets/images/leaderofmonth.png
-  AssetGenImage get leaderofmonth => const AssetGenImage('assets/images/leaderofmonth.png');
+  AssetGenImage get leaderofmonth =>
+      const AssetGenImage('assets/images/leaderofmonth.png');
 
   /// File path: assets/images/login_mask.png
-  AssetGenImage get loginMask => const AssetGenImage('assets/images/login_mask.png');
+  AssetGenImage get loginMask =>
+      const AssetGenImage('assets/images/login_mask.png');
+
+  /// File path: assets/images/profile_mask.png
+  AssetGenImage get profileMask =>
+      const AssetGenImage('assets/images/profile_mask.png');
 
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
+
+  /// File path: assets/images/donate_tree_button_mask.png
+  AssetGenImage get donateTreeButtonMask =>
+      const AssetGenImage('assets/images/donate_tree_button_mask.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
@@ -109,13 +151,16 @@ class $AssetsImagesGen {
         karbonHesapla,
         recycle,
         carbonMask,
+        donateButtonMask,
         homeMain,
         homeSeeOther,
         homeStatsCard1,
         homeStatsCard2,
         leaderofmonth,
         loginMask,
-        splash
+        profileMask,
+        splash,
+        donateTreeButtonMask,
       ];
 }
 
@@ -288,7 +333,8 @@ class SvgGenImage {
       placeholderBuilder: placeholderBuilder,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
-      colorFilter: colorFilter ?? (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
+      colorFilter: colorFilter ??
+          (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
     );

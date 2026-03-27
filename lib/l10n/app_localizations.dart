@@ -208,11 +208,11 @@ abstract class AppLocalizations {
   /// **'Soyadınız'**
   String get register_surname_textfield_text;
 
-  /// No description provided for @register_dogum_tarihi_textfield_text.
+  /// No description provided for @register_birth_date_textfield_text.
   ///
   /// In tr, this message translates to:
   /// **'Doğum Tarihiniz'**
-  String get register_dogum_tarihi_textfield_text;
+  String get register_birth_date_textfield_text;
 
   /// No description provided for @register_password_textfield_text.
   ///
@@ -459,6 +459,42 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Puanı Al'**
   String get selected_question_bottom_button_title;
+
+  /// No description provided for @profile_header_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Profil'**
+  String get profile_header_text;
+
+  /// No description provided for @profile_logout_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkış Yap'**
+  String get profile_logout_text;
+
+  /// No description provided for @profile_delete_account_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabımı Sil'**
+  String get profile_delete_account_text;
+
+  /// No description provided for @profile_star_total_point_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplam Kazandığınız Puan'**
+  String get profile_star_total_point_text;
+
+  /// No description provided for @profile_star_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, {donatedTree} ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin. /n/nHemen şimdi <strong>“Ağaç Bağışla”<strong> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!'**
+  String profile_star_text(String donatedTree);
+
+  /// No description provided for @profile_star_donate_button_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ağaç Bağışla'**
+  String get profile_star_donate_button_text;
 
   /// No description provided for @lorem_ipsum.
   ///

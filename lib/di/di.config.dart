@@ -82,6 +82,22 @@ import 'package:karbon/features/leaderofmont/domain/repositories/leaderboard_rep
     as _i322;
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_bloc.dart'
     as _i748;
+import 'package:karbon/features/profile/data/datasources/profile_remote.dart'
+    as _i483;
+import 'package:karbon/features/profile/data/repositories/profile_repository_impl.dart'
+    as _i758;
+import 'package:karbon/features/profile/domain/repositories/profile_repository.dart'
+    as _i48;
+import 'package:karbon/features/profile/domain/usecases/delete_account_usecase.dart'
+    as _i1049;
+import 'package:karbon/features/profile/domain/usecases/donate_trees_usecase.dart'
+    as _i26;
+import 'package:karbon/features/profile/domain/usecases/get_donation_usecase.dart'
+    as _i524;
+import 'package:karbon/features/profile/domain/usecases/get_profile_usecase.dart'
+    as _i812;
+import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart'
+    as _i111;
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart'
     as _i505;
 import 'package:karbon/features/usefulinfos/data/repositories/usefulinfo_repository_impl.dart'
@@ -120,12 +136,26 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i205.CarbonCalculateRemote>(
         () => _i205.CarbonCalculateRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i483.ProfileRemote>(
+        () => _i483.ProfileRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i322.LeaderboardRepository>(
         () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
+    gh.lazySingleton<_i48.ProfileRepository>(
+        () => _i758.ProfileRepositoryImpl(gh<_i483.ProfileRemote>()));
+    gh.factory<_i1049.DeleteAccountUsecase>(
+        () => _i1049.DeleteAccountUsecase(gh<_i48.ProfileRepository>()));
+    gh.factory<_i26.DonateTreesUsecase>(
+        () => _i26.DonateTreesUsecase(gh<_i48.ProfileRepository>()));
+    gh.factory<_i524.GetDonationsUsecase>(
+        () => _i524.GetDonationsUsecase(gh<_i48.ProfileRepository>()));
+    gh.factory<_i812.GetProfileUseCase>(
+        () => _i812.GetProfileUseCase(gh<_i48.ProfileRepository>()));
     gh.lazySingleton<_i25.HomeRemote>(
         () => _i25.HomeRemoteImpl(gh<_i361.Dio>()));
+    gh.singleton<_i111.ProfileBloc>(
+        () => _i111.ProfileBloc(gh<_i812.GetProfileUseCase>()));
     gh.lazySingleton<_i71.UsefulinfoRepository>(
         () => _i233.UsefulinfoRepositoryImpl(gh<_i505.UsefulinfoRemote>()));
     gh.lazySingleton<_i123.CarbonCalculateRepository>(() =>

@@ -19,7 +19,7 @@ class AppBottomNavigationBar extends StatelessWidget {
     _NavItemData(icon: Assets.icons.home, label: 'Home'),
     _NavItemData(icon: Assets.icons.stats, label: 'Stats'),
     _NavItemData(icon: Assets.icons.calendarMonthOutlined, label: 'Calendar'),
-    _NavItemData(icon: Assets.icons.favorites, label: 'Favorites'),
+    _NavItemData(icon: Assets.icons.profile, label: 'Profile'),
   ];
 
   @override

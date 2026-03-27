@@ -11,6 +11,22 @@
 part of 'navigation.dart';
 
 /// generated route for
+/// [CalendarPage]
+class CalendarRoute extends PageRouteInfo<void> {
+  const CalendarRoute({List<PageRouteInfo>? children})
+    : super(CalendarRoute.name, initialChildren: children);
+
+  static const String name = 'CalendarRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CalendarPage();
+    },
+  );
+}
+
+/// generated route for
 /// [CarbonCalculatePage]
 class CarbonCalculateRoute extends PageRouteInfo<void> {
   const CarbonCalculateRoute({List<PageRouteInfo>? children})
@@ -134,6 +150,22 @@ class LoginRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const LoginPage();
+    },
+  );
+}
+
+/// generated route for
+/// [ProfilePage]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+    : super(ProfileRoute.name, initialChildren: children);
+
+  static const String name = 'ProfileRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProfilePage();
     },
   );
 }

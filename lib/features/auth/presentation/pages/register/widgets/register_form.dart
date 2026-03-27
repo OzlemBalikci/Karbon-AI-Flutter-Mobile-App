@@ -34,7 +34,7 @@ class RegisterFormWidget extends StatelessWidget {
                   controller: TextEditingController()),
               SizedBox(height: AppThemeSpacing.s20.h),
               BirthDatePicker(
-                labelText: context.text.register_dogum_tarihi_textfield_text,
+                labelText: context.text.register_birth_date_textfield_text,
               ),
               SizedBox(height: AppThemeSpacing.s20.h),
               TextFieldWidget(

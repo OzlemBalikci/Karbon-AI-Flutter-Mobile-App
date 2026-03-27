@@ -17,6 +17,7 @@ import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -73,6 +74,9 @@ class GlobalBlocProviders extends StatelessWidget {
           create: (context) => getIt.get<DailyActivitiesBloc>()
             ..add(DailyActivitiesLoadRequested()),
           lazy: false,
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => getIt.get<ProfileBloc>(),
         ),
       ],
       child: child,

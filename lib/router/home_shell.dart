@@ -10,7 +10,12 @@ class HomeShellPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
-      routes: const [HomeRoute(), DailyActivitiesRoute()],
+      routes: const [
+        HomeRoute(),
+        DailyActivitiesRoute(),
+        CalendarRoute(),
+        ProfileRoute()
+      ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
         final tabIndex = tabsRouter.activeIndex;
