@@ -11,12 +11,13 @@ abstract class AuthRepository {
 
   Future<Either<Exception, AppUser>> register({
     required String email,
-    required String password,
-    required String name,
-    required String surname,
     required String identityNumber,
-    required String phoneNumber,
+    required String firstName,
+    required String lastName,
     required String birthDate,
+    required String phoneNumber,
+    required String password,
+    required String confirmPassword,
     required bool isKvkkApproved,
   });
 

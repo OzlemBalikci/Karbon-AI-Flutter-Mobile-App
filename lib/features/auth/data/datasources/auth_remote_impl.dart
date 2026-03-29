@@ -1,6 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/auth/data/datasources/auth_remote.dart';
+import 'package:karbon/features/auth/data/models/forgotpassword_request_model.dart';
+import 'package:karbon/features/auth/data/models/login_request_model.dart';
+import 'package:karbon/features/auth/data/models/login_response_model.dart';
+import 'package:karbon/features/auth/data/models/register_request_model.dart';
+import 'package:karbon/features/auth/data/models/register_response_model.dart';
+import 'package:karbon/features/auth/data/models/resetpassword_request_model.dart';
 import 'package:karbon/features/auth/data/models/user_model.dart';
 
 @LazySingleton(as: AuthRemote)
@@ -9,59 +15,41 @@ class AuthRemoteImpl implements AuthRemote {
   final Dio _dio;
 
   @override
-  Future<LoginResponseModel> login({
-    required String emailOrIdentityNumber,
-    required String password,
-  }) async {
-    // TODO: final res = await _dio.post('/api/v1/users/login', data: { 'emailOrIdentityNumber': emailOrIdentityNumber, 'password': password });
-    // TODO: return LoginResponseModel.fromJson(res.data);
-    await Future.delayed(const Duration(milliseconds: 500));
-    return const LoginResponseModel(token: 'mock_token');
+  Future<LoginResponseModel> login(LoginRequestModel request) async {
+    final res = await _dio.post(
+      '/api/v1/users/login',
+      data: request.toJson(),
+    );
+    final data = _unwrapMap(res.data);
+    return LoginResponseModel.fromJson(data);
   }
 
   @override
-  Future<UserModel> register({
-    required String email,
-    required String password,
-    required String name,
-    required String surname,
-    required String identityNumber,
-    required String phoneNumber,
-    required String birthDate,
-    required bool isKvkkApproved,
-  }) async {
-    // TODO: final res = await _dio.post('/api/v1/users/register', data: {...});
-    // TODO: return UserModel.fromJson(res.data);
-    await Future.delayed(const Duration(milliseconds: 500));
-    return UserModel(
-      id: 'mock_1',
-      email: email,
-      name: name,
-      surname: surname,
-      identityNumber: identityNumber,
-      phoneNumber: phoneNumber,
-      birthDate: DateTime.tryParse(birthDate),
-      isKvkkApproved: isKvkkApproved,
+  Future<RegisterResponseModel> register(RegisterRequestModel request) async {
+    final res = await _dio.post(
+      '/api/v1/users/register',
+      data: request.toJson(),
     );
+    final envelope = res.data as Map<String, dynamic>;
+    _assertSuccess(envelope);
+    return RegisterResponseModel.fromDataField(envelope['data']);
   }
 
   @override
   Future<UserModel> getProfile() async {
-    // TODO: final res = await _dio.get('/api/v1/users/profile');
-    // TODO: return UserModel.fromJson(res.data);
-    await Future.delayed(const Duration(milliseconds: 300));
-    return const UserModel(
-      id: 'mock_1',
-      email: 'mock@example.com',
-      name: 'Mock',
-      surname: 'User',
-    );
+    final res = await _dio.get('/api/v1/users/me/profile');
+    final data = _unwrapMap(res.data);
+    return UserModel.fromJson(data);
   }
 
   @override
   Future<void> forgotPassword({required String phoneNumber}) async {
-    // TODO: await _dio.post('/api/v1/users/password/forgot', data: { 'phoneNumber': phoneNumber });
-    await Future.delayed(const Duration(milliseconds: 500));
+    final request = ForgotPasswordRequestModel(phoneNumber: phoneNumber);
+    final res = await _dio.post(
+      '/api/v1/users/password/forgot',
+      data: request.toJson(),
+    );
+    _assertSuccess(res.data as Map<String, dynamic>);
   }
 
   @override
@@ -71,12 +59,42 @@ class AuthRemoteImpl implements AuthRemote {
     required String newPassword,
     required String confirmNewPassword,
   }) async {
-    // TODO: await _dio.post('/api/v1/users/password/reset', data: { 'phoneNumber': phoneNumber, 'resetCode': resetCode, 'newPassword': newPassword, 'confirmNewPassword': confirmNewPassword });
-    await Future.delayed(const Duration(milliseconds: 500));
+    final request = ResetPasswordRequestModel(
+      phoneNumber: phoneNumber,
+      resetCode: resetCode,
+      newPassword: newPassword,
+      confirmNewPassword: confirmNewPassword,
+    );
+    final res = await _dio.post(
+      '/api/v1/users/password/reset',
+      data: request.toJson(),
+    );
+    _assertSuccess(res.data as Map<String, dynamic>);
   }
 
   @override
   Future<void> logout() async {
-    await Future.delayed(const Duration(milliseconds: 200));
+    // Token local'den siliniyor; backend logout endpoint'i yoksa burada bir şey yapılmaz.
+  }
+
+  // ── Yardımcı metodlar ────────────────────────────────────────────────────
+
+  /// `{isSuccess, data: {...}}` zarfından `data` map'ini çıkarır.
+  Map<String, dynamic> _unwrapMap(dynamic response) {
+    final envelope = response as Map<String, dynamic>;
+    _assertSuccess(envelope);
+    final data = envelope['data'];
+    if (data == null) return <String, dynamic>{};
+    return Map<String, dynamic>.from(data as Map);
+  }
+
+  void _assertSuccess(Map<String, dynamic> envelope) {
+    if (envelope['isSuccess'] != true) {
+      final errors = envelope['errors'];
+      if (errors is List && errors.isNotEmpty) {
+        throw Exception(errors.first.toString());
+      }
+      throw Exception('İstek başarısız oldu.');
+    }
   }
 }

@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/di/di.dart';
-import 'package:karbon/l10n/app_localizations.dart';
 
 part 'widgets/splash_bottom_register.dart';
 part 'widgets/splash_logo.dart';
@@ -27,7 +26,6 @@ class SplashPage extends StatelessWidget {
           getIt.get<AuthBloc>()..add(const AuthEvent.appStarted()),
       child: Scaffold(
           body: Stack(
-        //fit: StackFit.expand,
         children: [
           Positioned.fill(
             child: Stack(
@@ -43,15 +41,21 @@ class SplashPage extends StatelessWidget {
               ],
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SizedBox(height: AppThemeSpacing.s30.h),
-              SplashLogoSection(),
-              SplashTextWidget(),
-              SplashBottomRegisterSection(),
-            ],
+          SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: AppThemeSpacing.s25.w,
+                  vertical: AppThemeSpacing.s25.h),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SplashLogoSection(),
+                  SplashTextWidget(),
+                  SplashBottomRegisterSection(),
+                ],
+              ),
+            ),
           ),
         ],
       )),

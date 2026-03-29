@@ -8,7 +8,6 @@ class SplashTextWidget extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(

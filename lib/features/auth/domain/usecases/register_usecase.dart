@@ -11,21 +11,23 @@ class RegisterUseCase {
   Future<Either<Exception, AppUser>> call({
     required String email,
     required String identityNumber,
-    required String name,
-    required String surname,
+    required String firstName,
+    required String lastName,
     required String birthDate,
-    required String password,
     required String phoneNumber,
+    required String password,
+    required String confirmPassword,
     required bool isKvkkApproved,
   }) =>
       _repository.register(
         email: email,
         identityNumber: identityNumber,
-        name: name,
-        surname: surname,
+        firstName: firstName,
+        lastName: lastName,
         birthDate: birthDate,
-        password: password,
         phoneNumber: phoneNumber,
+        password: password,
+        confirmPassword: confirmPassword,
         isKvkkApproved: isKvkkApproved,
       );
 }

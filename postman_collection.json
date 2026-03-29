@@ -1,0 +1,345 @@
+{
+  "info": {
+    "name": "Karbon Ayak İzi API",
+    "description": "Karbon Ayak İzi uygulaması API koleksiyonu",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://izt0001.izmirteknoloji.com.tr",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Kayıt Ol",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/users/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"kullanici@ornek.com\",\n  \"identityNumber\": \"12345678901\",\n  \"firstName\": \"Ad\",\n  \"lastName\": \"Soyad\",\n  \"birthDate\": \"1990-01-01T00:00:00Z\",\n  \"phoneNumber\": \"+905551234567\",\n  \"password\": \"Sifre123!\",\n  \"confirmPassword\": \"Sifre123!\",\n  \"isKvkkApproved\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Giriş Yap",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.data && jsonData.data.accessToken) {",
+                  "  pm.collectionVariables.set('token', jsonData.data.accessToken);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/users/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emailorIdentityNumber\": \"kullanici@ornek.com\",\n  \"password\": \"Sifre123!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Şifremi Unuttum",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/users/password/forgot",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"+905551234567\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Şifre Sıfırla",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/users/password/reset",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"+905551234567\",\n  \"resetCode\": \"12345\",\n  \"newPassword\": \"YeniSifre123!\",\n  \"confirmNewPassword\": \"YeniSifre123!\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ana Sayfa",
+      "item": [
+        {
+          "name": "Ana Sayfa Verisi",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/user-results/home",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Liderlik Tablosu",
+      "item": [
+        {
+          "name": "Ayin Liderleri",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/user-results/leaderboard?month=12&year=2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "user-results", "leaderboard"],
+              "query": [
+                { "key": "month", "value": "12" },
+                { "key": "year", "value": "2023" }
+              ]
+            },
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Günlük Aktiviteler",
+      "item": [
+        {
+          "name": "Bugünün Soruları",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/daily-activities/questions",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Cevap Kaydet",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/daily-activities/answers",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"questionId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"selectedOptionId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"userId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Önceki Cevaplar",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/daily-activities/previous-answers",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Bekleyen Sorular",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/daily-activities?status=pending",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "daily-activities"],
+              "query": [{ "key": "status", "value": "pending" }]
+            },
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Gün Detayı",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/daily-activities?date=2023-12-06",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "daily-activities"],
+              "query": [{ "key": "date", "value": "2023-12-06" }]
+            },
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Takvim",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/daily-activities/calendar?year=2023&month=12",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "daily-activities", "calendar"],
+              "query": [
+                { "key": "year", "value": "2023" },
+                { "key": "month", "value": "12" }
+              ]
+            },
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Aylık Aktiviteler (Tümünü Gör)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/daily-activities/monthly?year=2023&month=12&period=1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "daily-activities", "monthly"],
+              "query": [
+                { "key": "year", "value": "2023" },
+                { "key": "month", "value": "12" },
+                { "key": "period", "value": "1" }
+              ]
+            },
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Karbon Hesapla (Anket)",
+      "item": [
+        {
+          "name": "Aktif Anketi Getir",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/polls/active",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Anket Cevaplarını Gönder",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/polls/answers",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pollSetId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n  \"answers\": [\n    {\n      \"questionId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\n      \"optionId\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\"\n    }\n  ]\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Faydalı Bilgiler",
+      "item": [
+        {
+          "name": "Faydalı Bilgileri Listele",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/useful-information",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Profil",
+      "item": [
+        {
+          "name": "Profil Bilgileri",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/users/me/profile",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Bağış Geçmişi",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/users/me/donations",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Ağaç Bağışla",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/users/me/donations",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Hesabı Sil",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/users/me",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin — Hedefler",
+      "item": [
+        {
+          "name": "Global Hedef Oluştur",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/goals/global",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"month\": 12,\n  \"year\": 2023,\n  \"targetTreeCount\": 67000\n}"
+            }
+          }
+        },
+        {
+          "name": "Global Hedef Güncelle",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/goals/global/3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"month\": 12,\n  \"year\": 2023,\n  \"targetTreeCount\": 80000\n}"
+            }
+          }
+        },
+        {
+          "name": "Global Hedef Sil",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/goals/global/3fa85f64-5717-4562-b3fc-2c963f66afa6?month=12&year=2023",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "goals", "global", "3fa85f64-5717-4562-b3fc-2c963f66afa6"],
+              "query": [
+                { "key": "month", "value": "12" },
+                { "key": "year", "value": "2023" }
+              ]
+            },
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    }
+  ]
+}

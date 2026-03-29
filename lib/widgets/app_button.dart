@@ -21,25 +21,27 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
-      height: 56.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
-      ),
       child: OutlinedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
+          ),
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
           disabledBackgroundColor: backgroundColor,
           disabledForegroundColor: foregroundColor,
-          side: BorderSide(color: borderColor, width: 2),
+          side: BorderSide(color: borderColor.withValues(alpha: 0.8), width: 2),
         ),
-        child: Text(
-          text,
-          style: context.typographiesSp.bodyMedium.copyWith(
-            color: foregroundColor,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: AppThemeSpacing.s22.h),
+          child: Text(
+            text,
+            style: context.typographiesSp.bodyMedium.copyWith(
+              color: foregroundColor,
+            ),
           ),
         ),
       ),

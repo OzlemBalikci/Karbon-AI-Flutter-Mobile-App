@@ -1,32 +1,8 @@
 import 'package:karbon/features/auth/domain/entities/app_user.dart';
 
-/// Login endpoint'inden dönen model: JWT token içerir.
-class LoginResponseModel {
-  final String token;
-
-  const LoginResponseModel({required this.token});
-
-  factory LoginResponseModel.fromJson(Map<String, dynamic> json) =>
-      LoginResponseModel(token: json['token'] as String? ?? '');
-}
-
-/// GET /profile endpoint'inden dönen kullanıcı profili modeli.
+/// GET /api/v1/users/me/profile endpoint'inden dönen kullanıcı profil modeli.
+/// Login akışında token alındıktan sonra kullanıcı bilgilerini doldurmak için kullanılır.
 class UserModel {
-  final String id;
-  final String email;
-  final String? name;
-  final String? surname;
-  final String? identityNumber;
-  final String? phoneNumber;
-  final DateTime? birthDate;
-  final double totalCarbonScore;
-  final double totalPoints;
-  final double lastCarbonScore;
-  final int donatedTreeCount;
-  final DateTime? lastLoginDate;
-  final bool isKvkkApproved;
-  final bool emailConfirmed;
-
   const UserModel({
     required this.id,
     required this.email,
@@ -44,6 +20,21 @@ class UserModel {
     this.emailConfirmed = false,
   });
 
+  final String id;
+  final String email;
+  final String? name;
+  final String? surname;
+  final String? identityNumber;
+  final String? phoneNumber;
+  final DateTime? birthDate;
+  final double totalCarbonScore;
+  final double totalPoints;
+  final double lastCarbonScore;
+  final int donatedTreeCount;
+  final DateTime? lastLoginDate;
+  final bool isKvkkApproved;
+  final bool emailConfirmed;
+
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json['id'] as String? ?? '',
         email: json['email'] as String? ?? '',
@@ -54,7 +45,8 @@ class UserModel {
         birthDate: json['birthDate'] != null
             ? DateTime.tryParse(json['birthDate'] as String)
             : null,
-        totalCarbonScore: (json['totalCarbonScore'] as num?)?.toDouble() ?? 0,
+        totalCarbonScore:
+            (json['totalCarbonScore'] as num?)?.toDouble() ?? 0,
         totalPoints: (json['totalPoints'] as num?)?.toDouble() ?? 0,
         lastCarbonScore: (json['lastCarbonScore'] as num?)?.toDouble() ?? 0,
         donatedTreeCount: json['donatedTreeCount'] as int? ?? 0,

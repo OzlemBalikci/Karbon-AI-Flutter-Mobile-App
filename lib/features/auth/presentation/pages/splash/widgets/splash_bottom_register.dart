@@ -9,31 +9,21 @@ class SplashBottomRegisterSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              AppButton(
-                text: context.text.login_button_title_bizizmir,
-                backgroundColor: context.colors.secondary,
-                foregroundColor: context.colors.textOnSecondary,
-                borderColor: Colors.white70,
-                onPressed: () => context.router.replace(const LoginRoute()),
-              ),
-              SizedBox(height: AppThemeSpacing.s30.h),
-              AppButton(
-                text: context.text.register_button_bizizmir,
-                backgroundColor: Colors.transparent,
-                foregroundColor: context.colors.textOnPrimary,
-                borderColor: Colors.white70,
-                onPressed: () => context.router.replace(const RegisterRoute()),
-              ),
-              SizedBox(height: AppThemeSpacing.s36.h),
-            ],
-          ),
-        )
+        AppButton(
+          text: context.text.login_button_title_bizizmir,
+          backgroundColor: context.colors.secondary,
+          foregroundColor: context.colors.textOnSecondary,
+          borderColor: Colors.white70,
+          onPressed: () => context.router.replace(const LoginRoute()),
+        ),
+        SizedBox(height: AppThemeSpacing.s30.h),
+        AppButton(
+          text: context.text.register_button_bizizmir,
+          backgroundColor: Colors.transparent,
+          foregroundColor: context.colors.textOnPrimary,
+          borderColor: Colors.white70,
+          onPressed: () => context.router.replace(const RegisterRoute()),
+        ),
       ],
     );
   }

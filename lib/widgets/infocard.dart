@@ -16,26 +16,28 @@ class Infocard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      constraints: BoxConstraints(minHeight: 57.h),
-      decoration: BoxDecoration(
-        color: bgcolor.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: AppThemeSpacing.s15.w, vertical: AppThemeSpacing.s10.h),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              text,
-              style: style,
-              textAlign: TextAlign.center,
-            ),
-          ],
+    return SizedBox(
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: bgcolor.withValues(alpha: 0.2),
+          borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
+        ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: AppThemeSpacing.s15.w,
+              vertical: AppThemeSpacing.s10.h),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                text,
+                style: style,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );

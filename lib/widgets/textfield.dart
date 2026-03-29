@@ -10,45 +10,56 @@ class TextFieldWidget extends StatelessWidget {
     required this.controller,
     this.obscureText = false,
     this.suffixIcon,
+    this.onSuffixPressed,
   });
 
   final String hintText;
   final TextEditingController controller;
   final bool obscureText;
   final Widget? suffixIcon;
+  final VoidCallback? onSuffixPressed; // ikon tıklama callback'i
 
-  static final _border = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
-    borderSide: const BorderSide(color: Colors.white70, width: 1),
-  );
   @override
   Widget build(BuildContext context) {
+    final textStyle = context.typographiesSp.bodySmall
+        .copyWith(color: context.colors.textOnPrimary);
+
+    final border = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
+      borderSide:
+          BorderSide(color: Colors.white70.withValues(alpha: 0.8), width: 1),
+    );
+
     return TextField(
       controller: controller,
       obscureText: obscureText,
-      style: context.typographiesSp.bodySmall
-          .copyWith(color: context.colors.textOnPrimary),
+      style: textStyle,
       decoration: InputDecoration(
-        border: _border,
-        enabledBorder: _border,
-        focusedBorder: _border,
+        border: border,
+        enabledBorder: border,
+        focusedBorder: border,
         hintText: hintText,
-        suffixIcon: suffixIcon != null
-            ? Padding(
-                padding: EdgeInsets.only(right: AppThemeSpacing.s12.w),
-                child: suffixIcon!,
-              )
-            : null,
-        suffixIconConstraints: suffixIcon != null
-            ? BoxConstraints(maxWidth: 32.w, maxHeight: 32.h)
-            : null,
+        hintStyle: textStyle,
         isDense: true,
-        hintStyle: context.typographiesSp.bodySmall
-            .copyWith(color: context.colors.textOnPrimary),
         filled: true,
         fillColor: Colors.transparent,
         contentPadding: EdgeInsets.symmetric(
-            horizontal: AppThemeSpacing.s12.w, vertical: AppThemeSpacing.s14.h),
+          horizontal: AppThemeSpacing.s12.w,
+          vertical: AppThemeSpacing.s14.h,
+        ),
+        suffixIcon: suffixIcon != null
+            ? IconButton(
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(
+                  minWidth: 24.w,
+                  minHeight: 24.h,
+                  maxWidth: 24.w,
+                  maxHeight: 24.h,
+                ),
+                icon: suffixIcon!,
+                onPressed: onSuffixPressed ?? () {},
+              )
+            : null,
       ),
     );
   }

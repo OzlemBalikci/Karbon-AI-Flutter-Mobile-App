@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/auth/data/datasources/auth_local.dart';
 import 'package:karbon/features/auth/data/datasources/auth_remote.dart';
+import 'package:karbon/features/auth/data/models/login_request_model.dart';
+import 'package:karbon/features/auth/data/models/register_request_model.dart';
 import 'package:karbon/features/auth/domain/entities/app_user.dart';
 import 'package:karbon/features/auth/domain/repositories/auth_repository.dart';
 
@@ -21,10 +23,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     try {
       final loginResponse = await _remote.login(
-        emailOrIdentityNumber: emailOrIdentityNumber,
-        password: password,
+        LoginRequestModel(
+          emailorIdentityNumber: emailOrIdentityNumber,
+          password: password,
+        ),
       );
-      await _local.saveToken(loginResponse.token);
+      await _local.saveToken(loginResponse.accessToken);
       final profile = await _remote.getProfile();
       return Right(profile.toEntity());
     } on Exception catch (e) {
@@ -35,26 +39,43 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Exception, AppUser>> register({
     required String email,
-    required String password,
-    required String name,
-    required String surname,
     required String identityNumber,
-    required String phoneNumber,
+    required String firstName,
+    required String lastName,
     required String birthDate,
+    required String phoneNumber,
+    required String password,
+    required String confirmPassword,
     required bool isKvkkApproved,
   }) async {
     try {
-      final model = await _remote.register(
-        email: email,
-        password: password,
-        name: name,
-        surname: surname,
-        identityNumber: identityNumber,
-        phoneNumber: phoneNumber,
-        birthDate: birthDate,
-        isKvkkApproved: isKvkkApproved,
+      // 1. Kayıt ol
+      await _remote.register(
+        RegisterRequestModel(
+          email: email,
+          identityNumber: identityNumber,
+          firstName: firstName,
+          lastName: lastName,
+          birthDate: birthDate,
+          phoneNumber: phoneNumber,
+          password: password,
+          confirmPassword: confirmPassword,
+          isKvkkApproved: isKvkkApproved,
+        ),
       );
-      return Right(model.toEntity());
+
+      // 2. Kayıt başarılıysa otomatik giriş yap
+      final loginResponse = await _remote.login(
+        LoginRequestModel(
+          emailorIdentityNumber: email,
+          password: password,
+        ),
+      );
+      await _local.saveToken(loginResponse.accessToken);
+
+      // 3. Profili çek ve AppUser döndür
+      final profile = await _remote.getProfile();
+      return Right(profile.toEntity());
     } on Exception catch (e) {
       return Left(e);
     }
@@ -94,6 +115,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
+    await _remote.logout();
     await _local.clearSession();
   }
 }
