@@ -15,7 +15,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLoggedIn>(_onLoggedIn);
     on<AuthRegistered>(_onRegistered);
     on<AuthSignOutRequested>(_onSignOutRequested);
-    on<AuthLoggedOut>(_onSignedOut);
+    on<AuthTokenExpired>(_onTokenExpired);
+    on<AuthLoggedOut>(_onLoggedOut);
+    on<AuthUserProfileUpdated>(_onUserProfileUpdated);
   }
 
   final CheckSessionUseCase _checkSessionUseCase;
@@ -70,7 +72,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  void _onSignedOut(AuthLoggedOut event, Emitter<AuthState> emit) {
+  Future<void> _onTokenExpired(
+    AuthTokenExpired event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthState.loading());
+    try {
+      await _logoutUseCase();
+    } on Exception {
+      // Token zaten geçersiz olabilir; yine de UI tarafında oturumu kapalı göster.
+    }
     emit(const AuthState.unauthenticated());
+  }
+
+  void _onLoggedOut(AuthLoggedOut event, Emitter<AuthState> emit) {
+    emit(const AuthState.unauthenticated());
+  }
+
+  void _onUserProfileUpdated(
+      AuthUserProfileUpdated event, Emitter<AuthState> emit) {
+    _emitAuthenticated(event.user, emit);
   }
 }

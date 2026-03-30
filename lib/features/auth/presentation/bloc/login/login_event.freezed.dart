@@ -50,7 +50,9 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(LoginPageStarted value)? pageStarted,
+    TResult Function(LoginEmailOrIdentityNumberChanged value)?
+        emailOrIdentityNumberChanged,
+    TResult Function(LoginPasswordChanged value)? passwordChanged,
     TResult Function(LoginButtonPressed value)? loginButtonPressed,
     TResult Function(LoginTogglePasswordVisibility value)?
         togglePasswordVisibility,
@@ -59,8 +61,11 @@ extension LoginEventPatterns on LoginEvent {
   }) {
     final _that = this;
     switch (_that) {
-      case LoginPageStarted() when pageStarted != null:
-        return pageStarted(_that);
+      case LoginEmailOrIdentityNumberChanged()
+          when emailOrIdentityNumberChanged != null:
+        return emailOrIdentityNumberChanged(_that);
+      case LoginPasswordChanged() when passwordChanged != null:
+        return passwordChanged(_that);
       case LoginButtonPressed() when loginButtonPressed != null:
         return loginButtonPressed(_that);
       case LoginTogglePasswordVisibility()
@@ -88,7 +93,9 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(LoginPageStarted value) pageStarted,
+    required TResult Function(LoginEmailOrIdentityNumberChanged value)
+        emailOrIdentityNumberChanged,
+    required TResult Function(LoginPasswordChanged value) passwordChanged,
     required TResult Function(LoginButtonPressed value) loginButtonPressed,
     required TResult Function(LoginTogglePasswordVisibility value)
         togglePasswordVisibility,
@@ -97,8 +104,10 @@ extension LoginEventPatterns on LoginEvent {
   }) {
     final _that = this;
     switch (_that) {
-      case LoginPageStarted():
-        return pageStarted(_that);
+      case LoginEmailOrIdentityNumberChanged():
+        return emailOrIdentityNumberChanged(_that);
+      case LoginPasswordChanged():
+        return passwordChanged(_that);
       case LoginButtonPressed():
         return loginButtonPressed(_that);
       case LoginTogglePasswordVisibility():
@@ -122,7 +131,9 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(LoginPageStarted value)? pageStarted,
+    TResult? Function(LoginEmailOrIdentityNumberChanged value)?
+        emailOrIdentityNumberChanged,
+    TResult? Function(LoginPasswordChanged value)? passwordChanged,
     TResult? Function(LoginButtonPressed value)? loginButtonPressed,
     TResult? Function(LoginTogglePasswordVisibility value)?
         togglePasswordVisibility,
@@ -130,8 +141,11 @@ extension LoginEventPatterns on LoginEvent {
   }) {
     final _that = this;
     switch (_that) {
-      case LoginPageStarted() when pageStarted != null:
-        return pageStarted(_that);
+      case LoginEmailOrIdentityNumberChanged()
+          when emailOrIdentityNumberChanged != null:
+        return emailOrIdentityNumberChanged(_that);
+      case LoginPasswordChanged() when passwordChanged != null:
+        return passwordChanged(_that);
       case LoginButtonPressed() when loginButtonPressed != null:
         return loginButtonPressed(_that);
       case LoginTogglePasswordVisibility()
@@ -158,7 +172,9 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? pageStarted,
+    TResult Function(String emailOrIdentityNumber)?
+        emailOrIdentityNumberChanged,
+    TResult Function(String password)? passwordChanged,
     TResult Function(String emailOrIdentityNumber, String password)?
         loginButtonPressed,
     TResult Function()? togglePasswordVisibility,
@@ -167,8 +183,11 @@ extension LoginEventPatterns on LoginEvent {
   }) {
     final _that = this;
     switch (_that) {
-      case LoginPageStarted() when pageStarted != null:
-        return pageStarted();
+      case LoginEmailOrIdentityNumberChanged()
+          when emailOrIdentityNumberChanged != null:
+        return emailOrIdentityNumberChanged(_that.emailOrIdentityNumber);
+      case LoginPasswordChanged() when passwordChanged != null:
+        return passwordChanged(_that.password);
       case LoginButtonPressed() when loginButtonPressed != null:
         return loginButtonPressed(_that.emailOrIdentityNumber, _that.password);
       case LoginTogglePasswordVisibility()
@@ -196,7 +215,9 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() pageStarted,
+    required TResult Function(String emailOrIdentityNumber)
+        emailOrIdentityNumberChanged,
+    required TResult Function(String password) passwordChanged,
     required TResult Function(String emailOrIdentityNumber, String password)
         loginButtonPressed,
     required TResult Function() togglePasswordVisibility,
@@ -204,8 +225,10 @@ extension LoginEventPatterns on LoginEvent {
   }) {
     final _that = this;
     switch (_that) {
-      case LoginPageStarted():
-        return pageStarted();
+      case LoginEmailOrIdentityNumberChanged():
+        return emailOrIdentityNumberChanged(_that.emailOrIdentityNumber);
+      case LoginPasswordChanged():
+        return passwordChanged(_that.password);
       case LoginButtonPressed():
         return loginButtonPressed(_that.emailOrIdentityNumber, _that.password);
       case LoginTogglePasswordVisibility():
@@ -229,7 +252,9 @@ extension LoginEventPatterns on LoginEvent {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? pageStarted,
+    TResult? Function(String emailOrIdentityNumber)?
+        emailOrIdentityNumberChanged,
+    TResult? Function(String password)? passwordChanged,
     TResult? Function(String emailOrIdentityNumber, String password)?
         loginButtonPressed,
     TResult? Function()? togglePasswordVisibility,
@@ -237,8 +262,11 @@ extension LoginEventPatterns on LoginEvent {
   }) {
     final _that = this;
     switch (_that) {
-      case LoginPageStarted() when pageStarted != null:
-        return pageStarted();
+      case LoginEmailOrIdentityNumberChanged()
+          when emailOrIdentityNumberChanged != null:
+        return emailOrIdentityNumberChanged(_that.emailOrIdentityNumber);
+      case LoginPasswordChanged() when passwordChanged != null:
+        return passwordChanged(_that.password);
       case LoginButtonPressed() when loginButtonPressed != null:
         return loginButtonPressed(_that.emailOrIdentityNumber, _that.password);
       case LoginTogglePasswordVisibility()
@@ -254,21 +282,135 @@ extension LoginEventPatterns on LoginEvent {
 
 /// @nodoc
 
-class LoginPageStarted implements LoginEvent {
-  const LoginPageStarted();
+class LoginEmailOrIdentityNumberChanged implements LoginEvent {
+  const LoginEmailOrIdentityNumberChanged(
+      {required this.emailOrIdentityNumber});
+
+  final String emailOrIdentityNumber;
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $LoginEmailOrIdentityNumberChangedCopyWith<LoginEmailOrIdentityNumberChanged>
+      get copyWith => _$LoginEmailOrIdentityNumberChangedCopyWithImpl<
+          LoginEmailOrIdentityNumberChanged>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is LoginPageStarted);
+        (other.runtimeType == runtimeType &&
+            other is LoginEmailOrIdentityNumberChanged &&
+            (identical(other.emailOrIdentityNumber, emailOrIdentityNumber) ||
+                other.emailOrIdentityNumber == emailOrIdentityNumber));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, emailOrIdentityNumber);
 
   @override
   String toString() {
-    return 'LoginEvent.pageStarted()';
+    return 'LoginEvent.emailOrIdentityNumberChanged(emailOrIdentityNumber: $emailOrIdentityNumber)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $LoginEmailOrIdentityNumberChangedCopyWith<$Res>
+    implements $LoginEventCopyWith<$Res> {
+  factory $LoginEmailOrIdentityNumberChangedCopyWith(
+          LoginEmailOrIdentityNumberChanged value,
+          $Res Function(LoginEmailOrIdentityNumberChanged) _then) =
+      _$LoginEmailOrIdentityNumberChangedCopyWithImpl;
+  @useResult
+  $Res call({String emailOrIdentityNumber});
+}
+
+/// @nodoc
+class _$LoginEmailOrIdentityNumberChangedCopyWithImpl<$Res>
+    implements $LoginEmailOrIdentityNumberChangedCopyWith<$Res> {
+  _$LoginEmailOrIdentityNumberChangedCopyWithImpl(this._self, this._then);
+
+  final LoginEmailOrIdentityNumberChanged _self;
+  final $Res Function(LoginEmailOrIdentityNumberChanged) _then;
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? emailOrIdentityNumber = null,
+  }) {
+    return _then(LoginEmailOrIdentityNumberChanged(
+      emailOrIdentityNumber: null == emailOrIdentityNumber
+          ? _self.emailOrIdentityNumber
+          : emailOrIdentityNumber // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class LoginPasswordChanged implements LoginEvent {
+  const LoginPasswordChanged({required this.password});
+
+  final String password;
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $LoginPasswordChangedCopyWith<LoginPasswordChanged> get copyWith =>
+      _$LoginPasswordChangedCopyWithImpl<LoginPasswordChanged>(
+          this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is LoginPasswordChanged &&
+            (identical(other.password, password) ||
+                other.password == password));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, password);
+
+  @override
+  String toString() {
+    return 'LoginEvent.passwordChanged(password: $password)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $LoginPasswordChangedCopyWith<$Res>
+    implements $LoginEventCopyWith<$Res> {
+  factory $LoginPasswordChangedCopyWith(LoginPasswordChanged value,
+          $Res Function(LoginPasswordChanged) _then) =
+      _$LoginPasswordChangedCopyWithImpl;
+  @useResult
+  $Res call({String password});
+}
+
+/// @nodoc
+class _$LoginPasswordChangedCopyWithImpl<$Res>
+    implements $LoginPasswordChangedCopyWith<$Res> {
+  _$LoginPasswordChangedCopyWithImpl(this._self, this._then);
+
+  final LoginPasswordChanged _self;
+  final $Res Function(LoginPasswordChanged) _then;
+
+  /// Create a copy of LoginEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? password = null,
+  }) {
+    return _then(LoginPasswordChanged(
+      password: null == password
+          ? _self.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 

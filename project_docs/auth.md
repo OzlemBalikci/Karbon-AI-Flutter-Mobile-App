@@ -1,7 +1,6 @@
 # Auth
 
 ## İş Kuralları
-
 - Kullanıcı e-posta veya TC kimlik numarası ile giriş yapabilir
 - Kayıt sırasında KVKK onayı zorunludur
 - Şifre en az 8 karakter, büyük/küçük harf, rakam ve özel karakter içermelidir
@@ -12,7 +11,6 @@
 ---
 
 ## Kayıt Ol
-
 **POST** `/api/v1/users/register`  
 🔓 Public
 
@@ -39,6 +37,22 @@
 }
 ```
 
+### Response `400` — Validasyon Hatası
+```json
+{
+  "isSuccess": false,
+  "errors": ["Geçerli bir e-posta adresi giriniz."]
+}
+```
+
+### Response `409` — İş Kuralı İhlali
+```json
+{
+  "isSuccess": false,
+  "errors": ["Bu e-posta adresi zaten kullanılıyor."]
+}
+```
+
 ### Validasyon Kuralları
 | Alan | Kural |
 |------|-------|
@@ -52,7 +66,6 @@
 ---
 
 ## Giriş Yap
-
 **POST** `/api/v1/users/login`  
 🔓 Public
 
@@ -76,10 +89,25 @@
 }
 ```
 
+### Response `400` — Validasyon Hatası
+```json
+{
+  "isSuccess": false,
+  "errors": ["E-posta/TC kimlik no alanı zorunludur."]
+}
+```
+
+### Response `401` — Kimlik Doğrulama Hatası
+```json
+{
+  "isSuccess": false,
+  "errors": ["E-posta veya şifre hatalı."]
+}
+```
+
 ---
 
 ## Şifremi Unuttum
-
 **POST** `/api/v1/users/password/forgot`  
 🔓 Public
 
@@ -101,10 +129,25 @@ Telefon numarasına 5 haneli OTP kodu gönderilir.
 }
 ```
 
+### Response `400` — Validasyon Hatası
+```json
+{
+  "isSuccess": false,
+  "errors": ["Geçerli bir telefon numarası giriniz."]
+}
+```
+
+### Response `404` — Kullanıcı Bulunamadı
+```json
+{
+  "isSuccess": false,
+  "errors": ["Bu telefon numarasına kayıtlı kullanıcı bulunamadı."]
+}
+```
+
 ---
 
 ## Şifre Sıfırla
-
 **POST** `/api/v1/users/password/reset`  
 🔓 Public
 
@@ -128,5 +171,21 @@ Telefon numarasına 5 haneli OTP kodu gönderilir.
 {
   "isSuccess": true,
   "data": null
+}
+```
+
+### Response `400` — Validasyon Hatası
+```json
+{
+  "isSuccess": false,
+  "errors": ["Şifreler eşleşmiyor."]
+}
+```
+
+### Response `400` — OTP Hatası
+```json
+{
+  "isSuccess": false,
+  "errors": ["OTP kodu hatalı veya süresi dolmuş."]
 }
 ```

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
+import 'package:karbon/features/auth/presentation/bloc/login/login_state.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/textfield.dart';
 import 'package:karbon/widgets/infocard.dart';
@@ -12,7 +13,6 @@ import 'package:karbon/widgets/app_logo.dart';
 import 'package:karbon/widgets/screen_titles.dart';
 import 'package:karbon/features/auth/presentation/controllers/login_controller.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart';
-import 'package:karbon/features/auth/presentation/bloc/login/login_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_selector.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_event.dart';
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     final keyboardOpen = keyboardInset > 0;
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        if (state.resultStatus == LoginResultStatus.success) {
+        if (state.status == LoginPageStatus.success) {
           context.router.replaceAll([const HomeShellRoute()]);
         }
       },

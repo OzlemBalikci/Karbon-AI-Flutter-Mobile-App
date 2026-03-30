@@ -1,4 +1,8 @@
-/// POST /api/v1/users/login başarılı yanıtının `data` alanı
+/// POST `/api/v1/users/login` — başarılı yanıtın `data` objesi.
+///
+/// ```json
+/// { "accessToken": "...", "tokenType": "Bearer", "expiresIn": 3600 }
+/// ```
 class LoginResponseModel {
   const LoginResponseModel({
     required this.accessToken,

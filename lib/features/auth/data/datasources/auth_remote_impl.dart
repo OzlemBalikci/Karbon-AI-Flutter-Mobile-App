@@ -32,7 +32,7 @@ class AuthRemoteImpl implements AuthRemote {
     );
     final envelope = res.data as Map<String, dynamic>;
     _assertSuccess(envelope);
-    return RegisterResponseModel.fromDataField(envelope['data']);
+    return RegisterResponseModel.fromData(envelope['data']);
   }
 
   @override

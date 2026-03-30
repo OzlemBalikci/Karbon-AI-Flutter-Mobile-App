@@ -33,8 +33,11 @@ abstract class AuthState with _$AuthState {
         authFailure: (_) => AuthStatus.authfailure,
       );
 
-  bool get isLoading => status == AuthStatus.initial;
-  bool get isAuthenticated => status == AuthStatus.authenticated;
-  bool get isUnauthenticated => status == AuthStatus.unauthenticated;
-  bool get isAuthFailure => status == AuthStatus.authfailure;
+  bool get isLoading => maybeWhen(loading: () => true, orElse: () => false);
+  bool get isAuthenticated =>
+      maybeWhen(authenticated: (_) => true, orElse: () => false);
+  bool get isUnauthenticated =>
+      maybeWhen(unauthenticated: () => true, orElse: () => false);
+  bool get isFailure =>
+      maybeWhen(authFailure: (_) => true, orElse: () => false);
 }

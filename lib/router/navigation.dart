@@ -13,8 +13,6 @@ import 'package:karbon/features/dailyactivites/presentation/pages/screens/select
 import 'package:karbon/features/profile/presentation/profile.dart';
 import 'package:karbon/router/home_shell.dart';
 import 'package:karbon/router/daily_activities_shell.dart';
-import 'package:karbon/features/dailyactivites/presentation/pages/screens/selectedquestion.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:karbon/features/calendar/presentation/calendar.dart';
 
 part 'navigation.gr.dart';

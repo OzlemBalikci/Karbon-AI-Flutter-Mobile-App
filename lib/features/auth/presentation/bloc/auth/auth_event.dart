@@ -5,21 +5,33 @@ part 'auth_event.freezed.dart';
 
 @freezed
 sealed class AuthEvent with _$AuthEvent {
+  /// Uygulama / splash açıldığında: [sessionCheckRequested] zincirlenir.
   const factory AuthEvent.appStarted() = AuthAppStarted;
+
+  /// Yerel depoda geçerli token var mı kontrolü.
   const factory AuthEvent.sessionCheckRequested() = AuthSessionCheckRequested;
 
-  //Login/Register başarılı olduğunda
+  /// POST /login başarılı.
   const factory AuthEvent.loggedIn({
     required AppUser user,
   }) = AuthLoggedIn;
 
+  /// POST /register (+ otomatik login) başarılı.
   const factory AuthEvent.registered({
     required AppUser user,
   }) = AuthRegistered;
 
-  //Logout butonuna repository.logout() çağırır
+  /// Çıkış: repository üzerinden token temizlenir.
   const factory AuthEvent.signOutRequested() = AuthSignOutRequested;
 
-  //Sadece local state'i unauthenticated yapmak için
+  /// Token süresi doldu veya 401 — yerel oturum temizlenir.
+  const factory AuthEvent.tokenExpired() = AuthTokenExpired;
+
+  /// Sadece state: unauthenticated (repo çağrısı olmadan).
   const factory AuthEvent.loggedOut() = AuthLoggedOut;
+
+  /// User profile updated
+  const factory AuthEvent.userProfileUpdated({
+    required AppUser user,
+  }) = AuthUserProfileUpdated;
 }

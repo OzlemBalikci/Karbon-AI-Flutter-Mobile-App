@@ -7,7 +7,8 @@ import '../../../domain/usecases/login_usecase.dart';
 @injectable
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc(this._loginUseCase) : super(LoginState.initial()) {
-    on<LoginPageStarted>(_onLoginPageStarted);
+    on<LoginEmailOrIdentityNumberChanged>(_onEmailOrIdentityNumberChanged);
+    on<LoginPasswordChanged>(_onPasswordChanged);
     on<LoginTogglePasswordVisibility>(_onTogglePasswordVisibility);
     on<LoginButtonPressed>(_onLoginButtonPressed);
     on<LoginForgotPasswordPressed>(_onForgotPasswordPressed);
@@ -15,35 +16,39 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   final LoginUseCase _loginUseCase;
 
-  Future<void> _onLoginPageStarted(
-      LoginPageStarted event, Emitter<LoginState> emit) async {
-    emit(state.copyWith(pagestatus: LoginPageStatus.loading));
-    emit(state.copyWith(pagestatus: LoginPageStatus.success));
+  void _onEmailOrIdentityNumberChanged(
+      LoginEmailOrIdentityNumberChanged event, Emitter<LoginState> emit) {
+    emit(state.copyWith(emailOrIdentityNumber: event.emailOrIdentityNumber));
+  }
+
+  void _onPasswordChanged(
+      LoginPasswordChanged event, Emitter<LoginState> emit) {
+    emit(state.copyWith(password: event.password));
+  }
+
+  void _onTogglePasswordVisibility(
+      LoginTogglePasswordVisibility event, Emitter<LoginState> emit) {
+    emit(state.copyWith(obscurePassword: !state.obscurePassword));
   }
 
   Future<void> _onLoginButtonPressed(
     LoginButtonPressed event,
     Emitter<LoginState> emit,
   ) async {
-    emit(state.copyWith(resultStatus: LoginResultStatus.loading, error: null));
+    emit(state.copyWith(status: LoginPageStatus.loading, error: null));
     final result = await _loginUseCase(
       emailOrIdentityNumber: event.emailOrIdentityNumber,
       password: event.password,
     );
     result.fold(
         (e) => emit(state.copyWith(
-              resultStatus: LoginResultStatus.failure,
+              status: LoginPageStatus.failure,
               error: e.toString(),
             )),
         (user) => emit(state.copyWith(
-              resultStatus: LoginResultStatus.success,
+              status: LoginPageStatus.success,
               user: user,
             )));
-  }
-
-  void _onTogglePasswordVisibility(
-      LoginTogglePasswordVisibility event, Emitter<LoginState> emit) {
-    emit(state.copyWith(obscurePassword: !state.obscurePassword));
   }
 
   void _onForgotPasswordPressed(

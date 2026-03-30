@@ -40,6 +40,8 @@ import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart'
     as _i564;
 import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart'
     as _i171;
+import 'package:karbon/features/auth/presentation/bloc/register/register_bloc.dart'
+    as _i78;
 import 'package:karbon/features/auth/presentation/bloc/settings/settings_bloc.dart'
     as _i614;
 import 'package:karbon/features/carboncalculate/data/datasources/carbon_calculate_remote.dart'
@@ -212,6 +214,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1025.GetCalendarUsecase>(),
           gh<_i902.PostAnswerUsecase>(),
           gh<_i715.GetDetailsUsecase>(),
+        ));
+    gh.factory<_i78.RegisterBloc>(() => _i78.RegisterBloc(
+          gh<_i558.RegisterUseCase>(),
+          gh<_i564.AuthBloc>(),
         ));
     return this;
   }

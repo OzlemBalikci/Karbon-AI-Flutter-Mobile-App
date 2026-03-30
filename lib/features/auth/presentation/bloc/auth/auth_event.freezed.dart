@@ -55,7 +55,9 @@ extension AuthEventPatterns on AuthEvent {
     TResult Function(AuthLoggedIn value)? loggedIn,
     TResult Function(AuthRegistered value)? registered,
     TResult Function(AuthSignOutRequested value)? signOutRequested,
+    TResult Function(AuthTokenExpired value)? tokenExpired,
     TResult Function(AuthLoggedOut value)? loggedOut,
+    TResult Function(AuthUserProfileUpdated value)? userProfileUpdated,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -70,8 +72,12 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that);
       case AuthSignOutRequested() when signOutRequested != null:
         return signOutRequested(_that);
+      case AuthTokenExpired() when tokenExpired != null:
+        return tokenExpired(_that);
       case AuthLoggedOut() when loggedOut != null:
         return loggedOut(_that);
+      case AuthUserProfileUpdated() when userProfileUpdated != null:
+        return userProfileUpdated(_that);
       case _:
         return orElse();
     }
@@ -98,7 +104,9 @@ extension AuthEventPatterns on AuthEvent {
     required TResult Function(AuthLoggedIn value) loggedIn,
     required TResult Function(AuthRegistered value) registered,
     required TResult Function(AuthSignOutRequested value) signOutRequested,
+    required TResult Function(AuthTokenExpired value) tokenExpired,
     required TResult Function(AuthLoggedOut value) loggedOut,
+    required TResult Function(AuthUserProfileUpdated value) userProfileUpdated,
   }) {
     final _that = this;
     switch (_that) {
@@ -112,8 +120,12 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that);
       case AuthSignOutRequested():
         return signOutRequested(_that);
+      case AuthTokenExpired():
+        return tokenExpired(_that);
       case AuthLoggedOut():
         return loggedOut(_that);
+      case AuthUserProfileUpdated():
+        return userProfileUpdated(_that);
     }
   }
 
@@ -136,7 +148,9 @@ extension AuthEventPatterns on AuthEvent {
     TResult? Function(AuthLoggedIn value)? loggedIn,
     TResult? Function(AuthRegistered value)? registered,
     TResult? Function(AuthSignOutRequested value)? signOutRequested,
+    TResult? Function(AuthTokenExpired value)? tokenExpired,
     TResult? Function(AuthLoggedOut value)? loggedOut,
+    TResult? Function(AuthUserProfileUpdated value)? userProfileUpdated,
   }) {
     final _that = this;
     switch (_that) {
@@ -150,8 +164,12 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that);
       case AuthSignOutRequested() when signOutRequested != null:
         return signOutRequested(_that);
+      case AuthTokenExpired() when tokenExpired != null:
+        return tokenExpired(_that);
       case AuthLoggedOut() when loggedOut != null:
         return loggedOut(_that);
+      case AuthUserProfileUpdated() when userProfileUpdated != null:
+        return userProfileUpdated(_that);
       case _:
         return null;
     }
@@ -176,7 +194,9 @@ extension AuthEventPatterns on AuthEvent {
     TResult Function(AppUser user)? loggedIn,
     TResult Function(AppUser user)? registered,
     TResult Function()? signOutRequested,
+    TResult Function()? tokenExpired,
     TResult Function()? loggedOut,
+    TResult Function(AppUser user)? userProfileUpdated,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -191,8 +211,12 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that.user);
       case AuthSignOutRequested() when signOutRequested != null:
         return signOutRequested();
+      case AuthTokenExpired() when tokenExpired != null:
+        return tokenExpired();
       case AuthLoggedOut() when loggedOut != null:
         return loggedOut();
+      case AuthUserProfileUpdated() when userProfileUpdated != null:
+        return userProfileUpdated(_that.user);
       case _:
         return orElse();
     }
@@ -218,7 +242,9 @@ extension AuthEventPatterns on AuthEvent {
     required TResult Function(AppUser user) loggedIn,
     required TResult Function(AppUser user) registered,
     required TResult Function() signOutRequested,
+    required TResult Function() tokenExpired,
     required TResult Function() loggedOut,
+    required TResult Function(AppUser user) userProfileUpdated,
   }) {
     final _that = this;
     switch (_that) {
@@ -232,8 +258,12 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that.user);
       case AuthSignOutRequested():
         return signOutRequested();
+      case AuthTokenExpired():
+        return tokenExpired();
       case AuthLoggedOut():
         return loggedOut();
+      case AuthUserProfileUpdated():
+        return userProfileUpdated(_that.user);
     }
   }
 
@@ -256,7 +286,9 @@ extension AuthEventPatterns on AuthEvent {
     TResult? Function(AppUser user)? loggedIn,
     TResult? Function(AppUser user)? registered,
     TResult? Function()? signOutRequested,
+    TResult? Function()? tokenExpired,
     TResult? Function()? loggedOut,
+    TResult? Function(AppUser user)? userProfileUpdated,
   }) {
     final _that = this;
     switch (_that) {
@@ -270,8 +302,12 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that.user);
       case AuthSignOutRequested() when signOutRequested != null:
         return signOutRequested();
+      case AuthTokenExpired() when tokenExpired != null:
+        return tokenExpired();
       case AuthLoggedOut() when loggedOut != null:
         return loggedOut();
+      case AuthUserProfileUpdated() when userProfileUpdated != null:
+        return userProfileUpdated(_that.user);
       case _:
         return null;
     }
@@ -468,6 +504,26 @@ class AuthSignOutRequested implements AuthEvent {
 
 /// @nodoc
 
+class AuthTokenExpired implements AuthEvent {
+  const AuthTokenExpired();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is AuthTokenExpired);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'AuthEvent.tokenExpired()';
+  }
+}
+
+/// @nodoc
+
 class AuthLoggedOut implements AuthEvent {
   const AuthLoggedOut();
 
@@ -483,6 +539,71 @@ class AuthLoggedOut implements AuthEvent {
   @override
   String toString() {
     return 'AuthEvent.loggedOut()';
+  }
+}
+
+/// @nodoc
+
+class AuthUserProfileUpdated implements AuthEvent {
+  const AuthUserProfileUpdated({required this.user});
+
+  final AppUser user;
+
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $AuthUserProfileUpdatedCopyWith<AuthUserProfileUpdated> get copyWith =>
+      _$AuthUserProfileUpdatedCopyWithImpl<AuthUserProfileUpdated>(
+          this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is AuthUserProfileUpdated &&
+            (identical(other.user, user) || other.user == user));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @override
+  String toString() {
+    return 'AuthEvent.userProfileUpdated(user: $user)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $AuthUserProfileUpdatedCopyWith<$Res>
+    implements $AuthEventCopyWith<$Res> {
+  factory $AuthUserProfileUpdatedCopyWith(AuthUserProfileUpdated value,
+          $Res Function(AuthUserProfileUpdated) _then) =
+      _$AuthUserProfileUpdatedCopyWithImpl;
+  @useResult
+  $Res call({AppUser user});
+}
+
+/// @nodoc
+class _$AuthUserProfileUpdatedCopyWithImpl<$Res>
+    implements $AuthUserProfileUpdatedCopyWith<$Res> {
+  _$AuthUserProfileUpdatedCopyWithImpl(this._self, this._then);
+
+  final AuthUserProfileUpdated _self;
+  final $Res Function(AuthUserProfileUpdated) _then;
+
+  /// Create a copy of AuthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(AuthUserProfileUpdated(
+      user: null == user
+          ? _self.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as AppUser,
+    ));
   }
 }
 
