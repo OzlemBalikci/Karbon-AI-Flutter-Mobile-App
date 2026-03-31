@@ -14,7 +14,7 @@ part of 'navigation.dart';
 /// [CalendarPage]
 class CalendarRoute extends PageRouteInfo<void> {
   const CalendarRoute({List<PageRouteInfo>? children})
-    : super(CalendarRoute.name, initialChildren: children);
+      : super(CalendarRoute.name, initialChildren: children);
 
   static const String name = 'CalendarRoute';
 
@@ -30,7 +30,7 @@ class CalendarRoute extends PageRouteInfo<void> {
 /// [CarbonCalculatePage]
 class CarbonCalculateRoute extends PageRouteInfo<void> {
   const CarbonCalculateRoute({List<PageRouteInfo>? children})
-    : super(CarbonCalculateRoute.name, initialChildren: children);
+      : super(CarbonCalculateRoute.name, initialChildren: children);
 
   static const String name = 'CarbonCalculateRoute';
 
@@ -46,7 +46,7 @@ class CarbonCalculateRoute extends PageRouteInfo<void> {
 /// [DailyActivitiesPage]
 class DailyActivitiesRoute extends PageRouteInfo<void> {
   const DailyActivitiesRoute({List<PageRouteInfo>? children})
-    : super(DailyActivitiesRoute.name, initialChildren: children);
+      : super(DailyActivitiesRoute.name, initialChildren: children);
 
   static const String name = 'DailyActivitiesRoute';
 
@@ -62,7 +62,7 @@ class DailyActivitiesRoute extends PageRouteInfo<void> {
 /// [DailyActivitiesShellPage]
 class DailyActivitiesShellRoute extends PageRouteInfo<void> {
   const DailyActivitiesShellRoute({List<PageRouteInfo>? children})
-    : super(DailyActivitiesShellRoute.name, initialChildren: children);
+      : super(DailyActivitiesShellRoute.name, initialChildren: children);
 
   static const String name = 'DailyActivitiesShellRoute';
 
@@ -78,7 +78,7 @@ class DailyActivitiesShellRoute extends PageRouteInfo<void> {
 /// [ForgotPasswordPage]
 class ForgotPasswordRoute extends PageRouteInfo<void> {
   const ForgotPasswordRoute({List<PageRouteInfo>? children})
-    : super(ForgotPasswordRoute.name, initialChildren: children);
+      : super(ForgotPasswordRoute.name, initialChildren: children);
 
   static const String name = 'ForgotPasswordRoute';
 
@@ -94,7 +94,7 @@ class ForgotPasswordRoute extends PageRouteInfo<void> {
 /// [HomePage]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
-    : super(HomeRoute.name, initialChildren: children);
+      : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
@@ -110,7 +110,7 @@ class HomeRoute extends PageRouteInfo<void> {
 /// [HomeShellPage]
 class HomeShellRoute extends PageRouteInfo<void> {
   const HomeShellRoute({List<PageRouteInfo>? children})
-    : super(HomeShellRoute.name, initialChildren: children);
+      : super(HomeShellRoute.name, initialChildren: children);
 
   static const String name = 'HomeShellRoute';
 
@@ -126,7 +126,7 @@ class HomeShellRoute extends PageRouteInfo<void> {
 /// [LeaderofmonthPage]
 class LeaderofmonthRoute extends PageRouteInfo<void> {
   const LeaderofmonthRoute({List<PageRouteInfo>? children})
-    : super(LeaderofmonthRoute.name, initialChildren: children);
+      : super(LeaderofmonthRoute.name, initialChildren: children);
 
   static const String name = 'LeaderofmonthRoute';
 
@@ -142,7 +142,7 @@ class LeaderofmonthRoute extends PageRouteInfo<void> {
 /// [LoginPage]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
-    : super(LoginRoute.name, initialChildren: children);
+      : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
@@ -158,7 +158,7 @@ class LoginRoute extends PageRouteInfo<void> {
 /// [ProfilePage]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})
-    : super(ProfileRoute.name, initialChildren: children);
+      : super(ProfileRoute.name, initialChildren: children);
 
   static const String name = 'ProfileRoute';
 
@@ -174,7 +174,7 @@ class ProfileRoute extends PageRouteInfo<void> {
 /// [RegisterPage]
 class RegisterRoute extends PageRouteInfo<void> {
   const RegisterRoute({List<PageRouteInfo>? children})
-    : super(RegisterRoute.name, initialChildren: children);
+      : super(RegisterRoute.name, initialChildren: children);
 
   static const String name = 'RegisterRoute';
 
@@ -190,7 +190,7 @@ class RegisterRoute extends PageRouteInfo<void> {
 /// [ResetPasswordPage]
 class ResetPasswordRoute extends PageRouteInfo<void> {
   const ResetPasswordRoute({List<PageRouteInfo>? children})
-    : super(ResetPasswordRoute.name, initialChildren: children);
+      : super(ResetPasswordRoute.name, initialChildren: children);
 
   static const String name = 'ResetPasswordRoute';
 
@@ -206,7 +206,7 @@ class ResetPasswordRoute extends PageRouteInfo<void> {
 /// [SelectedQuestionPage]
 class SelectedQuestionRoute extends PageRouteInfo<void> {
   const SelectedQuestionRoute({List<PageRouteInfo>? children})
-    : super(SelectedQuestionRoute.name, initialChildren: children);
+      : super(SelectedQuestionRoute.name, initialChildren: children);
 
   static const String name = 'SelectedQuestionRoute';
 
@@ -222,7 +222,7 @@ class SelectedQuestionRoute extends PageRouteInfo<void> {
 /// [SplashPage]
 class SplashRoute extends PageRouteInfo<void> {
   const SplashRoute({List<PageRouteInfo>? children})
-    : super(SplashRoute.name, initialChildren: children);
+      : super(SplashRoute.name, initialChildren: children);
 
   static const String name = 'SplashRoute';
 
@@ -238,7 +238,7 @@ class SplashRoute extends PageRouteInfo<void> {
 /// [UsefulinfoPage]
 class UsefulinfoRoute extends PageRouteInfo<void> {
   const UsefulinfoRoute({List<PageRouteInfo>? children})
-    : super(UsefulinfoRoute.name, initialChildren: children);
+      : super(UsefulinfoRoute.name, initialChildren: children);
 
   static const String name = 'UsefulinfoRoute';
 

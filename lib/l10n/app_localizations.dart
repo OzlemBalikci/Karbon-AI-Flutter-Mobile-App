@@ -94,6 +94,18 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('tr')];
 
+  /// No description provided for @network_exception.
+  ///
+  /// In tr, this message translates to:
+  /// **'İnternet bağlantısı yok.'**
+  String get network_exception;
+
+  /// No description provided for @cache_exception.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yerel Veri Okunamadı'**
+  String get cache_exception;
+
   /// No description provided for @splash_info_text.
   ///
   /// In tr, this message translates to:

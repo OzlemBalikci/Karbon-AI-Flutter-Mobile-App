@@ -1,6 +1,8 @@
 
   {
     "@@locale": "tr",
+    "network_exception" : "İnternet bağlantısı yok.",
+    "cache_exception" : "Yerel Veri Okunamadı",
     "splash_info_text": "Geleceği Şekillendirin, \nKarbon Ayak İzinizi \nKüçültün!",
     "login_button_title_bizizmir": "Bizizmir ile Giriş Yap",
     "register_button_bizizmir": "Bizizmir ile Kayıt Ol",

@@ -9,6 +9,12 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
+  String get network_exception => 'İnternet bağlantısı yok.';
+
+  @override
+  String get cache_exception => 'Yerel Veri Okunamadı';
+
+  @override
   String get splash_info_text =>
       'Geleceği Şekillendirin, \nKarbon Ayak İzinizi \nKüçültün!';
 

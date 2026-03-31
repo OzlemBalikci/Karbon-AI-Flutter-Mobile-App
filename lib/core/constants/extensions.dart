@@ -9,8 +9,6 @@ extension AppThemeExtension on BuildContext {
   AppTheme get appTheme =>
       Theme.of(this).extension<AppTheme>() ?? const LightAppTheme();
 
-  AppThemeTypography get typographies => appTheme.typographies;
-
   AppThemeTypography get typographiesSp => appTheme.typographies.spScaled;
 
   AppThemeColors get colors => appTheme.colors;

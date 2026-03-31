@@ -10,7 +10,7 @@ class DonateTreeButton extends StatelessWidget {
       height: 56.h,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(Assets.images.donateTreeButtonMask.path),
+          image: AssetImage(Assets.images.donateButtonMask.path),
           fit: BoxFit.cover,
         ),
         color: context.colors.primary,

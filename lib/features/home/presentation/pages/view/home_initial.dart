@@ -7,10 +7,8 @@ class HomeInitialView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
         children: [
-          HomeFirstOpenFeatureSection(),
+          Expanded(child: HomeFirstOpenFeatureSection()),
         ],
       ),
     );

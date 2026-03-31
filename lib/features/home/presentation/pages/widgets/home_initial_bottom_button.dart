@@ -5,27 +5,24 @@ class HomeInitialBottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
-      child: Column(
-        children: [
-          AppButton(
-            text: context.text.useful_infos_button_title,
-            onPressed: () => context.router.push(const UsefulinfoRoute()),
-            backgroundColor: context.colors.secondary,
-            foregroundColor: context.colors.textOnSecondary,
-            borderColor: context.colors.primary,
-          ),
-          SizedBox(height: AppThemeSpacing.s30.h),
-          AppButton(
-            text: context.text.carbon_calculate_button_title,
-            onPressed: () => context.router.push(const CarbonCalculateRoute()),
-            backgroundColor: context.colors.primary,
-            foregroundColor: context.colors.textOnPrimary,
-            borderColor: context.colors.primary,
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        AppButton(
+          text: context.text.useful_infos_button_title,
+          onPressed: () => context.router.push(const UsefulinfoRoute()),
+          backgroundColor: context.colors.secondary,
+          foregroundColor: context.colors.textOnSecondary,
+          borderColor: context.colors.primary,
+        ),
+        SizedBox(height: AppThemeSpacing.s30.h),
+        AppButton(
+          text: context.text.carbon_calculate_button_title,
+          onPressed: () => context.router.push(const CarbonCalculateRoute()),
+          backgroundColor: context.colors.primary,
+          foregroundColor: context.colors.textOnPrimary,
+          borderColor: context.colors.primary,
+        ),
+      ],
     );
   }
 }

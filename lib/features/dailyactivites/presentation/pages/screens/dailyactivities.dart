@@ -41,10 +41,13 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
           ),
           SafeArea(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 HeaderSection(),
+                SizedBox(height: AppThemeSpacing.s20.h),
                 Expanded(child: TodaySection()),
+                SizedBox(height: AppThemeSpacing.s20.h),
                 Expanded(child: HistorySection()),
               ],
             ),
