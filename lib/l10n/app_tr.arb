@@ -69,8 +69,8 @@
     "profile_logout_text" : "Çıkış Yap",
     "profile_delete_account_text" : "Hesabımı Sil",
     "profile_star_total_point_text" : "Toplam Kazandığınız Puan",
-    "profile_star_text": "Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, {donatedTree} ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin. /n/nHemen şimdi <strong>“Ağaç Bağışla”<strong> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!",
-       "@profile_star_text": {
+    "profile_star_text": "Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, <span class=\"profile-donate-highlight\">&#8220;{donatedTree}&#8221;</span> ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin.<br/><br/>Hemen şimdi <span class=\"profile-donate-highlight\">&#8220;Ağaç Bağışla&#8221;</span> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!",
+    "@profile_star_text": {
         "placeholders": {
             "donatedTree": {
                 "type": "String",
@@ -79,5 +79,24 @@
         }
     },
     "profile_star_donate_button_text": "Ağaç Bağışla",
+    "logout_popup_header_title": "Hesabınızdan Çıkış Yapıyorsunuz",
+    "logout_popup_text" : "Çıkıp yapmak istediğinize emin misiniz?",
+    "logout_popup_accept_button_text" : "Evet, eminim.",
+    "logout_popup_deny_button_text" : "Hayır,vazgeçtim.",
+    "delete_account_popup_header_title" : "Hesabınızı Silmek Üzeresiniz",
+    "delete_account_popup_text": "Silmek istediğinize emin misiniz?",
+    "donate_succes_popup_title": "Tebrikler {donatedTree} ağaç bağışladınız!",  
+    "@donate_succes_popup_title": {
+    "placeholders": {
+        "donatedTree": {
+            "type": "String",
+            "example": "1.200"
+        }
+      }
+    },
+    "donate_succes_popup_text" : "Bu anlamlı katkını hayatına ve geleceğe etkisini asla göz ardı etme! <br/><br/>Yaşanılabilir bir İzmir amacıyla çıktığımız bu yolda bağışın için teşekkürler!",
+    "profile_tree_card_header_text" : "Bağışlanan Toplam Ağaç Sayısı",
+    "profile_tree_donated_tree_text" : "Bağışlanan Ağaç",
+    "profile_tree_last_donations": "Önceki Bağışlanan Ağaçlar",
     "lorem_ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."
   }

@@ -228,11 +228,48 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String profile_star_text(String donatedTree) {
-    return 'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, $donatedTree ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin. /n/nHemen şimdi <strong>“Ağaç Bağışla”<strong> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!';
+    return 'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, <span class=\"profile-donate-highlight\">&#8220;$donatedTree&#8221;</span> ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin.<br/><br/>Hemen şimdi <span class=\"profile-donate-highlight\">&#8220;Ağaç Bağışla&#8221;</span> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!';
   }
 
   @override
   String get profile_star_donate_button_text => 'Ağaç Bağışla';
+
+  @override
+  String get logout_popup_header_title => 'Hesabınızdan Çıkış Yapıyorsunuz';
+
+  @override
+  String get logout_popup_text => 'Çıkıp yapmak istediğinize emin misiniz?';
+
+  @override
+  String get logout_popup_accept_button_text => 'Evet, eminim.';
+
+  @override
+  String get logout_popup_deny_button_text => 'Hayır,vazgeçtim.';
+
+  @override
+  String get delete_account_popup_header_title =>
+      'Hesabınızı Silmek Üzeresiniz';
+
+  @override
+  String get delete_account_popup_text => 'Silmek istediğinize emin misiniz?';
+
+  @override
+  String donate_succes_popup_title(String donatedTree) {
+    return 'Tebrikler $donatedTree ağaç bağışladınız!';
+  }
+
+  @override
+  String get donate_succes_popup_text =>
+      'Bu anlamlı katkını hayatına ve geleceğe etkisini asla göz ardı etme! <br/><br/>Yaşanılabilir bir İzmir amacıyla çıktığımız bu yolda bağışın için teşekkürler!';
+
+  @override
+  String get profile_tree_card_header_text => 'Bağışlanan Toplam Ağaç Sayısı';
+
+  @override
+  String get profile_tree_donated_tree_text => 'Bağışlanan Ağaç';
+
+  @override
+  String get profile_tree_last_donations => 'Önceki Bağışlanan Ağaçlar';
 
   @override
   String get lorem_ipsum =>

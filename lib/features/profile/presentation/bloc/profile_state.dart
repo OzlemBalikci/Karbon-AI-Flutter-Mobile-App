@@ -18,6 +18,7 @@ abstract class ProfileState with _$ProfileState {
     @Default(ProfileLoadStatus.initial) ProfileLoadStatus loadStatus,
     UserProfileEntity? profile,
     String? error,
+    @Default(0) int selectedTabIndex,
   }) = _ProfileState;
 
   factory ProfileState.initial() => const ProfileState();

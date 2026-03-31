@@ -17,6 +17,7 @@ mixin _$ProfileState {
   ProfileLoadStatus get loadStatus;
   UserProfileEntity? get profile;
   String? get error;
+  int get selectedTabIndex;
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -34,15 +35,18 @@ mixin _$ProfileState {
             (identical(other.loadStatus, loadStatus) ||
                 other.loadStatus == loadStatus) &&
             (identical(other.profile, profile) || other.profile == profile) &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.selectedTabIndex, selectedTabIndex) ||
+                other.selectedTabIndex == selectedTabIndex));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loadStatus, profile, error);
+  int get hashCode =>
+      Object.hash(runtimeType, loadStatus, profile, error, selectedTabIndex);
 
   @override
   String toString() {
-    return 'ProfileState(loadStatus: $loadStatus, profile: $profile, error: $error)';
+    return 'ProfileState(loadStatus: $loadStatus, profile: $profile, error: $error, selectedTabIndex: $selectedTabIndex)';
   }
 }
 
@@ -55,7 +59,8 @@ abstract mixin class $ProfileStateCopyWith<$Res> {
   $Res call(
       {ProfileLoadStatus loadStatus,
       UserProfileEntity? profile,
-      String? error});
+      String? error,
+      int selectedTabIndex});
 }
 
 /// @nodoc
@@ -73,6 +78,7 @@ class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
     Object? loadStatus = null,
     Object? profile = freezed,
     Object? error = freezed,
+    Object? selectedTabIndex = null,
   }) {
     return _then(_self.copyWith(
       loadStatus: null == loadStatus
@@ -87,6 +93,10 @@ class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedTabIndex: null == selectedTabIndex
+          ? _self.selectedTabIndex
+          : selectedTabIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -185,14 +195,15 @@ extension ProfileStatePatterns on ProfileState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(ProfileLoadStatus loadStatus, UserProfileEntity? profile,
-            String? error)?
+            String? error, int selectedTabIndex)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ProfileState() when $default != null:
-        return $default(_that.loadStatus, _that.profile, _that.error);
+        return $default(_that.loadStatus, _that.profile, _that.error,
+            _that.selectedTabIndex);
       case _:
         return orElse();
     }
@@ -214,13 +225,14 @@ extension ProfileStatePatterns on ProfileState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(ProfileLoadStatus loadStatus, UserProfileEntity? profile,
-            String? error)
+            String? error, int selectedTabIndex)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ProfileState():
-        return $default(_that.loadStatus, _that.profile, _that.error);
+        return $default(_that.loadStatus, _that.profile, _that.error,
+            _that.selectedTabIndex);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -241,13 +253,14 @@ extension ProfileStatePatterns on ProfileState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(ProfileLoadStatus loadStatus, UserProfileEntity? profile,
-            String? error)?
+            String? error, int selectedTabIndex)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ProfileState() when $default != null:
-        return $default(_that.loadStatus, _that.profile, _that.error);
+        return $default(_that.loadStatus, _that.profile, _that.error,
+            _that.selectedTabIndex);
       case _:
         return null;
     }
@@ -258,7 +271,10 @@ extension ProfileStatePatterns on ProfileState {
 
 class _ProfileState extends ProfileState {
   const _ProfileState(
-      {this.loadStatus = ProfileLoadStatus.initial, this.profile, this.error})
+      {this.loadStatus = ProfileLoadStatus.initial,
+      this.profile,
+      this.error,
+      this.selectedTabIndex = 0})
       : super._();
 
   @override
@@ -268,6 +284,9 @@ class _ProfileState extends ProfileState {
   final UserProfileEntity? profile;
   @override
   final String? error;
+  @override
+  @JsonKey()
+  final int selectedTabIndex;
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -285,15 +304,18 @@ class _ProfileState extends ProfileState {
             (identical(other.loadStatus, loadStatus) ||
                 other.loadStatus == loadStatus) &&
             (identical(other.profile, profile) || other.profile == profile) &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.selectedTabIndex, selectedTabIndex) ||
+                other.selectedTabIndex == selectedTabIndex));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loadStatus, profile, error);
+  int get hashCode =>
+      Object.hash(runtimeType, loadStatus, profile, error, selectedTabIndex);
 
   @override
   String toString() {
-    return 'ProfileState(loadStatus: $loadStatus, profile: $profile, error: $error)';
+    return 'ProfileState(loadStatus: $loadStatus, profile: $profile, error: $error, selectedTabIndex: $selectedTabIndex)';
   }
 }
 
@@ -308,7 +330,8 @@ abstract mixin class _$ProfileStateCopyWith<$Res>
   $Res call(
       {ProfileLoadStatus loadStatus,
       UserProfileEntity? profile,
-      String? error});
+      String? error,
+      int selectedTabIndex});
 }
 
 /// @nodoc
@@ -327,6 +350,7 @@ class __$ProfileStateCopyWithImpl<$Res>
     Object? loadStatus = null,
     Object? profile = freezed,
     Object? error = freezed,
+    Object? selectedTabIndex = null,
   }) {
     return _then(_ProfileState(
       loadStatus: null == loadStatus
@@ -341,6 +365,10 @@ class __$ProfileStateCopyWithImpl<$Res>
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedTabIndex: null == selectedTabIndex
+          ? _self.selectedTabIndex
+          : selectedTabIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }

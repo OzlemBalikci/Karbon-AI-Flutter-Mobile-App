@@ -1,7 +1,7 @@
-part of '../profile.dart';
+part of '../../../profile.dart';
 
-class ProfileInfoFeatureView extends StatelessWidget {
-  const ProfileInfoFeatureView({super.key});
+class ProfileInfoFeatureSection extends StatelessWidget {
+  const ProfileInfoFeatureSection({super.key});
 
   @override
   Widget build(BuildContext context) {

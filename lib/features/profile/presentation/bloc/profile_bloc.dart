@@ -8,6 +8,7 @@ import 'package:karbon/features/profile/presentation/bloc/profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(this._getProfileUseCase) : super(ProfileState.initial()) {
     on<ProfileLoadRequested>(_onLoadRequested);
+    on<ProfileTabChanged>(_onTabChanged);
   }
 
   final GetProfileUseCase _getProfileUseCase;
@@ -30,5 +31,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ),
       ),
     );
+  }
+
+  void _onTabChanged(ProfileTabChanged event, Emitter<ProfileState> emit) {
+    emit(state.copyWith(selectedTabIndex: event.index));
   }
 }

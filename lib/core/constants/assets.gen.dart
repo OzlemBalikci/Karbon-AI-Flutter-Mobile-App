@@ -100,6 +100,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/donate_button_mask.png
   AssetGenImage get donateButtonMask => const AssetGenImage('assets/images/donate_button_mask.png');
 
+  /// File path: assets/images/donate_succes.png
+  AssetGenImage get donateSucces => const AssetGenImage('assets/images/donate_succes.png');
+
   /// File path: assets/images/home_main.png
   AssetGenImage get homeMain => const AssetGenImage('assets/images/home_main.png');
 
@@ -121,6 +124,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/profile_mask.png
   AssetGenImage get profileMask => const AssetGenImage('assets/images/profile_mask.png');
 
+  /// File path: assets/images/profile_tree_mask.png
+  AssetGenImage get profileTreeMask => const AssetGenImage('assets/images/profile_tree_mask.png');
+
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
 
@@ -132,6 +138,7 @@ class $AssetsImagesGen {
         recycle,
         carbonMask,
         donateButtonMask,
+        donateSucces,
         homeMain,
         homeSeeOther,
         homeStatsCard1,
@@ -139,6 +146,7 @@ class $AssetsImagesGen {
         leaderofmonth,
         loginMask,
         profileMask,
+        profileTreeMask,
         splash
       ];
 }

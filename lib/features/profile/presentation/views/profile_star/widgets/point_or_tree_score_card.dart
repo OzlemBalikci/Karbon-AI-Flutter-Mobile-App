@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../../../profile.dart';
 
 class PointScoreOrTreeDonationInfoCard extends StatelessWidget {
   const PointScoreOrTreeDonationInfoCard({
@@ -20,6 +20,7 @@ class PointScoreOrTreeDonationInfoCard extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           image: Assets.images.profileMask.provider(),
+          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),

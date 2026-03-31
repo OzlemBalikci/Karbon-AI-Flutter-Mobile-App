@@ -499,7 +499,7 @@ abstract class AppLocalizations {
   /// No description provided for @profile_star_text.
   ///
   /// In tr, this message translates to:
-  /// **'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, {donatedTree} ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin. /n/nHemen şimdi <strong>“Ağaç Bağışla”<strong> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!'**
+  /// **'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, <span class=\"profile-donate-highlight\">&#8220;{donatedTree}&#8221;</span> ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin.<br/><br/>Hemen şimdi <span class=\"profile-donate-highlight\">&#8220;Ağaç Bağışla&#8221;</span> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!'**
   String profile_star_text(String donatedTree);
 
   /// No description provided for @profile_star_donate_button_text.
@@ -507,6 +507,72 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ağaç Bağışla'**
   String get profile_star_donate_button_text;
+
+  /// No description provided for @logout_popup_header_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabınızdan Çıkış Yapıyorsunuz'**
+  String get logout_popup_header_title;
+
+  /// No description provided for @logout_popup_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıkıp yapmak istediğinize emin misiniz?'**
+  String get logout_popup_text;
+
+  /// No description provided for @logout_popup_accept_button_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Evet, eminim.'**
+  String get logout_popup_accept_button_text;
+
+  /// No description provided for @logout_popup_deny_button_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hayır,vazgeçtim.'**
+  String get logout_popup_deny_button_text;
+
+  /// No description provided for @delete_account_popup_header_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hesabınızı Silmek Üzeresiniz'**
+  String get delete_account_popup_header_title;
+
+  /// No description provided for @delete_account_popup_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Silmek istediğinize emin misiniz?'**
+  String get delete_account_popup_text;
+
+  /// No description provided for @donate_succes_popup_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tebrikler {donatedTree} ağaç bağışladınız!'**
+  String donate_succes_popup_title(String donatedTree);
+
+  /// No description provided for @donate_succes_popup_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu anlamlı katkını hayatına ve geleceğe etkisini asla göz ardı etme! <br/><br/>Yaşanılabilir bir İzmir amacıyla çıktığımız bu yolda bağışın için teşekkürler!'**
+  String get donate_succes_popup_text;
+
+  /// No description provided for @profile_tree_card_header_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağışlanan Toplam Ağaç Sayısı'**
+  String get profile_tree_card_header_text;
+
+  /// No description provided for @profile_tree_donated_tree_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağışlanan Ağaç'**
+  String get profile_tree_donated_tree_text;
+
+  /// No description provided for @profile_tree_last_donations.
+  ///
+  /// In tr, this message translates to:
+  /// **'Önceki Bağışlanan Ağaçlar'**
+  String get profile_tree_last_donations;
 
   /// No description provided for @lorem_ipsum.
   ///
