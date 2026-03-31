@@ -38,6 +38,8 @@ import 'package:karbon/features/auth/domain/usecases/resetpassword_usecase.dart'
     as _i1018;
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart'
     as _i564;
+import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_bloc.dart'
+    as _i823;
 import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart'
     as _i171;
 import 'package:karbon/features/auth/presentation/bloc/register/register_bloc.dart'
@@ -126,8 +128,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
-    gh.factory<_i614.SettingsBloc>(() => _i614.SettingsBloc());
     gh.singleton<_i361.Dio>(() => registerModule.dio);
+    gh.lazySingleton<_i614.SettingsBloc>(() => _i614.SettingsBloc());
     gh.lazySingleton<_i505.UsefulinfoRemote>(
         () => _i505.UsefulinfoRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i1036.LeaderboardRemote>(
@@ -156,7 +158,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i812.GetProfileUseCase(gh<_i48.ProfileRepository>()));
     gh.lazySingleton<_i25.HomeRemote>(
         () => _i25.HomeRemoteImpl(gh<_i361.Dio>()));
-    gh.singleton<_i111.ProfileBloc>(
+    gh.factory<_i111.ProfileBloc>(
         () => _i111.ProfileBloc(gh<_i812.GetProfileUseCase>()));
     gh.lazySingleton<_i71.UsefulinfoRepository>(
         () => _i233.UsefulinfoRepositoryImpl(gh<_i505.UsefulinfoRemote>()));
@@ -168,7 +170,7 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i320.DailyActivitiesRepository>(() =>
         _i449.DailyActivitiesRepositoryImpl(gh<_i342.DailyActivitiesRemote>()));
-    gh.singleton<_i748.LeaderofmonthBloc>(
+    gh.factory<_i748.LeaderofmonthBloc>(
         () => _i748.LeaderofmonthBloc(gh<_i322.LeaderboardRepository>()));
     gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
           gh<_i413.AuthRemote>(),
@@ -178,7 +180,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i434.UsefulinfoBloc(gh<_i71.UsefulinfoRepository>()));
     gh.factory<_i959.CarbonCalculateBloc>(
         () => _i959.CarbonCalculateBloc(gh<_i123.CarbonCalculateRepository>()));
-    gh.singleton<_i591.HomeBloc>(
+    gh.factory<_i591.HomeBloc>(
         () => _i591.HomeBloc(gh<_i406.HomeRepository>()));
     gh.factory<_i1025.GetCalendarUsecase>(
         () => _i1025.GetCalendarUsecase(gh<_i320.DailyActivitiesRepository>()));
@@ -202,13 +204,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i558.RegisterUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i1018.ResetPasswordUseCase>(
         () => _i1018.ResetPasswordUseCase(gh<_i252.AuthRepository>()));
+    gh.factory<_i823.ForgotPasswordBloc>(() => _i823.ForgotPasswordBloc(
+        forgotPasswordUseCase: gh<_i210.ForgotPasswordUseCase>()));
     gh.factory<_i171.LoginBloc>(
         () => _i171.LoginBloc(gh<_i1010.LoginUseCase>()));
-    gh.factory<_i564.AuthBloc>(() => _i564.AuthBloc(
+    gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(
           gh<_i793.CheckSessionUseCase>(),
           gh<_i566.LogoutUseCase>(),
         ));
-    gh.singleton<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
+    gh.factory<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
           gh<_i671.GetTodayQuestionsUsecase>(),
           gh<_i448.GetPendingStatusUsecase>(),
           gh<_i1025.GetCalendarUsecase>(),

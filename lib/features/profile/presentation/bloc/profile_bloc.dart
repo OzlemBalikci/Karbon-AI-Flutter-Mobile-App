@@ -4,7 +4,7 @@ import 'package:karbon/features/profile/presentation/bloc/profile_event.dart';
 import 'package:karbon/features/profile/domain/usecases/get_profile_usecase.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_state.dart';
 
-@singleton
+@injectable
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(this._getProfileUseCase) : super(ProfileState.initial()) {
     on<ProfileLoadRequested>(_onLoadRequested);

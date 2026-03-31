@@ -12,7 +12,7 @@ import 'package:karbon/features/dailyactivites/domain/usacases/get_calendar_usec
 import 'package:karbon/features/dailyactivites/domain/usacases/post_answer_usecase.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/get_details_usecase.dart';
 
-@singleton
+@injectable
 class DailyActivitiesBloc
     extends Bloc<DailyActivitiesEvent, DailyActivitiesState> {
   DailyActivitiesBloc(

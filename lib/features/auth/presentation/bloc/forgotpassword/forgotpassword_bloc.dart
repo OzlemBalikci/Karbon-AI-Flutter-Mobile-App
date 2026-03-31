@@ -3,7 +3,9 @@ import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/domain/usecases/forgotpassword_usecase.dart';
 import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_event.dart';
 import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_state.dart';
+import 'package:injectable/injectable.dart';
 
+@injectable
 class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
   final ForgotPasswordUseCase _forgotPasswordUseCase;

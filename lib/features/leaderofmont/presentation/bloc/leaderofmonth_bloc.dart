@@ -4,7 +4,7 @@ import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_eve
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_state.dart';
 import 'package:karbon/features/leaderofmont/domain/repositories/leaderboard_repository_impl.dart';
 
-@singleton
+@injectable
 class LeaderofmonthBloc extends Bloc<LeaderofmonthEvent, LeaderofmonthState> {
   final LeaderboardRepository _leaderofmonthRepository;
 

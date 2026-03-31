@@ -6,7 +6,7 @@ import 'package:karbon/features/auth/presentation/bloc/auth/auth_event.dart';
 import 'package:karbon/features/auth/domain/entities/app_user.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_state.dart';
 
-@injectable
+@lazySingleton
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(this._checkSessionUseCase, this._logoutUseCase)
       : super(const AuthState.loading()) {

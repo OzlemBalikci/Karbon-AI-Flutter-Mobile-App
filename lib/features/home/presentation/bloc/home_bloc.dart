@@ -4,7 +4,7 @@ import 'package:karbon/features/home/presentation/bloc/home_event.dart';
 import 'package:karbon/features/home/presentation/bloc/home_state.dart';
 import 'package:karbon/features/home/domain/repositories/home_repository.dart';
 
-@singleton
+@injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeRepository _homeRepository;
 

@@ -6,18 +6,8 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/di/di.config.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
-import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart';
-import 'package:karbon/features/home/presentation/bloc/home_bloc.dart';
-import 'package:karbon/features/home/presentation/bloc/home_event.dart';
-import 'package:karbon/features/auth/presentation/bloc/settings/settings_bloc.dart';
-import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart';
-import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_event.dart';
-import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_bloc.dart';
-import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart';
-import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
-import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:karbon/features/auth/presentation/bloc/settings/settings_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -53,30 +43,6 @@ class GlobalBlocProviders extends StatelessWidget {
         ),
         BlocProvider<AuthBloc>(
           create: (context) => getIt.get<AuthBloc>(),
-        ),
-        BlocProvider<HomeBloc>(
-          create: (context) => getIt.get<HomeBloc>()..add(HomeStarted()),
-        ),
-        BlocProvider<CarbonCalculateBloc>(
-          create: (context) => getIt.get<CarbonCalculateBloc>(),
-        ),
-        BlocProvider<UsefulinfoBloc>(
-          create: (context) => getIt.get<UsefulinfoBloc>(),
-        ),
-        BlocProvider<LoginBloc>(
-          create: (context) => getIt.get<LoginBloc>(),
-        ),
-        BlocProvider<LeaderofmonthBloc>(
-          create: (context) =>
-              getIt.get<LeaderofmonthBloc>()..add(LeaderofmonthStarted()),
-        ),
-        BlocProvider<DailyActivitiesBloc>(
-          create: (context) => getIt.get<DailyActivitiesBloc>()
-            ..add(DailyActivitiesLoadRequested()),
-          lazy: false,
-        ),
-        BlocProvider<ProfileBloc>(
-          create: (context) => getIt.get<ProfileBloc>(),
         ),
       ],
       child: child,
