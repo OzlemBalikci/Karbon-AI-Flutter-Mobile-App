@@ -1,7 +1,7 @@
-part of '../splash.dart';
+part of '../customfirstopen.dart';
 
-class SplashTextWidget extends StatelessWidget {
-  const SplashTextWidget({super.key});
+class CustomFirstOpenTextWidget extends StatelessWidget {
+  const CustomFirstOpenTextWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

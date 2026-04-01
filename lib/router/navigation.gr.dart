@@ -43,6 +43,22 @@ class CarbonCalculateRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CustomFirstOpenPage]
+class CustomFirstOpenRoute extends PageRouteInfo<void> {
+  const CustomFirstOpenRoute({List<PageRouteInfo>? children})
+      : super(CustomFirstOpenRoute.name, initialChildren: children);
+
+  static const String name = 'CustomFirstOpenRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CustomFirstOpenPage();
+    },
+  );
+}
+
+/// generated route for
 /// [DailyActivitiesPage]
 class DailyActivitiesRoute extends PageRouteInfo<void> {
   const DailyActivitiesRoute({List<PageRouteInfo>? children})
@@ -214,22 +230,6 @@ class SelectedQuestionRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const SelectedQuestionPage();
-    },
-  );
-}
-
-/// generated route for
-/// [SplashPage]
-class SplashRoute extends PageRouteInfo<void> {
-  const SplashRoute({List<PageRouteInfo>? children})
-      : super(SplashRoute.name, initialChildren: children);
-
-  static const String name = 'SplashRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const SplashPage();
     },
   );
 }

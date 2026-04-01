@@ -1,7 +1,7 @@
-part of '../splash.dart';
+part of '../customfirstopen.dart';
 
-class SplashBottomRegisterSection extends StatelessWidget {
-  const SplashBottomRegisterSection({super.key});
+class CustomFirstOpenBottomRegisterSection extends StatelessWidget {
+  const CustomFirstOpenBottomRegisterSection({super.key});
 
   @override
   Widget build(BuildContext context) {

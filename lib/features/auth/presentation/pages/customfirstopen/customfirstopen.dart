@@ -11,13 +11,13 @@ import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/di/di.dart';
 
-part 'widgets/splash_bottom_register.dart';
-part 'widgets/splash_logo.dart';
-part 'widgets/splash_text.dart';
+part 'widgets/customfirstopen_bottom_register.dart';
+part 'widgets/customfirstopen_logo.dart';
+part 'widgets/customfirstopen_text.dart';
 
 @RoutePage()
-class SplashPage extends StatelessWidget {
-  const SplashPage({super.key});
+class CustomFirstOpenPage extends StatelessWidget {
+  const CustomFirstOpenPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +50,9 @@ class SplashPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  SplashLogoSection(),
-                  SplashTextWidget(),
-                  SplashBottomRegisterSection(),
+                  CustomFirstOpenLogoSection(),
+                  CustomFirstOpenTextWidget(),
+                  CustomFirstOpenBottomRegisterSection(),
                 ],
               ),
             ),
