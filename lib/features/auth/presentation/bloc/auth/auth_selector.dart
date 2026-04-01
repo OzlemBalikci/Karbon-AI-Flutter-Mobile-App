@@ -20,7 +20,6 @@ AppUser? selectAuthUser(AuthState state) {
 
 String? selectAuthReason(AuthState state) {
   return state.maybeWhen(
-    unauthenticated: () => null,
     authFailure: (reason) => reason,
     orElse: () => null,
   );

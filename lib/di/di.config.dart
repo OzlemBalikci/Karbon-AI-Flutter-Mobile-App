@@ -104,6 +104,8 @@ import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart'
     as _i111;
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart'
     as _i505;
+import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote_mock.dart'
+    as _i964;
 import 'package:karbon/features/usefulinfos/data/repositories/usefulinfo_repository_impl.dart'
     as _i233;
 import 'package:karbon/features/usefulinfos/domain/repositories/usefulinfo_repository.dart'
@@ -130,8 +132,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i614.SettingsBloc>(() => _i614.SettingsBloc());
-    gh.lazySingleton<_i505.UsefulinfoRemote>(
-        () => _i505.UsefulinfoRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i1036.LeaderboardRemote>(
         () => _i1036.LeaderboardRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i342.DailyActivitiesRemote>(
@@ -144,6 +144,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i483.ProfileRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i505.UsefulinfoRemote>(
+        () => _i964.UsefulinfoRemoteMock());
     gh.lazySingleton<_i322.LeaderboardRepository>(
         () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
     gh.lazySingleton<_i48.ProfileRepository>(

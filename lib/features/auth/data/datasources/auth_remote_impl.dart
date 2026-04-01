@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/data/datasources/auth_remote.dart';
 import 'package:karbon/features/auth/data/models/forgotpassword_request_model.dart';
 import 'package:karbon/features/auth/data/models/login_request_model.dart';
@@ -89,12 +90,11 @@ class AuthRemoteImpl implements AuthRemote {
   }
 
   void _assertSuccess(Map<String, dynamic> envelope) {
-    if (envelope['isSuccess'] != true) {
-      final errors = envelope['errors'];
-      if (errors is List && errors.isNotEmpty) {
-        throw Exception(errors.first.toString());
-      }
-      throw Exception('İstek başarısız oldu.');
-    }
+    if (envelope['isSuccess'] == true) return;
+    final errors = envelope['errors'];
+    final msg = (errors is List && errors.isNotEmpty)
+        ? errors.first.toString()
+        : 'İstek başarısız oldu.';
+    throw BadRequestException(msg, statusCode: 400);
   }
 }

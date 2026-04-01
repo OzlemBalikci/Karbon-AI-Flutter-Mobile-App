@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:karbon/core/errors/exception_unwrapper.dart';
 import 'package:karbon/features/auth/data/datasources/auth_local.dart';
 import 'package:karbon/features/auth/data/datasources/auth_remote.dart';
 import 'package:karbon/features/auth/data/models/login_request_model.dart';
@@ -32,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final profile = await _remote.getProfile();
       return Right(profile.toEntity());
     } on Exception catch (e) {
-      return Left(e);
+      return Left(unwrapDioException(e));
     }
   }
 
@@ -77,7 +78,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final profile = await _remote.getProfile();
       return Right(profile.toEntity());
     } on Exception catch (e) {
-      return Left(e);
+      return Left(unwrapDioException(e));
     }
   }
 
@@ -89,7 +90,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await _remote.forgotPassword(phoneNumber: phoneNumber);
       return const Right(unit);
     } on Exception catch (e) {
-      return Left(e);
+      return Left(unwrapDioException(e));
     }
   }
 
@@ -109,7 +110,7 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return const Right(unit);
     } on Exception catch (e) {
-      return Left(e);
+      return Left(unwrapDioException(e));
     }
   }
 

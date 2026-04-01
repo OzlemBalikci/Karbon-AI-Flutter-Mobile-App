@@ -52,12 +52,12 @@ extension AuthEventPatterns on AuthEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AuthAppStarted value)? appStarted,
     TResult Function(AuthSessionCheckRequested value)? sessionCheckRequested,
+    TResult Function(AuthFirstOpenCompleted value)? firstOpenCompleted,
     TResult Function(AuthLoggedIn value)? loggedIn,
     TResult Function(AuthRegistered value)? registered,
     TResult Function(AuthSignOutRequested value)? signOutRequested,
     TResult Function(AuthTokenExpired value)? tokenExpired,
     TResult Function(AuthLoggedOut value)? loggedOut,
-    TResult Function(AuthUserProfileUpdated value)? userProfileUpdated,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -66,6 +66,8 @@ extension AuthEventPatterns on AuthEvent {
         return appStarted(_that);
       case AuthSessionCheckRequested() when sessionCheckRequested != null:
         return sessionCheckRequested(_that);
+      case AuthFirstOpenCompleted() when firstOpenCompleted != null:
+        return firstOpenCompleted(_that);
       case AuthLoggedIn() when loggedIn != null:
         return loggedIn(_that);
       case AuthRegistered() when registered != null:
@@ -76,8 +78,6 @@ extension AuthEventPatterns on AuthEvent {
         return tokenExpired(_that);
       case AuthLoggedOut() when loggedOut != null:
         return loggedOut(_that);
-      case AuthUserProfileUpdated() when userProfileUpdated != null:
-        return userProfileUpdated(_that);
       case _:
         return orElse();
     }
@@ -101,12 +101,12 @@ extension AuthEventPatterns on AuthEvent {
     required TResult Function(AuthAppStarted value) appStarted,
     required TResult Function(AuthSessionCheckRequested value)
         sessionCheckRequested,
+    required TResult Function(AuthFirstOpenCompleted value) firstOpenCompleted,
     required TResult Function(AuthLoggedIn value) loggedIn,
     required TResult Function(AuthRegistered value) registered,
     required TResult Function(AuthSignOutRequested value) signOutRequested,
     required TResult Function(AuthTokenExpired value) tokenExpired,
     required TResult Function(AuthLoggedOut value) loggedOut,
-    required TResult Function(AuthUserProfileUpdated value) userProfileUpdated,
   }) {
     final _that = this;
     switch (_that) {
@@ -114,6 +114,8 @@ extension AuthEventPatterns on AuthEvent {
         return appStarted(_that);
       case AuthSessionCheckRequested():
         return sessionCheckRequested(_that);
+      case AuthFirstOpenCompleted():
+        return firstOpenCompleted(_that);
       case AuthLoggedIn():
         return loggedIn(_that);
       case AuthRegistered():
@@ -124,8 +126,6 @@ extension AuthEventPatterns on AuthEvent {
         return tokenExpired(_that);
       case AuthLoggedOut():
         return loggedOut(_that);
-      case AuthUserProfileUpdated():
-        return userProfileUpdated(_that);
     }
   }
 
@@ -145,12 +145,12 @@ extension AuthEventPatterns on AuthEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AuthAppStarted value)? appStarted,
     TResult? Function(AuthSessionCheckRequested value)? sessionCheckRequested,
+    TResult? Function(AuthFirstOpenCompleted value)? firstOpenCompleted,
     TResult? Function(AuthLoggedIn value)? loggedIn,
     TResult? Function(AuthRegistered value)? registered,
     TResult? Function(AuthSignOutRequested value)? signOutRequested,
     TResult? Function(AuthTokenExpired value)? tokenExpired,
     TResult? Function(AuthLoggedOut value)? loggedOut,
-    TResult? Function(AuthUserProfileUpdated value)? userProfileUpdated,
   }) {
     final _that = this;
     switch (_that) {
@@ -158,6 +158,8 @@ extension AuthEventPatterns on AuthEvent {
         return appStarted(_that);
       case AuthSessionCheckRequested() when sessionCheckRequested != null:
         return sessionCheckRequested(_that);
+      case AuthFirstOpenCompleted() when firstOpenCompleted != null:
+        return firstOpenCompleted(_that);
       case AuthLoggedIn() when loggedIn != null:
         return loggedIn(_that);
       case AuthRegistered() when registered != null:
@@ -168,8 +170,6 @@ extension AuthEventPatterns on AuthEvent {
         return tokenExpired(_that);
       case AuthLoggedOut() when loggedOut != null:
         return loggedOut(_that);
-      case AuthUserProfileUpdated() when userProfileUpdated != null:
-        return userProfileUpdated(_that);
       case _:
         return null;
     }
@@ -191,12 +191,12 @@ extension AuthEventPatterns on AuthEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? appStarted,
     TResult Function()? sessionCheckRequested,
+    TResult Function()? firstOpenCompleted,
     TResult Function(AppUser user)? loggedIn,
     TResult Function(AppUser user)? registered,
     TResult Function()? signOutRequested,
     TResult Function()? tokenExpired,
     TResult Function()? loggedOut,
-    TResult Function(AppUser user)? userProfileUpdated,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -205,6 +205,8 @@ extension AuthEventPatterns on AuthEvent {
         return appStarted();
       case AuthSessionCheckRequested() when sessionCheckRequested != null:
         return sessionCheckRequested();
+      case AuthFirstOpenCompleted() when firstOpenCompleted != null:
+        return firstOpenCompleted();
       case AuthLoggedIn() when loggedIn != null:
         return loggedIn(_that.user);
       case AuthRegistered() when registered != null:
@@ -215,8 +217,6 @@ extension AuthEventPatterns on AuthEvent {
         return tokenExpired();
       case AuthLoggedOut() when loggedOut != null:
         return loggedOut();
-      case AuthUserProfileUpdated() when userProfileUpdated != null:
-        return userProfileUpdated(_that.user);
       case _:
         return orElse();
     }
@@ -239,12 +239,12 @@ extension AuthEventPatterns on AuthEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() appStarted,
     required TResult Function() sessionCheckRequested,
+    required TResult Function() firstOpenCompleted,
     required TResult Function(AppUser user) loggedIn,
     required TResult Function(AppUser user) registered,
     required TResult Function() signOutRequested,
     required TResult Function() tokenExpired,
     required TResult Function() loggedOut,
-    required TResult Function(AppUser user) userProfileUpdated,
   }) {
     final _that = this;
     switch (_that) {
@@ -252,6 +252,8 @@ extension AuthEventPatterns on AuthEvent {
         return appStarted();
       case AuthSessionCheckRequested():
         return sessionCheckRequested();
+      case AuthFirstOpenCompleted():
+        return firstOpenCompleted();
       case AuthLoggedIn():
         return loggedIn(_that.user);
       case AuthRegistered():
@@ -262,8 +264,6 @@ extension AuthEventPatterns on AuthEvent {
         return tokenExpired();
       case AuthLoggedOut():
         return loggedOut();
-      case AuthUserProfileUpdated():
-        return userProfileUpdated(_that.user);
     }
   }
 
@@ -283,12 +283,12 @@ extension AuthEventPatterns on AuthEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? appStarted,
     TResult? Function()? sessionCheckRequested,
+    TResult? Function()? firstOpenCompleted,
     TResult? Function(AppUser user)? loggedIn,
     TResult? Function(AppUser user)? registered,
     TResult? Function()? signOutRequested,
     TResult? Function()? tokenExpired,
     TResult? Function()? loggedOut,
-    TResult? Function(AppUser user)? userProfileUpdated,
   }) {
     final _that = this;
     switch (_that) {
@@ -296,6 +296,8 @@ extension AuthEventPatterns on AuthEvent {
         return appStarted();
       case AuthSessionCheckRequested() when sessionCheckRequested != null:
         return sessionCheckRequested();
+      case AuthFirstOpenCompleted() when firstOpenCompleted != null:
+        return firstOpenCompleted();
       case AuthLoggedIn() when loggedIn != null:
         return loggedIn(_that.user);
       case AuthRegistered() when registered != null:
@@ -306,8 +308,6 @@ extension AuthEventPatterns on AuthEvent {
         return tokenExpired();
       case AuthLoggedOut() when loggedOut != null:
         return loggedOut();
-      case AuthUserProfileUpdated() when userProfileUpdated != null:
-        return userProfileUpdated(_that.user);
       case _:
         return null;
     }
@@ -352,6 +352,26 @@ class AuthSessionCheckRequested implements AuthEvent {
   @override
   String toString() {
     return 'AuthEvent.sessionCheckRequested()';
+  }
+}
+
+/// @nodoc
+
+class AuthFirstOpenCompleted implements AuthEvent {
+  const AuthFirstOpenCompleted();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is AuthFirstOpenCompleted);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'AuthEvent.firstOpenCompleted()';
   }
 }
 
@@ -539,71 +559,6 @@ class AuthLoggedOut implements AuthEvent {
   @override
   String toString() {
     return 'AuthEvent.loggedOut()';
-  }
-}
-
-/// @nodoc
-
-class AuthUserProfileUpdated implements AuthEvent {
-  const AuthUserProfileUpdated({required this.user});
-
-  final AppUser user;
-
-  /// Create a copy of AuthEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $AuthUserProfileUpdatedCopyWith<AuthUserProfileUpdated> get copyWith =>
-      _$AuthUserProfileUpdatedCopyWithImpl<AuthUserProfileUpdated>(
-          this, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is AuthUserProfileUpdated &&
-            (identical(other.user, user) || other.user == user));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, user);
-
-  @override
-  String toString() {
-    return 'AuthEvent.userProfileUpdated(user: $user)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $AuthUserProfileUpdatedCopyWith<$Res>
-    implements $AuthEventCopyWith<$Res> {
-  factory $AuthUserProfileUpdatedCopyWith(AuthUserProfileUpdated value,
-          $Res Function(AuthUserProfileUpdated) _then) =
-      _$AuthUserProfileUpdatedCopyWithImpl;
-  @useResult
-  $Res call({AppUser user});
-}
-
-/// @nodoc
-class _$AuthUserProfileUpdatedCopyWithImpl<$Res>
-    implements $AuthUserProfileUpdatedCopyWith<$Res> {
-  _$AuthUserProfileUpdatedCopyWithImpl(this._self, this._then);
-
-  final AuthUserProfileUpdated _self;
-  final $Res Function(AuthUserProfileUpdated) _then;
-
-  /// Create a copy of AuthEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? user = null,
-  }) {
-    return _then(AuthUserProfileUpdated(
-      user: null == user
-          ? _self.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as AppUser,
-    ));
   }
 }
 

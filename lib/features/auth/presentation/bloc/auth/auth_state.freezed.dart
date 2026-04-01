@@ -50,7 +50,8 @@ extension AuthStatePatterns on AuthState {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(AuthLoading value)? loading,
+    TResult Function(AuthSessionChecking value)? sessionChecking,
+    TResult Function(AuthInitialUser value)? initialUser,
     TResult Function(AuthAuthenticated value)? authenticated,
     TResult Function(AuthUnauthenticated value)? unauthenticated,
     TResult Function(AuthFailure value)? authFailure,
@@ -58,8 +59,10 @@ extension AuthStatePatterns on AuthState {
   }) {
     final _that = this;
     switch (_that) {
-      case AuthLoading() when loading != null:
-        return loading(_that);
+      case AuthSessionChecking() when sessionChecking != null:
+        return sessionChecking(_that);
+      case AuthInitialUser() when initialUser != null:
+        return initialUser(_that);
       case AuthAuthenticated() when authenticated != null:
         return authenticated(_that);
       case AuthUnauthenticated() when unauthenticated != null:
@@ -86,23 +89,24 @@ extension AuthStatePatterns on AuthState {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(AuthLoading value) loading,
+    required TResult Function(AuthSessionChecking value) sessionChecking,
+    required TResult Function(AuthInitialUser value) initialUser,
     required TResult Function(AuthAuthenticated value) authenticated,
     required TResult Function(AuthUnauthenticated value) unauthenticated,
     required TResult Function(AuthFailure value) authFailure,
   }) {
     final _that = this;
     switch (_that) {
-      case AuthLoading():
-        return loading(_that);
+      case AuthSessionChecking():
+        return sessionChecking(_that);
+      case AuthInitialUser():
+        return initialUser(_that);
       case AuthAuthenticated():
         return authenticated(_that);
       case AuthUnauthenticated():
         return unauthenticated(_that);
       case AuthFailure():
         return authFailure(_that);
-      case _:
-        throw StateError('Unexpected subclass');
     }
   }
 
@@ -120,15 +124,18 @@ extension AuthStatePatterns on AuthState {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(AuthLoading value)? loading,
+    TResult? Function(AuthSessionChecking value)? sessionChecking,
+    TResult? Function(AuthInitialUser value)? initialUser,
     TResult? Function(AuthAuthenticated value)? authenticated,
     TResult? Function(AuthUnauthenticated value)? unauthenticated,
     TResult? Function(AuthFailure value)? authFailure,
   }) {
     final _that = this;
     switch (_that) {
-      case AuthLoading() when loading != null:
-        return loading(_that);
+      case AuthSessionChecking() when sessionChecking != null:
+        return sessionChecking(_that);
+      case AuthInitialUser() when initialUser != null:
+        return initialUser(_that);
       case AuthAuthenticated() when authenticated != null:
         return authenticated(_that);
       case AuthUnauthenticated() when unauthenticated != null:
@@ -154,16 +161,19 @@ extension AuthStatePatterns on AuthState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loading,
+    TResult Function()? sessionChecking,
+    TResult Function()? initialUser,
     TResult Function(AppUser? user)? authenticated,
     TResult Function()? unauthenticated,
-    TResult Function(String? reason)? authFailure,
+    TResult Function(String reason)? authFailure,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case AuthLoading() when loading != null:
-        return loading();
+      case AuthSessionChecking() when sessionChecking != null:
+        return sessionChecking();
+      case AuthInitialUser() when initialUser != null:
+        return initialUser();
       case AuthAuthenticated() when authenticated != null:
         return authenticated(_that.user);
       case AuthUnauthenticated() when unauthenticated != null:
@@ -190,23 +200,24 @@ extension AuthStatePatterns on AuthState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loading,
+    required TResult Function() sessionChecking,
+    required TResult Function() initialUser,
     required TResult Function(AppUser? user) authenticated,
     required TResult Function() unauthenticated,
-    required TResult Function(String? reason) authFailure,
+    required TResult Function(String reason) authFailure,
   }) {
     final _that = this;
     switch (_that) {
-      case AuthLoading():
-        return loading();
+      case AuthSessionChecking():
+        return sessionChecking();
+      case AuthInitialUser():
+        return initialUser();
       case AuthAuthenticated():
         return authenticated(_that.user);
       case AuthUnauthenticated():
         return unauthenticated();
       case AuthFailure():
         return authFailure(_that.reason);
-      case _:
-        throw StateError('Unexpected subclass');
     }
   }
 
@@ -224,15 +235,18 @@ extension AuthStatePatterns on AuthState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loading,
+    TResult? Function()? sessionChecking,
+    TResult? Function()? initialUser,
     TResult? Function(AppUser? user)? authenticated,
     TResult? Function()? unauthenticated,
-    TResult? Function(String? reason)? authFailure,
+    TResult? Function(String reason)? authFailure,
   }) {
     final _that = this;
     switch (_that) {
-      case AuthLoading() when loading != null:
-        return loading();
+      case AuthSessionChecking() when sessionChecking != null:
+        return sessionChecking();
+      case AuthInitialUser() when initialUser != null:
+        return initialUser();
       case AuthAuthenticated() when authenticated != null:
         return authenticated(_that.user);
       case AuthUnauthenticated() when unauthenticated != null:
@@ -247,13 +261,13 @@ extension AuthStatePatterns on AuthState {
 
 /// @nodoc
 
-class AuthLoading extends AuthState {
-  const AuthLoading() : super._();
+class AuthSessionChecking extends AuthState {
+  const AuthSessionChecking() : super._();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is AuthLoading);
+        (other.runtimeType == runtimeType && other is AuthSessionChecking);
   }
 
   @override
@@ -261,7 +275,27 @@ class AuthLoading extends AuthState {
 
   @override
   String toString() {
-    return 'AuthState.loading()';
+    return 'AuthState.sessionChecking()';
+  }
+}
+
+/// @nodoc
+
+class AuthInitialUser extends AuthState {
+  const AuthInitialUser() : super._();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is AuthInitialUser);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'AuthState.initialUser()';
   }
 }
 
@@ -352,9 +386,9 @@ class AuthUnauthenticated extends AuthState {
 /// @nodoc
 
 class AuthFailure extends AuthState {
-  const AuthFailure({this.reason}) : super._();
+  const AuthFailure({required this.reason}) : super._();
 
-  final String? reason;
+  final String reason;
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
@@ -387,7 +421,7 @@ abstract mixin class $AuthFailureCopyWith<$Res>
           AuthFailure value, $Res Function(AuthFailure) _then) =
       _$AuthFailureCopyWithImpl;
   @useResult
-  $Res call({String? reason});
+  $Res call({String reason});
 }
 
 /// @nodoc
@@ -401,13 +435,13 @@ class _$AuthFailureCopyWithImpl<$Res> implements $AuthFailureCopyWith<$Res> {
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? reason = freezed,
+    Object? reason = null,
   }) {
     return _then(AuthFailure(
-      reason: freezed == reason
+      reason: null == reason
           ? _self.reason
           : reason // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }

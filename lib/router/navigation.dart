@@ -14,6 +14,7 @@ import 'package:karbon/features/profile/presentation/profile.dart';
 import 'package:karbon/router/home_shell.dart';
 import 'package:karbon/router/daily_activities_shell.dart';
 import 'package:karbon/features/calendar/presentation/calendar.dart';
+import 'package:karbon/features/auth/presentation/pages/splash/splash.dart';
 
 part 'navigation.gr.dart';
 
@@ -21,7 +22,11 @@ part 'navigation.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(path: '/', page: CustomFirstOpenRoute.page, initial: true),
+        AutoRoute(path: '/', page: SplashRoute.page, initial: true),
+        AutoRoute(
+          path: '/custom-first-open',
+          page: CustomFirstOpenRoute.page,
+        ),
         AutoRoute(path: '/login', page: LoginRoute.page),
         AutoRoute(path: '/forgot-password', page: ForgotPasswordRoute.page),
         AutoRoute(path: '/register', page: RegisterRoute.page),

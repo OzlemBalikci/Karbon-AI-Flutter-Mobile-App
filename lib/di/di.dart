@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/di/di.config.dart';
+import 'package:karbon/core/networks/dio_interceptor.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:karbon/features/auth/presentation/bloc/settings/settings_bloc.dart';
@@ -20,7 +21,11 @@ FutureOr<void> configureDependencies() async {
 @module
 abstract class RegisterModule {
   @singleton
-  Dio get dio => Dio();
+  Dio get dio {
+    final client = Dio();
+    client.interceptors.add(AppInterceptor());
+    return client;
+  }
 
   @preResolve
   Future<SharedPreferences> get prefs => SharedPreferences.getInstance();

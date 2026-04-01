@@ -8,16 +8,18 @@ import 'package:karbon/features/auth/presentation/bloc/auth/auth_state.dart';
 
 @lazySingleton
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(this._checkSessionUseCase, this._logoutUseCase)
-      : super(const AuthState.loading()) {
+  AuthBloc(
+    this._checkSessionUseCase,
+    this._logoutUseCase,
+  ) : super(const AuthState.sessionChecking()) {
     on<AuthAppStarted>(_onAppStarted);
     on<AuthSessionCheckRequested>(_onSessionCheckRequested);
+    on<AuthFirstOpenCompleted>(_onFirstOpenCompleted);
     on<AuthLoggedIn>(_onLoggedIn);
     on<AuthRegistered>(_onRegistered);
     on<AuthSignOutRequested>(_onSignOutRequested);
     on<AuthTokenExpired>(_onTokenExpired);
     on<AuthLoggedOut>(_onLoggedOut);
-    on<AuthUserProfileUpdated>(_onUserProfileUpdated);
   }
 
   final CheckSessionUseCase _checkSessionUseCase;
@@ -27,6 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthAppStarted event,
     Emitter<AuthState> emit,
   ) async {
+    emit(const AuthState.sessionChecking());
     add(const AuthEvent.sessionCheckRequested());
   }
 
@@ -34,17 +37,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthSessionCheckRequested event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
+    emit(const AuthState.sessionChecking());
     try {
-      final hasSession = await _checkSessionUseCase();
-      if (hasSession) {
-        emit(const AuthState.authenticated());
-      } else {
-        emit(const AuthState.unauthenticated());
+      final startup = await _checkSessionUseCase();
+      switch (startup) {
+        case SessionStartup.initialUser:
+          emit(const AuthState.initialUser());
+        case SessionStartup.authenticated:
+          emit(const AuthState.authenticated());
+        case SessionStartup.unauthenticated:
+          emit(const AuthState.unauthenticated());
       }
     } on Exception catch (e) {
       emit(AuthState.authFailure(reason: e.toString()));
     }
+  }
+
+  Future<void> _onFirstOpenCompleted(
+    AuthFirstOpenCompleted event,
+    Emitter<AuthState> emit,
+  ) async {
+    await _checkSessionUseCase.markFirstOpenCompleted();
+    emit(const AuthState.unauthenticated());
   }
 
   void _onLoggedIn(AuthLoggedIn event, Emitter<AuthState> emit) {
@@ -63,7 +77,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthSignOutRequested event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
+    emit(const AuthState.sessionChecking());
     try {
       await _logoutUseCase();
       emit(const AuthState.unauthenticated());
@@ -76,7 +90,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthTokenExpired event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
+    emit(const AuthState.sessionChecking());
     try {
       await _logoutUseCase();
     } on Exception {
@@ -87,10 +101,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onLoggedOut(AuthLoggedOut event, Emitter<AuthState> emit) {
     emit(const AuthState.unauthenticated());
-  }
-
-  void _onUserProfileUpdated(
-      AuthUserProfileUpdated event, Emitter<AuthState> emit) {
-    _emitAuthenticated(event.user, emit);
   }
 }

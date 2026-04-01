@@ -130,6 +130,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/splash.png
   AssetGenImage get splash => const AssetGenImage('assets/images/splash.png');
 
+  /// File path: assets/images/splash_logo.png
+  AssetGenImage get splashLogo => const AssetGenImage('assets/images/splash_logo.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         appLogo,
@@ -147,7 +150,8 @@ class $AssetsImagesGen {
         loginMask,
         profileMask,
         profileTreeMask,
-        splash
+        splash,
+        splashLogo
       ];
 }
 

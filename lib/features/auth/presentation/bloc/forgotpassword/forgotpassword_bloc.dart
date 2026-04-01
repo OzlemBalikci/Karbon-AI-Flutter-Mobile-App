@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/domain/usecases/forgotpassword_usecase.dart';
 import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_event.dart';
@@ -44,23 +44,26 @@ class ForgotPasswordBloc
 
     result.fold(
       (exception) {
-        if (exception is ApiException) {
-          if (exception.isBadRequest) {
-            emit(state.copyWith(
-              status: ForgotPasswordPageStatus.failure,
-              phoneNumberError: exception.firstMessage,
-            ));
-          } else if (exception.isNotFound) {
-            emit(state.copyWith(
-              status: ForgotPasswordPageStatus.failure,
-              error: exception.firstMessage,
-            ));
-          } else {
-            emit(state.copyWith(
-              status: ForgotPasswordPageStatus.failure,
-              error: exception.firstMessage,
-            ));
-          }
+        if (exception is BadRequestException) {
+          emit(state.copyWith(
+            status: ForgotPasswordPageStatus.failure,
+            phoneNumberError: exception.message,
+          ));
+        } else if (exception is NotFoundException) {
+          emit(state.copyWith(
+            status: ForgotPasswordPageStatus.failure,
+            error: exception.message,
+          ));
+        } else if (exception is AppException) {
+          emit(state.copyWith(
+            status: ForgotPasswordPageStatus.failure,
+            error: exception.message,
+          ));
+        } else {
+          emit(state.copyWith(
+            status: ForgotPasswordPageStatus.failure,
+            error: exception.toString(),
+          ));
         }
       },
       (_) => emit(state.copyWith(status: ForgotPasswordPageStatus.success)),
