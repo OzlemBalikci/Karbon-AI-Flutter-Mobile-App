@@ -42,11 +42,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: AppThemeSpacing.s25.w,
-            child: BackIconButton(),
-          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.min,

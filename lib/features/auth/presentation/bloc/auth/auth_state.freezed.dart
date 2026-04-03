@@ -51,7 +51,6 @@ extension AuthStatePatterns on AuthState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AuthSessionChecking value)? sessionChecking,
-    TResult Function(AuthInitialUser value)? initialUser,
     TResult Function(AuthAuthenticated value)? authenticated,
     TResult Function(AuthUnauthenticated value)? unauthenticated,
     TResult Function(AuthFailure value)? authFailure,
@@ -61,8 +60,6 @@ extension AuthStatePatterns on AuthState {
     switch (_that) {
       case AuthSessionChecking() when sessionChecking != null:
         return sessionChecking(_that);
-      case AuthInitialUser() when initialUser != null:
-        return initialUser(_that);
       case AuthAuthenticated() when authenticated != null:
         return authenticated(_that);
       case AuthUnauthenticated() when unauthenticated != null:
@@ -90,7 +87,6 @@ extension AuthStatePatterns on AuthState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(AuthSessionChecking value) sessionChecking,
-    required TResult Function(AuthInitialUser value) initialUser,
     required TResult Function(AuthAuthenticated value) authenticated,
     required TResult Function(AuthUnauthenticated value) unauthenticated,
     required TResult Function(AuthFailure value) authFailure,
@@ -99,8 +95,6 @@ extension AuthStatePatterns on AuthState {
     switch (_that) {
       case AuthSessionChecking():
         return sessionChecking(_that);
-      case AuthInitialUser():
-        return initialUser(_that);
       case AuthAuthenticated():
         return authenticated(_that);
       case AuthUnauthenticated():
@@ -125,7 +119,6 @@ extension AuthStatePatterns on AuthState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AuthSessionChecking value)? sessionChecking,
-    TResult? Function(AuthInitialUser value)? initialUser,
     TResult? Function(AuthAuthenticated value)? authenticated,
     TResult? Function(AuthUnauthenticated value)? unauthenticated,
     TResult? Function(AuthFailure value)? authFailure,
@@ -134,8 +127,6 @@ extension AuthStatePatterns on AuthState {
     switch (_that) {
       case AuthSessionChecking() when sessionChecking != null:
         return sessionChecking(_that);
-      case AuthInitialUser() when initialUser != null:
-        return initialUser(_that);
       case AuthAuthenticated() when authenticated != null:
         return authenticated(_that);
       case AuthUnauthenticated() when unauthenticated != null:
@@ -162,24 +153,22 @@ extension AuthStatePatterns on AuthState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? sessionChecking,
-    TResult Function()? initialUser,
-    TResult Function(AppUser? user)? authenticated,
+    TResult Function(AppUser user)? authenticated,
     TResult Function()? unauthenticated,
-    TResult Function(String reason)? authFailure,
+    TResult Function(String reason, AuthFailureType failureType, String? code)?
+        authFailure,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case AuthSessionChecking() when sessionChecking != null:
         return sessionChecking();
-      case AuthInitialUser() when initialUser != null:
-        return initialUser();
       case AuthAuthenticated() when authenticated != null:
         return authenticated(_that.user);
       case AuthUnauthenticated() when unauthenticated != null:
         return unauthenticated();
       case AuthFailure() when authFailure != null:
-        return authFailure(_that.reason);
+        return authFailure(_that.reason, _that.failureType, _that.code);
       case _:
         return orElse();
     }
@@ -201,23 +190,22 @@ extension AuthStatePatterns on AuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() sessionChecking,
-    required TResult Function() initialUser,
-    required TResult Function(AppUser? user) authenticated,
+    required TResult Function(AppUser user) authenticated,
     required TResult Function() unauthenticated,
-    required TResult Function(String reason) authFailure,
+    required TResult Function(
+            String reason, AuthFailureType failureType, String? code)
+        authFailure,
   }) {
     final _that = this;
     switch (_that) {
       case AuthSessionChecking():
         return sessionChecking();
-      case AuthInitialUser():
-        return initialUser();
       case AuthAuthenticated():
         return authenticated(_that.user);
       case AuthUnauthenticated():
         return unauthenticated();
       case AuthFailure():
-        return authFailure(_that.reason);
+        return authFailure(_that.reason, _that.failureType, _that.code);
     }
   }
 
@@ -236,23 +224,21 @@ extension AuthStatePatterns on AuthState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? sessionChecking,
-    TResult? Function()? initialUser,
-    TResult? Function(AppUser? user)? authenticated,
+    TResult? Function(AppUser user)? authenticated,
     TResult? Function()? unauthenticated,
-    TResult? Function(String reason)? authFailure,
+    TResult? Function(String reason, AuthFailureType failureType, String? code)?
+        authFailure,
   }) {
     final _that = this;
     switch (_that) {
       case AuthSessionChecking() when sessionChecking != null:
         return sessionChecking();
-      case AuthInitialUser() when initialUser != null:
-        return initialUser();
       case AuthAuthenticated() when authenticated != null:
         return authenticated(_that.user);
       case AuthUnauthenticated() when unauthenticated != null:
         return unauthenticated();
       case AuthFailure() when authFailure != null:
-        return authFailure(_that.reason);
+        return authFailure(_that.reason, _that.failureType, _that.code);
       case _:
         return null;
     }
@@ -281,30 +267,10 @@ class AuthSessionChecking extends AuthState {
 
 /// @nodoc
 
-class AuthInitialUser extends AuthState {
-  const AuthInitialUser() : super._();
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is AuthInitialUser);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  String toString() {
-    return 'AuthState.initialUser()';
-  }
-}
-
-/// @nodoc
-
 class AuthAuthenticated extends AuthState {
-  const AuthAuthenticated({this.user}) : super._();
+  const AuthAuthenticated({required this.user}) : super._();
 
-  final AppUser? user;
+  final AppUser user;
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
@@ -337,7 +303,7 @@ abstract mixin class $AuthAuthenticatedCopyWith<$Res>
           AuthAuthenticated value, $Res Function(AuthAuthenticated) _then) =
       _$AuthAuthenticatedCopyWithImpl;
   @useResult
-  $Res call({AppUser? user});
+  $Res call({AppUser user});
 }
 
 /// @nodoc
@@ -352,13 +318,13 @@ class _$AuthAuthenticatedCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(AuthAuthenticated(
-      user: freezed == user
+      user: null == user
           ? _self.user
           : user // ignore: cast_nullable_to_non_nullable
-              as AppUser?,
+              as AppUser,
     ));
   }
 }
@@ -386,9 +352,13 @@ class AuthUnauthenticated extends AuthState {
 /// @nodoc
 
 class AuthFailure extends AuthState {
-  const AuthFailure({required this.reason}) : super._();
+  const AuthFailure(
+      {required this.reason, required this.failureType, this.code})
+      : super._();
 
   final String reason;
+  final AuthFailureType failureType;
+  final String? code;
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
@@ -402,15 +372,18 @@ class AuthFailure extends AuthState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is AuthFailure &&
-            (identical(other.reason, reason) || other.reason == reason));
+            (identical(other.reason, reason) || other.reason == reason) &&
+            (identical(other.failureType, failureType) ||
+                other.failureType == failureType) &&
+            (identical(other.code, code) || other.code == code));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, reason);
+  int get hashCode => Object.hash(runtimeType, reason, failureType, code);
 
   @override
   String toString() {
-    return 'AuthState.authFailure(reason: $reason)';
+    return 'AuthState.authFailure(reason: $reason, failureType: $failureType, code: $code)';
   }
 }
 
@@ -421,7 +394,7 @@ abstract mixin class $AuthFailureCopyWith<$Res>
           AuthFailure value, $Res Function(AuthFailure) _then) =
       _$AuthFailureCopyWithImpl;
   @useResult
-  $Res call({String reason});
+  $Res call({String reason, AuthFailureType failureType, String? code});
 }
 
 /// @nodoc
@@ -436,12 +409,22 @@ class _$AuthFailureCopyWithImpl<$Res> implements $AuthFailureCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? reason = null,
+    Object? failureType = null,
+    Object? code = freezed,
   }) {
     return _then(AuthFailure(
       reason: null == reason
           ? _self.reason
           : reason // ignore: cast_nullable_to_non_nullable
               as String,
+      failureType: null == failureType
+          ? _self.failureType
+          : failureType // ignore: cast_nullable_to_non_nullable
+              as AuthFailureType,
+      code: freezed == code
+          ? _self.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }

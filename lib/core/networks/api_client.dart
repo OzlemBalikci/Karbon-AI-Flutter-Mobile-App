@@ -1,2 +1,2 @@
-/// HTTP istemcisi [getIt]<Dio>() ile alınır; [RegisterModule] içinde
-/// [AppInterceptor] eklenir. Ek global `setupDio` yoktur.
+// HTTP istemcisi getIt<Dio>(). RegisterModule: cookie, TokenRefreshInterceptor,
+// AppInterceptor. ApiConfig.baseUrl için --dart-define=API_BASE_URL=...

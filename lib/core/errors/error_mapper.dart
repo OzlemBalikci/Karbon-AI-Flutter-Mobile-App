@@ -16,6 +16,8 @@ Failure mapExceptionToFailure(Exception e) {
     return ValidationFailure(e.message);
   } else if (e is ServerException) {
     return ServerFailure(e.message);
+  } else if (e is TooManyRequestsException) {
+    return RateLimitFailure(e.message);
   } else {
     return NetworkFailure("İnternet bağlantısını kontrol et");
   }

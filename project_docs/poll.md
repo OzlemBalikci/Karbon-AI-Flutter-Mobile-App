@@ -9,8 +9,10 @@
 - Anket tamamlandıktan sonra kullanıcı liderlik tablosuna girer
 - Her seçeneğin altında açıklama mesajı gösterilebilir (admin tarafından girilir)
 - Anket tamamlanınca ana sayfa `hasCompletedPoll: true` döner
+- Kullanıcı anketi yarıda bırakıp daha sonra kaldığı yerden devam edebilir
 
 ## Ağaç Hesaplama Formülü
+
 ```
 calculatedTrees = (totalCarbonScore / pointUnit) * treeCount
 ```
@@ -21,12 +23,16 @@ calculatedTrees = (totalCarbonScore / pointUnit) * treeCount
 "Karbon Ayak İzi Hesapla" butonuna tıklanır
     ↓
 GET /api/v1/polls/active → Aktif anketi getir
+    ↓ selectedOptionId dolu ise → önceki cevapları göster, kaldığı yerden devam et
+    ↓ selectedOptionId null ise → boş başla
     ↓
-Flutter soruları sırayla gösterir
+Her soruyu cevapladıkça
+    ↓
+POST /api/v1/polls/draft → Taslak kaydet (uygulama kapansa bile kaybolmaz)
     ↓
 Tüm cevaplar seçilince
     ↓
-POST /api/v1/polls/answers → Cevapları gönder
+POST /api/v1/polls/answers → Anketi tamamla
     ↓
 Response'da totalCarbonScore ve calculatedTrees döner
     ↓
@@ -44,22 +50,26 @@ GET /api/v1/user-results/home → hasCompletedPoll: true ile tam ekran
 **GET** `/api/v1/polls/active`  
 🔒 Auth gerekli
 
+Kullanıcının bu ay için taslağı varsa, sorulara ait `selectedOptionId` alanı dolu gelir. Flutter bu bilgiyle kullanıcıyı kaldığı yerden devam ettirebilir.
+
 ### Response `200`
+
 ```json
 {
   "isSuccess": true,
   "data": {
     "pollSetId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "name": "Aralık 2023 Anketi",
+    "name": "Mart 2026 Anketi",
     "description": "Aylık karbon ayak izi anketi",
     "questions": [
       {
         "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         "text": "Evinizi kaç kişi ile paylaşıyorsunuz?",
         "displayOrder": 1,
+        "selectedOptionId": "9fa85f64-5717-4562-b3fc-2c963f66afa6",
         "options": [
           {
-            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "id": "9fa85f64-5717-4562-b3fc-2c963f66afa6",
             "text": "Yalnız yaşıyorum.",
             "message": "Araştırmalar, yalnız yaşayan insanların daha fazla kaynak tükettiğini gösteriyor...",
             "carbonValue": 10.5,
@@ -72,11 +82,55 @@ GET /api/v1/user-results/home → hasCompletedPoll: true ile tam ekran
 }
 ```
 
+> `selectedOptionId` — Kullanıcının daha önce seçtiği seçenek ID'si. Taslak yoksa `null` gelir.
+
 ### Response `404`
+
 ```json
 {
   "isSuccess": false,
-  "errors": ["ActivePollNotFound"]
+  "errors": ["Bu dönem için aktif anket bulunamadı."]
+}
+```
+
+---
+
+## Taslak Kaydet
+
+**POST** `/api/v1/polls/draft`  
+🔒 Auth gerekli
+
+Kullanıcı anketi yarıda bıraksa bile cevaplar saklanır. Uygulama yeniden açıldığında `GET /polls/active` ile taslak cevaplar geri gelir.
+
+### İş Kuralları
+
+- Aynı ay içinde tamamlanmış anket varsa taslak kaydedilemez → `409 Conflict`
+- Mevcut taslak varsa üzerine yazılır
+
+### Request Body
+
+```json
+{
+  "pollSetId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "answers": [
+    {
+      "questionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "optionId": "9fa85f64-5717-4562-b3fc-2c963f66afa6"
+    }
+  ],
+  "isDraft": true
+}
+```
+
+### Response `200`
+
+```json
+{
+  "isSuccess": true,
+  "data": {
+    "totalCarbonScore": 10.5,
+    "calculatedTrees": 0
+  }
 }
 ```
 
@@ -87,18 +141,23 @@ GET /api/v1/user-results/home → hasCompletedPoll: true ile tam ekran
 **POST** `/api/v1/polls/answers`  
 🔒 Auth gerekli
 
+Anketi tamamlar. Taslak varsa üzerine yazarak `IsCompleted: true` olarak işaretler.
+
 ### İş Kuralları
+
 - Kullanıcı aynı anketi aynı ay içinde tekrar cevaplayamaz → `409 Conflict`
 - Geçersiz seçenek ID'si gönderilirse → `400 Bad Request`
+- `isDraft` alanı gönderilmez veya `false` olarak gönderilir
 
 ### Request Body
+
 ```json
 {
   "pollSetId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "answers": [
     {
       "questionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "optionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+      "optionId": "9fa85f64-5717-4562-b3fc-2c963f66afa6"
     },
     {
       "questionId": "4fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -109,6 +168,7 @@ GET /api/v1/user-results/home → hasCompletedPoll: true ile tam ekran
 ```
 
 ### Response `200`
+
 ```json
 {
   "isSuccess": true,
@@ -119,10 +179,185 @@ GET /api/v1/user-results/home → hasCompletedPoll: true ile tam ekran
 }
 ```
 
+### Response `400` — Geçersiz cevaplar
+
+```json
+{
+  "isSuccess": false,
+  "errors": ["Gönderilen anket cevapları geçersiz."]
+}
+```
+
 ### Response `409` — Zaten cevaplandı
+
 ```json
 {
   "isSuccess": false,
   "errors": ["Bu anketi bu ay zaten cevapladınız."]
+}
+```
+
+---
+
+## Anket Sonucunu Getir
+
+**GET** `/api/v1/polls/{pollSetId}/results`  
+🔒 Auth gerekli
+
+Normal kullanıcı kendi sonucunu görür. Admin `targetUserId` query parametresiyle istediği kullanıcının sonucunu getirebilir.
+
+### Query Parametreleri
+
+| Parametre | Zorunlu | Açıklama |
+|---|---|---|
+| `month` | Evet | Anketin ayı (1-12) |
+| `year` | Evet | Anketin yılı |
+| `targetUserId` | Hayır | Sadece Admin — hedef kullanıcı ID'si |
+
+### Response `200`
+
+```json
+{
+  "isSuccess": true,
+  "data": {
+    "userName": "Ekin Can Akın",
+    "totalScore": 70.5,
+    "treeCount": 1200,
+    "answers": [
+      {
+        "questionText": "Evinizi kaç kişi ile paylaşıyorsunuz?",
+        "selectedOptionText": "Yalnız yaşıyorum.",
+        "carbonValue": 10.5
+      }
+    ]
+  }
+}
+```
+
+### Response `404`
+
+```json
+{
+  "isSuccess": false,
+  "errors": ["Anket sonucu bulunamadı."]
+}
+```
+
+---
+
+## Admin — Tüm Anket Setlerini Listele
+
+**GET** `/api/v1/polls`  
+🔒 Admin
+
+### Response `200`
+
+```json
+{
+  "isSuccess": true,
+  "data": [
+    {
+      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "name": "Mart 2026 Anketi",
+      "month": 3,
+      "year": 2026,
+      "isActive": true,
+      "questionCount": 10
+    }
+  ]
+}
+```
+
+---
+
+## Admin — Anket Detayını Getir
+
+**GET** `/api/v1/polls/{id}`  
+🔒 Admin
+
+### Response `200`
+
+```json
+{
+  "isSuccess": true,
+  "data": {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "name": "Mart 2026 Anketi",
+    "month": 3,
+    "year": 2026,
+    "isActive": true,
+    "questions": [
+      {
+        "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        "text": "Evinizi kaç kişi ile paylaşıyorsunuz?",
+        "displayOrder": 1,
+        "options": [
+          {
+            "id": "9fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "text": "Yalnız yaşıyorum.",
+            "carbonValue": 10.5,
+            "displayOrder": 1
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+---
+
+## Admin — Yeni Anket Seti Oluştur
+
+**POST** `/api/v1/polls`  
+🔒 Admin
+
+### Request Body
+
+```json
+{
+  "name": "Nisan 2026 Anketi",
+  "description": "Aylık karbon ayak izi anketi",
+  "displayOrder": 1,
+  "month": 4,
+  "year": 2026
+}
+```
+
+### Response `200`
+
+```json
+{
+  "isSuccess": true,
+  "data": null
+}
+```
+
+---
+
+## Admin — Soruları Ankete Kopyala
+
+**POST** `/api/v1/polls/{pollSetId}/questions`  
+🔒 Admin
+
+Mevcut aktivite sorularını hedef ankete kopyalar.
+
+### Request Body
+
+```json
+{
+  "sourceQuestionIds": [
+    "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "4fa85f64-5717-4562-b3fc-2c963f66afa6"
+  ]
+}
+```
+
+### Response `200`
+
+```json
+{
+  "isSuccess": true,
+  "data": null
 }
 ```

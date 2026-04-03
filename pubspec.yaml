@@ -64,6 +64,9 @@ dependencies:
   intl: ^0.20.2
   flutter_web_frame: ^1.0.0
   flutter_screenutil: ^5.9.3
+  cookie_jar: ^4.0.9
+  dio_cookie_manager: ^3.4.0
+  path_provider: ^2.1.5
 
 # TODO: Hive seems to be abandoned. Need to replace it with a better one
 # https://github.com/isar/hive/issues/1324

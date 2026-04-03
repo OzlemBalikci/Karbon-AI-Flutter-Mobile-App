@@ -16,6 +16,8 @@ import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calcula
 import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/features/carboncalculate/domain/repositories/carbon_calculate_repository.dart';
+import 'package:karbon/di/di.dart';
 
 part 'widgets/info_bottom_button.dart';
 part 'widgets/first_question_bottom_button.dart';
@@ -43,38 +45,30 @@ class CarbonCalculatePage extends StatefulWidget {
 
 class _CarbonCalculatePageState extends State<CarbonCalculatePage> {
   @override
-  void initState() {
-    super.initState();
-    context
-        .read<CarbonCalculateBloc>()
-        .add(const CarbonCalculateEvent.loadRequested());
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: AppThemeSpacing.s25.w,
-            child: BackIconButton(),
-          ),
-          SafeArea(
-            child: Column(
-              children: [
-                Expanded(child: CarbonCalculateFeatureSection()),
-                SizedBox(height: AppThemeSpacing.s30.h),
-                CarbonCalculateBottomSection(),
-              ],
+    return BlocProvider(
+      create: (context) => CarbonCalculateBloc(
+        getIt.get<CarbonCalculateRepository>(),
+      )..add(const CarbonCalculateEvent.loadRequested()),
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Positioned(
+              top: MediaQuery.of(context).padding.top,
+              left: AppThemeSpacing.s25.w,
+              child: BackIconButton(),
             ),
-          ),
-        ],
+            SafeArea(
+              child: Column(
+                children: [
+                  Expanded(child: CarbonCalculateFeatureSection()),
+                  SizedBox(height: AppThemeSpacing.s30.h),
+                  CarbonCalculateBottomSection(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

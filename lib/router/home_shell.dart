@@ -10,6 +10,12 @@ import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities
 import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
 
+// Sabit set: tam ekran açılan, alt barı gizlemesi gereken rotalar
+const _fullScreenRoutes = <String>{
+  SelectedQuestionRoute.name,
+  // CalendarDetailRoute.name, -- takvim alt sayfalarını buraya ekle
+};
+
 @RoutePage()
 class HomeShellPage extends StatelessWidget {
   const HomeShellPage({super.key});
@@ -19,14 +25,14 @@ class HomeShellPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomeBloc>(
-          create: (context) => getIt.get<HomeBloc>()..add(HomeStarted()),
+          create: (_) => getIt<HomeBloc>()..add(HomeStarted()),
         ),
         BlocProvider<DailyActivitiesBloc>(
-          create: (context) => getIt.get<DailyActivitiesBloc>()
+          create: (_) => getIt<DailyActivitiesBloc>()
             ..add(const DailyActivitiesLoadRequested()),
         ),
         BlocProvider<ProfileBloc>(
-          create: (context) => getIt.get<ProfileBloc>(),
+          create: (_) => getIt<ProfileBloc>(),
         ),
       ],
       child: AutoTabsRouter(
@@ -34,13 +40,15 @@ class HomeShellPage extends StatelessWidget {
           HomeRoute(),
           DailyActivitiesRoute(),
           CalendarRoute(),
-          ProfileRoute()
+          ProfileRoute(),
         ],
         builder: (context, child) {
           final tabsRouter = AutoTabsRouter.of(context);
-          final tabIndex = tabsRouter.activeIndex;
-          final tabStack = tabsRouter.stackRouterOfIndex(tabIndex);
-          final showBottomNav = tabStack == null || !tabStack.canPop();
+          final tabStack =
+              tabsRouter.stackRouterOfIndex(tabsRouter.activeIndex);
+          final topRouteName = tabStack?.topRoute.name;
+          final showBottomNav = !_fullScreenRoutes.contains(topRouteName);
+
           return Scaffold(
             body: child,
             bottomNavigationBar: showBottomNav

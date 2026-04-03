@@ -36,3 +36,7 @@ class ServerException extends AppException {
 class NetworkException extends AppException {
   NetworkException(super.message);
 }
+
+class TooManyRequestsException extends AppException {
+  TooManyRequestsException(super.message, {super.statusCode});
+}

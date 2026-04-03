@@ -25,5 +25,6 @@ abstract class AuthRemote {
     required String confirmNewPassword,
   });
 
+  /// POST /api/v1/users/logout — refresh iptal; auth gerekli.
   Future<void> logout();
 }

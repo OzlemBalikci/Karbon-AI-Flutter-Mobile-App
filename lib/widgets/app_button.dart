@@ -25,7 +25,7 @@ class AppButton extends StatelessWidget {
       width: double.infinity,
       child: OutlinedButton(
         onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
+        style: OutlinedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
           ),
@@ -36,7 +36,7 @@ class AppButton extends StatelessWidget {
           side: BorderSide(color: borderColor.withValues(alpha: 0.8), width: 2),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: AppThemeSpacing.s22.h),
+          padding: EdgeInsets.symmetric(vertical: AppThemeSpacing.s20.h),
           child: Text(
             text,
             style: context.typographiesSp.bodyMedium.copyWith(

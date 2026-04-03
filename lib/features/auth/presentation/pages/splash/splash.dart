@@ -30,16 +30,13 @@ class _SplashPageState extends State<SplashPage> {
   void _navigateForState(BuildContext context, AuthState state) {
     state.when(
       sessionChecking: () {},
-      initialUser: () {
-        context.router.replaceAll([const CustomFirstOpenRoute()]);
-      },
       authenticated: (_) {
         context.router.replaceAll([const HomeShellRoute()]);
       },
       unauthenticated: () {
         context.router.replaceAll([const LoginRoute()]);
       },
-      authFailure: (_) {
+      authFailure: (reason, failureType, code) {
         context.router.replaceAll([const LoginRoute()]);
       },
     );

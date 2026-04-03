@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cookie_jar/cookie_jar.dart' as _i557;
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
@@ -126,26 +127,37 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final registerModule = _$RegisterModule();
+    await gh.factoryAsync<_i557.CookieJar>(
+      () => registerModule.cookieJar,
+      preResolve: true,
+    );
     await gh.factoryAsync<_i460.SharedPreferences>(
       () => registerModule.prefs,
       preResolve: true,
     );
-    gh.singleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i614.SettingsBloc>(() => _i614.SettingsBloc());
+    gh.lazySingleton<_i102.AuthLocal>(
+        () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
+    gh.lazySingleton<_i505.UsefulinfoRemote>(
+        () => _i964.UsefulinfoRemoteMock());
+    gh.lazySingleton<_i71.UsefulinfoRepository>(
+        () => _i233.UsefulinfoRepositoryImpl(gh<_i505.UsefulinfoRemote>()));
+    gh.singleton<_i361.Dio>(() => registerModule.dio(
+          gh<_i102.AuthLocal>(),
+          gh<_i557.CookieJar>(),
+        ));
+    gh.factory<_i434.UsefulinfoBloc>(
+        () => _i434.UsefulinfoBloc(gh<_i71.UsefulinfoRepository>()));
     gh.lazySingleton<_i1036.LeaderboardRemote>(
         () => _i1036.LeaderboardRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i342.DailyActivitiesRemote>(
         () => _i342.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
-    gh.lazySingleton<_i102.AuthLocal>(
-        () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i205.CarbonCalculateRemote>(
         () => _i205.CarbonCalculateRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i483.ProfileRemote>(
         () => _i483.ProfileRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
-    gh.lazySingleton<_i505.UsefulinfoRemote>(
-        () => _i964.UsefulinfoRemoteMock());
     gh.lazySingleton<_i322.LeaderboardRepository>(
         () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
     gh.lazySingleton<_i48.ProfileRepository>(
@@ -162,8 +174,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i25.HomeRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i111.ProfileBloc>(
         () => _i111.ProfileBloc(gh<_i812.GetProfileUseCase>()));
-    gh.lazySingleton<_i71.UsefulinfoRepository>(
-        () => _i233.UsefulinfoRepositoryImpl(gh<_i505.UsefulinfoRemote>()));
     gh.lazySingleton<_i123.CarbonCalculateRepository>(() =>
         _i163.CarbonCalculateRepositoryImpl(gh<_i205.CarbonCalculateRemote>()));
     gh.lazySingleton<_i406.HomeRepository>(() => _i274.HomeRepositoryImpl(
@@ -178,8 +188,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i413.AuthRemote>(),
           gh<_i102.AuthLocal>(),
         ));
-    gh.factory<_i434.UsefulinfoBloc>(
-        () => _i434.UsefulinfoBloc(gh<_i71.UsefulinfoRepository>()));
     gh.factory<_i959.CarbonCalculateBloc>(
         () => _i959.CarbonCalculateBloc(gh<_i123.CarbonCalculateRepository>()));
     gh.factory<_i591.HomeBloc>(

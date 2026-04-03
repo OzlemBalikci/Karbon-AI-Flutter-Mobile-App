@@ -18,6 +18,17 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<bool> get checkSession => _local.hasSession();
 
   @override
+  Future<Either<Exception, AppUser?>> resolveSession() async {
+    if (!await checkSession) return const Right(null);
+    try {
+      final profile = await _remote.getProfile();
+      return Right(profile.toEntity());
+    } on Exception catch (e) {
+      return Left(unwrapDioException(e));
+    }
+  }
+
+  @override
   Future<Either<Exception, AppUser>> login({
     required String emailOrIdentityNumber,
     required String password,
@@ -30,6 +41,7 @@ class AuthRepositoryImpl implements AuthRepository {
         ),
       );
       await _local.saveToken(loginResponse.accessToken);
+      await _local.saveRefreshToken(loginResponse.refreshToken);
       final profile = await _remote.getProfile();
       return Right(profile.toEntity());
     } on Exception catch (e) {
@@ -73,6 +85,7 @@ class AuthRepositoryImpl implements AuthRepository {
         ),
       );
       await _local.saveToken(loginResponse.accessToken);
+      await _local.saveRefreshToken(loginResponse.refreshToken);
 
       // 3. Profili çek ve AppUser döndür
       final profile = await _remote.getProfile();
@@ -116,7 +129,16 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> logout() async {
-    await _remote.logout();
+    try {
+      await _remote.logout();
+    } on Exception catch (_) {
+      // Token zaten geçersiz olabilir; yerel temizlik yine de yapılır.
+    }
     await _local.clearSession();
   }
+
+  // @override
+  // Future<void> deleteAccount() async {
+  //   await _remote.deleteAccount();
+  // }
 }

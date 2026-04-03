@@ -16,6 +16,7 @@ import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_selector.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_event.dart';
+import 'package:karbon/di/di.dart';
 
 part 'widgets/login_forgot_password.dart';
 
@@ -51,52 +52,55 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
     final keyboardOpen = keyboardInset > 0;
-    return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        if (state.status == LoginPageStatus.success) {
-          context.router.replaceAll([const HomeShellRoute()]);
-        }
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: context.colors.primary,
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Image.asset(
-                  Assets.images.loginMask.path,
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
+    return BlocProvider(
+      create: (context) => getIt<LoginBloc>(),
+      child: BlocListener<LoginBloc, LoginState>(
+        listener: (context, state) {
+          if (state.status == LoginPageStatus.success) {
+            context.router.replaceAll([const HomeShellRoute()]);
+          }
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: context.colors.primary,
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(
+                    Assets.images.loginMask.path,
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
-            ),
-            SafeArea(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return SingleChildScrollView(
-                    physics: keyboardOpen
-                        ? const ClampingScrollPhysics()
-                        : const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.only(bottom: keyboardInset),
-                    child: ConstrainedBox(
-                      constraints:
-                          BoxConstraints(minHeight: constraints.maxHeight),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          LoginFeatureSection(controller: _logincontroller),
-                          LoginBottomRegisterSection(),
-                        ],
+              SafeArea(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SingleChildScrollView(
+                      physics: keyboardOpen
+                          ? const ClampingScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: keyboardInset),
+                      child: ConstrainedBox(
+                        constraints:
+                            BoxConstraints(minHeight: constraints.maxHeight),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            LoginFeatureSection(controller: _logincontroller),
+                            LoginBottomRegisterSection(),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

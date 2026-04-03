@@ -19,7 +19,7 @@ class AppBottomNavigationBar extends StatelessWidget {
     _NavItemData(icon: Assets.icons.home, label: 'Home'),
     _NavItemData(icon: Assets.icons.stats, label: 'Stats'),
     _NavItemData(icon: Assets.icons.calendarMonthOutlined, label: 'Calendar'),
-    _NavItemData(icon: Assets.icons.profile, label: 'Profile'),
+    _NavItemData(icon: Assets.icons.favorites, label: 'Favorites'),
   ];
 
   @override
@@ -74,10 +74,6 @@ class AppBottomNavigationBar extends StatelessWidget {
                       child: item.icon.svg(
                         width: AppThemeSpacing.s24.w,
                         height: AppThemeSpacing.s24.h,
-                        colorFilter: selected
-                            ? ColorFilter.mode(
-                                context.colors.primary, BlendMode.srcIn)
-                            : null,
                       ),
                     ),
                   ),

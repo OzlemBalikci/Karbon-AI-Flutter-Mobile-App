@@ -8,6 +8,7 @@ class AuthLocalImpl implements AuthLocal {
   final SharedPreferences _prefs;
 
   static const _keyToken = 'auth_token';
+  static const _keyRefresh = 'auth_refresh_token';
 
   @override
   Future<bool> hasSession() async {
@@ -27,7 +28,23 @@ class AuthLocalImpl implements AuthLocal {
   }
 
   @override
+  Future<String?> getRefreshToken() async {
+    final v = _prefs.getString(_keyRefresh);
+    return (v?.isEmpty ?? true) ? null : v;
+  }
+
+  @override
+  Future<void> saveRefreshToken(String? refreshToken) async {
+    if (refreshToken == null || refreshToken.isEmpty) {
+      await _prefs.remove(_keyRefresh);
+    } else {
+      await _prefs.setString(_keyRefresh, refreshToken);
+    }
+  }
+
+  @override
   Future<void> clearSession() async {
     await _prefs.remove(_keyToken);
+    await _prefs.remove(_keyRefresh);
   }
 }

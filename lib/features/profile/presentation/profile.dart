@@ -101,11 +101,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: AppThemeSpacing.s25.w,
-            child: BackIconButton(),
-          ),
         ],
       ),
     );

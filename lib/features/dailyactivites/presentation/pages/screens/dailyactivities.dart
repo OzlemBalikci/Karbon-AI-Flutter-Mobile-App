@@ -34,11 +34,6 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: AppThemeSpacing.s25.w,
-            child: BackIconButton(),
-          ),
           SafeArea(
             child: Column(
               mainAxisSize: MainAxisSize.max,

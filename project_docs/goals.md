@@ -1,26 +1,27 @@
-# Hedefler (Admin)
+# Goals (Admin)
 
 ## İş Kuralları
-
-- Hedefler yalnızca admin tarafından belirlenir
-- Her ay için bir global hedef oluşturulabilir
-- Aynı ay için ikinci kez hedef oluşturulamaz → `409 Conflict`
-- Global hedef ana sayfada "Bir Ayda Hedeflenen Ağaç" olarak gösterilir
-- "Ulaşılması Hedeflenen Ağaç" `TreeDefinition.GlobalTargetTreeCount`'tan gelir
+- Yalnızca admin erişebilir
+- Her ay için yalnızca bir global hedef oluşturulabilir
+- Hedef ağaç sayısı aylık bağış toplamıyla karşılaştırılır
+- Ana sayfada progress bar olarak gösterilir
 
 ---
 
 ## Global Hedef Oluştur
 
 **POST** `/api/v1/goals/global`  
-🔒 Admin gerekli
+🔒 Admin
+
+### İş Kuralları
+- Aynı ay ve yıl için yalnızca bir hedef oluşturulabilir → `409 Conflict`
 
 ### Request Body
 ```json
 {
-  "month": 12,
-  "year": 2023,
-  "targetTreeCount": 67000
+  "month": 1,
+  "year": 2024,
+  "targetTreeCount": 1000
 }
 ```
 
@@ -30,18 +31,18 @@
   "isSuccess": true,
   "data": {
     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "month": 12,
-    "year": 2023,
-    "targetTreeCount": 67000
+    "month": 1,
+    "year": 2024,
+    "targetTreeCount": 1000
   }
 }
 ```
 
-### Response `409` — Zaten var
+### Response `409` — Hedef zaten mevcut
 ```json
 {
   "isSuccess": false,
-  "errors": ["GoalAlreadyExists"]
+  "errors": ["Bu aya ait hedef zaten mevcut."]
 }
 ```
 
@@ -50,12 +51,12 @@
 ## Global Hedef Güncelle
 
 **PUT** `/api/v1/goals/global/{id}`  
-🔒 Admin gerekli
+🔒 Admin
 
 ### Request Body
 ```json
 {
-  "targetTreeCount": 80000
+  "targetTreeCount": 1500
 }
 ```
 
@@ -65,10 +66,18 @@
   "isSuccess": true,
   "data": {
     "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "month": 12,
-    "year": 2023,
-    "targetTreeCount": 80000
+    "month": 1,
+    "year": 2024,
+    "targetTreeCount": 1500
   }
+}
+```
+
+### Response `404`
+```json
+{
+  "isSuccess": false,
+  "errors": ["Hedef bulunamadı."]
 }
 ```
 
@@ -76,13 +85,27 @@
 
 ## Global Hedef Sil
 
-**DELETE** `/api/v1/goals/global/{id}?month=12&year=2023`  
-🔒 Admin gerekli
+**DELETE** `/api/v1/goals/global/{id}`  
+🔒 Admin
+
+### Query Parameters
+| Parametre | Tip | Zorunlu | Açıklama |
+|-----------|-----|---------|----------|
+| month | int | Evet | Ay (1-12) |
+| year | int | Evet | Yıl |
 
 ### Response `200`
 ```json
 {
   "isSuccess": true,
   "data": null
+}
+```
+
+### Response `404`
+```json
+{
+  "isSuccess": false,
+  "errors": ["Hedef bulunamadı."]
 }
 ```

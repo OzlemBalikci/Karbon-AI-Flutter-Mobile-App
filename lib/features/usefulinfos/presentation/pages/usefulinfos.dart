@@ -45,6 +45,7 @@ class _UsefulinfoPageState extends State<UsefulinfoPage> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 UsefulInfoFeatureSection(),
+                SizedBox(height: AppThemeSpacing.s20.h),
                 UsefulInfoBottomSection(),
               ],
             ),

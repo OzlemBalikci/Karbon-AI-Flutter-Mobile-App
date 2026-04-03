@@ -22,6 +22,11 @@ class AppInterceptor extends Interceptor {
             messageFromBody ?? 'Geçersiz istek',
             statusCode: 400,
           ),
+        429 => TooManyRequestsException(
+            messageFromBody ??
+                'Çok fazla istek gönderildi. Lütfen daha sonra tekrar deneyin.',
+            statusCode: 429,
+          ),
         401 => UnauthorizedException(
             messageFromBody ?? 'Oturum süresi doldu',
             statusCode: 401,

@@ -20,6 +20,7 @@ class AppThemeColors {
   final Color border;
   final Color hint;
   final Color buttonDisabled;
+
   const AppThemeColors({
     required this.primarySwatch,
     required this.primary,

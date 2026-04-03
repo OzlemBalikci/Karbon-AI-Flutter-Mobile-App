@@ -34,3 +34,7 @@ class ServerFailure extends Failure {
 class NetworkFailure extends Failure {
   NetworkFailure(super.message);
 }
+
+class RateLimitFailure extends Failure {
+  RateLimitFailure(super.message);
+}

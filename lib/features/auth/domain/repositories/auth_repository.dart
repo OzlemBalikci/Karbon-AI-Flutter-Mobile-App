@@ -4,6 +4,9 @@ import 'package:karbon/features/auth/domain/entities/app_user.dart';
 abstract class AuthRepository {
   Future<bool> get checkSession;
 
+  /// Yerel token yoksa `Right(null)`; varsa profil yüklenir (`getProfile`).
+  Future<Either<Exception, AppUser?>> resolveSession();
+
   Future<Either<Exception, AppUser>> login({
     required String emailOrIdentityNumber,
     required String password,
@@ -35,4 +38,6 @@ abstract class AuthRepository {
   });
 
   Future<void> logout();
+
+  // Future<void> deleteAccount();
 }
