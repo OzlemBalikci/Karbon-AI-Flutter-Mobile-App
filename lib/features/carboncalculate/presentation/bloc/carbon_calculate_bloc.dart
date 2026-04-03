@@ -2,8 +2,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_event.dart';
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_state.dart';
-import 'package:karbon/features/carboncalculate/domain/repositories/carbon_calculate_repository.dart';
 import 'package:karbon/features/carboncalculate/domain/carbon_calculate_phase.dart';
+import 'package:karbon/features/carboncalculate/domain/repositories/carboncalculate_repository.dart';
 
 @injectable
 class CarbonCalculateBloc
@@ -25,7 +25,7 @@ class CarbonCalculateBloc
   void _onLoadRequested(CarbonCalculateLoadRequested event,
       Emitter<CarbonCalculateState> emit) async {
     emit(state.copyWith(isLoading: true));
-    final result = await _carbonCalculateRepository.getMonthlyPoll();
+    final result = await _carbonCalculateRepository.getActivePoll();
     result.fold(
       (e) => emit(state.copyWith(isLoading: false, error: e.toString())),
       (poll) {

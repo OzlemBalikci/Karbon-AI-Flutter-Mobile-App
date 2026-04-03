@@ -16,8 +16,8 @@ import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calcula
 import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
-import 'package:karbon/features/carboncalculate/domain/repositories/carbon_calculate_repository.dart';
 import 'package:karbon/di/di.dart';
+import 'package:karbon/features/carboncalculate/data/repositories/carbon_calculaterepository_impl.dart';
 
 part 'widgets/info_bottom_button.dart';
 part 'widgets/first_question_bottom_button.dart';
@@ -48,7 +48,7 @@ class _CarbonCalculatePageState extends State<CarbonCalculatePage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CarbonCalculateBloc(
-        getIt.get<CarbonCalculateRepository>(),
+        getIt.get<CarbonCalculateRepositoryImpl>(),
       )..add(const CarbonCalculateEvent.loadRequested()),
       child: Scaffold(
         body: Stack(

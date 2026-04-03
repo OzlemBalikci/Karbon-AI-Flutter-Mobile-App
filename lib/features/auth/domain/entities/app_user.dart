@@ -30,41 +30,4 @@ class AppUser {
     this.isKvkkApproved = false,
     this.emailConfirmed = false,
   });
-
-//   factory AppUser.fromJson(Map<String, dynamic> json) => AppUser(
-//         id: json['id'] as String? ?? '',
-//         email: json['email'] as String? ?? '',
-//         name: json['name'] as String?,
-//         surname: json['surname'] as String?,
-//         identityNumber: json['identityNumber'] as String?,
-//         phoneNumber: json['phoneNumber'] as String?,
-//         birthDate: json['birthDate'] != null
-//             ? DateTime.tryParse(json['birthDate'] as String)
-//             : null,
-//         totalCarbonScore: (json['totalCarbonScore'] as num?)?.toDouble() ?? 0,
-//         totalPoints: (json['totalPoints'] as num?)?.toDouble() ?? 0,
-//         lastCarbonScore: (json['lastCarbonScore'] as num?)?.toDouble() ?? 0,
-//         donatedTreeCount: json['donatedTreeCount'] as int? ?? 0,
-//         lastLoginDate: json['lastLoginDate'] != null
-//             ? DateTime.tryParse(json['lastLoginDate'] as String)
-//             : null,
-//         isKvkkApproved: json['isKvkkApproved'] as bool? ?? false,
-//         emailConfirmed: json['emailConfirmed'] as bool? ?? false,
-//       );
-
-//   @override
-//   List<Object?> get props => [
-//         id,
-//         email,
-//         name,
-//         surname,
-//         identityNumber,
-//         phoneNumber,
-//         birthDate,
-//         totalCarbonScore,
-//         totalPoints,
-//         donatedTreeCount,
-//         isKvkkApproved,
-//         emailConfirmed,
-//       ];
 }
