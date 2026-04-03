@@ -11,7 +11,6 @@ import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/widgets/infocard.dart';
 import 'package:intl/intl.dart';
-import 'package:karbon/widgets/back_icon_button.dart';
 
 part '../widgets/section_header.dart';
 part '../widgets/question_card.dart';

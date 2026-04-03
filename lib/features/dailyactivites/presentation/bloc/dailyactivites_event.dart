@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
 part 'dailyactivites_event.freezed.dart';
 

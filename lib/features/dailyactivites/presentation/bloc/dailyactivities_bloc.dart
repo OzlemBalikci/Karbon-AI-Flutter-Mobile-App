@@ -1,16 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/branch_step.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_entity.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/get_today_questions_usacase.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/get_pending_status_usecase.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/get_calendar_usecase.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/post_answer_usecase.dart';
-import 'package:karbon/features/dailyactivites/domain/usacases/get_details_usecase.dart';
 
 @injectable
 class DailyActivitiesBloc
@@ -20,7 +16,6 @@ class DailyActivitiesBloc
     this._getPendingStatusUsecase,
     this._getCalendarUsecase,
     this._postAnswerUsecase,
-    this._getDetailsUsecase,
   ) : super(DailyActivitiesState.initial()) {
     on<DailyActivitiesLoadRequested>(_onLoadRequested);
     on<DailyActivitiesLoadFailed>(_onLoadFailed);
@@ -35,7 +30,6 @@ class DailyActivitiesBloc
   final GetPendingStatusUsecase _getPendingStatusUsecase;
   final GetCalendarUsecase _getCalendarUsecase;
   final PostAnswerUsecase _postAnswerUsecase;
-  final GetDetailsUsecase _getDetailsUsecase;
 
   Future<void> _onLoadRequested(
     DailyActivitiesLoadRequested event,
@@ -185,10 +179,6 @@ class DailyActivitiesBloc
         ),
       ),
       (answer) {
-        final updatedStubs = [
-          ...state.answeredQuestionStubs,
-          q,
-        ];
         if (answer.nextQuestion != null) {
           emit(
             state.copyWith(
@@ -234,8 +224,9 @@ class DailyActivitiesBloc
     DailyActivitiesDetailClosed event,
     Emitter<DailyActivitiesState> emit,
   ) {
-    if (state.postAnswerStatus == DailyActivitiesPostAnswerStatus.submitting)
+    if (state.postAnswerStatus == DailyActivitiesPostAnswerStatus.submitting) {
       return;
+    }
     emit(
       state.copyWith(
         branchPath: [],

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/dailyactivites/domain/daily_root_questions.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/branch_step.dart';
 
 typedef DailyActivitiesQuestionRowData = (
   String text,

@@ -6,14 +6,13 @@ import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_selector.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/branch_step.dart';
 
 part '../widgets/dropdown_item.dart';
 part '../widgets/bottom_button.dart';

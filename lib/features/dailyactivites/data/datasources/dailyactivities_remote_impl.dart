@@ -1,54 +1,47 @@
-import 'package:dio/dio.dart';
+import 'package:karbon/features/dailyactivites/data/models/daily_activities_dtos.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
+import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart';
+import 'package:karbon/core/networks/api_envelope.dart';
+import 'package:karbon/core/networks/api_config.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_answer_result_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_question_option.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_item_entity.dart';
-
-abstract class DailyActivitiesRemote {
-  Future<List<DailyQuestionEntity>> getTodayQuestions();
-  Future<DailyAnswerResultEntity> getDetails({required String date});
-  Future<DailyAnswerResultEntity> postAnswer({
-    required String questionId,
-    required String optionId,
-  });
-  Future<DailyPendingEntity> getPendingStatus();
-  Future<DailyCalendarEntity> getCalendar({
-    required int year,
-    int? month,
-    int? period,
-  });
-}
+import 'package:dio/dio.dart';
 
 @LazySingleton(as: DailyActivitiesRemote)
 class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   DailyActivitiesRemoteImpl(this._dio);
+
   final Dio _dio;
 
-  static const _pathQuestions = '/daily-activities/questions';
-  static const _pathAnswers = '/daily-activities/answers';
-  static const _pathPending = '/daily-activities/pending';
-  static const _pathCalendar = '/daily-activities/calendar';
-  static const _pathDetails = '/daily-activities/details';
+  static const _v1 = '/api/v1/daily-activities';
+
+  bool get _useMocks => ApiConfig.baseUrl.isEmpty;
+
   @override
   Future<List<DailyQuestionEntity>> getTodayQuestions() async {
-    await Future<void>.delayed(const Duration(milliseconds: 300));
-    // TODO: final res = await _dio.get(_pathQuestions);
-    // final list = res.data as List<dynamic>;
-    // return list
-    //     .map((e) => DailyQuestionEntity.fromJson(e as Map<String, dynamic>))
-    //     .toList();
-    return _mockTodayQuestions;
+    if (_useMocks) {
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+      return _mockTodayQuestions.map((q) => q).toList();
+    }
+    final res = await _dio.get<dynamic>('$_v1/questions');
+    final raw = unwrapDataList(res.data);
+    return raw
+        .map((e) =>
+            DailyQuestionDto.fromJson(e as Map<String, dynamic>).toEntity())
+        .toList();
   }
 
   @override
   Future<DailyPendingEntity> getPendingStatus() async {
-    await Future<void>.delayed(const Duration(milliseconds: 150));
-    // TODO: final res = await _dio.get(_pathPending);
-    // return DailyPendingEntity.fromJson(res.data as Map<String, dynamic>);
-    return _mockPending;
+    if (_useMocks) {
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+      return _mockPending;
+    }
+    final res = await _dio.get<dynamic>(
+      _v1,
+      queryParameters: <String, dynamic>{'status': 'pending'},
+    );
+    final data = unwrapDataMap(res.data);
+    return DailyPendingDto.fromJson(data).toEntity();
   }
 
   @override
@@ -57,14 +50,20 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     int? month,
     int? period,
   }) async {
-    await Future<void>.delayed(const Duration(milliseconds: 150));
-    // TODO: final res = await _dio.get(_pathCalendar, queryParameters: {
-    //   'year': year,
-    //   if (month != null) 'month': month,
-    //   if (period != null) 'period': period,
-    // });
-    // return DailyCalendarEntity.fromJson(res.data as Map<String, dynamic>);
-    return _mockCalendar;
+    if (_useMocks) {
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+      return _mockCalendar;
+    }
+    final res = await _dio.get<dynamic>(
+      '$_v1/calendar',
+      queryParameters: <String, dynamic>{
+        'year': year,
+        if (month != null) 'month': month,
+        if (period != null) 'period': period,
+      },
+    );
+    final data = unwrapDataMap(res.data);
+    return DailyCalendarResponseDto.fromJson(data).toEntity();
   }
 
   @override
@@ -72,19 +71,35 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     required String questionId,
     required String optionId,
   }) async {
-    await Future<void>.delayed(const Duration(milliseconds: 200));
-
-    // TODO: gerçek API
-    // final res = await _dio.post(_pathAnswers, data: {
-    //   'questionId': questionId,
-    //   'optionId': optionId,
-    // });
-    // return DailyAnswerResultEntity.fromJson(res.data['data'] as Map<String, dynamic>);
-
-    return _mockPostAnswer(questionId: questionId, optionId: optionId);
+    if (_useMocks) {
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+      return _mockPostAnswer(questionId: questionId, optionId: optionId);
+    }
+    final res = await _dio.post<dynamic>(
+      '$_v1/answers',
+      data: <String, dynamic>{
+        'questionId': questionId,
+        'selectedOptionId': optionId,
+      },
+    );
+    final data = unwrapDataMap(res.data);
+    return DailyPostAnswerResponseDto.fromJson(data).toEntity();
   }
 
-  /// Seçilen seçeneğin [nextQuestionId] değerine göre sonraki soruyu mock listeden üretir.
+  @override
+  Future<DailyDayDetailEntity> getDetails({required String date}) async {
+    if (_useMocks) {
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+      return _mockDayDetail;
+    }
+    final res = await _dio.get<dynamic>(
+      _v1,
+      queryParameters: <String, dynamic>{'date': date},
+    );
+    final data = unwrapDataMap(res.data);
+    return DailyDayDetailDto.fromJson(data).toEntity();
+  }
+
   static DailyAnswerResultEntity _mockPostAnswer({
     required String questionId,
     required String optionId,
@@ -92,7 +107,11 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     final byId = allMockQuestionsById;
     final question = byId[questionId];
     if (question == null) {
-      return const DailyAnswerResultEntity(score: 0, nextQuestion: null);
+      return const DailyAnswerResultEntity(
+        totalCarbonScore: 0,
+        isFlowCompleted: true,
+        nextQuestion: null,
+      );
     }
     DailyQuestionOptionEntity? selected;
     for (final o in question.options) {
@@ -102,24 +121,48 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       }
     }
     if (selected == null) {
-      return const DailyAnswerResultEntity(score: 0, nextQuestion: null);
+      return const DailyAnswerResultEntity(
+        totalCarbonScore: 0,
+        isFlowCompleted: true,
+        nextQuestion: null,
+      );
     }
     final nextId = selected.nextQuestionId;
     final next = (nextId != null && nextId.isNotEmpty) ? byId[nextId] : null;
     return DailyAnswerResultEntity(
-      score: selected.carbonValue,
+      totalCarbonScore: selected.carbonValue,
+      isFlowCompleted: next == null,
       nextQuestion: next,
     );
   }
 
-  @override
-  Future<DailyAnswerResultEntity> getDetails({required String date}) async {
-    await Future<void>.delayed(const Duration(milliseconds: 150));
-    // TODO: _dio.get(_pathDetails, queryParameters: {'date': date});
-    return const DailyAnswerResultEntity(score: 4.5, nextQuestion: null);
-  }
+  static const _mockPending = DailyPendingEntity(
+    hasPending: true,
+    pendingCount: 1,
+  );
 
-  /// API şekline uygun mock (birden fazla kök soru; UI’da take(2) kullanabilirsin).
+  static const _mockCalendar = DailyCalendarEntity(
+    totalScore: 120.5,
+    items: [
+      DailyCalendarItemEntity(date: '2026-03-10', score: 4.5, hasDetails: true),
+      DailyCalendarItemEntity(date: '2026-03-09', score: 2.0, hasDetails: true),
+      DailyCalendarItemEntity(date: '2026-03-08', score: 7.0, hasDetails: true),
+    ],
+  );
+
+  static const _mockDayDetail = DailyDayDetailEntity(
+    date: '2026-03-10T00:00:00Z',
+    totalScore: 15,
+    activities: [
+      DailyDayActivityEntity(
+        questionText: 'Örnek soru',
+        selectedOptionText: 'Toplu Ulaşım',
+        score: 25,
+        activityDate: '2026-03-10T08:30:00Z',
+      ),
+    ],
+  );
+
   static final List<DailyQuestionEntity> _mockTodayQuestions = [
     DailyQuestionEntity(
       id: 'q1-mock',
@@ -139,6 +182,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
           nextQuestionId: 'q1-option2-mock',
         ),
       ],
+      remainingSeconds: 57600,
     ),
     DailyQuestionEntity(
       id: 'q1-option2-mock',
@@ -170,6 +214,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
           nextQuestionId: null,
         ),
       ],
+      remainingSeconds: 57580,
     ),
     DailyQuestionEntity(
       id: 'q1-option2-option1-mock',
@@ -195,6 +240,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
           nextQuestionId: null,
         ),
       ],
+      remainingSeconds: 57000,
     ),
     DailyQuestionEntity(
       id: 'q2-mock',
@@ -214,24 +260,9 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
           nextQuestionId: null,
         ),
       ],
+      remainingSeconds: 50000,
     ),
   ];
-
-  // getPendingStatus mock
-  static final _mockPending = DailyPendingEntity(
-    hasPending: true,
-    pendingCount: 1,
-  );
-
-  // getCalendar mock
-  static final _mockCalendar = DailyCalendarEntity(
-    totalScore: 120.5,
-    items: [
-      DailyCalendarItemEntity(date: '2026-03-10', score: 4.5, hasDetails: true),
-      DailyCalendarItemEntity(date: '2026-03-09', score: 2.0, hasDetails: true),
-      DailyCalendarItemEntity(date: '2026-03-08', score: 7.0, hasDetails: true),
-    ],
-  );
 
   static Map<String, DailyQuestionEntity> get allMockQuestionsById =>
       {for (final q in _mockTodayQuestions) q.id: q};

@@ -1,9 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_answer_result_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_pending_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_calendar_item_entity.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/branch_step.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
 part 'dailyactivities_state.freezed.dart';
 

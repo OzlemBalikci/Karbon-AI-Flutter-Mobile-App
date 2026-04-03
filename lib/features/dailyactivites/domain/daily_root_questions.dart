@@ -1,4 +1,4 @@
-import 'package:karbon/features/dailyactivites/domain/entities/daily_question_entity.dart';
+import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
 List<DailyQuestionEntity> rootQuestions(List<DailyQuestionEntity> all) {
   if (all.isEmpty) return all;

@@ -18,3 +18,12 @@ Map<String, dynamic> unwrapDataMap(dynamic response) {
   if (data == null) return <String, dynamic>{};
   return Map<String, dynamic>.from(data as Map);
 }
+
+/// Başarılı yanıtta `data` alanını [List] olarak döner; liste değilse boş liste.
+List<dynamic> unwrapDataList(dynamic response) {
+  final envelope = response as Map<String, dynamic>;
+  assertApiSuccess(envelope);
+  final data = envelope['data'];
+  if (data is! List) return <dynamic>[];
+  return data;
+}

@@ -69,8 +69,10 @@ import 'package:karbon/features/carboncalculate/domain/usecases/submit_poll_answ
     as _i630;
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart'
     as _i959;
-import 'package:karbon/features/dailyactivites/data/datasources/daily_activities_remote.dart'
+import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart'
     as _i342;
+import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote_impl.dart'
+    as _i847;
 import 'package:karbon/features/dailyactivites/data/repositories/daily_activities_repository_impl.dart'
     as _i449;
 import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart'
@@ -167,7 +169,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1036.LeaderboardRemote>(
         () => _i1036.LeaderboardRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i342.DailyActivitiesRemote>(
-        () => _i342.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
+        () => _i847.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i483.ProfileRemote>(
         () => _i483.ProfileRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
@@ -257,7 +259,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i448.GetPendingStatusUsecase>(),
           gh<_i1025.GetCalendarUsecase>(),
           gh<_i902.PostAnswerUsecase>(),
-          gh<_i715.GetDetailsUsecase>(),
         ));
     gh.factory<_i78.RegisterBloc>(() => _i78.RegisterBloc(
           gh<_i558.RegisterUseCase>(),
