@@ -65,6 +65,7 @@ class PollAnswerItemEntity {
       };
 }
 
+/// POST `/api/v1/polls/draft` ve `/api/v1/polls/answers` — domain; JSON için [PollSubmissionResultEntity].
 class PollSubmissionResultEntity {
   const PollSubmissionResultEntity({
     required this.totalCarbonScore,
@@ -90,6 +91,7 @@ class PollResultEntity {
   final List<PollResultAnswerEntity> answers;
 }
 
+/// GET `/api/v1/polls/{pollSetId}/results` — domain; JSON için [PollResultAnswerEntity].
 class PollResultAnswerEntity {
   const PollResultAnswerEntity({
     required this.questionText,
