@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/features/calendar/presentation/views/calendar_first_open/widgets/button.dart';
-import 'package:karbon/features/calendar/presentation/views/calendar_first_open/widgets/score_card.dart';
-import 'package:karbon/features/calendar/presentation/views/seeAll/widgets/daily_report_card.dart';
+import 'package:karbon/features/calendar/presentation/calendar_first_open/widgets/button.dart';
+import 'package:karbon/features/calendar/presentation/calendar_first_open/widgets/score_card.dart';
+import 'package:karbon/features/calendar/presentation/seeAll/widgets/daily_report_card.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 
 class SeeAllSection extends StatelessWidget {

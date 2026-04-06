@@ -15,8 +15,8 @@ import 'package:karbon/router/home_shell.dart';
 import 'package:karbon/router/daily_activities_shell.dart';
 import 'package:karbon/features/auth/presentation/pages/splash/splash.dart';
 import 'package:karbon/router/calendar_shell.dart';
-import 'package:karbon/features/calendar/presentation/views/calendar_first_open/calendar_first_open_page.dart';
-import 'package:karbon/features/calendar/presentation/views/seeAll/see_all_page.dart';
+import 'package:karbon/features/calendar/presentation/calendar_first_open/calendar_first_open_page.dart';
+import 'package:karbon/features/calendar/presentation/seeAll/see_all_page.dart';
 
 part 'navigation.gr.dart';
 

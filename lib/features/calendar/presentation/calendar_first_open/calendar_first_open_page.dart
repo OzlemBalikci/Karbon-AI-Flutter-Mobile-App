@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:karbon/core/constants/extensions.dart';
-import 'package:karbon/features/calendar/presentation/views/calendar_first_open/sections/calendar_section.dart';
+import 'package:karbon/features/calendar/presentation/calendar_first_open/sections/calendar_section.dart';
 
 @RoutePage()
 class CalendarFirstOpenPage extends StatefulWidget {

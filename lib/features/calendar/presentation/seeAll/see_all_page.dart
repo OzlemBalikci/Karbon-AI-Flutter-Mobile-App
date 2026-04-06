@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:karbon/features/calendar/presentation/views/seeAll/sections/seeall_section.dart';
+import 'package:karbon/features/calendar/presentation/seeAll/sections/seeall_section.dart';
 
 @RoutePage()
 class SeeAllPage extends StatelessWidget {
