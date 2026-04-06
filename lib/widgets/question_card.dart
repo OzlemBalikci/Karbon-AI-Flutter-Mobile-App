@@ -1,4 +1,4 @@
-part of '../screens/dailyactivities.dart';
+part of '../features/dailyactivites/presentation/pages/screens/dailyactivities.dart';
 
 // ─── Varyantlar ─────────────────────────────────────────────────────────────
 

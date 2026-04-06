@@ -12,7 +12,8 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
   final DailyActivitiesRemote _remote;
 
   @override
-  Future<Either<Exception, List<DailyQuestionEntity>>> getTodayQuestions() async {
+  Future<Either<Exception, List<DailyQuestionEntity>>>
+      getTodayQuestions() async {
     try {
       return Right(await _remote.getTodayQuestions());
     } on Exception catch (e) {

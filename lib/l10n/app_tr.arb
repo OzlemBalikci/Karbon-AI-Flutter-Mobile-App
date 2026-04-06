@@ -98,5 +98,9 @@
     "profile_tree_card_header_text" : "Bağışlanan Toplam Ağaç Sayısı",
     "profile_tree_donated_tree_text" : "Bağışlanan Ağaç",
     "profile_tree_last_donations": "Önceki Bağışlanan Ağaçlar",
+    "calendar_page_title": "Takvim",
+    "calendar_show_all_button": "Tümünü Göster",
+    "calendar_metric_carbon_points": "Karbon Puanı",
+    "calendar_metric_footprint_score": "Karbon Ayak İzi Skoru",
     "lorem_ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo."
   }

@@ -574,6 +574,30 @@ abstract class AppLocalizations {
   /// **'Önceki Bağışlanan Ağaçlar'**
   String get profile_tree_last_donations;
 
+  /// No description provided for @calendar_page_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Takvim'**
+  String get calendar_page_title;
+
+  /// No description provided for @calendar_show_all_button.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tümünü Göster'**
+  String get calendar_show_all_button;
+
+  /// No description provided for @calendar_metric_carbon_points.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karbon Puanı'**
+  String get calendar_metric_carbon_points;
+
+  /// No description provided for @calendar_metric_footprint_score.
+  ///
+  /// In tr, this message translates to:
+  /// **'Karbon Ayak İzi Skoru'**
+  String get calendar_metric_footprint_score;
+
   /// No description provided for @lorem_ipsum.
   ///
   /// In tr, this message translates to:

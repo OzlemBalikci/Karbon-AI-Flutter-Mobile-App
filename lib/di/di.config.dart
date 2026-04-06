@@ -70,9 +70,9 @@ import 'package:karbon/features/carboncalculate/domain/usecases/submit_poll_answ
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart'
     as _i959;
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart'
-    as _i342;
+    as _i614;
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote_impl.dart'
-    as _i847;
+    as _i261;
 import 'package:karbon/features/dailyactivites/data/repositories/daily_activities_repository_impl.dart'
     as _i449;
 import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart'
@@ -168,8 +168,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i434.UsefulinfoBloc(gh<_i71.UsefulinfoRepository>()));
     gh.lazySingleton<_i1036.LeaderboardRemote>(
         () => _i1036.LeaderboardRemoteImpl(gh<_i361.Dio>()));
-    gh.lazySingleton<_i342.DailyActivitiesRemote>(
-        () => _i847.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i614.DailyActivitiesRemote>(
+        () => _i261.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i483.ProfileRemote>(
         () => _i483.ProfileRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
@@ -199,8 +199,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i25.HomeRemote>(),
           gh<_i460.SharedPreferences>(),
         ));
-    gh.lazySingleton<_i320.DailyActivitiesRepository>(() =>
-        _i449.DailyActivitiesRepositoryImpl(gh<_i342.DailyActivitiesRemote>()));
     gh.factory<_i748.LeaderofmonthBloc>(
         () => _i748.LeaderofmonthBloc(gh<_i322.LeaderboardRepository>()));
     gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
@@ -214,6 +212,8 @@ extension GetItInjectableX on _i174.GetIt {
             ));
     gh.factory<_i591.HomeBloc>(
         () => _i591.HomeBloc(gh<_i406.HomeRepository>()));
+    gh.lazySingleton<_i320.DailyActivitiesRepository>(() =>
+        _i449.DailyActivitiesRepositoryImpl(gh<_i614.DailyActivitiesRemote>()));
     gh.factory<_i1025.GetCalendarUsecase>(
         () => _i1025.GetCalendarUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i715.GetDetailsUsecase>(
@@ -236,6 +236,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i558.RegisterUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i1018.ResetPasswordUseCase>(
         () => _i1018.ResetPasswordUseCase(gh<_i252.AuthRepository>()));
+    gh.factory<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
+          gh<_i671.GetTodayQuestionsUsecase>(),
+          gh<_i448.GetPendingStatusUsecase>(),
+          gh<_i1025.GetCalendarUsecase>(),
+          gh<_i902.PostAnswerUsecase>(),
+        ));
     gh.factory<_i823.ForgotPasswordBloc>(() => _i823.ForgotPasswordBloc(
         forgotPasswordUseCase: gh<_i210.ForgotPasswordUseCase>()));
     gh.factory<_i171.LoginBloc>(
@@ -254,12 +260,6 @@ extension GetItInjectableX on _i174.GetIt {
         _i715.SavePollDraftUseCase(gh<_i666.CarbonCalculateRepository>()));
     gh.factory<_i630.SubmitPollAnswersUseCase>(() =>
         _i630.SubmitPollAnswersUseCase(gh<_i666.CarbonCalculateRepository>()));
-    gh.factory<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
-          gh<_i671.GetTodayQuestionsUsecase>(),
-          gh<_i448.GetPendingStatusUsecase>(),
-          gh<_i1025.GetCalendarUsecase>(),
-          gh<_i902.PostAnswerUsecase>(),
-        ));
     gh.factory<_i78.RegisterBloc>(() => _i78.RegisterBloc(
           gh<_i558.RegisterUseCase>(),
           gh<_i564.AuthBloc>(),

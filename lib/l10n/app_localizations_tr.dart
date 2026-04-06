@@ -272,6 +272,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String get profile_tree_last_donations => 'Önceki Bağışlanan Ağaçlar';
 
   @override
+  String get calendar_page_title => 'Takvim';
+
+  @override
+  String get calendar_show_all_button => 'Tümünü Göster';
+
+  @override
+  String get calendar_metric_carbon_points => 'Karbon Puanı';
+
+  @override
+  String get calendar_metric_footprint_score => 'Karbon Ayak İzi Skoru';
+
+  @override
   String get lorem_ipsum =>
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.';
 }

@@ -13,8 +13,8 @@ import 'package:karbon/widgets/infocard.dart';
 import 'package:intl/intl.dart';
 
 part '../widgets/section_header.dart';
-part '../widgets/question_card.dart';
-part '../widgets/score_badge.dart';
+part '../../../../../widgets/question_card.dart';
+part '../../../../../widgets/score_badge.dart';
 part '../sections/today_section.dart';
 part '../sections/header_section.dart';
 part '../sections/history_section.dart';

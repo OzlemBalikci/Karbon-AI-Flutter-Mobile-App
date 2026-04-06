@@ -45,6 +45,12 @@ class $AssetsIconsGen {
   /// File path: assets/icons/iconbackbutton.svg
   SvgGenImage get iconbackbutton => const SvgGenImage('assets/icons/iconbackbutton.svg');
 
+  /// File path: assets/icons/iconleftbutton.svg
+  SvgGenImage get iconleftbutton => const SvgGenImage('assets/icons/iconleftbutton.svg');
+
+  /// File path: assets/icons/iconrightbutton.svg
+  SvgGenImage get iconrightbutton => const SvgGenImage('assets/icons/iconrightbutton.svg');
+
   /// File path: assets/icons/info.svg
   SvgGenImage get info => const SvgGenImage('assets/icons/info.svg');
 
@@ -71,6 +77,8 @@ class $AssetsIconsGen {
         favorites,
         home,
         iconbackbutton,
+        iconleftbutton,
+        iconrightbutton,
         info,
         logout,
         profile,
@@ -93,6 +101,12 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/Recycle.png
   AssetGenImage get recycle => const AssetGenImage('assets/images/Recycle.png');
+
+  /// File path: assets/images/calendar_mask.png
+  AssetGenImage get calendarMask => const AssetGenImage('assets/images/calendar_mask.png');
+
+  /// File path: assets/images/calendar_mask2.png
+  AssetGenImage get calendarMask2 => const AssetGenImage('assets/images/calendar_mask2.png');
 
   /// File path: assets/images/carbon_mask.png
   AssetGenImage get carbonMask => const AssetGenImage('assets/images/carbon_mask.png');
@@ -139,6 +153,8 @@ class $AssetsImagesGen {
         appLogoFront,
         karbonHesapla,
         recycle,
+        calendarMask,
+        calendarMask2,
         carbonMask,
         donateButtonMask,
         donateSucces,

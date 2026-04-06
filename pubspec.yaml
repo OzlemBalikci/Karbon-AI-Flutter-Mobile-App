@@ -36,6 +36,7 @@ dependencies:
   dartz: ^0.10.1
   logger: ^2.6.2
   flutter_secure_storage: ^10.0.0
+  table_calendar: ^3.2.0
   
 
   # Navigation
