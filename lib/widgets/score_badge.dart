@@ -1,4 +1,7 @@
-part of '../features/dailyactivites/presentation/pages/screens/dailyactivities.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:karbon/core/constants/spacing.dart';
+import 'package:karbon/core/constants/extensions.dart';
 
 class ScoreBadge extends StatelessWidget {
   const ScoreBadge({super.key, required this.score});

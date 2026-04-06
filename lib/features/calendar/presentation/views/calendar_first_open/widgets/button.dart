@@ -1,7 +1,12 @@
-part of '../calendar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/constants/spacing.dart';
 
-class _CalendarButtonShell extends StatelessWidget {
-  const _CalendarButtonShell({required this.child});
+class CalendarButtonShell extends StatelessWidget {
+  const CalendarButtonShell({super.key, required this.child});
 
   final Widget child;
 
@@ -60,7 +65,7 @@ class MonthChangeButtonRow extends StatelessWidget {
             child: GestureDetector(
               onTap: onPreviousMonth,
               behavior: HitTestBehavior.opaque,
-              child: _CalendarButtonShell(
+              child: CalendarButtonShell(
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: AppThemeSpacing.s15.w),
@@ -94,7 +99,7 @@ class MonthChangeButtonRow extends StatelessWidget {
             child: GestureDetector(
               onTap: onNextMonth,
               behavior: HitTestBehavior.opaque,
-              child: _CalendarButtonShell(
+              child: CalendarButtonShell(
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: AppThemeSpacing.s15.w),
@@ -135,7 +140,7 @@ class DayButton extends StatelessWidget {
         Expanded(
           child: SizedBox(
             width: double.infinity,
-            child: _CalendarButtonShell(
+            child: CalendarButtonShell(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s8.w),
                 child: Text(
@@ -152,7 +157,7 @@ class DayButton extends StatelessWidget {
         Expanded(
           child: SizedBox(
             width: double.infinity,
-            child: _CalendarButtonShell(
+            child: CalendarButtonShell(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s8.w),
                 child: Text(

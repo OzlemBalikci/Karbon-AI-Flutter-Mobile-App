@@ -60,6 +60,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/profile.svg
   SvgGenImage get profile => const SvgGenImage('assets/icons/profile.svg');
 
+  /// File path: assets/icons/seeallcardicon.svg
+  SvgGenImage get seeallcardicon => const SvgGenImage('assets/icons/seeallcardicon.svg');
+
   /// File path: assets/icons/stats.svg
   SvgGenImage get stats => const SvgGenImage('assets/icons/stats.svg');
 
@@ -82,6 +85,7 @@ class $AssetsIconsGen {
         info,
         logout,
         profile,
+        seeallcardicon,
         stats,
         treeSecondary
       ];

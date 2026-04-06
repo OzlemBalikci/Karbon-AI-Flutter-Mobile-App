@@ -1,4 +1,14 @@
-part of '../calendar.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/constants/spacing.dart';
+import 'package:karbon/router/navigation.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+import 'button.dart';
 
 class CalendarBox extends StatelessWidget {
   const CalendarBox({
@@ -65,14 +75,18 @@ class CalendarBox extends StatelessWidget {
                       style: context.typographiesSp.bodyMedium
                           .withColor(context.colors.text)),
                 ),
-                _CalendarButtonShell(
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: AppThemeSpacing.s22.w),
-                    child: Text(context.text.calendar_show_all_button,
-                        style: context.typographiesSp.bodySmall
-                            .withColor(context.colors.textOnSecondary)
-                            .withWeight(FontWeight.w600)),
+                GestureDetector(
+                  onTap: () => context.router.push(const SeeAllRoute()),
+                  behavior: HitTestBehavior.opaque,
+                  child: CalendarButtonShell(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppThemeSpacing.s22.w),
+                      child: Text(context.text.calendar_show_all_button,
+                          style: context.typographiesSp.bodySmall
+                              .withColor(context.colors.textOnSecondary)
+                              .withWeight(FontWeight.w600)),
+                    ),
                   ),
                 ),
               ]),

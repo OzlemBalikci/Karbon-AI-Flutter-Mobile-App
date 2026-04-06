@@ -8,7 +8,6 @@ import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_state.dart';
 import 'package:intl/intl.dart';
-import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_event.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_event.dart';

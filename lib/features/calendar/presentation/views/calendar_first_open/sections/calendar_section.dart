@@ -1,4 +1,12 @@
-part of '../calendar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/constants/spacing.dart';
+
+import '../widgets/button.dart';
+import '../widgets/calendar_box.dart';
+import '../widgets/score_card.dart';
 
 class CalendarSection extends StatelessWidget {
   const CalendarSection({

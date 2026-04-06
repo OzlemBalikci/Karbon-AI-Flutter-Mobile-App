@@ -1,4 +1,7 @@
-part of '../calendar.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/constants/spacing.dart';
 
 class ScoreCard extends StatelessWidget {
   const ScoreCard({
@@ -11,11 +14,11 @@ class ScoreCard extends StatelessWidget {
   });
 
   final Color bgColor;
-
   final String title;
   final String score;
   final ImageProvider? bgImage;
   final String text;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +36,7 @@ class ScoreCard extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(
               horizontal: AppThemeSpacing.s15.w,
-              vertical: AppThemeSpacing.s10.h),
+              vertical: AppThemeSpacing.s15.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

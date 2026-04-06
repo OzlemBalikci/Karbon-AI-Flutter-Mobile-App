@@ -13,7 +13,7 @@ import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_
 // Sabit set: tam ekran açılan, alt barı gizlemesi gereken rotalar
 const _fullScreenRoutes = <String>{
   SelectedQuestionRoute.name,
-  // CalendarDetailRoute.name, -- takvim alt sayfalarını buraya ekle
+  SeeAllRoute.name,
 };
 
 @RoutePage()
@@ -38,8 +38,8 @@ class HomeShellPage extends StatelessWidget {
       child: AutoTabsRouter(
         routes: const [
           HomeRoute(),
-          DailyActivitiesRoute(),
-          CalendarRoute(),
+          DailyActivitiesShellRoute(),
+          CalendarShellRoute(),
           ProfileRoute(),
         ],
         builder: (context, child) {

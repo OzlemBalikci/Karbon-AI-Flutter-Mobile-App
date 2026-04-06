@@ -598,6 +598,12 @@ abstract class AppLocalizations {
   /// **'Karbon Ayak İzi Skoru'**
   String get calendar_metric_footprint_score;
 
+  /// No description provided for @calendar_seeallcard_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cevap Detaylarını Gör'**
+  String get calendar_seeallcard_title;
+
   /// No description provided for @lorem_ipsum.
   ///
   /// In tr, this message translates to:

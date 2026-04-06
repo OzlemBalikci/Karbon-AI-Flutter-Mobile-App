@@ -11,17 +11,33 @@
 part of 'navigation.dart';
 
 /// generated route for
-/// [CalendarPage]
-class CalendarRoute extends PageRouteInfo<void> {
-  const CalendarRoute({List<PageRouteInfo>? children})
-      : super(CalendarRoute.name, initialChildren: children);
+/// [CalendarFirstOpenPage]
+class CalendarFirstOpenRoute extends PageRouteInfo<void> {
+  const CalendarFirstOpenRoute({List<PageRouteInfo>? children})
+      : super(CalendarFirstOpenRoute.name, initialChildren: children);
 
-  static const String name = 'CalendarRoute';
+  static const String name = 'CalendarFirstOpenRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const CalendarPage();
+      return const CalendarFirstOpenPage();
+    },
+  );
+}
+
+/// generated route for
+/// [CalendarShellPage]
+class CalendarShellRoute extends PageRouteInfo<void> {
+  const CalendarShellRoute({List<PageRouteInfo>? children})
+      : super(CalendarShellRoute.name, initialChildren: children);
+
+  static const String name = 'CalendarShellRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CalendarShellPage();
     },
   );
 }
@@ -214,6 +230,22 @@ class ResetPasswordRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ResetPasswordPage();
+    },
+  );
+}
+
+/// generated route for
+/// [SeeAllPage]
+class SeeAllRoute extends PageRouteInfo<void> {
+  const SeeAllRoute({List<PageRouteInfo>? children})
+      : super(SeeAllRoute.name, initialChildren: children);
+
+  static const String name = 'SeeAllRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SeeAllPage();
     },
   );
 }
