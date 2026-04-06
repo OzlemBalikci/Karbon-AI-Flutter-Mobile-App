@@ -7,6 +7,7 @@ import 'package:karbon/features/dailyactivites/domain/usacases/get_today_questio
 import 'package:karbon/features/dailyactivites/domain/usacases/get_pending_status_usecase.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/get_calendar_usecase.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/post_answer_usecase.dart';
+import 'package:karbon/features/auth/domain/usecases/checksession_usecase.dart';
 
 @injectable
 class DailyActivitiesBloc
@@ -16,6 +17,7 @@ class DailyActivitiesBloc
     this._getPendingStatusUsecase,
     this._getCalendarUsecase,
     this._postAnswerUsecase,
+    this._checkSessionUseCase,
   ) : super(DailyActivitiesState.initial()) {
     on<DailyActivitiesLoadRequested>(_onLoadRequested);
     on<DailyActivitiesLoadFailed>(_onLoadFailed);
@@ -30,6 +32,7 @@ class DailyActivitiesBloc
   final GetPendingStatusUsecase _getPendingStatusUsecase;
   final GetCalendarUsecase _getCalendarUsecase;
   final PostAnswerUsecase _postAnswerUsecase;
+  final CheckSessionUseCase _checkSessionUseCase;
 
   Future<void> _onLoadRequested(
     DailyActivitiesLoadRequested event,
@@ -165,9 +168,26 @@ class DailyActivitiesBloc
       ),
     );
 
+    final sessionResult = await _checkSessionUseCase();
+    final userId = sessionResult.fold<String?>(
+      (_) => null,
+      (u) => u?.id,
+    );
+    if (userId == null || userId.isEmpty) {
+      emit(
+        state.copyWith(
+          postAnswerStatus: DailyActivitiesPostAnswerStatus.error,
+          postAnswerError: 'Oturum bulunamadı.',
+          questionSolvedAt: solvedAt,
+        ),
+      );
+      return;
+    }
+
     final result = await _postAnswerUsecase(
       questionId: q.id,
-      optionId: selectedOption.id,
+      selectedOptionId: selectedOption.id,
+      userId: userId,
     );
 
     result.fold(

@@ -1,19 +1,15 @@
 part of '../features/dailyactivites/presentation/pages/screens/dailyactivities.dart';
 
-// ─── Varyantlar ─────────────────────────────────────────────────────────────
-
 sealed class QuestionCardVariant {
   const QuestionCardVariant();
 }
 
-/// Today bölümü: bloc'tan questionId ile metin alır, sağında ok ikonu.
 final class QuestionCardToday extends QuestionCardVariant {
   const QuestionCardToday({required this.questionId, this.onTap});
   final String questionId;
   final VoidCallback? onTap;
 }
 
-/// History bölümü: metin + skor doğrudan verilir (takvim/özet satırı).
 final class QuestionCardHistory extends QuestionCardVariant {
   const QuestionCardHistory({
     required this.text,
@@ -24,8 +20,6 @@ final class QuestionCardHistory extends QuestionCardVariant {
   final double score;
   final VoidCallback? onTap;
 }
-
-// ─── Widget ──────────────────────────────────────────────────────────────────
 
 class QuestionCard extends StatelessWidget {
   const QuestionCard({super.key, required this.variant});
@@ -42,8 +36,6 @@ class QuestionCard extends StatelessWidget {
     };
   }
 }
-
-// ─── Today ───────────────────────────────────────────────────────────────────
 
 class _TodayCard extends StatelessWidget {
   const _TodayCard({required this.questionId, this.onTap});
@@ -80,8 +72,6 @@ class _TodayCard extends StatelessWidget {
   }
 }
 
-// ─── History ─────────────────────────────────────────────────────────────────
-
 class _HistoryCard extends StatelessWidget {
   const _HistoryCard({
     required this.text,
@@ -106,8 +96,6 @@ class _HistoryCard extends StatelessWidget {
   }
 }
 
-// ─── Ortak kart kabuğu ───────────────────────────────────────────────────────
-
 class _CardShell extends StatelessWidget {
   const _CardShell({required this.text, required this.trailing});
 
@@ -118,7 +106,6 @@ class _CardShell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 65.h,
       decoration: BoxDecoration(
         color: context.colors.secondary,
         borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
@@ -131,18 +118,18 @@ class _CardShell extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
+        padding: EdgeInsets.symmetric(
+            horizontal: AppThemeSpacing.s15.w, vertical: AppThemeSpacing.s14.h),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
+            SizedBox(
+              width: 200.w,
               child: Text(
                 text,
-                style: context.typographiesSp.bodySmall
-                    .withColor(context.colors.textOnQuestion),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+                style: context.typographiesSp.bodySmall.withColor(
+                    context.colors.textOnQuestion.withValues(alpha: 0.6)),
               ),
             ),
             trailing,

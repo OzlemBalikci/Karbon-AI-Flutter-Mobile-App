@@ -24,13 +24,15 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
   @override
   Future<Either<Exception, DailyAnswerResultEntity>> postAnswer({
     required String questionId,
-    required String optionId,
+    required String selectedOptionId,
+    required String userId,
   }) async {
     try {
       return Right(
         await _remote.postAnswer(
           questionId: questionId,
-          optionId: optionId,
+          selectedOptionId: selectedOptionId,
+          userId: userId,
         ),
       );
     } on Exception catch (e) {
@@ -48,6 +50,16 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
   }
 
   @override
+  Future<Either<Exception, List<DailyPreviousAnswersByDateEntity>>>
+      getPreviousAnswers() async {
+    try {
+      return Right(await _remote.getPreviousAnswers());
+    } on Exception catch (e) {
+      return Left(unwrapDioException(e));
+    }
+  }
+
+  @override
   Future<Either<Exception, DailyCalendarEntity>> getCalendar({
     required int year,
     int? month,
@@ -56,6 +68,26 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
     try {
       return Right(
         await _remote.getCalendar(
+          year: year,
+          month: month,
+          period: period,
+        ),
+      );
+    } on Exception catch (e) {
+      return Left(unwrapDioException(e));
+    }
+  }
+
+  @override
+  Future<Either<Exception, DailyMonthlyActivitiesEntity>>
+      getMonthlyActivities({
+    required int year,
+    required int month,
+    required int period,
+  }) async {
+    try {
+      return Right(
+        await _remote.getMonthlyActivities(
           year: year,
           month: month,
           period: period,

@@ -284,4 +284,3 @@ hasPending: true → "X cevaplanmamış soru var" badge'i göster
     ]
   }
 }
-```

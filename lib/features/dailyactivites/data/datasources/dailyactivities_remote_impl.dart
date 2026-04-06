@@ -45,6 +45,21 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   }
 
   @override
+  Future<List<DailyPreviousAnswersByDateEntity>> getPreviousAnswers() async {
+    if (_useMocks) {
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+      return _mockPreviousAnswers;
+    }
+    final res = await _dio.get<dynamic>('$_v1/previous-answers');
+    final raw = unwrapDataList(res.data);
+    return raw
+        .map((e) => DailyPreviousAnswersByDateDto.fromJson(
+              e as Map<String, dynamic>,
+            ).toEntity())
+        .toList();
+  }
+
+  @override
   Future<DailyCalendarEntity> getCalendar({
     required int year,
     int? month,
@@ -67,19 +82,46 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   }
 
   @override
+  Future<DailyMonthlyActivitiesEntity> getMonthlyActivities({
+    required int year,
+    required int month,
+    required int period,
+  }) async {
+    if (_useMocks) {
+      await Future<void>.delayed(const Duration(milliseconds: 150));
+      return _mockMonthly;
+    }
+    final res = await _dio.get<dynamic>(
+      '$_v1/monthly',
+      queryParameters: <String, dynamic>{
+        'year': year,
+        'month': month,
+        'period': period,
+      },
+    );
+    final data = unwrapDataMap(res.data);
+    return DailyMonthlyActivitiesDto.fromJson(data).toEntity();
+  }
+
+  @override
   Future<DailyAnswerResultEntity> postAnswer({
     required String questionId,
-    required String optionId,
+    required String selectedOptionId,
+    required String userId,
   }) async {
     if (_useMocks) {
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      return _mockPostAnswer(questionId: questionId, optionId: optionId);
+      return _mockPostAnswer(
+        questionId: questionId,
+        selectedOptionId: selectedOptionId,
+      );
     }
     final res = await _dio.post<dynamic>(
       '$_v1/answers',
       data: <String, dynamic>{
         'questionId': questionId,
-        'selectedOptionId': optionId,
+        'selectedOptionId': selectedOptionId,
+        'userId': userId,
       },
     );
     final data = unwrapDataMap(res.data);
@@ -102,7 +144,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
 
   static DailyAnswerResultEntity _mockPostAnswer({
     required String questionId,
-    required String optionId,
+    required String selectedOptionId,
   }) {
     final byId = allMockQuestionsById;
     final question = byId[questionId];
@@ -115,7 +157,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     }
     DailyQuestionOptionEntity? selected;
     for (final o in question.options) {
-      if (o.id == optionId) {
+      if (o.id == selectedOptionId) {
         selected = o;
         break;
       }
@@ -147,6 +189,35 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       DailyCalendarItemEntity(date: '2026-03-10', score: 4.5, hasDetails: true),
       DailyCalendarItemEntity(date: '2026-03-09', score: 2.0, hasDetails: true),
       DailyCalendarItemEntity(date: '2026-03-08', score: 7.0, hasDetails: true),
+    ],
+  );
+
+  static const _mockPreviousAnswers = <DailyPreviousAnswersByDateEntity>[
+    DailyPreviousAnswersByDateEntity(
+      date: '2026-03-10T00:00:00Z',
+      answers: [
+        DailyPreviousAnswerItemEntity(
+          questionText: 'Örnek soru',
+          answerText: 'Toplu Ulaşım',
+          score: 25,
+          date: '2026-03-10T08:30:00Z',
+        ),
+      ],
+    ),
+  ];
+
+  static const _mockMonthly = DailyMonthlyActivitiesEntity(
+    totalMonthlyScore: 670,
+    totalPeriodScore: 335,
+    dailyScores: [
+      DailyMonthlyDayScoreEntity(
+        date: '2026-03-01T00:00:00Z',
+        totalScore: 13,
+      ),
+      DailyMonthlyDayScoreEntity(
+        date: '2026-03-04T00:00:00Z',
+        totalScore: 83,
+      ),
     ],
   );
 

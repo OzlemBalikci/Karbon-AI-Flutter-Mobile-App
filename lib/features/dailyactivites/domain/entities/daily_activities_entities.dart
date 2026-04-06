@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-/// GET `/api/v1/daily-activities/pending` — domain; JSON için [DailyPendingEntity].
+/// GET `/api/v1/daily-activities?status=pending` — bekleyen soru özeti.
 class DailyPendingEntity {
   const DailyPendingEntity({
     required this.hasPending,
@@ -11,7 +11,7 @@ class DailyPendingEntity {
   final int pendingCount;
 }
 
-/// GET `/api/v1/daily-activities/questions` — domain; JSON için [DailyQuestionEntity].
+/// GET `/api/v1/daily-activities/questions` — soru seçeneği.
 class DailyQuestionOptionEntity {
   const DailyQuestionOptionEntity({
     required this.id,
@@ -26,7 +26,7 @@ class DailyQuestionOptionEntity {
   final String? nextQuestionId;
 }
 
-/// GET `/api/v1/daily-activities/questions` — domain; JSON için [DailyQuestionEntity].
+/// GET `/api/v1/daily-activities/questions` — günlük soru.
 class DailyQuestionEntity {
   const DailyQuestionEntity({
     required this.id,
@@ -43,7 +43,7 @@ class DailyQuestionEntity {
   final int remainingSeconds;
 }
 
-/// POST `/api/v1/daily-activities/answers` — domain; JSON için [DailyAnswerResultEntity].
+/// POST `/api/v1/daily-activities/answers` — cevap sonucu (akış / skor).
 class DailyAnswerResultEntity {
   const DailyAnswerResultEntity({
     required this.totalCarbonScore,
@@ -56,7 +56,7 @@ class DailyAnswerResultEntity {
   final DailyQuestionEntity? nextQuestion;
 }
 
-/// GET `/api/v1/daily-activities/calendar` — domain; JSON için [DailyCalendarEntity].
+/// GET `/api/v1/daily-activities/calendar` — takvim günü özeti.
 class DailyCalendarItemEntity {
   const DailyCalendarItemEntity({
     required this.date,
@@ -72,7 +72,7 @@ class DailyCalendarItemEntity {
       DateFormat.yMMMMd('tr').format(DateTime.parse(date));
 }
 
-/// GET `/api/v1/daily-activities/calendar` — domain; JSON için [DailyCalendarEntity].
+/// GET `/api/v1/daily-activities/calendar` — takvim özeti.
 class DailyCalendarEntity {
   const DailyCalendarEntity({
     required this.totalScore,
@@ -83,7 +83,7 @@ class DailyCalendarEntity {
   final List<DailyCalendarItemEntity> items;
 }
 
-/// GET `/api/v1/daily-activities/details` — domain; JSON için [DailyDayDetailEntity].
+/// GET `/api/v1/daily-activities?date=` — gün içi aktivite satırı.
 class DailyDayActivityEntity {
   const DailyDayActivityEntity({
     required this.questionText,
@@ -98,7 +98,7 @@ class DailyDayActivityEntity {
   final String activityDate;
 }
 
-/// GET `/api/v1/daily-activities/details` — domain; JSON için [DailyDayDetailEntity].
+/// GET `/api/v1/daily-activities?date=` — seçilen günün detayı.
 class DailyDayDetailEntity {
   const DailyDayDetailEntity({
     required this.date,
@@ -111,7 +111,57 @@ class DailyDayDetailEntity {
   final List<DailyDayActivityEntity> activities;
 }
 
-/// Kırılımlı akış (presentation) — domain; JSON için [BranchStep].
+/// GET `/api/v1/daily-activities/previous-answers` — önceki cevaplar (son cevaplanan gün).
+class DailyPreviousAnswerItemEntity {
+  const DailyPreviousAnswerItemEntity({
+    required this.questionText,
+    required this.answerText,
+    required this.score,
+    required this.date,
+  });
+
+  final String questionText;
+  final String answerText;
+  final double score;
+  final String date;
+}
+
+/// GET `/api/v1/daily-activities/previous-answers` — tarihe göre gruplanmış önceki cevaplar.
+class DailyPreviousAnswersByDateEntity {
+  const DailyPreviousAnswersByDateEntity({
+    required this.date,
+    required this.answers,
+  });
+
+  final String date;
+  final List<DailyPreviousAnswerItemEntity> answers;
+}
+
+/// GET `/api/v1/daily-activities/monthly` — aylık / dönem özeti.
+class DailyMonthlyDayScoreEntity {
+  const DailyMonthlyDayScoreEntity({
+    required this.date,
+    required this.totalScore,
+  });
+
+  final String date;
+  final double totalScore;
+}
+
+/// GET `/api/v1/daily-activities/monthly` — aylık aktiviteler (Tümünü Gör).
+class DailyMonthlyActivitiesEntity {
+  const DailyMonthlyActivitiesEntity({
+    required this.totalMonthlyScore,
+    required this.totalPeriodScore,
+    required this.dailyScores,
+  });
+
+  final double totalMonthlyScore;
+  final double totalPeriodScore;
+  final List<DailyMonthlyDayScoreEntity> dailyScores;
+}
+
+/// Kırılımlı akış (presentation).
 class BranchStep {
   const BranchStep({
     required this.question,

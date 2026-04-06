@@ -10,7 +10,12 @@ class PostAnswerUsecase {
 
   Future<Either<Exception, DailyAnswerResultEntity>> call({
     required String questionId,
-    required String optionId,
+    required String selectedOptionId,
+    required String userId,
   }) =>
-      _repository.postAnswer(questionId: questionId, optionId: optionId);
+      _repository.postAnswer(
+        questionId: questionId,
+        selectedOptionId: selectedOptionId,
+        userId: userId,
+      );
 }

@@ -439,7 +439,7 @@ abstract class AppLocalizations {
   /// No description provided for @daily_activities_today_section_header_text.
   ///
   /// In tr, this message translates to:
-  /// **'Bugünün Soruları'**
+  /// **'Günlük Aktivitelerim'**
   String get daily_activities_today_section_header_text;
 
   /// No description provided for @daily_activities_info_text.
