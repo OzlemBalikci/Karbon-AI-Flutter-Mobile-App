@@ -3,5 +3,6 @@ part 'usefulinfo_event.freezed.dart';
 
 @freezed
 sealed class UsefulinfoEvent with _$UsefulinfoEvent {
-  const factory UsefulinfoEvent.loadRequested() = UsefulinfoLoadRequested;
+  const factory UsefulinfoEvent.fetchInfos() = FetchInfos;
+  const factory UsefulinfoEvent.infoSelected(String id) = InfoSelected;
 }

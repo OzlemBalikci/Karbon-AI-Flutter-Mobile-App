@@ -131,6 +131,8 @@ import 'package:karbon/features/usefulinfos/data/repositories/usefulinfo_reposit
     as _i233;
 import 'package:karbon/features/usefulinfos/domain/repositories/usefulinfo_repository.dart'
     as _i71;
+import 'package:karbon/features/usefulinfos/domain/usecases/get_useful_infos_usecase.dart'
+    as _i97;
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart'
     as _i434;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -168,10 +170,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i102.AuthLocal>(),
           gh<_i557.CookieJar>(),
         ));
-    gh.factory<_i434.UsefulinfoBloc>(
-        () => _i434.UsefulinfoBloc(gh<_i71.UsefulinfoRepository>()));
+    gh.factory<_i97.GetUsefulInfosUseCase>(
+        () => _i97.GetUsefulInfosUseCase(gh<_i71.UsefulinfoRepository>()));
     gh.lazySingleton<_i1036.LeaderboardRemote>(
         () => _i1036.LeaderboardRemoteImpl(gh<_i361.Dio>()));
+    gh.factory<_i434.UsefulinfoBloc>(
+        () => _i434.UsefulinfoBloc(gh<_i97.GetUsefulInfosUseCase>()));
     gh.lazySingleton<_i614.DailyActivitiesRemote>(
         () => _i261.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i483.ProfileRemote>(

@@ -6,16 +6,16 @@ import 'package:karbon/di/di.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/app_header_title.dart';
-import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_state.dart';
 import 'package:karbon/widgets/app_hero.dart';
 import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_event.dart';
+import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_selector.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
+import 'package:karbon/widgets/page_info_text.dart';
 
 part 'widgets/infos_buttons.dart';
-part 'widgets/info_text.dart';
 part 'widgets/usefulinfo_content_sheet.dart';
 part 'sections/usefulinfo_feature.dart';
 part 'sections/usefulinfo_bottom.dart';
@@ -31,26 +31,30 @@ class UsefulinfoPage extends StatefulWidget {
 class _UsefulinfoPageState extends State<UsefulinfoPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: AppThemeSpacing.s25.w,
-            child: BackIconButton(),
-          ),
-          SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                UsefulInfoFeatureSection(),
-                SizedBox(height: AppThemeSpacing.s20.h),
-                UsefulInfoBottomSection(),
-              ],
+    return BlocProvider(
+      create: (context) =>
+          getIt.get<UsefulinfoBloc>()..add(const UsefulinfoEvent.fetchInfos()),
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Positioned(
+              top: MediaQuery.of(context).padding.top,
+              left: AppThemeSpacing.s25.w,
+              child: BackIconButton(),
             ),
-          )
-        ],
+            SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  UsefulInfoFeatureSection(),
+                  SizedBox(height: AppThemeSpacing.s20.h),
+                  UsefulInfoBottomSection(),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

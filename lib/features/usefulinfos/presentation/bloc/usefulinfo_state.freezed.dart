@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$UsefulinfoState {
   UsefulinfoStatus get status;
   List<UsefulInfoEntity> get infos;
+  UsefulInfoEntity? get selectedInfo;
   String? get error;
 
   /// Create a copy of UsefulinfoState
@@ -33,16 +34,18 @@ mixin _$UsefulinfoState {
             other is UsefulinfoState &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other.infos, infos) &&
+            (identical(other.selectedInfo, selectedInfo) ||
+                other.selectedInfo == selectedInfo) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, const DeepCollectionEquality().hash(infos), error);
+  int get hashCode => Object.hash(runtimeType, status,
+      const DeepCollectionEquality().hash(infos), selectedInfo, error);
 
   @override
   String toString() {
-    return 'UsefulinfoState(status: $status, infos: $infos, error: $error)';
+    return 'UsefulinfoState(status: $status, infos: $infos, selectedInfo: $selectedInfo, error: $error)';
   }
 }
 
@@ -53,7 +56,10 @@ abstract mixin class $UsefulinfoStateCopyWith<$Res> {
       _$UsefulinfoStateCopyWithImpl;
   @useResult
   $Res call(
-      {UsefulinfoStatus status, List<UsefulInfoEntity> infos, String? error});
+      {UsefulinfoStatus status,
+      List<UsefulInfoEntity> infos,
+      UsefulInfoEntity? selectedInfo,
+      String? error});
 }
 
 /// @nodoc
@@ -71,6 +77,7 @@ class _$UsefulinfoStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? infos = null,
+    Object? selectedInfo = freezed,
     Object? error = freezed,
   }) {
     return _then(_self.copyWith(
@@ -82,6 +89,10 @@ class _$UsefulinfoStateCopyWithImpl<$Res>
           ? _self.infos
           : infos // ignore: cast_nullable_to_non_nullable
               as List<UsefulInfoEntity>,
+      selectedInfo: freezed == selectedInfo
+          ? _self.selectedInfo
+          : selectedInfo // ignore: cast_nullable_to_non_nullable
+              as UsefulInfoEntity?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -184,14 +195,15 @@ extension UsefulinfoStatePatterns on UsefulinfoState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(UsefulinfoStatus status, List<UsefulInfoEntity> infos,
-            String? error)?
+            UsefulInfoEntity? selectedInfo, String? error)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _UsefulinfoState() when $default != null:
-        return $default(_that.status, _that.infos, _that.error);
+        return $default(
+            _that.status, _that.infos, _that.selectedInfo, _that.error);
       case _:
         return orElse();
     }
@@ -213,13 +225,14 @@ extension UsefulinfoStatePatterns on UsefulinfoState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(UsefulinfoStatus status, List<UsefulInfoEntity> infos,
-            String? error)
+            UsefulInfoEntity? selectedInfo, String? error)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _UsefulinfoState():
-        return $default(_that.status, _that.infos, _that.error);
+        return $default(
+            _that.status, _that.infos, _that.selectedInfo, _that.error);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -240,13 +253,14 @@ extension UsefulinfoStatePatterns on UsefulinfoState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(UsefulinfoStatus status, List<UsefulInfoEntity> infos,
-            String? error)?
+            UsefulInfoEntity? selectedInfo, String? error)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _UsefulinfoState() when $default != null:
-        return $default(_that.status, _that.infos, _that.error);
+        return $default(
+            _that.status, _that.infos, _that.selectedInfo, _that.error);
       case _:
         return null;
     }
@@ -259,6 +273,7 @@ class _UsefulinfoState extends UsefulinfoState {
   const _UsefulinfoState(
       {this.status = UsefulinfoStatus.initial,
       final List<UsefulInfoEntity> infos = const [],
+      this.selectedInfo = null,
       this.error})
       : _infos = infos,
         super._();
@@ -275,6 +290,9 @@ class _UsefulinfoState extends UsefulinfoState {
     return EqualUnmodifiableListView(_infos);
   }
 
+  @override
+  @JsonKey()
+  final UsefulInfoEntity? selectedInfo;
   @override
   final String? error;
 
@@ -293,16 +311,18 @@ class _UsefulinfoState extends UsefulinfoState {
             other is _UsefulinfoState &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._infos, _infos) &&
+            (identical(other.selectedInfo, selectedInfo) ||
+                other.selectedInfo == selectedInfo) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, const DeepCollectionEquality().hash(_infos), error);
+  int get hashCode => Object.hash(runtimeType, status,
+      const DeepCollectionEquality().hash(_infos), selectedInfo, error);
 
   @override
   String toString() {
-    return 'UsefulinfoState(status: $status, infos: $infos, error: $error)';
+    return 'UsefulinfoState(status: $status, infos: $infos, selectedInfo: $selectedInfo, error: $error)';
   }
 }
 
@@ -315,7 +335,10 @@ abstract mixin class _$UsefulinfoStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {UsefulinfoStatus status, List<UsefulInfoEntity> infos, String? error});
+      {UsefulinfoStatus status,
+      List<UsefulInfoEntity> infos,
+      UsefulInfoEntity? selectedInfo,
+      String? error});
 }
 
 /// @nodoc
@@ -333,6 +356,7 @@ class __$UsefulinfoStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? infos = null,
+    Object? selectedInfo = freezed,
     Object? error = freezed,
   }) {
     return _then(_UsefulinfoState(
@@ -344,6 +368,10 @@ class __$UsefulinfoStateCopyWithImpl<$Res>
           ? _self._infos
           : infos // ignore: cast_nullable_to_non_nullable
               as List<UsefulInfoEntity>,
+      selectedInfo: freezed == selectedInfo
+          ? _self.selectedInfo
+          : selectedInfo // ignore: cast_nullable_to_non_nullable
+              as UsefulInfoEntity?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable

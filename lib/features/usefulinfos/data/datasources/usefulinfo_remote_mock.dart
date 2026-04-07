@@ -2,8 +2,12 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart';
 import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
 
-/// Sahte liste. Gerçek API için: bu dosyadaki `@LazySingleton` kaldırılıp
-/// [UsefulinfoRemoteImpl] üzerinde `LazySingleton(as: UsefulinfoRemote)` açılır.
+/// Geliştirme aşaması için sahte veri kaynağı.
+///
+/// Canlıya geçmek için:
+///   1. Bu dosyadaki `@LazySingleton` annotation'ını kaldır.
+///   2. [UsefulinfoRemoteImpl]'a `@LazySingleton(as: UsefulinfoRemote)` ekle.
+///   3. `dart run build_runner build --delete-conflicting-outputs` çalıştır.
 @LazySingleton(as: UsefulinfoRemote)
 class UsefulinfoRemoteMock implements UsefulinfoRemote {
   static const _mockInfos = [

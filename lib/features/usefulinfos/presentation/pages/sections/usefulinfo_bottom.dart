@@ -7,19 +7,12 @@ class UsefulInfoBottomSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
-      child: BlocProvider(
-        create: (context) => getIt.get<UsefulinfoBloc>()
-          ..add(const UsefulinfoEvent.loadRequested()),
-        child: BlocBuilder<UsefulinfoBloc, UsefulinfoState>(
-          builder: (context, state) {
-            if (state.status == UsefulinfoStatus.loading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state.status == UsefulinfoStatus.error) {
-              return Center(child: Text(state.error ?? 'Bir hata oluştu'));
-            }
-            return InfosButtons(infos: state.infos);
-          },
+      child: UsefulinfoStatusSelector(
+        onInitial: () => const Center(child: CircularProgressIndicator()),
+        onLoading: () => const Center(child: CircularProgressIndicator()),
+        onError: (error) => Center(child: Text(error)),
+        onSuccess: () => UsefulinfoListSelector(
+          builder: (infos) => InfosButtons(infos: infos),
         ),
       ),
     );

@@ -1,8 +1,8 @@
 import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
 
-/// API öğesi → [UsefulInfoEntity].
-class UsefulInfoModel {
-  const UsefulInfoModel({
+/// GET `/api/v1/useful-information` — JSON deserialization için DTO.
+class UsefulInfoDto {
+  const UsefulInfoDto({
     required this.id,
     required this.title,
     required this.content,
@@ -14,8 +14,8 @@ class UsefulInfoModel {
   final String content;
   final int displayOrder;
 
-  factory UsefulInfoModel.fromJson(Map<String, dynamic> json) {
-    return UsefulInfoModel(
+  factory UsefulInfoDto.fromJson(Map<String, dynamic> json) {
+    return UsefulInfoDto(
       id: json['id'] as String? ?? '',
       title: json['title'] as String? ?? '',
       content: json['content'] as String? ?? '',

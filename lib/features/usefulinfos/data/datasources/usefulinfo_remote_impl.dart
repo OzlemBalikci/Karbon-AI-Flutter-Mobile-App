@@ -1,16 +1,27 @@
 import 'package:dio/dio.dart';
+// import 'package:injectable/injectable.dart'; // canlıya geçince yorumu kaldır
 import 'package:karbon/core/errors/exceptions.dart';
+import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart';
-import 'package:karbon/features/usefulinfos/data/models/usefulinfo_model.dart';
+import 'package:karbon/features/usefulinfos/data/models/usefulinfo_dto.dart';
 import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
 
-/// Gerçek HTTP. DI şu an [UsefulinfoRemoteMock] kullanıyor; canlıya geçince
-/// burada `@LazySingleton(as: UsefulinfoRemote)` açılıp mock’taki annotation kaldırılır.
+/// Gerçek HTTP uygulaması — GET `/api/v1/useful-information`.
 ///
-/// HTTP hata kodları [AppInterceptor] ile [AppException]’a çevrilir; burada sadece
-/// başarılı gövde (`isSuccess` / `data`) parse edilir.
+/// Hata akışı:
+///   • Ağ / HTTP hataları → [AppInterceptor] tarafından [AppException] alt sınıflarına dönüştürülür.
+///   • `isSuccess: false` gövdesi → [assertApiSuccess] ([unwrapDataList] içinde) [BadRequestException] fırlatır.
+///   • Beklenmeyen veri formatı → aşağıdaki guard [BadRequestException] fırlatır.
+///   Tüm exception'lar repository katmanında [unwrapDioException] ile [Either.left]'e çevrilir.
+///
+/// Şu an [UsefulinfoRemoteMock] DI'a kayıtlı; canlıya geçmek için:
+///   1. Aşağıdaki `@LazySingleton` satırının başındaki `//` yi kaldır.
+///   2. `usefulinfo_remote_mock.dart` içindeki `@LazySingleton` satırını yoruma al.
+///   3. `dart run build_runner build --delete-conflicting-outputs` çalıştır.
+// @LazySingleton(as: UsefulinfoRemote)
 class UsefulinfoRemoteImpl implements UsefulinfoRemote {
   UsefulinfoRemoteImpl(this._dio);
+
   final Dio _dio;
 
   static const _path = '/api/v1/useful-information';
@@ -18,53 +29,15 @@ class UsefulinfoRemoteImpl implements UsefulinfoRemote {
   @override
   Future<List<UsefulInfoEntity>> getUsefulInfos() async {
     final res = await _dio.get<dynamic>(_path);
-    final models = _unwrapList(
-      res.data,
-      httpStatus: res.statusCode ?? 200,
-    );
-    return models.map((m) => m.toEntity()).toList();
-  }
-
-  List<UsefulInfoModel> _unwrapList(dynamic response,
-      {required int httpStatus}) {
-    final envelope = _asEnvelopeMap(response);
-    _assertSuccess(envelope, httpStatus: httpStatus);
-    final data = envelope['data'];
-    if (data is! List) {
-      throw BadRequestException(
-        'Beklenmeyen veri formatı.',
-        statusCode: 400,
-      );
-    }
-    return data.map((e) {
-      if (e is! Map) {
+    final raw = unwrapDataList(res.data);
+    return raw.map((e) {
+      if (e is! Map<String, dynamic>) {
         throw BadRequestException(
-          'Liste öğesi beklenen formatta değil.',
+          'Beklenmeyen öğe formatı: Map bekleniyor.',
           statusCode: 400,
         );
       }
-      return UsefulInfoModel.fromJson(Map<String, dynamic>.from(e));
+      return UsefulInfoDto.fromJson(e).toEntity();
     }).toList();
-  }
-
-  Map<String, dynamic> _asEnvelopeMap(dynamic response) {
-    if (response is! Map) {
-      throw ServerException(
-        'Beklenmeyen veri formatı.',
-        statusCode: 500,
-      );
-    }
-    return Map<String, dynamic>.from(response);
-  }
-
-  void _assertSuccess(Map<String, dynamic> envelope,
-      {required int httpStatus}) {
-    if (envelope['isSuccess'] == true) return;
-    final errors = envelope['errors'];
-    final msg = (errors is List && errors.isNotEmpty)
-        ? errors.first.toString()
-        : 'İstek başarısız oldu.';
-    final code = httpStatus >= 400 ? httpStatus : 400;
-    throw BadRequestException(msg, statusCode: code);
   }
 }

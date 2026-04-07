@@ -51,13 +51,16 @@ extension UsefulinfoEventPatterns on UsefulinfoEvent {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(UsefulinfoLoadRequested value)? loadRequested,
+    TResult Function(FetchInfos value)? fetchInfos,
+    TResult Function(InfoSelected value)? infoSelected,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case UsefulinfoLoadRequested() when loadRequested != null:
-        return loadRequested(_that);
+      case FetchInfos() when fetchInfos != null:
+        return fetchInfos(_that);
+      case InfoSelected() when infoSelected != null:
+        return infoSelected(_that);
       case _:
         return orElse();
     }
@@ -78,12 +81,15 @@ extension UsefulinfoEventPatterns on UsefulinfoEvent {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(UsefulinfoLoadRequested value) loadRequested,
+    required TResult Function(FetchInfos value) fetchInfos,
+    required TResult Function(InfoSelected value) infoSelected,
   }) {
     final _that = this;
     switch (_that) {
-      case UsefulinfoLoadRequested():
-        return loadRequested(_that);
+      case FetchInfos():
+        return fetchInfos(_that);
+      case InfoSelected():
+        return infoSelected(_that);
     }
   }
 
@@ -101,12 +107,15 @@ extension UsefulinfoEventPatterns on UsefulinfoEvent {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(UsefulinfoLoadRequested value)? loadRequested,
+    TResult? Function(FetchInfos value)? fetchInfos,
+    TResult? Function(InfoSelected value)? infoSelected,
   }) {
     final _that = this;
     switch (_that) {
-      case UsefulinfoLoadRequested() when loadRequested != null:
-        return loadRequested(_that);
+      case FetchInfos() when fetchInfos != null:
+        return fetchInfos(_that);
+      case InfoSelected() when infoSelected != null:
+        return infoSelected(_that);
       case _:
         return null;
     }
@@ -126,13 +135,16 @@ extension UsefulinfoEventPatterns on UsefulinfoEvent {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loadRequested,
+    TResult Function()? fetchInfos,
+    TResult Function(String id)? infoSelected,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case UsefulinfoLoadRequested() when loadRequested != null:
-        return loadRequested();
+      case FetchInfos() when fetchInfos != null:
+        return fetchInfos();
+      case InfoSelected() when infoSelected != null:
+        return infoSelected(_that.id);
       case _:
         return orElse();
     }
@@ -153,12 +165,15 @@ extension UsefulinfoEventPatterns on UsefulinfoEvent {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loadRequested,
+    required TResult Function() fetchInfos,
+    required TResult Function(String id) infoSelected,
   }) {
     final _that = this;
     switch (_that) {
-      case UsefulinfoLoadRequested():
-        return loadRequested();
+      case FetchInfos():
+        return fetchInfos();
+      case InfoSelected():
+        return infoSelected(_that.id);
     }
   }
 
@@ -176,12 +191,15 @@ extension UsefulinfoEventPatterns on UsefulinfoEvent {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loadRequested,
+    TResult? Function()? fetchInfos,
+    TResult? Function(String id)? infoSelected,
   }) {
     final _that = this;
     switch (_that) {
-      case UsefulinfoLoadRequested() when loadRequested != null:
-        return loadRequested();
+      case FetchInfos() when fetchInfos != null:
+        return fetchInfos();
+      case InfoSelected() when infoSelected != null:
+        return infoSelected(_that.id);
       case _:
         return null;
     }
@@ -190,13 +208,13 @@ extension UsefulinfoEventPatterns on UsefulinfoEvent {
 
 /// @nodoc
 
-class UsefulinfoLoadRequested implements UsefulinfoEvent {
-  const UsefulinfoLoadRequested();
+class FetchInfos implements UsefulinfoEvent {
+  const FetchInfos();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is UsefulinfoLoadRequested);
+        (other.runtimeType == runtimeType && other is FetchInfos);
   }
 
   @override
@@ -204,7 +222,70 @@ class UsefulinfoLoadRequested implements UsefulinfoEvent {
 
   @override
   String toString() {
-    return 'UsefulinfoEvent.loadRequested()';
+    return 'UsefulinfoEvent.fetchInfos()';
+  }
+}
+
+/// @nodoc
+
+class InfoSelected implements UsefulinfoEvent {
+  const InfoSelected(this.id);
+
+  final String id;
+
+  /// Create a copy of UsefulinfoEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $InfoSelectedCopyWith<InfoSelected> get copyWith =>
+      _$InfoSelectedCopyWithImpl<InfoSelected>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is InfoSelected &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @override
+  String toString() {
+    return 'UsefulinfoEvent.infoSelected(id: $id)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $InfoSelectedCopyWith<$Res>
+    implements $UsefulinfoEventCopyWith<$Res> {
+  factory $InfoSelectedCopyWith(
+          InfoSelected value, $Res Function(InfoSelected) _then) =
+      _$InfoSelectedCopyWithImpl;
+  @useResult
+  $Res call({String id});
+}
+
+/// @nodoc
+class _$InfoSelectedCopyWithImpl<$Res> implements $InfoSelectedCopyWith<$Res> {
+  _$InfoSelectedCopyWithImpl(this._self, this._then);
+
+  final InfoSelected _self;
+  final $Res Function(InfoSelected) _then;
+
+  /// Create a copy of UsefulinfoEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(InfoSelected(
+      null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 

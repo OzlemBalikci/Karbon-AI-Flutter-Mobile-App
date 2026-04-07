@@ -5,15 +5,17 @@ class UsefulInfoFeatureSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        AppHeaderTitle(
-            title: context.text.useful_infos_header_text),
-        AppHero(),
-        InfoText(),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AppHeaderTitle(title: context.text.useful_infos_header_text),
+          AppHero(),
+          PageInfoText(text: context.text.lorem_ipsum),
+        ],
+      ),
     );
   }
 }

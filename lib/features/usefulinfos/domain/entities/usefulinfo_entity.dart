@@ -5,6 +5,7 @@ class UsefulInfoEntity {
     required this.content,
     required this.displayOrder,
   });
+
   final String id;
   final String title;
   final String content;
