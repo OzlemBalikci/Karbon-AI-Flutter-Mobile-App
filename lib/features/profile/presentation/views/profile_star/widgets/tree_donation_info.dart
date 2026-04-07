@@ -8,11 +8,9 @@ class TreeDonationInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final baseStyle = context.typographiesSp.bodyExtraSmall;
     final onQuestion = context.colors.textOnQuestion;
-    final primary = context.colors.primary;
-
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        if (state.loadStatus != ProfileLoadStatus.success ||
+        if (state.profileStatus != ProfileStatus.success ||
             state.profile == null) {
           return const SizedBox.shrink();
         }

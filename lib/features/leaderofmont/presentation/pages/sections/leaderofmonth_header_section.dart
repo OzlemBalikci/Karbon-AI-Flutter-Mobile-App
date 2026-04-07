@@ -16,14 +16,6 @@ class LeaderofmonthHeaderSection extends StatelessWidget {
         ),
         Positioned(
           top: 0,
-          left: AppThemeSpacing.s25.w,
-          child: Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: BackIconButton(),
-          ),
-        ),
-        Positioned(
-          top: 0,
           left: 0,
           right: 0,
           child: Center(
@@ -32,6 +24,14 @@ class LeaderofmonthHeaderSection extends StatelessWidget {
               child:
                   AppHeaderTitle(title: context.text.leaderofmonth_header_text),
             ),
+          ),
+        ),
+        Positioned(
+          top: 0,
+          left: AppThemeSpacing.s25.w,
+          child: Padding(
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: BackIconButton(),
           ),
         ),
       ],

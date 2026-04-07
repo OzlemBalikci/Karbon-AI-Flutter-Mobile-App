@@ -14,10 +14,16 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$ProfileState {
-  ProfileLoadStatus get loadStatus;
+  int get selectedTab;
+  ProfileStatus get profileStatus;
   UserProfileEntity? get profile;
-  String? get error;
-  int get selectedTabIndex;
+  DonationHistoryStatus get donationHistoryStatus;
+  DonationHistoryEntity? get donationHistory;
+  DonateTreesStatus get donateStatus;
+  DonateTreesResultEntity? get donateResult;
+  String? get profileError;
+  String? get donationHistoryError;
+  String? get donateError;
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,21 +38,44 @@ mixin _$ProfileState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is ProfileState &&
-            (identical(other.loadStatus, loadStatus) ||
-                other.loadStatus == loadStatus) &&
+            (identical(other.selectedTab, selectedTab) ||
+                other.selectedTab == selectedTab) &&
+            (identical(other.profileStatus, profileStatus) ||
+                other.profileStatus == profileStatus) &&
             (identical(other.profile, profile) || other.profile == profile) &&
-            (identical(other.error, error) || other.error == error) &&
-            (identical(other.selectedTabIndex, selectedTabIndex) ||
-                other.selectedTabIndex == selectedTabIndex));
+            (identical(other.donationHistoryStatus, donationHistoryStatus) ||
+                other.donationHistoryStatus == donationHistoryStatus) &&
+            (identical(other.donationHistory, donationHistory) ||
+                other.donationHistory == donationHistory) &&
+            (identical(other.donateStatus, donateStatus) ||
+                other.donateStatus == donateStatus) &&
+            (identical(other.donateResult, donateResult) ||
+                other.donateResult == donateResult) &&
+            (identical(other.profileError, profileError) ||
+                other.profileError == profileError) &&
+            (identical(other.donationHistoryError, donationHistoryError) ||
+                other.donationHistoryError == donationHistoryError) &&
+            (identical(other.donateError, donateError) ||
+                other.donateError == donateError));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, loadStatus, profile, error, selectedTabIndex);
+  int get hashCode => Object.hash(
+      runtimeType,
+      selectedTab,
+      profileStatus,
+      profile,
+      donationHistoryStatus,
+      donationHistory,
+      donateStatus,
+      donateResult,
+      profileError,
+      donationHistoryError,
+      donateError);
 
   @override
   String toString() {
-    return 'ProfileState(loadStatus: $loadStatus, profile: $profile, error: $error, selectedTabIndex: $selectedTabIndex)';
+    return 'ProfileState(selectedTab: $selectedTab, profileStatus: $profileStatus, profile: $profile, donationHistoryStatus: $donationHistoryStatus, donationHistory: $donationHistory, donateStatus: $donateStatus, donateResult: $donateResult, profileError: $profileError, donationHistoryError: $donationHistoryError, donateError: $donateError)';
   }
 }
 
@@ -57,10 +86,16 @@ abstract mixin class $ProfileStateCopyWith<$Res> {
       _$ProfileStateCopyWithImpl;
   @useResult
   $Res call(
-      {ProfileLoadStatus loadStatus,
+      {int selectedTab,
+      ProfileStatus profileStatus,
       UserProfileEntity? profile,
-      String? error,
-      int selectedTabIndex});
+      DonationHistoryStatus donationHistoryStatus,
+      DonationHistoryEntity? donationHistory,
+      DonateTreesStatus donateStatus,
+      DonateTreesResultEntity? donateResult,
+      String? profileError,
+      String? donationHistoryError,
+      String? donateError});
 }
 
 /// @nodoc
@@ -75,28 +110,58 @@ class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loadStatus = null,
+    Object? selectedTab = null,
+    Object? profileStatus = null,
     Object? profile = freezed,
-    Object? error = freezed,
-    Object? selectedTabIndex = null,
+    Object? donationHistoryStatus = null,
+    Object? donationHistory = freezed,
+    Object? donateStatus = null,
+    Object? donateResult = freezed,
+    Object? profileError = freezed,
+    Object? donationHistoryError = freezed,
+    Object? donateError = freezed,
   }) {
     return _then(_self.copyWith(
-      loadStatus: null == loadStatus
-          ? _self.loadStatus
-          : loadStatus // ignore: cast_nullable_to_non_nullable
-              as ProfileLoadStatus,
+      selectedTab: null == selectedTab
+          ? _self.selectedTab
+          : selectedTab // ignore: cast_nullable_to_non_nullable
+              as int,
+      profileStatus: null == profileStatus
+          ? _self.profileStatus
+          : profileStatus // ignore: cast_nullable_to_non_nullable
+              as ProfileStatus,
       profile: freezed == profile
           ? _self.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as UserProfileEntity?,
-      error: freezed == error
-          ? _self.error
-          : error // ignore: cast_nullable_to_non_nullable
+      donationHistoryStatus: null == donationHistoryStatus
+          ? _self.donationHistoryStatus
+          : donationHistoryStatus // ignore: cast_nullable_to_non_nullable
+              as DonationHistoryStatus,
+      donationHistory: freezed == donationHistory
+          ? _self.donationHistory
+          : donationHistory // ignore: cast_nullable_to_non_nullable
+              as DonationHistoryEntity?,
+      donateStatus: null == donateStatus
+          ? _self.donateStatus
+          : donateStatus // ignore: cast_nullable_to_non_nullable
+              as DonateTreesStatus,
+      donateResult: freezed == donateResult
+          ? _self.donateResult
+          : donateResult // ignore: cast_nullable_to_non_nullable
+              as DonateTreesResultEntity?,
+      profileError: freezed == profileError
+          ? _self.profileError
+          : profileError // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectedTabIndex: null == selectedTabIndex
-          ? _self.selectedTabIndex
-          : selectedTabIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      donationHistoryError: freezed == donationHistoryError
+          ? _self.donationHistoryError
+          : donationHistoryError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      donateError: freezed == donateError
+          ? _self.donateError
+          : donateError // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -194,16 +259,34 @@ extension ProfileStatePatterns on ProfileState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(ProfileLoadStatus loadStatus, UserProfileEntity? profile,
-            String? error, int selectedTabIndex)?
+    TResult Function(
+            int selectedTab,
+            ProfileStatus profileStatus,
+            UserProfileEntity? profile,
+            DonationHistoryStatus donationHistoryStatus,
+            DonationHistoryEntity? donationHistory,
+            DonateTreesStatus donateStatus,
+            DonateTreesResultEntity? donateResult,
+            String? profileError,
+            String? donationHistoryError,
+            String? donateError)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ProfileState() when $default != null:
-        return $default(_that.loadStatus, _that.profile, _that.error,
-            _that.selectedTabIndex);
+        return $default(
+            _that.selectedTab,
+            _that.profileStatus,
+            _that.profile,
+            _that.donationHistoryStatus,
+            _that.donationHistory,
+            _that.donateStatus,
+            _that.donateResult,
+            _that.profileError,
+            _that.donationHistoryError,
+            _that.donateError);
       case _:
         return orElse();
     }
@@ -224,15 +307,33 @@ extension ProfileStatePatterns on ProfileState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(ProfileLoadStatus loadStatus, UserProfileEntity? profile,
-            String? error, int selectedTabIndex)
+    TResult Function(
+            int selectedTab,
+            ProfileStatus profileStatus,
+            UserProfileEntity? profile,
+            DonationHistoryStatus donationHistoryStatus,
+            DonationHistoryEntity? donationHistory,
+            DonateTreesStatus donateStatus,
+            DonateTreesResultEntity? donateResult,
+            String? profileError,
+            String? donationHistoryError,
+            String? donateError)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ProfileState():
-        return $default(_that.loadStatus, _that.profile, _that.error,
-            _that.selectedTabIndex);
+        return $default(
+            _that.selectedTab,
+            _that.profileStatus,
+            _that.profile,
+            _that.donationHistoryStatus,
+            _that.donationHistory,
+            _that.donateStatus,
+            _that.donateResult,
+            _that.profileError,
+            _that.donationHistoryError,
+            _that.donateError);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -252,15 +353,33 @@ extension ProfileStatePatterns on ProfileState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(ProfileLoadStatus loadStatus, UserProfileEntity? profile,
-            String? error, int selectedTabIndex)?
+    TResult? Function(
+            int selectedTab,
+            ProfileStatus profileStatus,
+            UserProfileEntity? profile,
+            DonationHistoryStatus donationHistoryStatus,
+            DonationHistoryEntity? donationHistory,
+            DonateTreesStatus donateStatus,
+            DonateTreesResultEntity? donateResult,
+            String? profileError,
+            String? donationHistoryError,
+            String? donateError)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ProfileState() when $default != null:
-        return $default(_that.loadStatus, _that.profile, _that.error,
-            _that.selectedTabIndex);
+        return $default(
+            _that.selectedTab,
+            _that.profileStatus,
+            _that.profile,
+            _that.donationHistoryStatus,
+            _that.donationHistory,
+            _that.donateStatus,
+            _that.donateResult,
+            _that.profileError,
+            _that.donationHistoryError,
+            _that.donateError);
       case _:
         return null;
     }
@@ -271,22 +390,42 @@ extension ProfileStatePatterns on ProfileState {
 
 class _ProfileState extends ProfileState {
   const _ProfileState(
-      {this.loadStatus = ProfileLoadStatus.initial,
+      {this.selectedTab = 0,
+      this.profileStatus = ProfileStatus.initial,
       this.profile,
-      this.error,
-      this.selectedTabIndex = 0})
+      this.donationHistoryStatus = DonationHistoryStatus.initial,
+      this.donationHistory,
+      this.donateStatus = DonateTreesStatus.initial,
+      this.donateResult,
+      this.profileError,
+      this.donationHistoryError,
+      this.donateError})
       : super._();
 
   @override
   @JsonKey()
-  final ProfileLoadStatus loadStatus;
+  final int selectedTab;
+  @override
+  @JsonKey()
+  final ProfileStatus profileStatus;
   @override
   final UserProfileEntity? profile;
   @override
-  final String? error;
+  @JsonKey()
+  final DonationHistoryStatus donationHistoryStatus;
+  @override
+  final DonationHistoryEntity? donationHistory;
   @override
   @JsonKey()
-  final int selectedTabIndex;
+  final DonateTreesStatus donateStatus;
+  @override
+  final DonateTreesResultEntity? donateResult;
+  @override
+  final String? profileError;
+  @override
+  final String? donationHistoryError;
+  @override
+  final String? donateError;
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -301,21 +440,44 @@ class _ProfileState extends ProfileState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _ProfileState &&
-            (identical(other.loadStatus, loadStatus) ||
-                other.loadStatus == loadStatus) &&
+            (identical(other.selectedTab, selectedTab) ||
+                other.selectedTab == selectedTab) &&
+            (identical(other.profileStatus, profileStatus) ||
+                other.profileStatus == profileStatus) &&
             (identical(other.profile, profile) || other.profile == profile) &&
-            (identical(other.error, error) || other.error == error) &&
-            (identical(other.selectedTabIndex, selectedTabIndex) ||
-                other.selectedTabIndex == selectedTabIndex));
+            (identical(other.donationHistoryStatus, donationHistoryStatus) ||
+                other.donationHistoryStatus == donationHistoryStatus) &&
+            (identical(other.donationHistory, donationHistory) ||
+                other.donationHistory == donationHistory) &&
+            (identical(other.donateStatus, donateStatus) ||
+                other.donateStatus == donateStatus) &&
+            (identical(other.donateResult, donateResult) ||
+                other.donateResult == donateResult) &&
+            (identical(other.profileError, profileError) ||
+                other.profileError == profileError) &&
+            (identical(other.donationHistoryError, donationHistoryError) ||
+                other.donationHistoryError == donationHistoryError) &&
+            (identical(other.donateError, donateError) ||
+                other.donateError == donateError));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, loadStatus, profile, error, selectedTabIndex);
+  int get hashCode => Object.hash(
+      runtimeType,
+      selectedTab,
+      profileStatus,
+      profile,
+      donationHistoryStatus,
+      donationHistory,
+      donateStatus,
+      donateResult,
+      profileError,
+      donationHistoryError,
+      donateError);
 
   @override
   String toString() {
-    return 'ProfileState(loadStatus: $loadStatus, profile: $profile, error: $error, selectedTabIndex: $selectedTabIndex)';
+    return 'ProfileState(selectedTab: $selectedTab, profileStatus: $profileStatus, profile: $profile, donationHistoryStatus: $donationHistoryStatus, donationHistory: $donationHistory, donateStatus: $donateStatus, donateResult: $donateResult, profileError: $profileError, donationHistoryError: $donationHistoryError, donateError: $donateError)';
   }
 }
 
@@ -328,10 +490,16 @@ abstract mixin class _$ProfileStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {ProfileLoadStatus loadStatus,
+      {int selectedTab,
+      ProfileStatus profileStatus,
       UserProfileEntity? profile,
-      String? error,
-      int selectedTabIndex});
+      DonationHistoryStatus donationHistoryStatus,
+      DonationHistoryEntity? donationHistory,
+      DonateTreesStatus donateStatus,
+      DonateTreesResultEntity? donateResult,
+      String? profileError,
+      String? donationHistoryError,
+      String? donateError});
 }
 
 /// @nodoc
@@ -347,28 +515,58 @@ class __$ProfileStateCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? loadStatus = null,
+    Object? selectedTab = null,
+    Object? profileStatus = null,
     Object? profile = freezed,
-    Object? error = freezed,
-    Object? selectedTabIndex = null,
+    Object? donationHistoryStatus = null,
+    Object? donationHistory = freezed,
+    Object? donateStatus = null,
+    Object? donateResult = freezed,
+    Object? profileError = freezed,
+    Object? donationHistoryError = freezed,
+    Object? donateError = freezed,
   }) {
     return _then(_ProfileState(
-      loadStatus: null == loadStatus
-          ? _self.loadStatus
-          : loadStatus // ignore: cast_nullable_to_non_nullable
-              as ProfileLoadStatus,
+      selectedTab: null == selectedTab
+          ? _self.selectedTab
+          : selectedTab // ignore: cast_nullable_to_non_nullable
+              as int,
+      profileStatus: null == profileStatus
+          ? _self.profileStatus
+          : profileStatus // ignore: cast_nullable_to_non_nullable
+              as ProfileStatus,
       profile: freezed == profile
           ? _self.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as UserProfileEntity?,
-      error: freezed == error
-          ? _self.error
-          : error // ignore: cast_nullable_to_non_nullable
+      donationHistoryStatus: null == donationHistoryStatus
+          ? _self.donationHistoryStatus
+          : donationHistoryStatus // ignore: cast_nullable_to_non_nullable
+              as DonationHistoryStatus,
+      donationHistory: freezed == donationHistory
+          ? _self.donationHistory
+          : donationHistory // ignore: cast_nullable_to_non_nullable
+              as DonationHistoryEntity?,
+      donateStatus: null == donateStatus
+          ? _self.donateStatus
+          : donateStatus // ignore: cast_nullable_to_non_nullable
+              as DonateTreesStatus,
+      donateResult: freezed == donateResult
+          ? _self.donateResult
+          : donateResult // ignore: cast_nullable_to_non_nullable
+              as DonateTreesResultEntity?,
+      profileError: freezed == profileError
+          ? _self.profileError
+          : profileError // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectedTabIndex: null == selectedTabIndex
-          ? _self.selectedTabIndex
-          : selectedTabIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      donationHistoryError: freezed == donationHistoryError
+          ? _self.donationHistoryError
+          : donationHistoryError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      donateError: freezed == donateError
+          ? _self.donateError
+          : donateError // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }

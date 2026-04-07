@@ -1,11 +1,17 @@
 import 'package:dartz/dartz.dart';
-import 'package:karbon/features/profile/domain/entities/donate_trees_result_entity.dart';
-import 'package:karbon/features/profile/domain/entities/donation_history_entity.dart';
-import 'package:karbon/features/profile/domain/entities/user_profile_entity.dart';
+import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
 
+/// Profil veri sözleşmesi — bkz. [project_docs/profile.md].
 abstract class ProfileRepository {
+  /// GET `/api/v1/users/me/profile`
   Future<Either<Exception, UserProfileEntity>> getProfile();
+
+  /// GET `/api/v1/users/me/donations`
   Future<Either<Exception, DonationHistoryEntity>> getDonations();
+
+  /// POST `/api/v1/users/me/donations`
   Future<Either<Exception, DonateTreesResultEntity>> donateTrees();
+
+  /// DELETE `/api/v1/users/me`
   Future<Either<Exception, void>> deleteAccount();
 }

@@ -57,11 +57,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               ),
             ),
           ),
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: 25.w,
-            child: BackIconButton(),
-          ),
           SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -86,6 +81,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 );
               },
             ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top,
+            left: 25.w,
+            child: BackIconButton(),
           ),
         ],
       ),

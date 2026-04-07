@@ -6,6 +6,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:karbon/features/profile/presentation/bloc/profile_selector.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_state.dart';
 import 'package:intl/intl.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_event.dart';
@@ -68,15 +69,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      context.read<ProfileBloc>().add(ProfileLoadRequested());
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -89,12 +81,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(height: AppThemeSpacing.s20.h),
                 IconsRow(),
                 SizedBox(height: AppThemeSpacing.s20.h),
-                BlocSelector<ProfileBloc, ProfileState, int>(
-                  selector: (state) => state.selectedTabIndex,
-                  builder: (context, index) => switch (index) {
+                ProfileTabSelector(
+                  builder: (index) => switch (index) {
+                    0 => const ProfileInfoFeatureSection(),
                     1 => const ProfileStarFeatureSection(),
                     2 => const ProfileTreeFeatureSection(),
-                    _ => const ProfileInfoFeatureSection(),
+                    _ => const SizedBox.shrink(),
                   },
                 ),
               ],

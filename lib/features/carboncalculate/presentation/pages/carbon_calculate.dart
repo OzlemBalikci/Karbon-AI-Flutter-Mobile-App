@@ -53,11 +53,6 @@ class _CarbonCalculatePageState extends State<CarbonCalculatePage> {
       child: Scaffold(
         body: Stack(
           children: [
-            Positioned(
-              top: MediaQuery.of(context).padding.top,
-              left: AppThemeSpacing.s25.w,
-              child: BackIconButton(),
-            ),
             SafeArea(
               child: Column(
                 children: [
@@ -66,6 +61,11 @@ class _CarbonCalculatePageState extends State<CarbonCalculatePage> {
                   CarbonCalculateBottomSection(),
                 ],
               ),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).padding.top,
+              left: AppThemeSpacing.s25.w,
+              child: BackIconButton(),
             ),
           ],
         ),

@@ -12,6 +12,7 @@ import 'package:karbon/features/dailyactivites/presentation/pages/screens/dailya
 import 'package:karbon/features/dailyactivites/presentation/pages/screens/selectedquestion.dart';
 import 'package:karbon/features/profile/presentation/profile.dart';
 import 'package:karbon/router/home_shell.dart';
+import 'package:karbon/router/home_tab_shell.dart';
 import 'package:karbon/router/daily_activities_shell.dart';
 import 'package:karbon/features/auth/presentation/pages/splash/splash.dart';
 import 'package:karbon/router/calendar_shell.dart';
@@ -33,14 +34,30 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: '/forgot-password', page: ForgotPasswordRoute.page),
         AutoRoute(path: '/register', page: RegisterRoute.page),
         AutoRoute(path: '/reset-password', page: ResetPasswordRoute.page),
-        AutoRoute(path: '/carbon-calculate', page: CarbonCalculateRoute.page),
-        AutoRoute(path: '/useful-info', page: UsefulinfoRoute.page),
         AutoRoute(path: '/leaderofmonth', page: LeaderofmonthRoute.page),
         AutoRoute(
           path: '/main',
           page: HomeShellRoute.page,
           children: [
-            AutoRoute(path: 'home', page: HomeRoute.page),
+            AutoRoute(
+              path: 'home',
+              page: HomeTabShellRoute.page,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: HomeRoute.page,
+                  initial: true,
+                ),
+                AutoRoute(
+                  path: 'useful-info',
+                  page: UsefulinfoRoute.page,
+                ),
+                AutoRoute(
+                  path: 'carbon-calculate',
+                  page: CarbonCalculateRoute.page,
+                ),
+              ],
+            ),
             AutoRoute(
               path: 'daily-activities',
               page: DailyActivitiesShellRoute.page,

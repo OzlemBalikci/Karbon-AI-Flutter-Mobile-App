@@ -109,6 +109,8 @@ import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_blo
     as _i748;
 import 'package:karbon/features/profile/data/datasources/profile_remote.dart'
     as _i483;
+import 'package:karbon/features/profile/data/datasources/profile_remote_impl.dart'
+    as _i103;
 import 'package:karbon/features/profile/data/repositories/profile_repository_impl.dart'
     as _i758;
 import 'package:karbon/features/profile/domain/repositories/profile_repository.dart'
@@ -178,10 +180,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i434.UsefulinfoBloc(gh<_i97.GetUsefulInfosUseCase>()));
     gh.lazySingleton<_i614.DailyActivitiesRemote>(
         () => _i261.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
-    gh.lazySingleton<_i483.ProfileRemote>(
-        () => _i483.ProfileRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i483.ProfileRemote>(
+        () => _i103.ProfileRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i322.LeaderboardRepository>(
         () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
     gh.lazySingleton<_i48.ProfileRepository>(
@@ -196,13 +198,16 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i812.GetProfileUseCase(gh<_i48.ProfileRepository>()));
     gh.lazySingleton<_i25.HomeRemote>(
         () => _i25.HomeRemoteImpl(gh<_i361.Dio>()));
-    gh.factory<_i111.ProfileBloc>(
-        () => _i111.ProfileBloc(gh<_i812.GetProfileUseCase>()));
     gh.lazySingleton<_i357.CarbonCalculateRemote>(
         () => _i408.CarbonCalculateRemoteImpl(
               gh<_i361.Dio>(),
               gh<_i366.CarbonCalculateLocal>(),
             ));
+    gh.factory<_i111.ProfileBloc>(() => _i111.ProfileBloc(
+          gh<_i812.GetProfileUseCase>(),
+          gh<_i524.GetDonationsUsecase>(),
+          gh<_i26.DonateTreesUsecase>(),
+        ));
     gh.lazySingleton<_i406.HomeRepository>(() => _i274.HomeRepositoryImpl(
           gh<_i25.HomeRemote>(),
           gh<_i460.SharedPreferences>(),

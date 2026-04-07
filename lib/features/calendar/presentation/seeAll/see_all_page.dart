@@ -14,15 +14,15 @@ class SeeAllPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: AppThemeSpacing.s25.w,
-            child: BackIconButton(),
-          ),
           SafeArea(
             child: SingleChildScrollView(
               child: const SeeAllSection(),
             ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top,
+            left: AppThemeSpacing.s25.w,
+            child: BackIconButton(),
           ),
         ],
       ),

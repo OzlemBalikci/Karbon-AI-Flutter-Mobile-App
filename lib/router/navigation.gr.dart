@@ -155,6 +155,22 @@ class HomeShellRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [HomeTabShellPage]
+class HomeTabShellRoute extends PageRouteInfo<void> {
+  const HomeTabShellRoute({List<PageRouteInfo>? children})
+      : super(HomeTabShellRoute.name, initialChildren: children);
+
+  static const String name = 'HomeTabShellRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const HomeTabShellPage();
+    },
+  );
+}
+
+/// generated route for
 /// [LeaderofmonthPage]
 class LeaderofmonthRoute extends PageRouteInfo<void> {
   const LeaderofmonthRoute({List<PageRouteInfo>? children})

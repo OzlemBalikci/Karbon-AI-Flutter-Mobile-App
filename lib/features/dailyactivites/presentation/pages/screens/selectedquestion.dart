@@ -32,17 +32,6 @@ class _SelectedQuestionPageState extends State<SelectedQuestionPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: AppThemeSpacing.s25.w,
-            child: const BackIconButton(),
-          ),
-          Positioned(
-            bottom: MediaQuery.of(context).padding.bottom,
-            left: 0,
-            right: 0,
-            child: BottomButton(),
-          ),
           SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -59,6 +48,17 @@ class _SelectedQuestionPageState extends State<SelectedQuestionPage> {
                 ),
               ],
             ),
+          ),
+          Positioned(
+            bottom: MediaQuery.of(context).padding.bottom,
+            left: 0,
+            right: 0,
+            child: BottomButton(),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top,
+            left: AppThemeSpacing.s25.w,
+            child: const BackIconButton(),
           ),
         ],
       ),

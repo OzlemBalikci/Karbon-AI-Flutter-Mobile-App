@@ -50,16 +50,25 @@ extension ProfileEventPatterns on ProfileEvent {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(ProfileLoadRequested value)? loadRequested,
-    TResult Function(ProfileTabChanged value)? profileTabChanged,
+    TResult Function(FetchProfile value)? fetchProfile,
+    TResult Function(TabChanged value)? tabChanged,
+    TResult Function(FetchDonationHistory value)? fetchDonationHistory,
+    TResult Function(DonateTrees value)? donateTrees,
+    TResult Function(DonateReset value)? donateReset,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case ProfileLoadRequested() when loadRequested != null:
-        return loadRequested(_that);
-      case ProfileTabChanged() when profileTabChanged != null:
-        return profileTabChanged(_that);
+      case FetchProfile() when fetchProfile != null:
+        return fetchProfile(_that);
+      case TabChanged() when tabChanged != null:
+        return tabChanged(_that);
+      case FetchDonationHistory() when fetchDonationHistory != null:
+        return fetchDonationHistory(_that);
+      case DonateTrees() when donateTrees != null:
+        return donateTrees(_that);
+      case DonateReset() when donateReset != null:
+        return donateReset(_that);
       case _:
         return orElse();
     }
@@ -80,15 +89,24 @@ extension ProfileEventPatterns on ProfileEvent {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(ProfileLoadRequested value) loadRequested,
-    required TResult Function(ProfileTabChanged value) profileTabChanged,
+    required TResult Function(FetchProfile value) fetchProfile,
+    required TResult Function(TabChanged value) tabChanged,
+    required TResult Function(FetchDonationHistory value) fetchDonationHistory,
+    required TResult Function(DonateTrees value) donateTrees,
+    required TResult Function(DonateReset value) donateReset,
   }) {
     final _that = this;
     switch (_that) {
-      case ProfileLoadRequested():
-        return loadRequested(_that);
-      case ProfileTabChanged():
-        return profileTabChanged(_that);
+      case FetchProfile():
+        return fetchProfile(_that);
+      case TabChanged():
+        return tabChanged(_that);
+      case FetchDonationHistory():
+        return fetchDonationHistory(_that);
+      case DonateTrees():
+        return donateTrees(_that);
+      case DonateReset():
+        return donateReset(_that);
     }
   }
 
@@ -106,15 +124,24 @@ extension ProfileEventPatterns on ProfileEvent {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(ProfileLoadRequested value)? loadRequested,
-    TResult? Function(ProfileTabChanged value)? profileTabChanged,
+    TResult? Function(FetchProfile value)? fetchProfile,
+    TResult? Function(TabChanged value)? tabChanged,
+    TResult? Function(FetchDonationHistory value)? fetchDonationHistory,
+    TResult? Function(DonateTrees value)? donateTrees,
+    TResult? Function(DonateReset value)? donateReset,
   }) {
     final _that = this;
     switch (_that) {
-      case ProfileLoadRequested() when loadRequested != null:
-        return loadRequested(_that);
-      case ProfileTabChanged() when profileTabChanged != null:
-        return profileTabChanged(_that);
+      case FetchProfile() when fetchProfile != null:
+        return fetchProfile(_that);
+      case TabChanged() when tabChanged != null:
+        return tabChanged(_that);
+      case FetchDonationHistory() when fetchDonationHistory != null:
+        return fetchDonationHistory(_that);
+      case DonateTrees() when donateTrees != null:
+        return donateTrees(_that);
+      case DonateReset() when donateReset != null:
+        return donateReset(_that);
       case _:
         return null;
     }
@@ -134,16 +161,25 @@ extension ProfileEventPatterns on ProfileEvent {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? loadRequested,
-    TResult Function(int index)? profileTabChanged,
+    TResult Function()? fetchProfile,
+    TResult Function(int index)? tabChanged,
+    TResult Function()? fetchDonationHistory,
+    TResult Function(int treeCount)? donateTrees,
+    TResult Function()? donateReset,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case ProfileLoadRequested() when loadRequested != null:
-        return loadRequested();
-      case ProfileTabChanged() when profileTabChanged != null:
-        return profileTabChanged(_that.index);
+      case FetchProfile() when fetchProfile != null:
+        return fetchProfile();
+      case TabChanged() when tabChanged != null:
+        return tabChanged(_that.index);
+      case FetchDonationHistory() when fetchDonationHistory != null:
+        return fetchDonationHistory();
+      case DonateTrees() when donateTrees != null:
+        return donateTrees(_that.treeCount);
+      case DonateReset() when donateReset != null:
+        return donateReset();
       case _:
         return orElse();
     }
@@ -164,15 +200,24 @@ extension ProfileEventPatterns on ProfileEvent {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() loadRequested,
-    required TResult Function(int index) profileTabChanged,
+    required TResult Function() fetchProfile,
+    required TResult Function(int index) tabChanged,
+    required TResult Function() fetchDonationHistory,
+    required TResult Function(int treeCount) donateTrees,
+    required TResult Function() donateReset,
   }) {
     final _that = this;
     switch (_that) {
-      case ProfileLoadRequested():
-        return loadRequested();
-      case ProfileTabChanged():
-        return profileTabChanged(_that.index);
+      case FetchProfile():
+        return fetchProfile();
+      case TabChanged():
+        return tabChanged(_that.index);
+      case FetchDonationHistory():
+        return fetchDonationHistory();
+      case DonateTrees():
+        return donateTrees(_that.treeCount);
+      case DonateReset():
+        return donateReset();
     }
   }
 
@@ -190,15 +235,24 @@ extension ProfileEventPatterns on ProfileEvent {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? loadRequested,
-    TResult? Function(int index)? profileTabChanged,
+    TResult? Function()? fetchProfile,
+    TResult? Function(int index)? tabChanged,
+    TResult? Function()? fetchDonationHistory,
+    TResult? Function(int treeCount)? donateTrees,
+    TResult? Function()? donateReset,
   }) {
     final _that = this;
     switch (_that) {
-      case ProfileLoadRequested() when loadRequested != null:
-        return loadRequested();
-      case ProfileTabChanged() when profileTabChanged != null:
-        return profileTabChanged(_that.index);
+      case FetchProfile() when fetchProfile != null:
+        return fetchProfile();
+      case TabChanged() when tabChanged != null:
+        return tabChanged(_that.index);
+      case FetchDonationHistory() when fetchDonationHistory != null:
+        return fetchDonationHistory();
+      case DonateTrees() when donateTrees != null:
+        return donateTrees(_that.treeCount);
+      case DonateReset() when donateReset != null:
+        return donateReset();
       case _:
         return null;
     }
@@ -207,13 +261,13 @@ extension ProfileEventPatterns on ProfileEvent {
 
 /// @nodoc
 
-class ProfileLoadRequested implements ProfileEvent {
-  const ProfileLoadRequested();
+class FetchProfile implements ProfileEvent {
+  const FetchProfile();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ProfileLoadRequested);
+        (other.runtimeType == runtimeType && other is FetchProfile);
   }
 
   @override
@@ -221,14 +275,14 @@ class ProfileLoadRequested implements ProfileEvent {
 
   @override
   String toString() {
-    return 'ProfileEvent.loadRequested()';
+    return 'ProfileEvent.fetchProfile()';
   }
 }
 
 /// @nodoc
 
-class ProfileTabChanged implements ProfileEvent {
-  const ProfileTabChanged(this.index);
+class TabChanged implements ProfileEvent {
+  const TabChanged(this.index);
 
   final int index;
 
@@ -236,14 +290,14 @@ class ProfileTabChanged implements ProfileEvent {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $ProfileTabChangedCopyWith<ProfileTabChanged> get copyWith =>
-      _$ProfileTabChangedCopyWithImpl<ProfileTabChanged>(this, _$identity);
+  $TabChangedCopyWith<TabChanged> get copyWith =>
+      _$TabChangedCopyWithImpl<TabChanged>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is ProfileTabChanged &&
+            other is TabChanged &&
             (identical(other.index, index) || other.index == index));
   }
 
@@ -252,27 +306,26 @@ class ProfileTabChanged implements ProfileEvent {
 
   @override
   String toString() {
-    return 'ProfileEvent.profileTabChanged(index: $index)';
+    return 'ProfileEvent.tabChanged(index: $index)';
   }
 }
 
 /// @nodoc
-abstract mixin class $ProfileTabChangedCopyWith<$Res>
+abstract mixin class $TabChangedCopyWith<$Res>
     implements $ProfileEventCopyWith<$Res> {
-  factory $ProfileTabChangedCopyWith(
-          ProfileTabChanged value, $Res Function(ProfileTabChanged) _then) =
-      _$ProfileTabChangedCopyWithImpl;
+  factory $TabChangedCopyWith(
+          TabChanged value, $Res Function(TabChanged) _then) =
+      _$TabChangedCopyWithImpl;
   @useResult
   $Res call({int index});
 }
 
 /// @nodoc
-class _$ProfileTabChangedCopyWithImpl<$Res>
-    implements $ProfileTabChangedCopyWith<$Res> {
-  _$ProfileTabChangedCopyWithImpl(this._self, this._then);
+class _$TabChangedCopyWithImpl<$Res> implements $TabChangedCopyWith<$Res> {
+  _$TabChangedCopyWithImpl(this._self, this._then);
 
-  final ProfileTabChanged _self;
-  final $Res Function(ProfileTabChanged) _then;
+  final TabChanged _self;
+  final $Res Function(TabChanged) _then;
 
   /// Create a copy of ProfileEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -280,12 +333,116 @@ class _$ProfileTabChangedCopyWithImpl<$Res>
   $Res call({
     Object? index = null,
   }) {
-    return _then(ProfileTabChanged(
+    return _then(TabChanged(
       null == index
           ? _self.index
           : index // ignore: cast_nullable_to_non_nullable
               as int,
     ));
+  }
+}
+
+/// @nodoc
+
+class FetchDonationHistory implements ProfileEvent {
+  const FetchDonationHistory();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is FetchDonationHistory);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'ProfileEvent.fetchDonationHistory()';
+  }
+}
+
+/// @nodoc
+
+class DonateTrees implements ProfileEvent {
+  const DonateTrees(this.treeCount);
+
+  final int treeCount;
+
+  /// Create a copy of ProfileEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $DonateTreesCopyWith<DonateTrees> get copyWith =>
+      _$DonateTreesCopyWithImpl<DonateTrees>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is DonateTrees &&
+            (identical(other.treeCount, treeCount) ||
+                other.treeCount == treeCount));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, treeCount);
+
+  @override
+  String toString() {
+    return 'ProfileEvent.donateTrees(treeCount: $treeCount)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $DonateTreesCopyWith<$Res>
+    implements $ProfileEventCopyWith<$Res> {
+  factory $DonateTreesCopyWith(
+          DonateTrees value, $Res Function(DonateTrees) _then) =
+      _$DonateTreesCopyWithImpl;
+  @useResult
+  $Res call({int treeCount});
+}
+
+/// @nodoc
+class _$DonateTreesCopyWithImpl<$Res> implements $DonateTreesCopyWith<$Res> {
+  _$DonateTreesCopyWithImpl(this._self, this._then);
+
+  final DonateTrees _self;
+  final $Res Function(DonateTrees) _then;
+
+  /// Create a copy of ProfileEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? treeCount = null,
+  }) {
+    return _then(DonateTrees(
+      null == treeCount
+          ? _self.treeCount
+          : treeCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class DonateReset implements ProfileEvent {
+  const DonateReset();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is DonateReset);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'ProfileEvent.donateReset()';
   }
 }
 

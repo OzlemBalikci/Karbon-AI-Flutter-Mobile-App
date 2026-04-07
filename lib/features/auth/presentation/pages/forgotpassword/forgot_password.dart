@@ -46,11 +46,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
             ),
           ),
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: 25.w,
-            child: BackIconButton(color: Colors.black),
-          ),
           SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -74,6 +69,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 );
               },
             ),
+          ),
+          Positioned(
+            top: MediaQuery.of(context).padding.top,
+            left: 25.w,
+            child: BackIconButton(color: Colors.black),
           ),
         ],
       ),
