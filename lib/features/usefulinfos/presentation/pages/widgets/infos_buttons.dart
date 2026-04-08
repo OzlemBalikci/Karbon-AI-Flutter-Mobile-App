@@ -8,6 +8,7 @@ class InfosButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (infos.isEmpty) {
+      // Faydalı bilgilerin gelmemesi halinde uyarı widget'ı gösterilecek.
       return const SizedBox.shrink();
     }
     return ListView.separated(
