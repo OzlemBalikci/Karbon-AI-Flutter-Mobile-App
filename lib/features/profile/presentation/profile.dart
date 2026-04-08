@@ -32,11 +32,10 @@ part 'views/donateHistory/widgets/donated_tree_card.dart';
 part 'views/donateHistory/sections/profile_tree_feature.dart';
 part 'views/donateTree/widgets/donate_succes_popup.dart';
 
-/// Profil diyalogları: [ProfilePopupKind] ile kart içeriği seçilir; dış çerçeve [showAppPopup].
+/// Çıkış / hesap silme: [ProfilePopupKind] + [showAppPopup]. Bağış başarısı [BlocListener] ile açılır.
 enum ProfilePopupKind {
   logout,
   deleteAccount,
-  donateSuccess,
 }
 
 Future<void> showProfilePopup(BuildContext context, ProfilePopupKind kind) {
@@ -48,12 +47,6 @@ Future<void> showProfilePopup(BuildContext context, ProfilePopupKind kind) {
     ProfilePopupKind.deleteAccount => LogoutPopup(
         title: context.text.delete_account_popup_header_title,
         text: context.text.delete_account_popup_text,
-      ),
-    ProfilePopupKind.donateSuccess => DonateSuccessPopup(
-        title: context.text.donate_succes_popup_title(
-          NumberFormat.decimalPattern('tr_TR').format(1200),
-        ),
-        text: context.text.donate_succes_popup_text,
       ),
   };
 
@@ -70,30 +63,78 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
+  void initState() {
+    super.initState();
+    final bloc = context.read<ProfileBloc>();
+    if (bloc.state.profileStatus == AsyncStatus.initial) {
+      bloc.add(const ProfileEvent.fetchProfile());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AppHeaderTitle(title: context.text.profile_header_text),
-                SizedBox(height: AppThemeSpacing.s20.h),
-                IconsRow(),
-                SizedBox(height: AppThemeSpacing.s20.h),
-                ProfileTabSelector(
-                  builder: (index) => switch (index) {
-                    0 => const ProfileInfoFeatureSection(),
-                    1 => const ProfileStarFeatureSection(),
-                    2 => const ProfileTreeFeatureSection(),
-                    _ => const SizedBox.shrink(),
-                  },
-                ),
-              ],
+    return BlocListener<ProfileBloc, ProfileState>(
+      listenWhen: (previous, current) {
+        if (current.donateStatus == AsyncStatus.success &&
+            previous.donateStatus != AsyncStatus.success &&
+            current.donateResult != null) {
+          return true;
+        }
+        if (current.donateStatus == AsyncStatus.error &&
+            previous.donateStatus != AsyncStatus.error &&
+            current.donateError != null) {
+          return true;
+        }
+        return false;
+      },
+      listener: (context, state) {
+        if (state.donateStatus == AsyncStatus.success &&
+            state.donateResult != null) {
+          final count = state.donateResult!.donatedTreeCount;
+          showAppPopup<void>(
+            context,
+            child: DonateSuccessPopup(
+              title: context.text.donate_succes_popup_title(
+                NumberFormat.decimalPattern('tr_TR').format(count),
+              ),
+              text: context.text.donate_succes_popup_text,
             ),
-          ),
-        ],
+          ).then((_) {
+            if (context.mounted) {
+              context.read<ProfileBloc>().add(const ProfileEvent.donateReset());
+            }
+          });
+        } else if (state.donateStatus == AsyncStatus.error &&
+            state.donateError != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.donateError!)),
+          );
+        }
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  AppHeaderTitle(title: context.text.profile_header_text),
+                  SizedBox(height: AppThemeSpacing.s20.h),
+                  IconsRow(),
+                  SizedBox(height: AppThemeSpacing.s20.h),
+                  ProfileTabSelector(
+                    builder: (index) => switch (index) {
+                      0 => const ProfileInfoFeatureSection(),
+                      1 => const ProfileStarFeatureSection(),
+                      2 => const ProfileTreeFeatureSection(),
+                      _ => const SizedBox.shrink(),
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
