@@ -1,10 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:karbon/core/constants/assets.gen.dart';
-import 'package:karbon/core/constants/extensions.dart';
-import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/widgets/app_popup_dialog.dart';
-import 'package:flutter_html/flutter_html.dart';
+part of '../../../profile.dart';
 
 class DonateSuccessPopup extends StatelessWidget {
   const DonateSuccessPopup({
