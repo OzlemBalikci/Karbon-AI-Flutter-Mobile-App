@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_leader_entity.dart';
+import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_state.dart';
-import 'package:karbon/features/leaderofmont/domain/entities/current_user_rank_entity.dart';
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_bloc.dart';
 
 class LeaderofmonthSelector<T>

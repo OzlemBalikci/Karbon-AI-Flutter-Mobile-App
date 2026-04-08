@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_leader_entity.dart';
+import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 import 'package:karbon/features/leaderofmont/presentation/models/leader_card_variant.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

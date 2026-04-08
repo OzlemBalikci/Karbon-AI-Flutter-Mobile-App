@@ -13,12 +13,7 @@ part of 'leaderofmonth_event.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$LeaderofmonthEvent implements DiagnosticableTreeMixin {
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties..add(DiagnosticsProperty('type', 'LeaderofmonthEvent'));
-  }
-
+mixin _$LeaderofmonthEvent {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
@@ -29,7 +24,7 @@ mixin _$LeaderofmonthEvent implements DiagnosticableTreeMixin {
   int get hashCode => runtimeType.hashCode;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LeaderofmonthEvent()';
   }
 }
@@ -56,19 +51,16 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(LeaderofmonthStarted value)? started,
+    TResult Function(LeaderofmonthInitialized value)? initialized,
     TResult Function(LeaderofmonthRefreshRequested value)? refreshRequested,
-    TResult Function(LeaderofmonthLoadFailed value)? loadFailed,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthStarted() when started != null:
-        return started(_that);
+      case LeaderofmonthInitialized() when initialized != null:
+        return initialized(_that);
       case LeaderofmonthRefreshRequested() when refreshRequested != null:
         return refreshRequested(_that);
-      case LeaderofmonthLoadFailed() when loadFailed != null:
-        return loadFailed(_that);
       case _:
         return orElse();
     }
@@ -89,19 +81,16 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(LeaderofmonthStarted value) started,
+    required TResult Function(LeaderofmonthInitialized value) initialized,
     required TResult Function(LeaderofmonthRefreshRequested value)
         refreshRequested,
-    required TResult Function(LeaderofmonthLoadFailed value) loadFailed,
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthStarted():
-        return started(_that);
+      case LeaderofmonthInitialized():
+        return initialized(_that);
       case LeaderofmonthRefreshRequested():
         return refreshRequested(_that);
-      case LeaderofmonthLoadFailed():
-        return loadFailed(_that);
     }
   }
 
@@ -119,18 +108,15 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(LeaderofmonthStarted value)? started,
+    TResult? Function(LeaderofmonthInitialized value)? initialized,
     TResult? Function(LeaderofmonthRefreshRequested value)? refreshRequested,
-    TResult? Function(LeaderofmonthLoadFailed value)? loadFailed,
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthStarted() when started != null:
-        return started(_that);
+      case LeaderofmonthInitialized() when initialized != null:
+        return initialized(_that);
       case LeaderofmonthRefreshRequested() when refreshRequested != null:
         return refreshRequested(_that);
-      case LeaderofmonthLoadFailed() when loadFailed != null:
-        return loadFailed(_that);
       case _:
         return null;
     }
@@ -150,19 +136,16 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
+    TResult Function(int month, int year)? initialized,
     TResult Function()? refreshRequested,
-    TResult Function(String message)? loadFailed,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthStarted() when started != null:
-        return started();
+      case LeaderofmonthInitialized() when initialized != null:
+        return initialized(_that.month, _that.year);
       case LeaderofmonthRefreshRequested() when refreshRequested != null:
         return refreshRequested();
-      case LeaderofmonthLoadFailed() when loadFailed != null:
-        return loadFailed(_that.message);
       case _:
         return orElse();
     }
@@ -183,18 +166,15 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
+    required TResult Function(int month, int year) initialized,
     required TResult Function() refreshRequested,
-    required TResult Function(String message) loadFailed,
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthStarted():
-        return started();
+      case LeaderofmonthInitialized():
+        return initialized(_that.month, _that.year);
       case LeaderofmonthRefreshRequested():
         return refreshRequested();
-      case LeaderofmonthLoadFailed():
-        return loadFailed(_that.message);
     }
   }
 
@@ -212,18 +192,15 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
+    TResult? Function(int month, int year)? initialized,
     TResult? Function()? refreshRequested,
-    TResult? Function(String message)? loadFailed,
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthStarted() when started != null:
-        return started();
+      case LeaderofmonthInitialized() when initialized != null:
+        return initialized(_that.month, _that.year);
       case LeaderofmonthRefreshRequested() when refreshRequested != null:
         return refreshRequested();
-      case LeaderofmonthLoadFailed() when loadFailed != null:
-        return loadFailed(_that.message);
       case _:
         return null;
     }
@@ -232,43 +209,80 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
 /// @nodoc
 
-class LeaderofmonthStarted
-    with DiagnosticableTreeMixin
-    implements LeaderofmonthEvent {
-  const LeaderofmonthStarted();
+class LeaderofmonthInitialized implements LeaderofmonthEvent {
+  const LeaderofmonthInitialized({required this.month, required this.year});
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties..add(DiagnosticsProperty('type', 'LeaderofmonthEvent.started'));
-  }
+  final int month;
+  final int year;
+
+  /// Create a copy of LeaderofmonthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $LeaderofmonthInitializedCopyWith<LeaderofmonthInitialized> get copyWith =>
+      _$LeaderofmonthInitializedCopyWithImpl<LeaderofmonthInitialized>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is LeaderofmonthStarted);
+        (other.runtimeType == runtimeType &&
+            other is LeaderofmonthInitialized &&
+            (identical(other.month, month) || other.month == month) &&
+            (identical(other.year, year) || other.year == year));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, month, year);
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LeaderofmonthEvent.started()';
+  String toString() {
+    return 'LeaderofmonthEvent.initialized(month: $month, year: $year)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $LeaderofmonthInitializedCopyWith<$Res>
+    implements $LeaderofmonthEventCopyWith<$Res> {
+  factory $LeaderofmonthInitializedCopyWith(LeaderofmonthInitialized value,
+          $Res Function(LeaderofmonthInitialized) _then) =
+      _$LeaderofmonthInitializedCopyWithImpl;
+  @useResult
+  $Res call({int month, int year});
+}
+
+/// @nodoc
+class _$LeaderofmonthInitializedCopyWithImpl<$Res>
+    implements $LeaderofmonthInitializedCopyWith<$Res> {
+  _$LeaderofmonthInitializedCopyWithImpl(this._self, this._then);
+
+  final LeaderofmonthInitialized _self;
+  final $Res Function(LeaderofmonthInitialized) _then;
+
+  /// Create a copy of LeaderofmonthEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? month = null,
+    Object? year = null,
+  }) {
+    return _then(LeaderofmonthInitialized(
+      month: null == month
+          ? _self.month
+          : month // ignore: cast_nullable_to_non_nullable
+              as int,
+      year: null == year
+          ? _self.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
   }
 }
 
 /// @nodoc
 
-class LeaderofmonthRefreshRequested
-    with DiagnosticableTreeMixin
-    implements LeaderofmonthEvent {
+class LeaderofmonthRefreshRequested implements LeaderofmonthEvent {
   const LeaderofmonthRefreshRequested();
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'LeaderofmonthEvent.refreshRequested'));
-  }
 
   @override
   bool operator ==(Object other) {
@@ -281,82 +295,8 @@ class LeaderofmonthRefreshRequested
   int get hashCode => runtimeType.hashCode;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'LeaderofmonthEvent.refreshRequested()';
-  }
-}
-
-/// @nodoc
-
-class LeaderofmonthLoadFailed
-    with DiagnosticableTreeMixin
-    implements LeaderofmonthEvent {
-  const LeaderofmonthLoadFailed(this.message);
-
-  final String message;
-
-  /// Create a copy of LeaderofmonthEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $LeaderofmonthLoadFailedCopyWith<LeaderofmonthLoadFailed> get copyWith =>
-      _$LeaderofmonthLoadFailedCopyWithImpl<LeaderofmonthLoadFailed>(
-          this, _$identity);
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'LeaderofmonthEvent.loadFailed'))
-      ..add(DiagnosticsProperty('message', message));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is LeaderofmonthLoadFailed &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LeaderofmonthEvent.loadFailed(message: $message)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $LeaderofmonthLoadFailedCopyWith<$Res>
-    implements $LeaderofmonthEventCopyWith<$Res> {
-  factory $LeaderofmonthLoadFailedCopyWith(LeaderofmonthLoadFailed value,
-          $Res Function(LeaderofmonthLoadFailed) _then) =
-      _$LeaderofmonthLoadFailedCopyWithImpl;
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class _$LeaderofmonthLoadFailedCopyWithImpl<$Res>
-    implements $LeaderofmonthLoadFailedCopyWith<$Res> {
-  _$LeaderofmonthLoadFailedCopyWithImpl(this._self, this._then);
-
-  final LeaderofmonthLoadFailed _self;
-  final $Res Function(LeaderofmonthLoadFailed) _then;
-
-  /// Create a copy of LeaderofmonthEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(LeaderofmonthLoadFailed(
-      null == message
-          ? _self.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
   }
 }
 

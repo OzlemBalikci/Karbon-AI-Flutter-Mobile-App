@@ -3,28 +3,23 @@ import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
 
 part 'profile_state.freezed.dart';
 
-enum ProfileStatus { initial, loading, success, error }
-
-enum DonationHistoryStatus { initial, loading, success, error }
-
-enum DonateTreesStatus { initial, loading, success, error }
+enum AsyncStatus { initial, loading, success, error }
 
 @freezed
 abstract class ProfileState with _$ProfileState {
   const ProfileState._();
   const factory ProfileState({
-    @Default(0) int selectedTab,
-    @Default(ProfileStatus.initial) ProfileStatus profileStatus,
+    @Default(AsyncStatus.initial) AsyncStatus profileStatus,
     UserProfileEntity? profile,
-    @Default(DonationHistoryStatus.initial)
-    DonationHistoryStatus donationHistoryStatus,
+    @Default(AsyncStatus.initial) AsyncStatus donationHistoryStatus,
     DonationHistoryEntity? donationHistory,
-    @Default(DonateTreesStatus.initial) DonateTreesStatus donateStatus,
+    @Default(AsyncStatus.initial) AsyncStatus donateStatus,
     DonateTreesResultEntity? donateResult,
+    @Default(0) int selectedTab,
     String? profileError,
     String? donationHistoryError,
     String? donateError,
   }) = _ProfileState;
 
-  factory ProfileState.initial() => const ProfileState(selectedTab: 0);
+  factory ProfileState.initial() => const ProfileState();
 }

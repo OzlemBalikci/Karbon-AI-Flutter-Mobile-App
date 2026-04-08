@@ -10,7 +10,7 @@ class TreeDonationInfoCard extends StatelessWidget {
     final onQuestion = context.colors.textOnQuestion;
     return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
-        if (state.profileStatus != ProfileStatus.success ||
+        if (state.profileStatus != AsyncStatus.success ||
             state.profile == null) {
           return const SizedBox.shrink();
         }

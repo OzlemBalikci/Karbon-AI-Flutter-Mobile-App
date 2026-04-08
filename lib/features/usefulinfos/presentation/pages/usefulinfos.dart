@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
@@ -6,7 +7,10 @@ import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/widgets/app_hero.dart';
 import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
+import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart';
+import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_event.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_selector.dart';
+import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_state.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/widgets/page_info_text.dart';
@@ -25,6 +29,15 @@ class UsefulinfoPage extends StatefulWidget {
 }
 
 class _UsefulinfoPageState extends State<UsefulinfoPage> {
+  @override
+  void initState() {
+    super.initState();
+    final bloc = context.read<UsefulinfoBloc>();
+    if (bloc.state.status == UsefulinfoStatus.initial) {
+      bloc.add(const UsefulinfoEvent.fetchInfos());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

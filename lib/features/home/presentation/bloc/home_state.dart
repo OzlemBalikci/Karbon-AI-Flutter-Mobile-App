@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
-import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
-import 'package:karbon/features/home/domain/entities/user_rank_entity.dart';
 
 part 'home_state.freezed.dart';
 

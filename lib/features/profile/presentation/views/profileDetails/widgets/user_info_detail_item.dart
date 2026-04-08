@@ -5,7 +5,10 @@ class UserInfoDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProfileStatusSelector(
+    return ProfileAsyncStatusSelector<UserProfileEntity>(
+      statusSelector: (s) => s.profileStatus,
+      errorSelector: (s) => s.profileError,
+      dataSelector: (s) => s.profile,
       onLoading: () => const Center(
         child: Padding(
           padding: EdgeInsets.all(24),

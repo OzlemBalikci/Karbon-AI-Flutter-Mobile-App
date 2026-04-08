@@ -1,54 +1,68 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:karbon/features/leaderofmont/domain/usecases/get_leaderboard_data_usecase.dart';
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_event.dart';
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_state.dart';
-import 'package:karbon/features/leaderofmont/domain/repositories/leaderboard_repository_impl.dart';
 
 @injectable
 class LeaderofmonthBloc extends Bloc<LeaderofmonthEvent, LeaderofmonthState> {
-  final LeaderboardRepository _leaderofmonthRepository;
-
-  LeaderofmonthBloc(this._leaderofmonthRepository)
+  LeaderofmonthBloc(this._getLeaderboardData)
       : super(LeaderofmonthState.initial()) {
-    on<LeaderofmonthStarted>(_onStarted);
+    on<LeaderofmonthInitialized>(_onInitialized);
     on<LeaderofmonthRefreshRequested>(_onRefreshRequested);
-    on<LeaderofmonthLoadFailed>(_onLoadFailed);
   }
 
-  Future<void> _onStarted(
-      LeaderofmonthStarted event, Emitter<LeaderofmonthState> emit) async {
-    await _loadLeaderboard(emit);
-  }
+  final GetLeaderboardDataUseCase _getLeaderboardData;
 
-  Future<void> _onRefreshRequested(LeaderofmonthRefreshRequested event,
-      Emitter<LeaderofmonthState> emit) async {
-    await _loadLeaderboard(emit);
-  }
+  int? _lastMonth;
+  int? _lastYear;
 
-  Future<void> _onLoadFailed(
-      LeaderofmonthLoadFailed event, Emitter<LeaderofmonthState> emit) async {
+  Future<void> _onInitialized(
+    LeaderofmonthInitialized event,
+    Emitter<LeaderofmonthState> emit,
+  ) async {
+    _lastMonth = event.month;
+    _lastYear = event.year;
+
     emit(state.copyWith(
-        status: LeaderofmonthStatus.error, error: event.message));
+      status: LeaderofmonthStatus.loading,
+      error: null,
+    ));
+    await _fetch(emit, month: event.month, year: event.year);
   }
 
-  Future<void> _loadLeaderboard(Emitter<LeaderofmonthState> emit) async {
-    try {
-      emit(state.copyWith(status: LeaderofmonthStatus.loading, error: null));
-      final result = await _leaderofmonthRepository.getLeaderboardDataEntity();
+  Future<void> _onRefreshRequested(
+    LeaderofmonthRefreshRequested event,
+    Emitter<LeaderofmonthState> emit,
+  ) async {
+    if (_lastMonth == null || _lastYear == null) return;
+    await _fetch(emit, month: _lastMonth!, year: _lastYear!, silent: true);
+  }
 
-      result.fold(
-        (e) => emit(state.copyWith(
-            status: LeaderofmonthStatus.error, error: e.toString())),
-        (data) => emit(state.copyWith(
-          status: LeaderofmonthStatus.success,
-          leaders: data.leaders,
-          currentUserRank: data.currentUserRank,
-          error: null,
-        )),
-      );
-    } on Exception catch (e) {
-      emit(state.copyWith(
-          status: LeaderofmonthStatus.error, error: e.toString()));
-    }
+  Future<void> _fetch(
+    Emitter<LeaderofmonthState> emit, {
+    required int month,
+    required int year,
+    bool silent = false,
+  }) async {
+    final result = await _getLeaderboardData(month: month, year: year);
+
+    result.fold(
+      (exception) {
+        if (!silent) {
+          emit(state.copyWith(
+            status: LeaderofmonthStatus.error,
+            error: exception.toString(),
+          ));
+        }
+      },
+      (data) => emit(state.copyWith(
+        status: LeaderofmonthStatus.success,
+        leaders: [...data.podium, ...data.leaders],
+        podiumSize: data.podium.length,
+        currentUserRank: data.currentUserRank,
+        error: null,
+      )),
+    );
   }
 }

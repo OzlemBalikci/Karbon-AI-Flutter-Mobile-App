@@ -27,15 +27,15 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> _onFetchProfile(
       FetchProfile event, Emitter<ProfileState> emit) async {
     emit(state.copyWith(
-        profileStatus: ProfileStatus.loading, profileError: null));
+        profileStatus: AsyncStatus.loading, profileError: null));
     final result = await _getProfile();
     result.fold(
       (failure) => emit(state.copyWith(
-        profileStatus: ProfileStatus.error,
+        profileStatus: AsyncStatus.error,
         profileError: failure.toString(),
       )),
       (profile) => emit(state.copyWith(
-        profileStatus: ProfileStatus.success,
+        profileStatus: AsyncStatus.success,
         profile: profile,
       )),
     );
@@ -44,7 +44,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   void _onTabChanged(TabChanged event, Emitter<ProfileState> emit) {
     emit(state.copyWith(selectedTab: event.index));
     if (event.index == 2 &&
-        state.donationHistoryStatus == DonationHistoryStatus.initial) {
+        state.donationHistoryStatus == AsyncStatus.initial) {
       add(const ProfileEvent.fetchDonationHistory());
     }
   }
@@ -52,16 +52,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> _onFetchDonationHistory(
       FetchDonationHistory event, Emitter<ProfileState> emit) async {
     emit(state.copyWith(
-        donationHistoryStatus: DonationHistoryStatus.loading,
+        donationHistoryStatus: AsyncStatus.loading,
         donationHistoryError: null));
     final result = await _getDonationHistory();
     result.fold(
       (failure) => emit(state.copyWith(
-        donationHistoryStatus: DonationHistoryStatus.error,
+        donationHistoryStatus: AsyncStatus.error,
         donationHistoryError: failure.toString(),
       )),
       (history) => emit(state.copyWith(
-        donationHistoryStatus: DonationHistoryStatus.success,
+        donationHistoryStatus: AsyncStatus.success,
         donationHistory: history,
       )),
     );
@@ -70,23 +70,26 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> _onDonateTrees(
       DonateTrees event, Emitter<ProfileState> emit) async {
     emit(state.copyWith(
-        donateStatus: DonateTreesStatus.loading, donateError: null));
+        donateStatus: AsyncStatus.loading, donateError: null));
     final result = await _donateTrees();
     result.fold(
       (failure) => emit(state.copyWith(
-        donateStatus: DonateTreesStatus.error,
+        donateStatus: AsyncStatus.error,
         donateError: failure.toString(),
       )),
-      (donateResult) => emit(state.copyWith(
-        donateStatus: DonateTreesStatus.success,
-        donateResult: donateResult,
-      )),
+      (donateResult) {
+        emit(state.copyWith(
+          donateStatus: AsyncStatus.success,
+          donateResult: donateResult,
+        ));
+        add(const FetchProfile());
+      },
     );
   }
 
   void _onDonateReset(DonateReset event, Emitter<ProfileState> emit) {
     emit(state.copyWith(
-      donateStatus: DonateTreesStatus.initial,
+      donateStatus: AsyncStatus.initial,
       donateResult: null,
     ));
   }

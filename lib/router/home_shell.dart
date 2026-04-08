@@ -9,9 +9,7 @@ import 'package:karbon/features/home/presentation/bloc/home_event.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
-import 'package:karbon/features/profile/presentation/bloc/profile_event.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart';
-import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_event.dart';
 
 // Sabit set: tam ekran açılan, alt barı gizlemesi gereken rotalar
 const _fullScreenRoutes = <String>{
@@ -33,21 +31,17 @@ class HomeShellPage extends StatelessWidget {
           create: (_) => getIt<HomeBloc>()..add(HomeStarted()),
         ),
         BlocProvider<UsefulinfoBloc>(
-          create: (_) =>
-              getIt<UsefulinfoBloc>()..add(const UsefulinfoEvent.fetchInfos()),
+          create: (_) => getIt<UsefulinfoBloc>(),
         ),
         BlocProvider<DailyActivitiesBloc>(
           create: (_) => getIt<DailyActivitiesBloc>()
             ..add(const DailyActivitiesLoadRequested()),
         ),
-        BlocProvider<ProfileBloc>(
-          create: (_) => getIt<ProfileBloc>()..add(FetchProfile()),
-        ),
+        BlocProvider<ProfileBloc>(create: (_) => getIt<ProfileBloc>()),
       ],
       child: AutoTabsRouter(
         routes: const [
-          // HomeShell altında gerçek çocuk HomeTabShellRoute; nested push/pop (Usefulinfo vb.) için gerekli.
-          HomeTabShellRoute(),
+          HomeRoute(),
           DailyActivitiesShellRoute(),
           CalendarShellRoute(),
           ProfileRoute(),

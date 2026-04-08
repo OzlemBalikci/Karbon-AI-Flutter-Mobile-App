@@ -101,10 +101,14 @@ import 'package:karbon/features/home/domain/repositories/home_repository.dart'
 import 'package:karbon/features/home/presentation/bloc/home_bloc.dart' as _i591;
 import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote.dart'
     as _i1036;
+import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote_impl.dart'
+    as _i679;
 import 'package:karbon/features/leaderofmont/data/repositories/leaderboard_repository_impl.dart'
     as _i966;
-import 'package:karbon/features/leaderofmont/domain/repositories/leaderboard_repository_impl.dart'
-    as _i322;
+import 'package:karbon/features/leaderofmont/domain/repositories/leaderboard_repository.dart'
+    as _i77;
+import 'package:karbon/features/leaderofmont/domain/usecases/get_leaderboard_data_usecase.dart'
+    as _i520;
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_bloc.dart'
     as _i748;
 import 'package:karbon/features/profile/data/datasources/profile_remote.dart'
@@ -175,7 +179,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i97.GetUsefulInfosUseCase>(
         () => _i97.GetUsefulInfosUseCase(gh<_i71.UsefulinfoRepository>()));
     gh.lazySingleton<_i1036.LeaderboardRemote>(
-        () => _i1036.LeaderboardRemoteImpl(gh<_i361.Dio>()));
+        () => _i679.LeaderboardRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i434.UsefulinfoBloc>(
         () => _i434.UsefulinfoBloc(gh<_i97.GetUsefulInfosUseCase>()));
     gh.lazySingleton<_i614.DailyActivitiesRemote>(
@@ -184,8 +188,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i483.ProfileRemote>(
         () => _i103.ProfileRemoteImpl(gh<_i361.Dio>()));
-    gh.lazySingleton<_i322.LeaderboardRepository>(
-        () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
     gh.lazySingleton<_i48.ProfileRepository>(
         () => _i758.ProfileRepositoryImpl(gh<_i483.ProfileRemote>()));
     gh.factory<_i1049.DeleteAccountUsecase>(
@@ -212,12 +214,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i25.HomeRemote>(),
           gh<_i460.SharedPreferences>(),
         ));
-    gh.factory<_i748.LeaderofmonthBloc>(
-        () => _i748.LeaderofmonthBloc(gh<_i322.LeaderboardRepository>()));
     gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
           gh<_i413.AuthRemote>(),
           gh<_i102.AuthLocal>(),
         ));
+    gh.lazySingleton<_i77.LeaderboardRepository>(
+        () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
     gh.lazySingleton<_i666.CarbonCalculateRepository>(
         () => _i180.CarbonCalculateRepositoryImpl(
               gh<_i357.CarbonCalculateRemote>(),
@@ -242,6 +244,8 @@ extension GetItInjectableX on _i174.GetIt {
             gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i495.GetPreviousAnswersUsecase>(() =>
         _i495.GetPreviousAnswersUsecase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i520.GetLeaderboardDataUseCase>(() =>
+        _i520.GetLeaderboardDataUseCase(gh<_i77.LeaderboardRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i210.ForgotPasswordUseCase>(
@@ -279,6 +283,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i902.PostAnswerUsecase>(),
           gh<_i793.CheckSessionUseCase>(),
         ));
+    gh.factory<_i748.LeaderofmonthBloc>(
+        () => _i748.LeaderofmonthBloc(gh<_i520.GetLeaderboardDataUseCase>()));
     gh.factory<_i78.RegisterBloc>(() => _i78.RegisterBloc(
           gh<_i558.RegisterUseCase>(),
           gh<_i564.AuthBloc>(),

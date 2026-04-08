@@ -2,7 +2,7 @@ part of '../leaderofmonth.dart';
 
 class LeaderboardUserStatus extends StatelessWidget {
   const LeaderboardUserStatus({super.key, required this.entity});
-  final LeaderboardLeaderEntity entity;
+  final CurrentUserRankEntity entity;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class LeaderboardUserStatus extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              '${entity.valueDisplay} ile ${entity.rank}. sıradasınız.',
+              entity.message,
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),

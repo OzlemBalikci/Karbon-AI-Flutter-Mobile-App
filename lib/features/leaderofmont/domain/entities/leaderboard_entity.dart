@@ -1,33 +1,43 @@
-class LeaderboardEntity {
-  final int rank;
-  final String fullName;
-  final int treeCount;
-  final bool isCurrentUser;
-
-  const LeaderboardEntity({
+/// Tek bir liderlik satırı (podium veya liste).
+class LeaderboardLeaderEntity {
+  const LeaderboardLeaderEntity({
     required this.rank,
     required this.fullName,
     required this.treeCount,
     required this.isCurrentUser,
   });
 
-  String get valueDisplay => _formatTreeCount(treeCount);
+  final int rank;
+  final String fullName;
+  final int treeCount;
+  final bool isCurrentUser;
 
-  static String _formatTreeCount(int n) {
-    if (n >= 1000000000) return '${n ~/ 1000000000}B Ağaç';
-    if (n >= 1000000) return '${n ~/ 1000000}M Ağaç';
-    if (n >= 1000) return '${n ~/ 1000}K Ağaç';
-    return '$n Ağaç';
-  }
+  /// UI metinleri için (örn. "100000 Ağaç").
+  String get valueDisplay => '$treeCount Ağaç';
+}
 
-  factory LeaderboardEntity.fromJson(Map<String, dynamic> json) =>
-      LeaderboardEntity(
-        rank: json['rank'] as int? ?? 0,
-        fullName: json['fullName'] as String? ?? '',
-        treeCount: json['treeCount'] as int? ?? 0,
-        isCurrentUser: json['isCurrentUser'] as bool? ?? false,
-      );
+/// Alt bant: kullanıcının kendi sırası.
+class CurrentUserRankEntity {
+  const CurrentUserRankEntity({
+    required this.rank,
+    required this.treeCount,
+    required this.message,
+  });
 
-  @override
-  List<Object?> get props => [rank, fullName, treeCount, isCurrentUser];
+  final int rank;
+  final int treeCount;
+  final String message;
+}
+
+/// GET `/api/v1/user-results/leaderboard` yanıtının `data` gövdesi.
+class LeaderboardDataEntity {
+  const LeaderboardDataEntity({
+    required this.podium,
+    required this.leaders,
+    required this.currentUserRank,
+  });
+
+  final List<LeaderboardLeaderEntity> podium;
+  final List<LeaderboardLeaderEntity> leaders;
+  final CurrentUserRankEntity currentUserRank;
 }

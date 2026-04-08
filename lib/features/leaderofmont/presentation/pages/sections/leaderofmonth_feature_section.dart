@@ -18,13 +18,7 @@ class LeaderofmonthFeatureSection extends StatelessWidget {
           CurrentUserRankSelector(
             builder: (rank) {
               if (rank == null) return const SizedBox.shrink();
-              return LeaderboardUserStatus(
-                entity: LeaderboardLeaderEntity(
-                  rank: rank.rank,
-                  fullName: '',
-                  treeCount: rank.treeCount,
-                ),
-              );
+              return LeaderboardUserStatus(entity: rank);
             },
           ),
         ],

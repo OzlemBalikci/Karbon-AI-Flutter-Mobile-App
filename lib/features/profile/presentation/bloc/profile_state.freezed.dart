@@ -15,11 +15,11 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ProfileState {
   int get selectedTab;
-  ProfileStatus get profileStatus;
+  AsyncStatus get profileStatus;
   UserProfileEntity? get profile;
-  DonationHistoryStatus get donationHistoryStatus;
+  AsyncStatus get donationHistoryStatus;
   DonationHistoryEntity? get donationHistory;
-  DonateTreesStatus get donateStatus;
+  AsyncStatus get donateStatus;
   DonateTreesResultEntity? get donateResult;
   String? get profileError;
   String? get donationHistoryError;
@@ -87,11 +87,11 @@ abstract mixin class $ProfileStateCopyWith<$Res> {
   @useResult
   $Res call(
       {int selectedTab,
-      ProfileStatus profileStatus,
+      AsyncStatus profileStatus,
       UserProfileEntity? profile,
-      DonationHistoryStatus donationHistoryStatus,
+      AsyncStatus donationHistoryStatus,
       DonationHistoryEntity? donationHistory,
-      DonateTreesStatus donateStatus,
+      AsyncStatus donateStatus,
       DonateTreesResultEntity? donateResult,
       String? profileError,
       String? donationHistoryError,
@@ -129,7 +129,7 @@ class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
       profileStatus: null == profileStatus
           ? _self.profileStatus
           : profileStatus // ignore: cast_nullable_to_non_nullable
-              as ProfileStatus,
+              as AsyncStatus,
       profile: freezed == profile
           ? _self.profile
           : profile // ignore: cast_nullable_to_non_nullable
@@ -137,7 +137,7 @@ class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
       donationHistoryStatus: null == donationHistoryStatus
           ? _self.donationHistoryStatus
           : donationHistoryStatus // ignore: cast_nullable_to_non_nullable
-              as DonationHistoryStatus,
+              as AsyncStatus,
       donationHistory: freezed == donationHistory
           ? _self.donationHistory
           : donationHistory // ignore: cast_nullable_to_non_nullable
@@ -145,7 +145,7 @@ class _$ProfileStateCopyWithImpl<$Res> implements $ProfileStateCopyWith<$Res> {
       donateStatus: null == donateStatus
           ? _self.donateStatus
           : donateStatus // ignore: cast_nullable_to_non_nullable
-              as DonateTreesStatus,
+              as AsyncStatus,
       donateResult: freezed == donateResult
           ? _self.donateResult
           : donateResult // ignore: cast_nullable_to_non_nullable
@@ -261,11 +261,11 @@ extension ProfileStatePatterns on ProfileState {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             int selectedTab,
-            ProfileStatus profileStatus,
+            AsyncStatus profileStatus,
             UserProfileEntity? profile,
-            DonationHistoryStatus donationHistoryStatus,
+            AsyncStatus donationHistoryStatus,
             DonationHistoryEntity? donationHistory,
-            DonateTreesStatus donateStatus,
+            AsyncStatus donateStatus,
             DonateTreesResultEntity? donateResult,
             String? profileError,
             String? donationHistoryError,
@@ -309,11 +309,11 @@ extension ProfileStatePatterns on ProfileState {
   TResult when<TResult extends Object?>(
     TResult Function(
             int selectedTab,
-            ProfileStatus profileStatus,
+            AsyncStatus profileStatus,
             UserProfileEntity? profile,
-            DonationHistoryStatus donationHistoryStatus,
+            AsyncStatus donationHistoryStatus,
             DonationHistoryEntity? donationHistory,
-            DonateTreesStatus donateStatus,
+            AsyncStatus donateStatus,
             DonateTreesResultEntity? donateResult,
             String? profileError,
             String? donationHistoryError,
@@ -355,11 +355,11 @@ extension ProfileStatePatterns on ProfileState {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             int selectedTab,
-            ProfileStatus profileStatus,
+            AsyncStatus profileStatus,
             UserProfileEntity? profile,
-            DonationHistoryStatus donationHistoryStatus,
+            AsyncStatus donationHistoryStatus,
             DonationHistoryEntity? donationHistory,
-            DonateTreesStatus donateStatus,
+            AsyncStatus donateStatus,
             DonateTreesResultEntity? donateResult,
             String? profileError,
             String? donationHistoryError,
@@ -391,11 +391,11 @@ extension ProfileStatePatterns on ProfileState {
 class _ProfileState extends ProfileState {
   const _ProfileState(
       {this.selectedTab = 0,
-      this.profileStatus = ProfileStatus.initial,
+      this.profileStatus = AsyncStatus.initial,
       this.profile,
-      this.donationHistoryStatus = DonationHistoryStatus.initial,
+      this.donationHistoryStatus = AsyncStatus.initial,
       this.donationHistory,
-      this.donateStatus = DonateTreesStatus.initial,
+      this.donateStatus = AsyncStatus.initial,
       this.donateResult,
       this.profileError,
       this.donationHistoryError,
@@ -407,17 +407,17 @@ class _ProfileState extends ProfileState {
   final int selectedTab;
   @override
   @JsonKey()
-  final ProfileStatus profileStatus;
+  final AsyncStatus profileStatus;
   @override
   final UserProfileEntity? profile;
   @override
   @JsonKey()
-  final DonationHistoryStatus donationHistoryStatus;
+  final AsyncStatus donationHistoryStatus;
   @override
   final DonationHistoryEntity? donationHistory;
   @override
   @JsonKey()
-  final DonateTreesStatus donateStatus;
+  final AsyncStatus donateStatus;
   @override
   final DonateTreesResultEntity? donateResult;
   @override
@@ -491,11 +491,11 @@ abstract mixin class _$ProfileStateCopyWith<$Res>
   @useResult
   $Res call(
       {int selectedTab,
-      ProfileStatus profileStatus,
+      AsyncStatus profileStatus,
       UserProfileEntity? profile,
-      DonationHistoryStatus donationHistoryStatus,
+      AsyncStatus donationHistoryStatus,
       DonationHistoryEntity? donationHistory,
-      DonateTreesStatus donateStatus,
+      AsyncStatus donateStatus,
       DonateTreesResultEntity? donateResult,
       String? profileError,
       String? donationHistoryError,
@@ -534,7 +534,7 @@ class __$ProfileStateCopyWithImpl<$Res>
       profileStatus: null == profileStatus
           ? _self.profileStatus
           : profileStatus // ignore: cast_nullable_to_non_nullable
-              as ProfileStatus,
+              as AsyncStatus,
       profile: freezed == profile
           ? _self.profile
           : profile // ignore: cast_nullable_to_non_nullable
@@ -542,7 +542,7 @@ class __$ProfileStateCopyWithImpl<$Res>
       donationHistoryStatus: null == donationHistoryStatus
           ? _self.donationHistoryStatus
           : donationHistoryStatus // ignore: cast_nullable_to_non_nullable
-              as DonationHistoryStatus,
+              as AsyncStatus,
       donationHistory: freezed == donationHistory
           ? _self.donationHistory
           : donationHistory // ignore: cast_nullable_to_non_nullable
@@ -550,7 +550,7 @@ class __$ProfileStateCopyWithImpl<$Res>
       donateStatus: null == donateStatus
           ? _self.donateStatus
           : donateStatus // ignore: cast_nullable_to_non_nullable
-              as DonateTreesStatus,
+              as AsyncStatus,
       donateResult: freezed == donateResult
           ? _self.donateResult
           : donateResult // ignore: cast_nullable_to_non_nullable

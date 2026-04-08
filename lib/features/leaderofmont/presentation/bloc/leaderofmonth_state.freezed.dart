@@ -16,6 +16,7 @@ T _$identity<T>(T value) => value;
 mixin _$LeaderofmonthState implements DiagnosticableTreeMixin {
   LeaderofmonthStatus get status;
   List<LeaderboardLeaderEntity> get leaders;
+  int get podiumSize;
   CurrentUserRankEntity? get currentUserRank;
   String? get error;
 
@@ -33,6 +34,7 @@ mixin _$LeaderofmonthState implements DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'LeaderofmonthState'))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('leaders', leaders))
+      ..add(DiagnosticsProperty('podiumSize', podiumSize))
       ..add(DiagnosticsProperty('currentUserRank', currentUserRank))
       ..add(DiagnosticsProperty('error', error));
   }
@@ -44,18 +46,25 @@ mixin _$LeaderofmonthState implements DiagnosticableTreeMixin {
             other is LeaderofmonthState &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other.leaders, leaders) &&
+            (identical(other.podiumSize, podiumSize) ||
+                other.podiumSize == podiumSize) &&
             (identical(other.currentUserRank, currentUserRank) ||
                 other.currentUserRank == currentUserRank) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status,
-      const DeepCollectionEquality().hash(leaders), currentUserRank, error);
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      const DeepCollectionEquality().hash(leaders),
+      podiumSize,
+      currentUserRank,
+      error);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LeaderofmonthState(status: $status, leaders: $leaders, currentUserRank: $currentUserRank, error: $error)';
+    return 'LeaderofmonthState(status: $status, leaders: $leaders, podiumSize: $podiumSize, currentUserRank: $currentUserRank, error: $error)';
   }
 }
 
@@ -68,6 +77,7 @@ abstract mixin class $LeaderofmonthStateCopyWith<$Res> {
   $Res call(
       {LeaderofmonthStatus status,
       List<LeaderboardLeaderEntity> leaders,
+      int podiumSize,
       CurrentUserRankEntity? currentUserRank,
       String? error});
 }
@@ -87,6 +97,7 @@ class _$LeaderofmonthStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? leaders = null,
+    Object? podiumSize = null,
     Object? currentUserRank = freezed,
     Object? error = freezed,
   }) {
@@ -99,6 +110,10 @@ class _$LeaderofmonthStateCopyWithImpl<$Res>
           ? _self.leaders
           : leaders // ignore: cast_nullable_to_non_nullable
               as List<LeaderboardLeaderEntity>,
+      podiumSize: null == podiumSize
+          ? _self.podiumSize
+          : podiumSize // ignore: cast_nullable_to_non_nullable
+              as int,
       currentUserRank: freezed == currentUserRank
           ? _self.currentUserRank
           : currentUserRank // ignore: cast_nullable_to_non_nullable
@@ -207,6 +222,7 @@ extension LeaderofmonthStatePatterns on LeaderofmonthState {
     TResult Function(
             LeaderofmonthStatus status,
             List<LeaderboardLeaderEntity> leaders,
+            int podiumSize,
             CurrentUserRankEntity? currentUserRank,
             String? error)?
         $default, {
@@ -215,8 +231,8 @@ extension LeaderofmonthStatePatterns on LeaderofmonthState {
     final _that = this;
     switch (_that) {
       case _LeaderofmonthState() when $default != null:
-        return $default(
-            _that.status, _that.leaders, _that.currentUserRank, _that.error);
+        return $default(_that.status, _that.leaders, _that.podiumSize,
+            _that.currentUserRank, _that.error);
       case _:
         return orElse();
     }
@@ -240,6 +256,7 @@ extension LeaderofmonthStatePatterns on LeaderofmonthState {
     TResult Function(
             LeaderofmonthStatus status,
             List<LeaderboardLeaderEntity> leaders,
+            int podiumSize,
             CurrentUserRankEntity? currentUserRank,
             String? error)
         $default,
@@ -247,8 +264,8 @@ extension LeaderofmonthStatePatterns on LeaderofmonthState {
     final _that = this;
     switch (_that) {
       case _LeaderofmonthState():
-        return $default(
-            _that.status, _that.leaders, _that.currentUserRank, _that.error);
+        return $default(_that.status, _that.leaders, _that.podiumSize,
+            _that.currentUserRank, _that.error);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -271,6 +288,7 @@ extension LeaderofmonthStatePatterns on LeaderofmonthState {
     TResult? Function(
             LeaderofmonthStatus status,
             List<LeaderboardLeaderEntity> leaders,
+            int podiumSize,
             CurrentUserRankEntity? currentUserRank,
             String? error)?
         $default,
@@ -278,8 +296,8 @@ extension LeaderofmonthStatePatterns on LeaderofmonthState {
     final _that = this;
     switch (_that) {
       case _LeaderofmonthState() when $default != null:
-        return $default(
-            _that.status, _that.leaders, _that.currentUserRank, _that.error);
+        return $default(_that.status, _that.leaders, _that.podiumSize,
+            _that.currentUserRank, _that.error);
       case _:
         return null;
     }
@@ -293,6 +311,7 @@ class _LeaderofmonthState extends LeaderofmonthState
   const _LeaderofmonthState(
       {this.status = LeaderofmonthStatus.initial,
       final List<LeaderboardLeaderEntity> leaders = const [],
+      this.podiumSize = 3,
       this.currentUserRank,
       this.error})
       : _leaders = leaders,
@@ -310,6 +329,9 @@ class _LeaderofmonthState extends LeaderofmonthState
     return EqualUnmodifiableListView(_leaders);
   }
 
+  @override
+  @JsonKey()
+  final int podiumSize;
   @override
   final CurrentUserRankEntity? currentUserRank;
   @override
@@ -329,6 +351,7 @@ class _LeaderofmonthState extends LeaderofmonthState
       ..add(DiagnosticsProperty('type', 'LeaderofmonthState'))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('leaders', leaders))
+      ..add(DiagnosticsProperty('podiumSize', podiumSize))
       ..add(DiagnosticsProperty('currentUserRank', currentUserRank))
       ..add(DiagnosticsProperty('error', error));
   }
@@ -340,18 +363,25 @@ class _LeaderofmonthState extends LeaderofmonthState
             other is _LeaderofmonthState &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._leaders, _leaders) &&
+            (identical(other.podiumSize, podiumSize) ||
+                other.podiumSize == podiumSize) &&
             (identical(other.currentUserRank, currentUserRank) ||
                 other.currentUserRank == currentUserRank) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status,
-      const DeepCollectionEquality().hash(_leaders), currentUserRank, error);
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      const DeepCollectionEquality().hash(_leaders),
+      podiumSize,
+      currentUserRank,
+      error);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LeaderofmonthState(status: $status, leaders: $leaders, currentUserRank: $currentUserRank, error: $error)';
+    return 'LeaderofmonthState(status: $status, leaders: $leaders, podiumSize: $podiumSize, currentUserRank: $currentUserRank, error: $error)';
   }
 }
 
@@ -366,6 +396,7 @@ abstract mixin class _$LeaderofmonthStateCopyWith<$Res>
   $Res call(
       {LeaderofmonthStatus status,
       List<LeaderboardLeaderEntity> leaders,
+      int podiumSize,
       CurrentUserRankEntity? currentUserRank,
       String? error});
 }
@@ -385,6 +416,7 @@ class __$LeaderofmonthStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? leaders = null,
+    Object? podiumSize = null,
     Object? currentUserRank = freezed,
     Object? error = freezed,
   }) {
@@ -397,6 +429,10 @@ class __$LeaderofmonthStateCopyWithImpl<$Res>
           ? _self._leaders
           : leaders // ignore: cast_nullable_to_non_nullable
               as List<LeaderboardLeaderEntity>,
+      podiumSize: null == podiumSize
+          ? _self.podiumSize
+          : podiumSize // ignore: cast_nullable_to_non_nullable
+              as int,
       currentUserRank: freezed == currentUserRank
           ? _self.currentUserRank
           : currentUserRank // ignore: cast_nullable_to_non_nullable

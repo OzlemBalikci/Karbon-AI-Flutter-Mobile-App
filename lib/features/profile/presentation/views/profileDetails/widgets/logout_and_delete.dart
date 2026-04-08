@@ -9,8 +9,7 @@ class LogoutAndDelete extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         _LogoutButton(
-          onPressed: () =>
-              showProfilePopup(context, ProfilePopupKind.logout),
+          onPressed: () => showProfilePopup(context, ProfilePopupKind.logout),
         ),
         //SizedBox(height: AppThemeSpacing.s20.h),
         TextButton(
