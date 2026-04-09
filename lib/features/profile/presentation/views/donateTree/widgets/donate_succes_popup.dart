@@ -12,9 +12,6 @@ class DonateSuccessPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bodySmall = context.typographiesSp.bodySmall;
-    final onQuestion = context.colors.textOnQuestion;
-
     return AppPopupCard(
       padding: EdgeInsets.symmetric(
         horizontal: AppThemeSpacing.s25.w,
@@ -39,9 +36,10 @@ class DonateSuccessPopup extends StatelessWidget {
                 margin: Margins.zero,
                 padding: HtmlPaddings.zero,
                 textAlign: TextAlign.center,
-                fontSize: FontSize(bodySmall.fontSize ?? 12),
-                fontFamily: bodySmall.fontFamily,
-                color: onQuestion,
+                fontSize:
+                    FontSize(context.typographiesSp.bodySmall.fontSize ?? 12),
+                fontFamily: context.typographiesSp.bodySmall.fontFamily,
+                color: context.colors.textOnQuestion,
               ),
               'br': Style(
                 height: Height(8),

@@ -1,47 +1,34 @@
 part of '../../../profile.dart';
 
-/// Profil yıldız sekmesi: bağış açıklaması (HTML; “Ağaç Bağışla” span ile vurgulu).
-class TreeDonationInfoCard extends StatelessWidget {
-  const TreeDonationInfoCard({super.key});
+/// Bağış açıklaması HTML’i; içerik `html` ile dışarıdan verilir.
+class TreeDonationInfo extends StatelessWidget {
+  const TreeDonationInfo({super.key, required this.html});
+
+  final String html;
 
   @override
   Widget build(BuildContext context) {
-    final baseStyle = context.typographiesSp.bodyExtraSmall;
-    final onQuestion = context.colors.textOnQuestion;
-    return BlocBuilder<ProfileBloc, ProfileState>(
-      builder: (context, state) {
-        if (state.profileStatus != AsyncStatus.success ||
-            state.profile == null) {
-          return const SizedBox.shrink();
-        }
-
-        final trees = NumberFormat.decimalPattern('tr').format(
-          state.profile!.availableTreeCount,
-        );
-        final html = context.text.profile_star_text(trees);
-
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s15.w),
-          child: Html(
-            data: html,
-            style: {
-              'body': Style(
-                fontStyle: FontStyle.italic,
-                margin: Margins.zero,
-                padding: HtmlPaddings.zero,
-                textAlign: TextAlign.center,
-                fontSize: FontSize(baseStyle.fontSize ?? 12),
-                fontFamily: baseStyle.fontFamily,
-                color: onQuestion,
-              ),
-              'span': Style(
-                color: context.colors.textOnQuestion,
-                fontWeight: FontWeight.bold,
-              ),
-            },
+    return SizedBox(
+      width: 275.w,
+      child: Html(
+        data: html,
+        style: {
+          'body': Style(
+            fontStyle: FontStyle.italic,
+            margin: Margins.zero,
+            padding: HtmlPaddings.zero,
+            textAlign: TextAlign.center,
+            fontSize:
+                FontSize(context.typographiesSp.bodyExtraSmall.fontSize ?? 12),
+            fontFamily: context.typographiesSp.bodyExtraSmall.fontFamily,
+            color: context.colors.textOnQuestion,
           ),
-        );
-      },
+          'span': Style(
+            color: context.colors.textOnQuestion,
+            fontWeight: FontWeight.bold,
+          ),
+        },
+      ),
     );
   }
 }

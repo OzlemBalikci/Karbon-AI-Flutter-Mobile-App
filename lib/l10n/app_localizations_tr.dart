@@ -229,11 +229,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String profile_star_text(String donatedTree) {
-    return 'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, <span class=\"profile-donate-highlight\">&#8220;$donatedTree&#8221;</span> ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin.<br/><br/>Hemen şimdi <span class=\"profile-donate-highlight\">&#8220;Ağaç Bağışla&#8221;</span> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!';
+    return 'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, <span class=\"profile-donate-highlight\">$donatedTree</span> ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin.<br/><br/>Hemen şimdi <span class=\"profile-donate-highlight\">&#8220;Ağaç Bağışla&#8221;</span> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!';
   }
 
   @override
   String get profile_star_donate_button_text => 'Ağaç Bağışla';
+
+  @override
+  String get profile_star_no_trees_hint =>
+      'Dünyayı daha yeşil bir yer yapma yolculuğuna hoş geldin! Uygulamayı kullanarak puan toplayabilir, bu puanları hedeflediğin fidan bağışlarına dönüştürebilirsin. <br/><br/>Şu an bağışlayabileceğin ağaç sayısı 0 görünüyor, haydi bu sayıyı birlikte artıralım!';
 
   @override
   String get logout_popup_header_title => 'Hesabınızdan Çıkış Yapıyorsunuz';
@@ -290,4 +294,10 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get lorem_ipsum =>
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.';
+
+  @override
+  String get points => 'puan';
+
+  @override
+  String get tree => 'Ağaç';
 }

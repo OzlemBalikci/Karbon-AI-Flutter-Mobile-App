@@ -29,6 +29,7 @@ part 'views/profileDetails/sections/profile_detail_feature.dart';
 part 'views/donateTree/sections/donate_tree_feature.dart';
 part 'views/profileDetails/widgets/popup_base.dart';
 part 'views/donateHistory/widgets/donated_tree_card.dart';
+part 'views/donateHistory/widgets/donation_history_list.dart';
 part 'views/donateHistory/sections/profile_tree_feature.dart';
 part 'views/donateTree/widgets/donate_succes_popup.dart';
 
@@ -101,13 +102,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: AppThemeSpacing.s20.h),
                   IconsRow(),
                   SizedBox(height: AppThemeSpacing.s20.h),
-                  ProfileTabSelector(
-                    builder: (index) => switch (index) {
-                      0 => const ProfileInfoFeatureSection(),
-                      1 => const ProfileStarFeatureSection(),
-                      2 => const ProfileTreeFeatureSection(),
-                      _ => const SizedBox.shrink(),
-                    },
+                  Expanded(
+                    child: ProfileTabSelector(
+                      builder: (index) => switch (index) {
+                        0 => const ProfileInfoFeatureSection(),
+                        1 => const ProfileStarFeatureSection(),
+                        2 => const ProfileTreeFeatureSection(),
+                        _ => const SizedBox.shrink(),
+                      },
+                    ),
                   ),
                 ],
               ),

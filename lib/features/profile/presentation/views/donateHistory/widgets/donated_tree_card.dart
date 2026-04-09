@@ -1,10 +1,14 @@
 part of '../../../profile.dart';
 
-class DonatedTreeCard extends StatelessWidget {
-  const DonatedTreeCard({super.key});
+class _DonatedTreeCardItem extends StatelessWidget {
+  const _DonatedTreeCardItem({super.key, required this.item});
+
+  final DonationItemEntity item;
 
   @override
   Widget build(BuildContext context) {
+    final dateStr = DateFormat.yMMMMd('tr').format(item.donationDate.toLocal());
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -12,12 +16,11 @@ class DonatedTreeCard extends StatelessWidget {
           image: Assets.images.profileTreeMask.provider(),
           fit: BoxFit.cover,
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Color(0x26000000),
             offset: Offset(0, 4),
             blurRadius: 25,
-            spreadRadius: 0,
           ),
         ],
         color: Colors.white,
@@ -33,14 +36,16 @@ class DonatedTreeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '20 Aralık 2023',
+                  dateStr,
                   style: context.typographiesSp.bodyMediumSmall.copyWith(
-                      color: Color(0xFF0B7942), fontStyle: FontStyle.italic),
+                      color: const Color(0xFF0B7942),
+                      fontStyle: FontStyle.italic),
                 ),
                 Text(
                   context.text.profile_tree_donated_tree_text,
                   style: context.typographiesSp.bodyMediumSmall.copyWith(
-                      color: Color(0xFF0B7942), fontStyle: FontStyle.italic),
+                      color: const Color(0xFF0B7942),
+                      fontStyle: FontStyle.italic),
                 ),
               ],
             ),
@@ -53,12 +58,12 @@ class DonatedTreeCard extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  '10',
+                  item.treeCount.toString(),
                   style: context.typographiesSp.headingLarge
                       .copyWith(color: context.colors.textOnPrimary),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

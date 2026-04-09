@@ -8,6 +8,9 @@ enum AsyncStatus { initial, loading, success, error }
 @freezed
 abstract class ProfileState with _$ProfileState {
   const ProfileState._();
+
+  bool get canDonate => profile != null && profile!.availableTreeCount > 0;
+
   const factory ProfileState({
     @Default(AsyncStatus.initial) AsyncStatus profileStatus,
     UserProfileEntity? profile,

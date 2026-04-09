@@ -8,8 +8,8 @@ class ProfileInfoFeatureSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           UserInfoDetailItem(),
           SizedBox(height: AppThemeSpacing.s20.h),

@@ -499,7 +499,7 @@ abstract class AppLocalizations {
   /// No description provided for @profile_star_text.
   ///
   /// In tr, this message translates to:
-  /// **'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, <span class=\"profile-donate-highlight\">&#8220;{donatedTree}&#8221;</span> ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin.<br/><br/>Hemen şimdi <span class=\"profile-donate-highlight\">&#8220;Ağaç Bağışla&#8221;</span> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!'**
+  /// **'Toplamış olduğun puanlar sayesinde, doğaya olan duyarlılığını bir adım öteye taşıyabilir ve çevresel sorumluluğunu yerine getirebilirsin. Bu anlamlı katkını, <span class=\"profile-donate-highlight\">{donatedTree}</span> ağaçlık bir bağışa çevirerek doğanın korunmasına destek olabilirsin.<br/><br/>Hemen şimdi <span class=\"profile-donate-highlight\">&#8220;Ağaç Bağışla&#8221;</span> butona tıklayarak, sürdürülebilir bir geleceğe olan katkını artır!'**
   String profile_star_text(String donatedTree);
 
   /// No description provided for @profile_star_donate_button_text.
@@ -507,6 +507,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ağaç Bağışla'**
   String get profile_star_donate_button_text;
+
+  /// No description provided for @profile_star_no_trees_hint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dünyayı daha yeşil bir yer yapma yolculuğuna hoş geldin! Uygulamayı kullanarak puan toplayabilir, bu puanları hedeflediğin fidan bağışlarına dönüştürebilirsin. <br/><br/>Şu an bağışlayabileceğin ağaç sayısı 0 görünüyor, haydi bu sayıyı birlikte artıralım!'**
+  String get profile_star_no_trees_hint;
 
   /// No description provided for @logout_popup_header_title.
   ///
@@ -609,6 +615,18 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.'**
   String get lorem_ipsum;
+
+  /// No description provided for @points.
+  ///
+  /// In tr, this message translates to:
+  /// **'puan'**
+  String get points;
+
+  /// No description provided for @tree.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ağaç'**
+  String get tree;
 }
 
 class _AppLocalizationsDelegate

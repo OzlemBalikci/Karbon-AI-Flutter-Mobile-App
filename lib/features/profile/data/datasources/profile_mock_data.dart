@@ -8,7 +8,7 @@ final UserProfileEntity kMockUserProfile = UserProfileEntity(
   name: 'Ekin Can',
   surname: 'Akın',
   birthDate: mockBirthUtc,
-  totalPoints: 200000.0,
+  totalPoints: 200000,
   donatedTreeCount: 1270,
   availableTreeCount: 1200,
 );
@@ -25,6 +25,21 @@ final DonationHistoryEntity kMockDonationHistory = DonationHistoryEntity(
       treeCount: 10,
       pointsSpent: 5000.0,
       donationDate: DateTime.utc(2023, 12, 8),
+    ),
+    DonationItemEntity(
+      treeCount: 10,
+      pointsSpent: 5000.0,
+      donationDate: DateTime.utc(2023, 11, 8),
+    ),
+    DonationItemEntity(
+      treeCount: 10,
+      pointsSpent: 5000.0,
+      donationDate: DateTime.utc(2023, 10, 8),
+    ),
+    DonationItemEntity(
+      treeCount: 10,
+      pointsSpent: 5000.0,
+      donationDate: DateTime.utc(2023, 9, 8),
     ),
   ],
 );
