@@ -58,7 +58,6 @@ class _IconItem extends StatelessWidget {
         : context.colors.textOnSecondary;
 
     return Container(
-      height: 54.h,
       width: double.infinity,
       decoration: BoxDecoration(
         color: bgColor,
@@ -72,12 +71,15 @@ class _IconItem extends StatelessWidget {
           ),
         ],
       ),
-      child: IconButton(
-        onPressed: () => context.read<ProfileBloc>().add(TabChanged(index)),
-        icon: icon.svg(
-          width: 24.w,
-          height: 24.h,
-          colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: AppThemeSpacing.s6.h),
+        child: IconButton(
+          onPressed: () => context.read<ProfileBloc>().add(TabChanged(index)),
+          icon: icon.svg(
+            width: 24.w,
+            height: 24.h,
+            colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+          ),
         ),
       ),
     );

@@ -26,32 +26,11 @@ part 'views/donateTree/widgets/point_or_tree_score_card.dart';
 part 'views/donateTree/widgets/tree_donation_info.dart';
 part 'views/donateTree/widgets/donate_tree_button.dart';
 part 'views/profileDetails/sections/profile_detail_feature.dart';
-part 'views/donateTree/sections/profile_star_feature.dart';
-part 'views/profileDetails/widgets/logout_popup.dart';
+part 'views/donateTree/sections/donate_tree_feature.dart';
+part 'views/profileDetails/widgets/popup_base.dart';
 part 'views/donateHistory/widgets/donated_tree_card.dart';
 part 'views/donateHistory/sections/profile_tree_feature.dart';
 part 'views/donateTree/widgets/donate_succes_popup.dart';
-
-/// Çıkış / hesap silme: [ProfilePopupKind] + [showAppPopup]. Bağış başarısı [BlocListener] ile açılır.
-enum ProfilePopupKind {
-  logout,
-  deleteAccount,
-}
-
-Future<void> showProfilePopup(BuildContext context, ProfilePopupKind kind) {
-  final Widget child = switch (kind) {
-    ProfilePopupKind.logout => LogoutPopup(
-        title: context.text.logout_popup_header_title,
-        text: context.text.logout_popup_text,
-      ),
-    ProfilePopupKind.deleteAccount => LogoutPopup(
-        title: context.text.delete_account_popup_header_title,
-        text: context.text.delete_account_popup_text,
-      ),
-  };
-
-  return showAppPopup<void>(context, child: child);
-}
 
 @RoutePage()
 class ProfilePage extends StatefulWidget {

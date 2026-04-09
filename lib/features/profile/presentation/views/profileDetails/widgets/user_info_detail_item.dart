@@ -22,7 +22,7 @@ class UserInfoDetailItem extends StatelessWidget {
       ),
       onSuccess: (profile) {
         final birthStr =
-            DateFormat.yMMMMd('tr').format(profile.birthDate.toLocal());
+            DateFormat('dd.MM.yyyy', 'tr').format(profile.birthDate.toLocal());
         return Column(
           children: [
             _InfoDetailItem(
@@ -70,7 +70,6 @@ class _InfoDetailItem extends StatelessWidget {
         SizedBox(height: AppThemeSpacing.s10.h),
         Container(
           width: double.infinity,
-          height: 45.h,
           decoration: BoxDecoration(
             color: context.colors.primary.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
@@ -78,7 +77,9 @@ class _InfoDetailItem extends StatelessWidget {
                 color: context.colors.primary.withValues(alpha: 0.8), width: 1),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s12.w),
+            padding: EdgeInsets.symmetric(
+                horizontal: AppThemeSpacing.s12.w,
+                vertical: AppThemeSpacing.s12.h),
             child: Row(
               children: [
                 Text(

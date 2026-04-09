@@ -70,7 +70,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get register_email_textfield_text => 'E-Posta Adresiniz';
 
   @override
-  String get register_tcno_textfield_text => 'T.C. Kimlik No';
+  String get register_tcno_textfield_text => 'T.C. Kimlik Numaranız';
 
   @override
   String get register_name_textfield_text => 'Adınız';

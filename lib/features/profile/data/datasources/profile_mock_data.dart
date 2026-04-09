@@ -1,5 +1,6 @@
 import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
 
+//mock kaldırılacak.
 final DateTime mockBirthUtc = DateTime.utc(1998, 2, 12);
 
 final UserProfileEntity kMockUserProfile = UserProfileEntity(

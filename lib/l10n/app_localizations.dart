@@ -205,7 +205,7 @@ abstract class AppLocalizations {
   /// No description provided for @register_tcno_textfield_text.
   ///
   /// In tr, this message translates to:
-  /// **'T.C. Kimlik No'**
+  /// **'T.C. Kimlik Numaranız'**
   String get register_tcno_textfield_text;
 
   /// No description provided for @register_name_textfield_text.

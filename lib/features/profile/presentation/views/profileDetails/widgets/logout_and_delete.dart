@@ -11,7 +11,7 @@ class LogoutAndDelete extends StatelessWidget {
         _LogoutButton(
           onPressed: () => showProfilePopup(context, ProfilePopupKind.logout),
         ),
-        //SizedBox(height: AppThemeSpacing.s20.h),
+        SizedBox(height: AppThemeSpacing.s10.h),
         TextButton(
           onPressed: () =>
               showProfilePopup(context, ProfilePopupKind.deleteAccount),
@@ -42,14 +42,15 @@ class _LogoutButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
         child: Container(
           width: double.infinity,
-          height: 54.h,
           decoration: BoxDecoration(
             color: context.colors.secondary,
             borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
             border: Border.all(color: context.colors.error, width: 1),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
+            padding: EdgeInsets.symmetric(
+                horizontal: AppThemeSpacing.s24.w,
+                vertical: AppThemeSpacing.s15.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -1,7 +1,7 @@
 part of '../../../profile.dart';
 
-class LogoutPopup extends StatelessWidget {
-  const LogoutPopup({
+class ProfilePopupBase extends StatelessWidget {
+  const ProfilePopupBase({
     super.key,
     required this.title,
     required this.text,
@@ -18,7 +18,7 @@ class LogoutPopup extends StatelessWidget {
         vertical: AppThemeSpacing.s30.h,
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Align(
@@ -34,6 +34,7 @@ class LogoutPopup extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: AppThemeSpacing.s20.h),
           Align(
             alignment: Alignment.center,
             child: ConstrainedBox(
@@ -47,6 +48,7 @@ class LogoutPopup extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: AppThemeSpacing.s20.h),
           Column(
             children: [
               AppButton(
@@ -76,4 +78,24 @@ class LogoutPopup extends StatelessWidget {
       ),
     );
   }
+}
+
+enum ProfilePopupKind {
+  logout,
+  deleteAccount,
+}
+
+Future<void> showProfilePopup(BuildContext context, ProfilePopupKind kind) {
+  final Widget child = switch (kind) {
+    ProfilePopupKind.logout => ProfilePopupBase(
+        title: context.text.logout_popup_header_title,
+        text: context.text.logout_popup_text,
+      ),
+    ProfilePopupKind.deleteAccount => ProfilePopupBase(
+        title: context.text.delete_account_popup_header_title,
+        text: context.text.delete_account_popup_text,
+      ),
+  };
+
+  return showAppPopup<void>(context, child: child);
 }
