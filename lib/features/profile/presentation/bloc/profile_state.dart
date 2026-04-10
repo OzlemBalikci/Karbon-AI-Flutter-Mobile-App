@@ -3,7 +3,12 @@ import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
 
 part 'profile_state.freezed.dart';
 
-enum AsyncStatus { initial, loading, success, error }
+enum AsyncStatus {
+  initial,
+  loading,
+  success,
+  error,
+}
 
 @freezed
 abstract class ProfileState with _$ProfileState {

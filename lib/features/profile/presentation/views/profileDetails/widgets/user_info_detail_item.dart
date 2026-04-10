@@ -9,10 +9,10 @@ class UserInfoDetailItem extends StatelessWidget {
       statusSelector: (s) => s.profileStatus,
       errorSelector: (s) => s.profileError,
       dataSelector: (s) => s.profile,
-      onLoading: () => const Center(
+      onLoading: () => Center(
         child: Padding(
-          padding: EdgeInsets.all(24),
-          child: CircularProgressIndicator(),
+          padding: EdgeInsets.all(24.w),
+          child: AppLoadingLottie(width: 120.w, height: 120.w),
         ),
       ),
       onError: (error) => Text(

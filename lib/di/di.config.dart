@@ -233,17 +233,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1025.GetCalendarUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i715.GetDetailsUsecase>(
         () => _i715.GetDetailsUsecase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i519.GetMonthlyActivitiesUsecase>(() =>
+        _i519.GetMonthlyActivitiesUsecase(
+            gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i448.GetPendingStatusUsecase>(() =>
         _i448.GetPendingStatusUsecase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i495.GetPreviousAnswersUsecase>(() =>
+        _i495.GetPreviousAnswersUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i671.GetTodayQuestionsUsecase>(() =>
         _i671.GetTodayQuestionsUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i902.PostAnswerUsecase>(
         () => _i902.PostAnswerUsecase(gh<_i320.DailyActivitiesRepository>()));
-    gh.factory<_i519.GetMonthlyActivitiesUsecase>(() =>
-        _i519.GetMonthlyActivitiesUsecase(
-            gh<_i320.DailyActivitiesRepository>()));
-    gh.factory<_i495.GetPreviousAnswersUsecase>(() =>
-        _i495.GetPreviousAnswersUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i520.GetLeaderboardDataUseCase>(() =>
         _i520.GetLeaderboardDataUseCase(gh<_i77.LeaderboardRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(

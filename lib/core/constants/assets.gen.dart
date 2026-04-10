@@ -14,6 +14,16 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart' as _svg;
 import 'package:vector_graphics/vector_graphics.dart' as _vg;
 
+class $AssetsAnimationsGen {
+  const $AssetsAnimationsGen();
+
+  /// File path: assets/animations/Greenify the Earth.json
+  String get greenifyTheEarth => 'assets/animations/Greenify the Earth.json';
+
+  /// List of all assets
+  List<String> get values => [greenifyTheEarth];
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -178,6 +188,7 @@ class $AssetsImagesGen {
 class Assets {
   const Assets._();
 
+  static const $AssetsAnimationsGen animations = $AssetsAnimationsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
 }

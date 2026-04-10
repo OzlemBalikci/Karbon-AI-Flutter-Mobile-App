@@ -17,6 +17,7 @@ import 'package:karbon/widgets/app_header_title.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/app_popup_dialog.dart';
+import 'package:karbon/widgets/app_loading_lottie.dart';
 import 'package:karbon/router/navigation.dart';
 
 part 'views/profileDetails/widgets/user_info_detail_item.dart';
@@ -30,7 +31,7 @@ part 'views/donateTree/sections/donate_tree_feature.dart';
 part 'views/profileDetails/widgets/popup_base.dart';
 part 'views/donateHistory/widgets/donated_tree_card.dart';
 part 'views/donateHistory/widgets/donation_history_list.dart';
-part 'views/donateHistory/sections/profile_tree_feature.dart';
+part 'views/donateHistory/sections/donate_history_section.dart';
 part 'views/donateTree/widgets/donate_succes_popup.dart';
 
 @RoutePage()
@@ -80,9 +81,10 @@ class _ProfilePageState extends State<ProfilePage> {
               text: context.text.donate_succes_popup_text,
             ),
           ).then((_) {
-            if (context.mounted) {
-              context.read<ProfileBloc>().add(const ProfileEvent.donateReset());
-            }
+            if (!context.mounted) return;
+            final bloc = context.read<ProfileBloc>();
+            bloc.add(const ProfileEvent.donateReset());
+            bloc.add(const ProfileEvent.fetchProfile());
           });
         } else if (state.donateStatus == AsyncStatus.error &&
             state.donateError != null) {
@@ -107,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       builder: (index) => switch (index) {
                         0 => const ProfileInfoFeatureSection(),
                         1 => const ProfileStarFeatureSection(),
-                        2 => const ProfileTreeFeatureSection(),
+                        2 => const DonateHistorySection(),
                         _ => const SizedBox.shrink(),
                       },
                     ),

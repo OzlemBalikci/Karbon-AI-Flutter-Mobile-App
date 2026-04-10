@@ -8,9 +8,15 @@ class DonationHistoryListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: true,
       clipBehavior: Clip.hardEdge,
-      physics: const BouncingScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.fromLTRB(
+        AppThemeSpacing.s25.w,
+        0,
+        AppThemeSpacing.s25.w,
+        40.h,
+      ),
       itemCount: donations.length,
       itemBuilder: (context, index) {
         final isLast = index == donations.length - 1;

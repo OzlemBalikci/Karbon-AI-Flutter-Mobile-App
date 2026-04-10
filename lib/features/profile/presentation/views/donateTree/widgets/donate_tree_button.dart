@@ -40,36 +40,25 @@ class DonateTreeButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(
               horizontal: AppThemeSpacing.s15.w,
               vertical: AppThemeSpacing.s20.h),
-          child: isLoading
-              ? Center(
-                  child: SizedBox(
-                    width: 24.w,
-                    height: 24.h,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: context.colors.textOnPrimary,
-                    ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(
+                  context.text.profile_star_donate_button_text,
+                  style: context.typographiesSp.bodyMedium.copyWith(
+                    color: context.colors.textOnPrimary,
                   ),
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        context.text.profile_star_donate_button_text,
-                        style: context.typographiesSp.bodyMedium.copyWith(
-                          color: context.colors.textOnPrimary,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      label,
-                      style: context.typographiesSp.bodyMedium.copyWith(
-                        color: context.colors.textOnPrimary,
-                      ),
-                    ),
-                  ],
                 ),
+              ),
+              Text(
+                label,
+                style: context.typographiesSp.bodyMedium.copyWith(
+                  color: context.colors.textOnPrimary,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
