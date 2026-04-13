@@ -4,9 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_local.dart';
-import 'package:karbon/features/carboncalculate/data/models/active_pollset_dto.dart';
-import 'package:karbon/features/carboncalculate/data/models/poll_result_dto.dart';
-import 'package:karbon/features/carboncalculate/data/models/poll_submission_result_dto.dart';
+import 'package:karbon/features/carboncalculate/data/dtos/active_pollset_dto.dart';
+import 'package:karbon/features/carboncalculate/data/dtos/poll_result_dto.dart';
+import 'package:karbon/features/carboncalculate/data/dtos/poll_submit_dto.dart';
+import 'package:karbon/features/carboncalculate/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote.dart';
 
@@ -24,7 +25,7 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
     final res = await _dio.get<dynamic>('/api/v1/polls/active');
     final data = unwrapDataMap(res.data);
     await _local.saveActivePollJson(jsonEncode(data));
-    return ActivePollSetDto.fromJson(data).toEntity();
+    return PollMapper.toActivePollEntity(ActivePollSetDto.fromJson(data));
   }
 
   @override
@@ -34,14 +35,13 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
   }) async {
     final res = await _dio.post<dynamic>(
       '/api/v1/polls/draft',
-      data: <String, dynamic>{
-        'pollSetId': pollSetId,
-        'answers': answers.map((e) => e.toJson()).toList(),
-        'isDraft': true,
-      },
+      data: PollMapper.toDraftRequest(
+        pollSetId: pollSetId,
+        answers: answers,
+      ).toJson(),
     );
     final data = unwrapDataMap(res.data);
-    return PollSubmissionResultDto.fromJson(data).toEntity();
+    return PollMapper.toScoreEntity(PollSubmissionResultDto.fromJson(data));
   }
 
   @override
@@ -51,13 +51,13 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
   }) async {
     final res = await _dio.post<dynamic>(
       '/api/v1/polls/answers',
-      data: PollAnswersRequestDto.submit(
+      data: PollMapper.toSubmitRequest(
         pollSetId: pollSetId,
         answers: answers,
       ).toJson(),
     );
     final data = unwrapDataMap(res.data);
-    return PollSubmissionResultDto.fromJson(data).toEntity();
+    return PollMapper.toScoreEntity(PollSubmissionResultDto.fromJson(data));
   }
 
   @override
@@ -74,6 +74,6 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
       },
     );
     final data = unwrapDataMap(res.data);
-    return PollResultDto.fromJson(data).toEntity();
+    return PollMapper.toResultEntity(PollResultDto.fromJson(data));
   }
 }

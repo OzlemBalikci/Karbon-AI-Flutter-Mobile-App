@@ -43,7 +43,7 @@ class CarbonCalculateBloc
         emit(state.copyWith(
           status: CarbonCalculateStatus.success,
           pollSetId: poll.pollSetId,
-          pollDescription: poll.description,
+          pollDescription: poll.description ?? '',
           questions: poll.questions,
           answers: restoredAnswers,
         ));

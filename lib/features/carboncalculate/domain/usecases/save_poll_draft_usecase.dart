@@ -11,9 +11,12 @@ class SavePollDraftUseCase {
   Future<Either<Exception, PollSubmissionResultEntity>> call({
     required String pollSetId,
     required List<PollAnswerItemEntity> answers,
-  }) =>
-      _repository.savePollDraft(
-        pollSetId: pollSetId,
-        answers: answers,
+  }) {
+    if (answers.isEmpty) {
+      return Future.value(
+        Left(Exception('Taslak kaydı için en az bir cevap gerekli.')),
       );
+    }
+    return _repository.savePollDraft(pollSetId: pollSetId, answers: answers);
+  }
 }

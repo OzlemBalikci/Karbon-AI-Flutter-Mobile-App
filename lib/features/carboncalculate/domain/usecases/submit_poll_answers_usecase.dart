@@ -9,11 +9,18 @@ class SubmitPollAnswersUseCase {
   final CarbonCalculateRepository _repository;
 
   Future<Either<Exception, PollSubmissionResultEntity>> call({
-    required String pollSetId,
+    required ActivePollSetEntity poll,
     required List<PollAnswerItemEntity> answers,
-  }) =>
-      _repository.submitPollAnswers(
-        pollSetId: pollSetId,
-        answers: answers,
+  }) {
+    if (answers.length != poll.questions.length) {
+      return Future.value(
+        Left(
+            Exception('Gönderilen cevap sayısı anket sorularıyla eşleşmiyor.')),
       );
+    }
+    return _repository.submitPollAnswers(
+      pollSetId: poll.pollSetId,
+      answers: answers,
+    );
+  }
 }

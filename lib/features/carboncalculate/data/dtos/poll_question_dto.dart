@@ -1,5 +1,4 @@
-import 'package:karbon/features/carboncalculate/data/models/poll_option_dto.dart';
-import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
+import 'package:karbon/features/carboncalculate/data/dtos/poll_option_dto.dart';
 
 class PollQuestionDto {
   const PollQuestionDto({
@@ -28,12 +27,4 @@ class PollQuestionDto {
           .toList(),
     );
   }
-
-  PollQuestionEntity toEntity() => PollQuestionEntity(
-        id: id,
-        text: text,
-        displayOrder: displayOrder,
-        selectedOptionId: selectedOptionId,
-        options: options.map((o) => o.toEntity()).toList(),
-      );
 }

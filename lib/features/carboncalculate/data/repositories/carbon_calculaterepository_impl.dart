@@ -5,7 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/core/errors/exception_unwrapper.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_local.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote.dart';
-import 'package:karbon/features/carboncalculate/data/models/active_pollset_dto.dart';
+import 'package:karbon/features/carboncalculate/data/dtos/active_pollset_dto.dart';
+import 'package:karbon/features/carboncalculate/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 import 'package:karbon/features/carboncalculate/domain/repositories/carboncalculate_repository.dart';
 
@@ -26,7 +27,8 @@ class CarbonCalculateRepositoryImpl implements CarbonCalculateRepository {
       if (raw != null && raw.isNotEmpty) {
         try {
           final map = jsonDecode(raw) as Map<String, dynamic>;
-          return Right(ActivePollSetDto.fromJson(map).toEntity());
+          return Right(
+              PollMapper.toActivePollEntity(ActivePollSetDto.fromJson(map)));
         } catch (_) {}
       }
       return Left(unwrapDioException(e));
