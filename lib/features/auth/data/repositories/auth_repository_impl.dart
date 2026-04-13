@@ -3,8 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/core/errors/exception_unwrapper.dart';
 import 'package:karbon/features/auth/data/datasources/auth_local.dart';
 import 'package:karbon/features/auth/data/datasources/auth_remote.dart';
-import 'package:karbon/features/auth/data/models/login_request_model.dart';
-import 'package:karbon/features/auth/data/models/register_request_model.dart';
+import 'package:karbon/features/auth/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/auth/domain/entities/app_user.dart';
 import 'package:karbon/features/auth/domain/repositories/auth_repository.dart';
 
@@ -22,7 +21,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (!await checkSession) return const Right(null);
     try {
       final profile = await _remote.getProfile();
-      return Right(profile.toEntity());
+      return Right(AuthMapper.toAppUser(profile));
     } on Exception catch (e) {
       return Left(unwrapDioException(e));
     }
@@ -35,15 +34,15 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     try {
       final loginResponse = await _remote.login(
-        LoginRequestModel(
-          emailorIdentityNumber: emailOrIdentityNumber,
+        AuthMapper.loginRequest(
+          emailOrIdentityNumber: emailOrIdentityNumber,
           password: password,
         ),
       );
       await _local.saveToken(loginResponse.accessToken);
       await _local.saveRefreshToken(loginResponse.refreshToken);
       final profile = await _remote.getProfile();
-      return Right(profile.toEntity());
+      return Right(AuthMapper.toAppUser(profile));
     } on Exception catch (e) {
       return Left(unwrapDioException(e));
     }
@@ -64,7 +63,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       // 1. Kayıt ol
       await _remote.register(
-        RegisterRequestModel(
+        AuthMapper.registerRequest(
           email: email,
           identityNumber: identityNumber,
           firstName: firstName,
@@ -79,8 +78,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
       // 2. Kayıt başarılıysa otomatik giriş yap
       final loginResponse = await _remote.login(
-        LoginRequestModel(
-          emailorIdentityNumber: email,
+        AuthMapper.loginRequest(
+          emailOrIdentityNumber: email,
           password: password,
         ),
       );
@@ -89,7 +88,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       // 3. Profili çek ve AppUser döndür
       final profile = await _remote.getProfile();
-      return Right(profile.toEntity());
+      return Right(AuthMapper.toAppUser(profile));
     } on Exception catch (e) {
       return Left(unwrapDioException(e));
     }

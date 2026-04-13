@@ -1,6 +1,6 @@
 /// POST /api/v1/users/login request body
-class LoginRequestModel {
-  const LoginRequestModel({
+class LoginRequestDto {
+  const LoginRequestDto({
     required this.emailorIdentityNumber,
     required this.password,
   });
@@ -13,3 +13,5 @@ class LoginRequestModel {
         'password': password,
       };
 }
+
+typedef LoginRequestModel = LoginRequestDto;

@@ -1,9 +1,7 @@
-import 'package:karbon/features/auth/domain/entities/app_user.dart';
-
 /// GET /api/v1/users/me/profile endpoint'inden dönen kullanıcı profil modeli.
 /// Login akışında token alındıktan sonra kullanıcı bilgilerini doldurmak için kullanılır.
-class UserModel {
-  const UserModel({
+class UserDto {
+  const UserDto({
     required this.id,
     required this.email,
     this.name,
@@ -35,7 +33,7 @@ class UserModel {
   final bool isKvkkApproved;
   final bool emailConfirmed;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+  factory UserDto.fromJson(Map<String, dynamic> json) => UserDto(
         id: json['id'] as String? ?? '',
         email: json['email'] as String? ?? '',
         name: json['name'] as String?,
@@ -45,8 +43,7 @@ class UserModel {
         birthDate: json['birthDate'] != null
             ? DateTime.tryParse(json['birthDate'] as String)
             : null,
-        totalCarbonScore:
-            (json['totalCarbonScore'] as num?)?.toDouble() ?? 0,
+        totalCarbonScore: (json['totalCarbonScore'] as num?)?.toDouble() ?? 0,
         totalPoints: (json['totalPoints'] as num?)?.toDouble() ?? 0,
         lastCarbonScore: (json['lastCarbonScore'] as num?)?.toDouble() ?? 0,
         donatedTreeCount: json['donatedTreeCount'] as int? ?? 0,
@@ -56,21 +53,6 @@ class UserModel {
         isKvkkApproved: json['isKvkkApproved'] as bool? ?? false,
         emailConfirmed: json['emailConfirmed'] as bool? ?? false,
       );
-
-  AppUser toEntity() => AppUser(
-        id: id,
-        email: email,
-        name: name,
-        surname: surname,
-        identityNumber: identityNumber,
-        phoneNumber: phoneNumber,
-        birthDate: birthDate,
-        totalCarbonScore: totalCarbonScore,
-        totalPoints: totalPoints,
-        lastCarbonScore: lastCarbonScore,
-        donatedTreeCount: donatedTreeCount,
-        lastLoginDate: lastLoginDate,
-        isKvkkApproved: isKvkkApproved,
-        emailConfirmed: emailConfirmed,
-      );
 }
+
+typedef UserModel = UserDto;

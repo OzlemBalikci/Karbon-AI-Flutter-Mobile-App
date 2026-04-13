@@ -2,13 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/auth/data/datasources/auth_remote.dart';
-import 'package:karbon/features/auth/data/models/forgotpassword_request_model.dart';
-import 'package:karbon/features/auth/data/models/login_request_model.dart';
-import 'package:karbon/features/auth/data/models/login_response_model.dart';
-import 'package:karbon/features/auth/data/models/register_request_model.dart';
-import 'package:karbon/features/auth/data/models/register_response_model.dart';
-import 'package:karbon/features/auth/data/models/resetpassword_request_model.dart';
-import 'package:karbon/features/auth/data/models/user_model.dart';
+import 'package:karbon/features/auth/data/dtos/forgotpassword_dto.dart';
+import 'package:karbon/features/auth/data/dtos/login_dto.dart';
+import 'package:karbon/features/auth/data/dtos/login_response_dto.dart';
+import 'package:karbon/features/auth/data/dtos/register_dto.dart';
+import 'package:karbon/features/auth/data/dtos/register_response_dto.dart';
+import 'package:karbon/features/auth/data/dtos/resetpassword_dto.dart';
+import 'package:karbon/features/auth/data/dtos/user_model.dart';
 
 @LazySingleton(as: AuthRemote)
 class AuthRemoteImpl implements AuthRemote {

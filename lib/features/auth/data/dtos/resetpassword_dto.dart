@@ -1,6 +1,6 @@
 /// POST /api/v1/users/password/reset request body
-class ResetPasswordRequestModel {
-  const ResetPasswordRequestModel({
+class ResetPasswordDto {
+  const ResetPasswordDto({
     required this.phoneNumber,
     required this.resetCode,
     required this.newPassword,
@@ -21,3 +21,5 @@ class ResetPasswordRequestModel {
         'confirmNewPassword': confirmNewPassword,
       };
 }
+
+typedef ResetPasswordRequestModel = ResetPasswordDto;

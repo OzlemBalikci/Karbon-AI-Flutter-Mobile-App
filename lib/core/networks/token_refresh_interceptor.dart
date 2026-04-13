@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/auth/data/datasources/auth_local.dart';
-import 'package:karbon/features/auth/data/models/login_response_model.dart';
+import 'package:karbon/features/auth/data/dtos/login_response_dto.dart';
 
 /// Access token header ekler; 401 sonrası [POST /users/token/refresh] ile yeniler ve isteği tekrarlar.
 /// [CookieManager] ile gelen `refresh_token` çerezi aynı [Dio] üzerinden gider.
