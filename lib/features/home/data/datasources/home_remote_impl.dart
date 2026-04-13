@@ -3,7 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/home/data/datasources/home_remote.dart';
-import 'package:karbon/features/home/data/models/home_dashboard_dto.dart';
+import 'package:karbon/features/home/data/dtos/home_dashboard_dto.dart';
+import 'package:karbon/features/home/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
 
 /// Canlı API. Mock için [HomeRemoteMock] kayıtlıyken bu sınıf `@Injectable()` kalır.
@@ -26,6 +27,6 @@ class HomeRemoteImpl implements HomeRemote {
       );
     }
     final map = unwrapDataMap(raw);
-    return HomeDashboardDto.fromJson(map).toEntity();
+    return HomeMapper.toHomeDashboardEntity(HomeDashboardDto.fromJson(map));
   }
 }

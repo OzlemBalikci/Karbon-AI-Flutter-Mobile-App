@@ -1,5 +1,3 @@
-import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
-
 class GlobalTargetDto {
   const GlobalTargetDto({
     required this.targetTreeCount,
@@ -21,11 +19,4 @@ class GlobalTargetDto {
       progressPercent: (json['progressPercent'] as num?)?.toDouble() ?? 0,
     );
   }
-
-  GlobalTargetEntity toEntity() => GlobalTargetEntity(
-        targetTreeCount: targetTreeCount,
-        donatedTreeCount: donatedTreeCount,
-        remainingTreeCount: remainingTreeCount,
-        progressPercent: progressPercent,
-      );
 }

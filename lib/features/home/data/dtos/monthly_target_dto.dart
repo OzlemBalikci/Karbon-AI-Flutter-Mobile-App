@@ -1,5 +1,3 @@
-import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
-
 class MonthlyTargetDto {
   const MonthlyTargetDto({
     required this.month,
@@ -27,13 +25,4 @@ class MonthlyTargetDto {
       progressPercent: (json['progressPercent'] as num?)?.toDouble() ?? 0,
     );
   }
-
-  MonthlyTargetEntity toEntity() => MonthlyTargetEntity(
-        month: month,
-        year: year,
-        targetTreeCount: targetTreeCount,
-        donatedTreeCount: donatedTreeCount,
-        remainingTreeCount: remainingTreeCount,
-        progressPercent: progressPercent,
-      );
 }

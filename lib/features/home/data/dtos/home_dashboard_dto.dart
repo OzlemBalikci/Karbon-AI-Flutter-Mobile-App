@@ -1,7 +1,6 @@
-import 'package:karbon/features/home/data/models/global_target_dto.dart';
-import 'package:karbon/features/home/data/models/home_top_leader_dto.dart';
-import 'package:karbon/features/home/data/models/monthly_target_dto.dart';
-import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
+import 'package:karbon/features/home/data/dtos/global_target_dto.dart';
+import 'package:karbon/features/home/data/dtos/home_top_leader_dto.dart';
+import 'package:karbon/features/home/data/dtos/monthly_target_dto.dart';
 
 /// GET `/api/v1/user-results/home` → `data` (`project_docs/home.md`).
 class HomeDashboardDto {
@@ -48,11 +47,4 @@ class HomeDashboardDto {
               : null,
     );
   }
-
-  HomeDashboardEntity toEntity() => HomeDashboardEntity(
-        hasCompletedPoll: hasCompletedPoll,
-        globalTarget: globalTarget?.toEntity(),
-        monthlyTarget: monthlyTarget?.toEntity(),
-        topLeaders: topLeaders?.map((e) => e.toEntity()).toList(),
-      );
 }

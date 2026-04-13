@@ -1,5 +1,3 @@
-import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
-
 class HomeTopLeaderDto {
   const HomeTopLeaderDto({
     required this.rank,
@@ -21,11 +19,4 @@ class HomeTopLeaderDto {
       isCurrentUser: json['isCurrentUser'] as bool? ?? false,
     );
   }
-
-  HomeTopLeaderEntity toEntity() => HomeTopLeaderEntity(
-        rank: rank,
-        fullName: fullName,
-        treeCount: treeCount,
-        isCurrentUser: isCurrentUser,
-      );
 }
