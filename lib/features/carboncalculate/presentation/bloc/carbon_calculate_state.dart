@@ -1,12 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:karbon/features/carboncalculate/domain/carbon_calculate_phase.dart';
+import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 
 part 'carbon_calculate_state.freezed.dart';
 
 enum CarbonCalculateStatus {
   initial,
   loading,
-  loaded,
+  success,
+  submitting,
   error,
 }
 
@@ -15,12 +17,23 @@ abstract class CarbonCalculateState with _$CarbonCalculateState {
   const CarbonCalculateState._();
 
   const factory CarbonCalculateState({
+    @Default(CarbonCalculateStatus.initial) CarbonCalculateStatus status,
     @Default(0) int currentStep,
-    @Default({}) Map<int, dynamic> answers,
-    @Default(false) bool isLoading,
+
+    /// Aktif anket ID'si — taslak ve gönderim için gerekli.
+    String? pollSetId,
+
+    /// Anket açıklama metni (bilgi adımında gösterilir).
+    @Default('') String pollDescription,
+
+    /// Anket soruları; yüklenince dolar.
+    @Default([]) List<PollQuestionEntity> questions,
+
+    /// Seçilen cevaplar: `questionId → optionId`
+    @Default({}) Map<String, String> answers,
     String? error,
-    @Default([]) List<Map<String, dynamic>> questions,
     @Default(false) bool goToHomeRequested,
+    PollSubmissionResultEntity? submissionResult,
   }) = _CarbonCalculateState;
 
   factory CarbonCalculateState.initial() => const CarbonCalculateState();
@@ -33,7 +46,7 @@ abstract class CarbonCalculateState with _$CarbonCalculateState {
     return const CarbonResultPhase();
   }
 
-  /// 0=info, 1..N=sorular, N+1=sonuç
+  /// 0 = bilgi, 1..N = sorular, N+1 = sonuç
   int get maxStep => questions.isEmpty ? 14 : questions.length + 1;
 
   int get lastQuestionStep => questions.isEmpty ? 13 : questions.length;
@@ -43,5 +56,16 @@ abstract class CarbonCalculateState with _$CarbonCalculateState {
   bool get isLastStep => currentStep >= maxStep;
   bool get canGoBack => currentStep > 0;
   int get questionIndex => currentStep - 1;
-  bool get isCurrentQuestionAnswered => answers.containsKey(questionIndex);
+
+  bool get isCurrentQuestionAnswered {
+    if (phase is! CarbonQuestionPhase) return false;
+    final idx = questionIndex;
+    if (idx < 0 || idx >= questions.length) return false;
+    return answers.containsKey(questions[idx].id);
+  }
+
+  /// Mevcut cevapları [PollAnswerItemEntity] listesine çevirir.
+  List<PollAnswerItemEntity> get answerItems => answers.entries
+      .map((e) => PollAnswerItemEntity(questionId: e.key, optionId: e.value))
+      .toList();
 }

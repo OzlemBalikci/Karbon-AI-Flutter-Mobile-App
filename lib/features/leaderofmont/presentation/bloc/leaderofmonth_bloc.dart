@@ -8,61 +8,62 @@ import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_sta
 class LeaderofmonthBloc extends Bloc<LeaderofmonthEvent, LeaderofmonthState> {
   LeaderofmonthBloc(this._getLeaderboardData)
       : super(LeaderofmonthState.initial()) {
-    on<LeaderofmonthInitialized>(_onInitialized);
+    on<LeaderofmonthFetchRequested>(_onFetchRequested);
     on<LeaderofmonthRefreshRequested>(_onRefreshRequested);
   }
 
   final GetLeaderboardDataUseCase _getLeaderboardData;
 
-  int? _lastMonth;
-  int? _lastYear;
-
-  Future<void> _onInitialized(
-    LeaderofmonthInitialized event,
+  Future<void> _onFetchRequested(
+    LeaderofmonthFetchRequested event,
     Emitter<LeaderofmonthState> emit,
   ) async {
-    _lastMonth = event.month;
-    _lastYear = event.year;
+    if (state.status == LeaderofmonthStatus.success) return;
 
-    emit(state.copyWith(
-      status: LeaderofmonthStatus.loading,
-      error: null,
-    ));
-    await _fetch(emit, month: event.month, year: event.year);
+    emit(state.copyWith(status: LeaderofmonthStatus.loading, error: null));
+    await _fetchLeaderboard(emit);
   }
 
   Future<void> _onRefreshRequested(
     LeaderofmonthRefreshRequested event,
     Emitter<LeaderofmonthState> emit,
   ) async {
-    if (_lastMonth == null || _lastYear == null) return;
-    await _fetch(emit, month: _lastMonth!, year: _lastYear!, silent: true);
+    emit(state.copyWith(status: LeaderofmonthStatus.loading, error: null));
+    await _fetchLeaderboard(emit);
   }
 
-  Future<void> _fetch(
-    Emitter<LeaderofmonthState> emit, {
-    required int month,
-    required int year,
-    bool silent = false,
-  }) async {
-    final result = await _getLeaderboardData(month: month, year: year);
-
-    result.fold(
-      (exception) {
-        if (!silent) {
-          emit(state.copyWith(
+  Future<void> _fetchLeaderboard(Emitter<LeaderofmonthState> emit) async {
+    try {
+      final now = DateTime.now();
+      final result = await _getLeaderboardData(
+        month: now.month,
+        year: now.year,
+      );
+      result.fold(
+        (exception) => emit(
+          state.copyWith(
             status: LeaderofmonthStatus.error,
             error: exception.toString(),
-          ));
-        }
-      },
-      (data) => emit(state.copyWith(
-        status: LeaderofmonthStatus.success,
-        leaders: [...data.podium, ...data.leaders],
-        podiumSize: data.podium.length,
-        currentUserRank: data.currentUserRank,
-        error: null,
-      )),
-    );
+          ),
+        ),
+        (data) => emit(
+          state.copyWith(
+            status: LeaderofmonthStatus.success,
+            podium: data.podium,
+            leaders: data.leaders,
+            currentUserRank: data.currentUserRank,
+            error: null,
+          ),
+        ),
+      );
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+      emit(
+        state.copyWith(
+          status: LeaderofmonthStatus.error,
+          error: error.toString(),
+        ),
+      );
+    }
   }
 }

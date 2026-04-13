@@ -1,18 +1,18 @@
+import 'package:injectable/injectable.dart';
 import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote.dart';
 import 'package:karbon/features/leaderofmont/data/models/leaderboard_data_dto.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
-/// Örnek veri — `leaderboard.md` ile uyumlu. Canlı API için `LeaderboardRemoteImpl` kullanın.
-///
-/// DI'da mock kullanmak için bu sınıftaki `@LazySingleton` satırının yorumunu kaldırıp
-/// `leaderboard_remote_impl.dart` içindeki `@LazySingleton`ı yoruma alın; ardından build_runner.
-// @LazySingleton(as: LeaderboardRemote)
+/// Geliştirme: ana sayfa [LeaderCardRow] + liderlik ekranı için örnek veri.
+/// Canlı API için [LeaderboardRemoteImpl] ile `@LazySingleton(as: LeaderboardRemote)` değiştirin.
+@LazySingleton(as: LeaderboardRemote)
 class LeaderboardRemoteMock implements LeaderboardRemote {
   @override
   Future<LeaderboardDataEntity> getLeaderboard({
     required int month,
     required int year,
   }) async {
+    await Future<void>.delayed(const Duration(milliseconds: 100));
     return LeaderboardDataDto.fromJson(_sampleData).toEntity();
   }
 
@@ -20,35 +20,71 @@ class LeaderboardRemoteMock implements LeaderboardRemote {
     'podium': [
       {
         'rank': 1,
-        'fullName': 'Ekin Can Akın',
-        'treeCount': 100000,
+        'fullName': 'Zeynep Kaya',
+        'treeCount': 1280,
         'isCurrentUser': false,
       },
       {
         'rank': 2,
-        'fullName': 'Ekin Can Akın',
-        'treeCount': 50000,
-        'isCurrentUser': false,
+        'fullName': 'Ahmet Yılmaz',
+        'treeCount': 940,
+        'isCurrentUser': true,
       },
       {
         'rank': 3,
-        'fullName': 'Ekin Can Akın',
-        'treeCount': 10000,
-        'isCurrentUser': true,
+        'fullName': 'Ayşe Demir',
+        'treeCount': 820,
+        'isCurrentUser': false,
       },
     ],
     'leaders': [
       {
         'rank': 4,
-        'fullName': 'Ekin Can Akın',
-        'treeCount': 902,
+        'fullName': 'Ayşe Demir',
+        'treeCount': 610,
+        'isCurrentUser': false,
+      },
+      {
+        'rank': 5,
+        'fullName': 'Can Öztürk',
+        'treeCount': 500,
+        'isCurrentUser': false,
+      },
+      {
+        'rank': 6,
+        'fullName': 'Ayşe Demir',
+        'treeCount': 200,
+        'isCurrentUser': false,
+      },
+      {
+        'rank': 7,
+        'fullName': 'Can Öztürk',
+        'treeCount': 445,
+        'isCurrentUser': false,
+      },
+      {
+        'rank': 8,
+        'fullName': 'Ayşe Demir',
+        'treeCount': 610,
+        'isCurrentUser': false,
+      },
+      {
+        'rank': 9,
+        'fullName': 'Can Öztürk',
+        'treeCount': 445,
+        'isCurrentUser': false,
+      },
+      {
+        'rank': 10,
+        'fullName': 'Ayşe Demir',
+        'treeCount': 610,
         'isCurrentUser': false,
       },
     ],
     'currentUserRank': {
-      'rank': 3,
-      'treeCount': 10000,
-      'message': '10000 Ağaç ile 3. sıradasınız.',
+      'rank': 20,
+      'treeCount': 940,
+      'message': '940 Ağaç ile 2. sıradasınız.',
     },
   };
 }

@@ -55,27 +55,19 @@ extension HomeEventPatterns on HomeEvent {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(HomeStarted value)? started,
-    TResult Function(HomeSurveyCompleted value)? surveyCompleted,
+    TResult Function(HomeFetchRequested value)? fetchRequested,
     TResult Function(HomeRefreshRequested value)? refreshRequested,
-    TResult Function(HomeReturnedFromCarbonCalculate value)?
-        returnedFromCarbonCalculate,
-    TResult Function(HomeLoadFailed value)? loadFailed,
+    TResult Function(HomePollCompleted value)? pollCompleted,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case HomeStarted() when started != null:
-        return started(_that);
-      case HomeSurveyCompleted() when surveyCompleted != null:
-        return surveyCompleted(_that);
+      case HomeFetchRequested() when fetchRequested != null:
+        return fetchRequested(_that);
       case HomeRefreshRequested() when refreshRequested != null:
         return refreshRequested(_that);
-      case HomeReturnedFromCarbonCalculate()
-          when returnedFromCarbonCalculate != null:
-        return returnedFromCarbonCalculate(_that);
-      case HomeLoadFailed() when loadFailed != null:
-        return loadFailed(_that);
+      case HomePollCompleted() when pollCompleted != null:
+        return pollCompleted(_that);
       case _:
         return orElse();
     }
@@ -96,25 +88,18 @@ extension HomeEventPatterns on HomeEvent {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(HomeStarted value) started,
-    required TResult Function(HomeSurveyCompleted value) surveyCompleted,
+    required TResult Function(HomeFetchRequested value) fetchRequested,
     required TResult Function(HomeRefreshRequested value) refreshRequested,
-    required TResult Function(HomeReturnedFromCarbonCalculate value)
-        returnedFromCarbonCalculate,
-    required TResult Function(HomeLoadFailed value) loadFailed,
+    required TResult Function(HomePollCompleted value) pollCompleted,
   }) {
     final _that = this;
     switch (_that) {
-      case HomeStarted():
-        return started(_that);
-      case HomeSurveyCompleted():
-        return surveyCompleted(_that);
+      case HomeFetchRequested():
+        return fetchRequested(_that);
       case HomeRefreshRequested():
         return refreshRequested(_that);
-      case HomeReturnedFromCarbonCalculate():
-        return returnedFromCarbonCalculate(_that);
-      case HomeLoadFailed():
-        return loadFailed(_that);
+      case HomePollCompleted():
+        return pollCompleted(_that);
     }
   }
 
@@ -132,26 +117,18 @@ extension HomeEventPatterns on HomeEvent {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(HomeStarted value)? started,
-    TResult? Function(HomeSurveyCompleted value)? surveyCompleted,
+    TResult? Function(HomeFetchRequested value)? fetchRequested,
     TResult? Function(HomeRefreshRequested value)? refreshRequested,
-    TResult? Function(HomeReturnedFromCarbonCalculate value)?
-        returnedFromCarbonCalculate,
-    TResult? Function(HomeLoadFailed value)? loadFailed,
+    TResult? Function(HomePollCompleted value)? pollCompleted,
   }) {
     final _that = this;
     switch (_that) {
-      case HomeStarted() when started != null:
-        return started(_that);
-      case HomeSurveyCompleted() when surveyCompleted != null:
-        return surveyCompleted(_that);
+      case HomeFetchRequested() when fetchRequested != null:
+        return fetchRequested(_that);
       case HomeRefreshRequested() when refreshRequested != null:
         return refreshRequested(_that);
-      case HomeReturnedFromCarbonCalculate()
-          when returnedFromCarbonCalculate != null:
-        return returnedFromCarbonCalculate(_that);
-      case HomeLoadFailed() when loadFailed != null:
-        return loadFailed(_that);
+      case HomePollCompleted() when pollCompleted != null:
+        return pollCompleted(_that);
       case _:
         return null;
     }
@@ -171,26 +148,19 @@ extension HomeEventPatterns on HomeEvent {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function(double carbonResult)? surveyCompleted,
+    TResult Function()? fetchRequested,
     TResult Function()? refreshRequested,
-    TResult Function()? returnedFromCarbonCalculate,
-    TResult Function(String message)? loadFailed,
+    TResult Function()? pollCompleted,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case HomeStarted() when started != null:
-        return started();
-      case HomeSurveyCompleted() when surveyCompleted != null:
-        return surveyCompleted(_that.carbonResult);
+      case HomeFetchRequested() when fetchRequested != null:
+        return fetchRequested();
       case HomeRefreshRequested() when refreshRequested != null:
         return refreshRequested();
-      case HomeReturnedFromCarbonCalculate()
-          when returnedFromCarbonCalculate != null:
-        return returnedFromCarbonCalculate();
-      case HomeLoadFailed() when loadFailed != null:
-        return loadFailed(_that.message);
+      case HomePollCompleted() when pollCompleted != null:
+        return pollCompleted();
       case _:
         return orElse();
     }
@@ -211,24 +181,18 @@ extension HomeEventPatterns on HomeEvent {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function(double carbonResult) surveyCompleted,
+    required TResult Function() fetchRequested,
     required TResult Function() refreshRequested,
-    required TResult Function() returnedFromCarbonCalculate,
-    required TResult Function(String message) loadFailed,
+    required TResult Function() pollCompleted,
   }) {
     final _that = this;
     switch (_that) {
-      case HomeStarted():
-        return started();
-      case HomeSurveyCompleted():
-        return surveyCompleted(_that.carbonResult);
+      case HomeFetchRequested():
+        return fetchRequested();
       case HomeRefreshRequested():
         return refreshRequested();
-      case HomeReturnedFromCarbonCalculate():
-        return returnedFromCarbonCalculate();
-      case HomeLoadFailed():
-        return loadFailed(_that.message);
+      case HomePollCompleted():
+        return pollCompleted();
     }
   }
 
@@ -246,25 +210,18 @@ extension HomeEventPatterns on HomeEvent {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function(double carbonResult)? surveyCompleted,
+    TResult? Function()? fetchRequested,
     TResult? Function()? refreshRequested,
-    TResult? Function()? returnedFromCarbonCalculate,
-    TResult? Function(String message)? loadFailed,
+    TResult? Function()? pollCompleted,
   }) {
     final _that = this;
     switch (_that) {
-      case HomeStarted() when started != null:
-        return started();
-      case HomeSurveyCompleted() when surveyCompleted != null:
-        return surveyCompleted(_that.carbonResult);
+      case HomeFetchRequested() when fetchRequested != null:
+        return fetchRequested();
       case HomeRefreshRequested() when refreshRequested != null:
         return refreshRequested();
-      case HomeReturnedFromCarbonCalculate()
-          when returnedFromCarbonCalculate != null:
-        return returnedFromCarbonCalculate();
-      case HomeLoadFailed() when loadFailed != null:
-        return loadFailed(_that.message);
+      case HomePollCompleted() when pollCompleted != null:
+        return pollCompleted();
       case _:
         return null;
     }
@@ -273,18 +230,18 @@ extension HomeEventPatterns on HomeEvent {
 
 /// @nodoc
 
-class HomeStarted with DiagnosticableTreeMixin implements HomeEvent {
-  const HomeStarted();
+class HomeFetchRequested with DiagnosticableTreeMixin implements HomeEvent {
+  const HomeFetchRequested();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties..add(DiagnosticsProperty('type', 'HomeEvent.started'));
+    properties..add(DiagnosticsProperty('type', 'HomeEvent.fetchRequested'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is HomeStarted);
+        (other.runtimeType == runtimeType && other is HomeFetchRequested);
   }
 
   @override
@@ -292,79 +249,7 @@ class HomeStarted with DiagnosticableTreeMixin implements HomeEvent {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeEvent.started()';
-  }
-}
-
-/// @nodoc
-
-class HomeSurveyCompleted with DiagnosticableTreeMixin implements HomeEvent {
-  const HomeSurveyCompleted({required this.carbonResult});
-
-  final double carbonResult;
-
-  /// Create a copy of HomeEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $HomeSurveyCompletedCopyWith<HomeSurveyCompleted> get copyWith =>
-      _$HomeSurveyCompletedCopyWithImpl<HomeSurveyCompleted>(this, _$identity);
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'HomeEvent.surveyCompleted'))
-      ..add(DiagnosticsProperty('carbonResult', carbonResult));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is HomeSurveyCompleted &&
-            (identical(other.carbonResult, carbonResult) ||
-                other.carbonResult == carbonResult));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, carbonResult);
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeEvent.surveyCompleted(carbonResult: $carbonResult)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $HomeSurveyCompletedCopyWith<$Res>
-    implements $HomeEventCopyWith<$Res> {
-  factory $HomeSurveyCompletedCopyWith(
-          HomeSurveyCompleted value, $Res Function(HomeSurveyCompleted) _then) =
-      _$HomeSurveyCompletedCopyWithImpl;
-  @useResult
-  $Res call({double carbonResult});
-}
-
-/// @nodoc
-class _$HomeSurveyCompletedCopyWithImpl<$Res>
-    implements $HomeSurveyCompletedCopyWith<$Res> {
-  _$HomeSurveyCompletedCopyWithImpl(this._self, this._then);
-
-  final HomeSurveyCompleted _self;
-  final $Res Function(HomeSurveyCompleted) _then;
-
-  /// Create a copy of HomeEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? carbonResult = null,
-  }) {
-    return _then(HomeSurveyCompleted(
-      carbonResult: null == carbonResult
-          ? _self.carbonResult
-          : carbonResult // ignore: cast_nullable_to_non_nullable
-              as double,
-    ));
+    return 'HomeEvent.fetchRequested()';
   }
 }
 
@@ -395,23 +280,18 @@ class HomeRefreshRequested with DiagnosticableTreeMixin implements HomeEvent {
 
 /// @nodoc
 
-class HomeReturnedFromCarbonCalculate
-    with DiagnosticableTreeMixin
-    implements HomeEvent {
-  const HomeReturnedFromCarbonCalculate();
+class HomePollCompleted with DiagnosticableTreeMixin implements HomeEvent {
+  const HomePollCompleted();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(
-          DiagnosticsProperty('type', 'HomeEvent.returnedFromCarbonCalculate'));
+    properties..add(DiagnosticsProperty('type', 'HomeEvent.pollCompleted'));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is HomeReturnedFromCarbonCalculate);
+        (other.runtimeType == runtimeType && other is HomePollCompleted);
   }
 
   @override
@@ -419,78 +299,7 @@ class HomeReturnedFromCarbonCalculate
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeEvent.returnedFromCarbonCalculate()';
-  }
-}
-
-/// @nodoc
-
-class HomeLoadFailed with DiagnosticableTreeMixin implements HomeEvent {
-  const HomeLoadFailed(this.message);
-
-  final String message;
-
-  /// Create a copy of HomeEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $HomeLoadFailedCopyWith<HomeLoadFailed> get copyWith =>
-      _$HomeLoadFailedCopyWithImpl<HomeLoadFailed>(this, _$identity);
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', 'HomeEvent.loadFailed'))
-      ..add(DiagnosticsProperty('message', message));
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is HomeLoadFailed &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeEvent.loadFailed(message: $message)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $HomeLoadFailedCopyWith<$Res>
-    implements $HomeEventCopyWith<$Res> {
-  factory $HomeLoadFailedCopyWith(
-          HomeLoadFailed value, $Res Function(HomeLoadFailed) _then) =
-      _$HomeLoadFailedCopyWithImpl;
-  @useResult
-  $Res call({String message});
-}
-
-/// @nodoc
-class _$HomeLoadFailedCopyWithImpl<$Res>
-    implements $HomeLoadFailedCopyWith<$Res> {
-  _$HomeLoadFailedCopyWithImpl(this._self, this._then);
-
-  final HomeLoadFailed _self;
-  final $Res Function(HomeLoadFailed) _then;
-
-  /// Create a copy of HomeEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? message = null,
-  }) {
-    return _then(HomeLoadFailed(
-      null == message
-          ? _self.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return 'HomeEvent.pollCompleted()';
   }
 }
 

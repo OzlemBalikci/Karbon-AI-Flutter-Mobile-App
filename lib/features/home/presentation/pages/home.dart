@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
+import 'package:karbon/features/home/presentation/bloc/home_bloc.dart';
 import 'package:karbon/features/home/presentation/bloc/home_state.dart';
 import 'package:karbon/features/home/presentation/bloc/home_selector.dart';
-import 'package:karbon/widgets/back_icon_button.dart';
+import 'package:karbon/features/leaderofmont/presentation/pages/widgets/leader_card_row.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/widgets/app_button.dart';
-import 'package:karbon/features/leaderofmont/presentation/pages/widgets/leader_card_row.dart';
-import 'package:karbon/features/leaderofmont/presentation/models/leader_card_variant.dart';
+import 'package:karbon/features/leaderofmont/presentation/widgetvariant/leader_card_variant.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/app_hero.dart';

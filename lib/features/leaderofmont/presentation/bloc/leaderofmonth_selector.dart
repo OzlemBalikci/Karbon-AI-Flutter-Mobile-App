@@ -13,6 +13,30 @@ class LeaderofmonthSelector<T>
   }) : super(builder: (_, value) => builder(value));
 }
 
+class LeaderofmonthStatusSelector
+    extends LeaderofmonthSelector<LeaderofmonthStatus> {
+  LeaderofmonthStatusSelector({
+    super.key,
+    required Widget Function() onLoading,
+    required Widget Function(String error) onError,
+    required Widget Function() onSuccess,
+    Widget Function()? onInitial,
+  }) : super(
+          selector: (state) => state.status,
+          builder: (status) => switch (status) {
+            LeaderofmonthStatus.initial =>
+              onInitial?.call() ?? const SizedBox.shrink(),
+            LeaderofmonthStatus.loading => onLoading(),
+            LeaderofmonthStatus.error =>
+              BlocSelector<LeaderofmonthBloc, LeaderofmonthState, String?>(
+                selector: (state) => state.error,
+                builder: (_, error) => onError(error ?? 'Bir hata oluştu'),
+              ),
+            LeaderofmonthStatus.success => onSuccess(),
+          },
+        );
+}
+
 /// Lider listesini LeaderofmonthBloc'tan seçer.
 /// Home ve Leaderofmonth sayfaları tarafından kullanılır.
 class LeaderRankSelector
@@ -21,7 +45,7 @@ class LeaderRankSelector
     super.key,
     required Widget Function(List<LeaderboardLeaderEntity>) builder,
   }) : super(
-          selector: (state) => state.leaders,
+          selector: (state) => [...state.podium, ...state.leaders],
           builder: builder,
         );
 }

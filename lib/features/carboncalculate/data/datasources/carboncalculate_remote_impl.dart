@@ -10,7 +10,9 @@ import 'package:karbon/features/carboncalculate/data/models/poll_submission_resu
 import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote.dart';
 
-@LazySingleton(as: CarbonCalculateRemote)
+/// Canlı API. DI’da [CarbonCalculateRemote] için [CarbonCalculateRemoteMock]
+/// yerine bu sınıfı `@LazySingleton(as: CarbonCalculateRemote)` ile kaydedin.
+@Injectable()
 class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
   CarbonCalculateRemoteImpl(this._dio, this._local);
 
@@ -49,10 +51,10 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
   }) async {
     final res = await _dio.post<dynamic>(
       '/api/v1/polls/answers',
-      data: <String, dynamic>{
-        'pollSetId': pollSetId,
-        'answers': answers.map((e) => e.toJson()).toList(),
-      },
+      data: PollAnswersRequestDto.submit(
+        pollSetId: pollSetId,
+        answers: answers,
+      ).toJson(),
     );
     final data = unwrapDataMap(res.data);
     return PollSubmissionResultDto.fromJson(data).toEntity();

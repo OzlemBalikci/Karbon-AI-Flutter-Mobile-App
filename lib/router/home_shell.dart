@@ -10,6 +10,13 @@ import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities
 import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart';
+import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_event.dart';
+import 'package:karbon/features/profile/presentation/bloc/profile_event.dart';
+import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_bloc.dart';
+import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_event.dart';
+import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart';
+import 'package:karbon/features/carboncalculate/domain/repositories/carboncalculate_repository.dart';
+import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_event.dart';
 
 // Sabit set: tam ekran açılan, alt barı gizlemesi gereken rotalar
 const _fullScreenRoutes = <String>{
@@ -17,6 +24,7 @@ const _fullScreenRoutes = <String>{
   SeeAllRoute.name,
   UsefulinfoRoute.name,
   CarbonCalculateRoute.name,
+  LeaderofmonthRoute.name,
 };
 
 @RoutePage()
@@ -28,20 +36,34 @@ class HomeShellPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomeBloc>(
-          create: (_) => getIt<HomeBloc>()..add(HomeStarted()),
+          create: (_) =>
+              getIt<HomeBloc>()..add(const HomeEvent.fetchRequested()),
+        ),
+        BlocProvider(
+          create: (context) => CarbonCalculateBloc(
+            getIt.get<CarbonCalculateRepository>(),
+          )..add(const CarbonCalculateEvent.loadRequested()),
+        ),
+        BlocProvider(
+          create: (_) => getIt<LeaderofmonthBloc>()
+            ..add(const LeaderofmonthEvent.fetchRequested()),
         ),
         BlocProvider<UsefulinfoBloc>(
-          create: (_) => getIt<UsefulinfoBloc>(),
+          create: (_) =>
+              getIt<UsefulinfoBloc>()..add(const UsefulinfoEvent.fetchInfos()),
         ),
         BlocProvider<DailyActivitiesBloc>(
           create: (_) => getIt<DailyActivitiesBloc>()
             ..add(const DailyActivitiesLoadRequested()),
         ),
-        BlocProvider<ProfileBloc>(create: (_) => getIt<ProfileBloc>()),
+        BlocProvider<ProfileBloc>(
+          create: (_) =>
+              getIt<ProfileBloc>()..add(const ProfileEvent.fetchProfile()),
+        ),
       ],
       child: AutoTabsRouter(
         routes: const [
-          HomeRoute(),
+          HomeTabShellRoute(),
           DailyActivitiesShellRoute(),
           CalendarShellRoute(),
           ProfileRoute(),

@@ -41,12 +41,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
   }
 
-  Future<void> _onTabChanged(
-      TabChanged event, Emitter<ProfileState> emit) async {
+  void _onTabChanged(TabChanged event, Emitter<ProfileState> emit) {
     emit(state.copyWith(selectedTab: event.index));
     if (event.index == 2 &&
         state.donationHistoryStatus == AsyncStatus.initial) {
-      await _onFetchDonationHistory(const FetchDonationHistory(), emit);
+      add(const ProfileEvent.fetchDonationHistory());
     }
   }
 

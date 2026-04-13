@@ -2,8 +2,8 @@ part of '../carbon_calculate.dart';
 
 class CarbonCalculateRadioOption extends StatelessWidget {
   final String label;
-  final int value;
-  final int? selectedValue;
+  final String value;
+  final String? selectedValue;
 
   const CarbonCalculateRadioOption({
     super.key,
@@ -15,7 +15,7 @@ class CarbonCalculateRadioOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isSelected = selectedValue == value;
-    return RadioListTile<int>(
+    return RadioListTile<String>(
       value: value,
       title: Text(
         label,

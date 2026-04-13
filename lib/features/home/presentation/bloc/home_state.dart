@@ -1,12 +1,14 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
 
 part 'home_state.freezed.dart';
 
 enum HomeStatus {
+  initial,
   loading,
-  loaded,
-  failed,
+  success,
+  error,
 }
 
 enum HomeViewType {
@@ -20,10 +22,10 @@ abstract class HomeState with _$HomeState {
   const factory HomeState({
     @Default(HomeStatus.loading) HomeStatus status,
     @Default(HomeViewType.initial) HomeViewType viewType,
-    @Default(0) int yearlyTreeCount,
-    @Default(0) int monthlyTreeCount,
-    double? totalCarbon,
-    double? savedCarbon,
+    @Default(false) bool hasCompletedPoll,
+    GlobalTargetEntity? globalTarget,
+    MonthlyTargetEntity? monthlyTarget,
+    @Default([]) List<HomeTopLeaderEntity> topLeaders,
     String? error,
   }) = _HomeState;
 
@@ -31,10 +33,4 @@ abstract class HomeState with _$HomeState {
         status: HomeStatus.loading,
         viewType: HomeViewType.initial,
       );
-  bool get isLoading => status == HomeStatus.loading;
-  bool get isLoaded => status == HomeStatus.loaded;
-  bool get hasError => status == HomeStatus.failed;
-
-  bool get isInitialView => viewType == HomeViewType.initial;
-  bool get isMainView => viewType == HomeViewType.main;
 }

@@ -16,10 +16,10 @@ T _$identity<T>(T value) => value;
 mixin _$HomeState implements DiagnosticableTreeMixin {
   HomeStatus get status;
   HomeViewType get viewType;
-  int get yearlyTreeCount;
-  int get monthlyTreeCount;
-  double? get totalCarbon;
-  double? get savedCarbon;
+  bool get hasCompletedPoll;
+  GlobalTargetEntity? get globalTarget;
+  MonthlyTargetEntity? get monthlyTarget;
+  List<HomeTopLeaderEntity> get topLeaders;
   String? get error;
 
   /// Create a copy of HomeState
@@ -35,10 +35,10 @@ mixin _$HomeState implements DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'HomeState'))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('viewType', viewType))
-      ..add(DiagnosticsProperty('yearlyTreeCount', yearlyTreeCount))
-      ..add(DiagnosticsProperty('monthlyTreeCount', monthlyTreeCount))
-      ..add(DiagnosticsProperty('totalCarbon', totalCarbon))
-      ..add(DiagnosticsProperty('savedCarbon', savedCarbon))
+      ..add(DiagnosticsProperty('hasCompletedPoll', hasCompletedPoll))
+      ..add(DiagnosticsProperty('globalTarget', globalTarget))
+      ..add(DiagnosticsProperty('monthlyTarget', monthlyTarget))
+      ..add(DiagnosticsProperty('topLeaders', topLeaders))
       ..add(DiagnosticsProperty('error', error));
   }
 
@@ -50,24 +50,31 @@ mixin _$HomeState implements DiagnosticableTreeMixin {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.viewType, viewType) ||
                 other.viewType == viewType) &&
-            (identical(other.yearlyTreeCount, yearlyTreeCount) ||
-                other.yearlyTreeCount == yearlyTreeCount) &&
-            (identical(other.monthlyTreeCount, monthlyTreeCount) ||
-                other.monthlyTreeCount == monthlyTreeCount) &&
-            (identical(other.totalCarbon, totalCarbon) ||
-                other.totalCarbon == totalCarbon) &&
-            (identical(other.savedCarbon, savedCarbon) ||
-                other.savedCarbon == savedCarbon) &&
+            (identical(other.hasCompletedPoll, hasCompletedPoll) ||
+                other.hasCompletedPoll == hasCompletedPoll) &&
+            (identical(other.globalTarget, globalTarget) ||
+                other.globalTarget == globalTarget) &&
+            (identical(other.monthlyTarget, monthlyTarget) ||
+                other.monthlyTarget == monthlyTarget) &&
+            const DeepCollectionEquality()
+                .equals(other.topLeaders, topLeaders) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, viewType,
-      yearlyTreeCount, monthlyTreeCount, totalCarbon, savedCarbon, error);
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      viewType,
+      hasCompletedPoll,
+      globalTarget,
+      monthlyTarget,
+      const DeepCollectionEquality().hash(topLeaders),
+      error);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeState(status: $status, viewType: $viewType, yearlyTreeCount: $yearlyTreeCount, monthlyTreeCount: $monthlyTreeCount, totalCarbon: $totalCarbon, savedCarbon: $savedCarbon, error: $error)';
+    return 'HomeState(status: $status, viewType: $viewType, hasCompletedPoll: $hasCompletedPoll, globalTarget: $globalTarget, monthlyTarget: $monthlyTarget, topLeaders: $topLeaders, error: $error)';
   }
 }
 
@@ -79,10 +86,10 @@ abstract mixin class $HomeStateCopyWith<$Res> {
   $Res call(
       {HomeStatus status,
       HomeViewType viewType,
-      int yearlyTreeCount,
-      int monthlyTreeCount,
-      double? totalCarbon,
-      double? savedCarbon,
+      bool hasCompletedPoll,
+      GlobalTargetEntity? globalTarget,
+      MonthlyTargetEntity? monthlyTarget,
+      List<HomeTopLeaderEntity> topLeaders,
       String? error});
 }
 
@@ -100,10 +107,10 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
   $Res call({
     Object? status = null,
     Object? viewType = null,
-    Object? yearlyTreeCount = null,
-    Object? monthlyTreeCount = null,
-    Object? totalCarbon = freezed,
-    Object? savedCarbon = freezed,
+    Object? hasCompletedPoll = null,
+    Object? globalTarget = freezed,
+    Object? monthlyTarget = freezed,
+    Object? topLeaders = null,
     Object? error = freezed,
   }) {
     return _then(_self.copyWith(
@@ -115,22 +122,22 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
           ? _self.viewType
           : viewType // ignore: cast_nullable_to_non_nullable
               as HomeViewType,
-      yearlyTreeCount: null == yearlyTreeCount
-          ? _self.yearlyTreeCount
-          : yearlyTreeCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      monthlyTreeCount: null == monthlyTreeCount
-          ? _self.monthlyTreeCount
-          : monthlyTreeCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalCarbon: freezed == totalCarbon
-          ? _self.totalCarbon
-          : totalCarbon // ignore: cast_nullable_to_non_nullable
-              as double?,
-      savedCarbon: freezed == savedCarbon
-          ? _self.savedCarbon
-          : savedCarbon // ignore: cast_nullable_to_non_nullable
-              as double?,
+      hasCompletedPoll: null == hasCompletedPoll
+          ? _self.hasCompletedPoll
+          : hasCompletedPoll // ignore: cast_nullable_to_non_nullable
+              as bool,
+      globalTarget: freezed == globalTarget
+          ? _self.globalTarget
+          : globalTarget // ignore: cast_nullable_to_non_nullable
+              as GlobalTargetEntity?,
+      monthlyTarget: freezed == monthlyTarget
+          ? _self.monthlyTarget
+          : monthlyTarget // ignore: cast_nullable_to_non_nullable
+              as MonthlyTargetEntity?,
+      topLeaders: null == topLeaders
+          ? _self.topLeaders
+          : topLeaders // ignore: cast_nullable_to_non_nullable
+              as List<HomeTopLeaderEntity>,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -235,10 +242,10 @@ extension HomeStatePatterns on HomeState {
     TResult Function(
             HomeStatus status,
             HomeViewType viewType,
-            int yearlyTreeCount,
-            int monthlyTreeCount,
-            double? totalCarbon,
-            double? savedCarbon,
+            bool hasCompletedPoll,
+            GlobalTargetEntity? globalTarget,
+            MonthlyTargetEntity? monthlyTarget,
+            List<HomeTopLeaderEntity> topLeaders,
             String? error)?
         $default, {
     required TResult orElse(),
@@ -249,10 +256,10 @@ extension HomeStatePatterns on HomeState {
         return $default(
             _that.status,
             _that.viewType,
-            _that.yearlyTreeCount,
-            _that.monthlyTreeCount,
-            _that.totalCarbon,
-            _that.savedCarbon,
+            _that.hasCompletedPoll,
+            _that.globalTarget,
+            _that.monthlyTarget,
+            _that.topLeaders,
             _that.error);
       case _:
         return orElse();
@@ -277,10 +284,10 @@ extension HomeStatePatterns on HomeState {
     TResult Function(
             HomeStatus status,
             HomeViewType viewType,
-            int yearlyTreeCount,
-            int monthlyTreeCount,
-            double? totalCarbon,
-            double? savedCarbon,
+            bool hasCompletedPoll,
+            GlobalTargetEntity? globalTarget,
+            MonthlyTargetEntity? monthlyTarget,
+            List<HomeTopLeaderEntity> topLeaders,
             String? error)
         $default,
   ) {
@@ -290,10 +297,10 @@ extension HomeStatePatterns on HomeState {
         return $default(
             _that.status,
             _that.viewType,
-            _that.yearlyTreeCount,
-            _that.monthlyTreeCount,
-            _that.totalCarbon,
-            _that.savedCarbon,
+            _that.hasCompletedPoll,
+            _that.globalTarget,
+            _that.monthlyTarget,
+            _that.topLeaders,
             _that.error);
       case _:
         throw StateError('Unexpected subclass');
@@ -317,10 +324,10 @@ extension HomeStatePatterns on HomeState {
     TResult? Function(
             HomeStatus status,
             HomeViewType viewType,
-            int yearlyTreeCount,
-            int monthlyTreeCount,
-            double? totalCarbon,
-            double? savedCarbon,
+            bool hasCompletedPoll,
+            GlobalTargetEntity? globalTarget,
+            MonthlyTargetEntity? monthlyTarget,
+            List<HomeTopLeaderEntity> topLeaders,
             String? error)?
         $default,
   ) {
@@ -330,10 +337,10 @@ extension HomeStatePatterns on HomeState {
         return $default(
             _that.status,
             _that.viewType,
-            _that.yearlyTreeCount,
-            _that.monthlyTreeCount,
-            _that.totalCarbon,
-            _that.savedCarbon,
+            _that.hasCompletedPoll,
+            _that.globalTarget,
+            _that.monthlyTarget,
+            _that.topLeaders,
             _that.error);
       case _:
         return null;
@@ -347,12 +354,13 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
   const _HomeState(
       {this.status = HomeStatus.loading,
       this.viewType = HomeViewType.initial,
-      this.yearlyTreeCount = 0,
-      this.monthlyTreeCount = 0,
-      this.totalCarbon,
-      this.savedCarbon,
+      this.hasCompletedPoll = false,
+      this.globalTarget,
+      this.monthlyTarget,
+      final List<HomeTopLeaderEntity> topLeaders = const [],
       this.error})
-      : super._();
+      : _topLeaders = topLeaders,
+        super._();
 
   @override
   @JsonKey()
@@ -362,14 +370,20 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
   final HomeViewType viewType;
   @override
   @JsonKey()
-  final int yearlyTreeCount;
+  final bool hasCompletedPoll;
+  @override
+  final GlobalTargetEntity? globalTarget;
+  @override
+  final MonthlyTargetEntity? monthlyTarget;
+  final List<HomeTopLeaderEntity> _topLeaders;
   @override
   @JsonKey()
-  final int monthlyTreeCount;
-  @override
-  final double? totalCarbon;
-  @override
-  final double? savedCarbon;
+  List<HomeTopLeaderEntity> get topLeaders {
+    if (_topLeaders is EqualUnmodifiableListView) return _topLeaders;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_topLeaders);
+  }
+
   @override
   final String? error;
 
@@ -387,10 +401,10 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
       ..add(DiagnosticsProperty('type', 'HomeState'))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('viewType', viewType))
-      ..add(DiagnosticsProperty('yearlyTreeCount', yearlyTreeCount))
-      ..add(DiagnosticsProperty('monthlyTreeCount', monthlyTreeCount))
-      ..add(DiagnosticsProperty('totalCarbon', totalCarbon))
-      ..add(DiagnosticsProperty('savedCarbon', savedCarbon))
+      ..add(DiagnosticsProperty('hasCompletedPoll', hasCompletedPoll))
+      ..add(DiagnosticsProperty('globalTarget', globalTarget))
+      ..add(DiagnosticsProperty('monthlyTarget', monthlyTarget))
+      ..add(DiagnosticsProperty('topLeaders', topLeaders))
       ..add(DiagnosticsProperty('error', error));
   }
 
@@ -402,24 +416,31 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.viewType, viewType) ||
                 other.viewType == viewType) &&
-            (identical(other.yearlyTreeCount, yearlyTreeCount) ||
-                other.yearlyTreeCount == yearlyTreeCount) &&
-            (identical(other.monthlyTreeCount, monthlyTreeCount) ||
-                other.monthlyTreeCount == monthlyTreeCount) &&
-            (identical(other.totalCarbon, totalCarbon) ||
-                other.totalCarbon == totalCarbon) &&
-            (identical(other.savedCarbon, savedCarbon) ||
-                other.savedCarbon == savedCarbon) &&
+            (identical(other.hasCompletedPoll, hasCompletedPoll) ||
+                other.hasCompletedPoll == hasCompletedPoll) &&
+            (identical(other.globalTarget, globalTarget) ||
+                other.globalTarget == globalTarget) &&
+            (identical(other.monthlyTarget, monthlyTarget) ||
+                other.monthlyTarget == monthlyTarget) &&
+            const DeepCollectionEquality()
+                .equals(other._topLeaders, _topLeaders) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, viewType,
-      yearlyTreeCount, monthlyTreeCount, totalCarbon, savedCarbon, error);
+  int get hashCode => Object.hash(
+      runtimeType,
+      status,
+      viewType,
+      hasCompletedPoll,
+      globalTarget,
+      monthlyTarget,
+      const DeepCollectionEquality().hash(_topLeaders),
+      error);
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeState(status: $status, viewType: $viewType, yearlyTreeCount: $yearlyTreeCount, monthlyTreeCount: $monthlyTreeCount, totalCarbon: $totalCarbon, savedCarbon: $savedCarbon, error: $error)';
+    return 'HomeState(status: $status, viewType: $viewType, hasCompletedPoll: $hasCompletedPoll, globalTarget: $globalTarget, monthlyTarget: $monthlyTarget, topLeaders: $topLeaders, error: $error)';
   }
 }
 
@@ -434,10 +455,10 @@ abstract mixin class _$HomeStateCopyWith<$Res>
   $Res call(
       {HomeStatus status,
       HomeViewType viewType,
-      int yearlyTreeCount,
-      int monthlyTreeCount,
-      double? totalCarbon,
-      double? savedCarbon,
+      bool hasCompletedPoll,
+      GlobalTargetEntity? globalTarget,
+      MonthlyTargetEntity? monthlyTarget,
+      List<HomeTopLeaderEntity> topLeaders,
       String? error});
 }
 
@@ -455,10 +476,10 @@ class __$HomeStateCopyWithImpl<$Res> implements _$HomeStateCopyWith<$Res> {
   $Res call({
     Object? status = null,
     Object? viewType = null,
-    Object? yearlyTreeCount = null,
-    Object? monthlyTreeCount = null,
-    Object? totalCarbon = freezed,
-    Object? savedCarbon = freezed,
+    Object? hasCompletedPoll = null,
+    Object? globalTarget = freezed,
+    Object? monthlyTarget = freezed,
+    Object? topLeaders = null,
     Object? error = freezed,
   }) {
     return _then(_HomeState(
@@ -470,22 +491,22 @@ class __$HomeStateCopyWithImpl<$Res> implements _$HomeStateCopyWith<$Res> {
           ? _self.viewType
           : viewType // ignore: cast_nullable_to_non_nullable
               as HomeViewType,
-      yearlyTreeCount: null == yearlyTreeCount
-          ? _self.yearlyTreeCount
-          : yearlyTreeCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      monthlyTreeCount: null == monthlyTreeCount
-          ? _self.monthlyTreeCount
-          : monthlyTreeCount // ignore: cast_nullable_to_non_nullable
-              as int,
-      totalCarbon: freezed == totalCarbon
-          ? _self.totalCarbon
-          : totalCarbon // ignore: cast_nullable_to_non_nullable
-              as double?,
-      savedCarbon: freezed == savedCarbon
-          ? _self.savedCarbon
-          : savedCarbon // ignore: cast_nullable_to_non_nullable
-              as double?,
+      hasCompletedPoll: null == hasCompletedPoll
+          ? _self.hasCompletedPoll
+          : hasCompletedPoll // ignore: cast_nullable_to_non_nullable
+              as bool,
+      globalTarget: freezed == globalTarget
+          ? _self.globalTarget
+          : globalTarget // ignore: cast_nullable_to_non_nullable
+              as GlobalTargetEntity?,
+      monthlyTarget: freezed == monthlyTarget
+          ? _self.monthlyTarget
+          : monthlyTarget // ignore: cast_nullable_to_non_nullable
+              as MonthlyTargetEntity?,
+      topLeaders: null == topLeaders
+          ? _self._topLeaders
+          : topLeaders // ignore: cast_nullable_to_non_nullable
+              as List<HomeTopLeaderEntity>,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable

@@ -52,35 +52,38 @@ extension CarbonCalculateEventPatterns on CarbonCalculateEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CarbonCalculateLoadRequested value)? loadRequested,
-    TResult Function(CarbonCalculateLoadFailed value)? loadFailed,
     TResult Function(CarbonCalculateNextPressed value)? nextPressed,
     TResult Function(CarbonCalculateBackPressed value)? backPressed,
-    TResult Function(CarbonCalculateFinishPressed value)? finishPressed,
+    TResult Function(CarbonCalculateAnswerSelected value)? answerSelected,
+    TResult Function(CarbonCalculateSaveDraftRequested value)?
+        saveDraftRequested,
+    TResult Function(CarbonCalculateSubmitAnswersRequested value)?
+        submitAnswersRequested,
     TResult Function(CarbonCalculateCalculateAgainPressed value)?
         calculateAgainPressed,
     TResult Function(CarbonCalculateGoToHomePressed value)? goToHomePressed,
-    TResult Function(CarbonCalculateAnswerSelected value)? answerSelected,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case CarbonCalculateLoadRequested() when loadRequested != null:
         return loadRequested(_that);
-      case CarbonCalculateLoadFailed() when loadFailed != null:
-        return loadFailed(_that);
       case CarbonCalculateNextPressed() when nextPressed != null:
         return nextPressed(_that);
       case CarbonCalculateBackPressed() when backPressed != null:
         return backPressed(_that);
-      case CarbonCalculateFinishPressed() when finishPressed != null:
-        return finishPressed(_that);
+      case CarbonCalculateAnswerSelected() when answerSelected != null:
+        return answerSelected(_that);
+      case CarbonCalculateSaveDraftRequested() when saveDraftRequested != null:
+        return saveDraftRequested(_that);
+      case CarbonCalculateSubmitAnswersRequested()
+          when submitAnswersRequested != null:
+        return submitAnswersRequested(_that);
       case CarbonCalculateCalculateAgainPressed()
           when calculateAgainPressed != null:
         return calculateAgainPressed(_that);
       case CarbonCalculateGoToHomePressed() when goToHomePressed != null:
         return goToHomePressed(_that);
-      case CarbonCalculateAnswerSelected() when answerSelected != null:
-        return answerSelected(_that);
       case _:
         return orElse();
     }
@@ -102,35 +105,37 @@ extension CarbonCalculateEventPatterns on CarbonCalculateEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CarbonCalculateLoadRequested value) loadRequested,
-    required TResult Function(CarbonCalculateLoadFailed value) loadFailed,
     required TResult Function(CarbonCalculateNextPressed value) nextPressed,
     required TResult Function(CarbonCalculateBackPressed value) backPressed,
-    required TResult Function(CarbonCalculateFinishPressed value) finishPressed,
+    required TResult Function(CarbonCalculateAnswerSelected value)
+        answerSelected,
+    required TResult Function(CarbonCalculateSaveDraftRequested value)
+        saveDraftRequested,
+    required TResult Function(CarbonCalculateSubmitAnswersRequested value)
+        submitAnswersRequested,
     required TResult Function(CarbonCalculateCalculateAgainPressed value)
         calculateAgainPressed,
     required TResult Function(CarbonCalculateGoToHomePressed value)
         goToHomePressed,
-    required TResult Function(CarbonCalculateAnswerSelected value)
-        answerSelected,
   }) {
     final _that = this;
     switch (_that) {
       case CarbonCalculateLoadRequested():
         return loadRequested(_that);
-      case CarbonCalculateLoadFailed():
-        return loadFailed(_that);
       case CarbonCalculateNextPressed():
         return nextPressed(_that);
       case CarbonCalculateBackPressed():
         return backPressed(_that);
-      case CarbonCalculateFinishPressed():
-        return finishPressed(_that);
+      case CarbonCalculateAnswerSelected():
+        return answerSelected(_that);
+      case CarbonCalculateSaveDraftRequested():
+        return saveDraftRequested(_that);
+      case CarbonCalculateSubmitAnswersRequested():
+        return submitAnswersRequested(_that);
       case CarbonCalculateCalculateAgainPressed():
         return calculateAgainPressed(_that);
       case CarbonCalculateGoToHomePressed():
         return goToHomePressed(_that);
-      case CarbonCalculateAnswerSelected():
-        return answerSelected(_that);
     }
   }
 
@@ -149,34 +154,37 @@ extension CarbonCalculateEventPatterns on CarbonCalculateEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CarbonCalculateLoadRequested value)? loadRequested,
-    TResult? Function(CarbonCalculateLoadFailed value)? loadFailed,
     TResult? Function(CarbonCalculateNextPressed value)? nextPressed,
     TResult? Function(CarbonCalculateBackPressed value)? backPressed,
-    TResult? Function(CarbonCalculateFinishPressed value)? finishPressed,
+    TResult? Function(CarbonCalculateAnswerSelected value)? answerSelected,
+    TResult? Function(CarbonCalculateSaveDraftRequested value)?
+        saveDraftRequested,
+    TResult? Function(CarbonCalculateSubmitAnswersRequested value)?
+        submitAnswersRequested,
     TResult? Function(CarbonCalculateCalculateAgainPressed value)?
         calculateAgainPressed,
     TResult? Function(CarbonCalculateGoToHomePressed value)? goToHomePressed,
-    TResult? Function(CarbonCalculateAnswerSelected value)? answerSelected,
   }) {
     final _that = this;
     switch (_that) {
       case CarbonCalculateLoadRequested() when loadRequested != null:
         return loadRequested(_that);
-      case CarbonCalculateLoadFailed() when loadFailed != null:
-        return loadFailed(_that);
       case CarbonCalculateNextPressed() when nextPressed != null:
         return nextPressed(_that);
       case CarbonCalculateBackPressed() when backPressed != null:
         return backPressed(_that);
-      case CarbonCalculateFinishPressed() when finishPressed != null:
-        return finishPressed(_that);
+      case CarbonCalculateAnswerSelected() when answerSelected != null:
+        return answerSelected(_that);
+      case CarbonCalculateSaveDraftRequested() when saveDraftRequested != null:
+        return saveDraftRequested(_that);
+      case CarbonCalculateSubmitAnswersRequested()
+          when submitAnswersRequested != null:
+        return submitAnswersRequested(_that);
       case CarbonCalculateCalculateAgainPressed()
           when calculateAgainPressed != null:
         return calculateAgainPressed(_that);
       case CarbonCalculateGoToHomePressed() when goToHomePressed != null:
         return goToHomePressed(_that);
-      case CarbonCalculateAnswerSelected() when answerSelected != null:
-        return answerSelected(_that);
       case _:
         return null;
     }
@@ -197,34 +205,35 @@ extension CarbonCalculateEventPatterns on CarbonCalculateEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadRequested,
-    TResult Function(String error)? loadFailed,
     TResult Function()? nextPressed,
     TResult Function()? backPressed,
-    TResult Function()? finishPressed,
+    TResult Function(String questionId, String optionId)? answerSelected,
+    TResult Function()? saveDraftRequested,
+    TResult Function()? submitAnswersRequested,
     TResult Function()? calculateAgainPressed,
     TResult Function()? goToHomePressed,
-    TResult Function(int questionIndex, dynamic value)? answerSelected,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case CarbonCalculateLoadRequested() when loadRequested != null:
         return loadRequested();
-      case CarbonCalculateLoadFailed() when loadFailed != null:
-        return loadFailed(_that.error);
       case CarbonCalculateNextPressed() when nextPressed != null:
         return nextPressed();
       case CarbonCalculateBackPressed() when backPressed != null:
         return backPressed();
-      case CarbonCalculateFinishPressed() when finishPressed != null:
-        return finishPressed();
+      case CarbonCalculateAnswerSelected() when answerSelected != null:
+        return answerSelected(_that.questionId, _that.optionId);
+      case CarbonCalculateSaveDraftRequested() when saveDraftRequested != null:
+        return saveDraftRequested();
+      case CarbonCalculateSubmitAnswersRequested()
+          when submitAnswersRequested != null:
+        return submitAnswersRequested();
       case CarbonCalculateCalculateAgainPressed()
           when calculateAgainPressed != null:
         return calculateAgainPressed();
       case CarbonCalculateGoToHomePressed() when goToHomePressed != null:
         return goToHomePressed();
-      case CarbonCalculateAnswerSelected() when answerSelected != null:
-        return answerSelected(_that.questionIndex, _that.value);
       case _:
         return orElse();
     }
@@ -246,32 +255,33 @@ extension CarbonCalculateEventPatterns on CarbonCalculateEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadRequested,
-    required TResult Function(String error) loadFailed,
     required TResult Function() nextPressed,
     required TResult Function() backPressed,
-    required TResult Function() finishPressed,
+    required TResult Function(String questionId, String optionId)
+        answerSelected,
+    required TResult Function() saveDraftRequested,
+    required TResult Function() submitAnswersRequested,
     required TResult Function() calculateAgainPressed,
     required TResult Function() goToHomePressed,
-    required TResult Function(int questionIndex, dynamic value) answerSelected,
   }) {
     final _that = this;
     switch (_that) {
       case CarbonCalculateLoadRequested():
         return loadRequested();
-      case CarbonCalculateLoadFailed():
-        return loadFailed(_that.error);
       case CarbonCalculateNextPressed():
         return nextPressed();
       case CarbonCalculateBackPressed():
         return backPressed();
-      case CarbonCalculateFinishPressed():
-        return finishPressed();
+      case CarbonCalculateAnswerSelected():
+        return answerSelected(_that.questionId, _that.optionId);
+      case CarbonCalculateSaveDraftRequested():
+        return saveDraftRequested();
+      case CarbonCalculateSubmitAnswersRequested():
+        return submitAnswersRequested();
       case CarbonCalculateCalculateAgainPressed():
         return calculateAgainPressed();
       case CarbonCalculateGoToHomePressed():
         return goToHomePressed();
-      case CarbonCalculateAnswerSelected():
-        return answerSelected(_that.questionIndex, _that.value);
     }
   }
 
@@ -290,33 +300,34 @@ extension CarbonCalculateEventPatterns on CarbonCalculateEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadRequested,
-    TResult? Function(String error)? loadFailed,
     TResult? Function()? nextPressed,
     TResult? Function()? backPressed,
-    TResult? Function()? finishPressed,
+    TResult? Function(String questionId, String optionId)? answerSelected,
+    TResult? Function()? saveDraftRequested,
+    TResult? Function()? submitAnswersRequested,
     TResult? Function()? calculateAgainPressed,
     TResult? Function()? goToHomePressed,
-    TResult? Function(int questionIndex, dynamic value)? answerSelected,
   }) {
     final _that = this;
     switch (_that) {
       case CarbonCalculateLoadRequested() when loadRequested != null:
         return loadRequested();
-      case CarbonCalculateLoadFailed() when loadFailed != null:
-        return loadFailed(_that.error);
       case CarbonCalculateNextPressed() when nextPressed != null:
         return nextPressed();
       case CarbonCalculateBackPressed() when backPressed != null:
         return backPressed();
-      case CarbonCalculateFinishPressed() when finishPressed != null:
-        return finishPressed();
+      case CarbonCalculateAnswerSelected() when answerSelected != null:
+        return answerSelected(_that.questionId, _that.optionId);
+      case CarbonCalculateSaveDraftRequested() when saveDraftRequested != null:
+        return saveDraftRequested();
+      case CarbonCalculateSubmitAnswersRequested()
+          when submitAnswersRequested != null:
+        return submitAnswersRequested();
       case CarbonCalculateCalculateAgainPressed()
           when calculateAgainPressed != null:
         return calculateAgainPressed();
       case CarbonCalculateGoToHomePressed() when goToHomePressed != null:
         return goToHomePressed();
-      case CarbonCalculateAnswerSelected() when answerSelected != null:
-        return answerSelected(_that.questionIndex, _that.value);
       case _:
         return null;
     }
@@ -341,71 +352,6 @@ class CarbonCalculateLoadRequested implements CarbonCalculateEvent {
   @override
   String toString() {
     return 'CarbonCalculateEvent.loadRequested()';
-  }
-}
-
-/// @nodoc
-
-class CarbonCalculateLoadFailed implements CarbonCalculateEvent {
-  const CarbonCalculateLoadFailed(this.error);
-
-  final String error;
-
-  /// Create a copy of CarbonCalculateEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $CarbonCalculateLoadFailedCopyWith<CarbonCalculateLoadFailed> get copyWith =>
-      _$CarbonCalculateLoadFailedCopyWithImpl<CarbonCalculateLoadFailed>(
-          this, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is CarbonCalculateLoadFailed &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  @override
-  String toString() {
-    return 'CarbonCalculateEvent.loadFailed(error: $error)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $CarbonCalculateLoadFailedCopyWith<$Res>
-    implements $CarbonCalculateEventCopyWith<$Res> {
-  factory $CarbonCalculateLoadFailedCopyWith(CarbonCalculateLoadFailed value,
-          $Res Function(CarbonCalculateLoadFailed) _then) =
-      _$CarbonCalculateLoadFailedCopyWithImpl;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class _$CarbonCalculateLoadFailedCopyWithImpl<$Res>
-    implements $CarbonCalculateLoadFailedCopyWith<$Res> {
-  _$CarbonCalculateLoadFailedCopyWithImpl(this._self, this._then);
-
-  final CarbonCalculateLoadFailed _self;
-  final $Res Function(CarbonCalculateLoadFailed) _then;
-
-  /// Create a copy of CarbonCalculateEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(CarbonCalculateLoadFailed(
-      null == error
-          ? _self.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
   }
 }
 
@@ -453,14 +399,90 @@ class CarbonCalculateBackPressed implements CarbonCalculateEvent {
 
 /// @nodoc
 
-class CarbonCalculateFinishPressed implements CarbonCalculateEvent {
-  const CarbonCalculateFinishPressed();
+class CarbonCalculateAnswerSelected implements CarbonCalculateEvent {
+  const CarbonCalculateAnswerSelected(
+      {required this.questionId, required this.optionId});
+
+  final String questionId;
+  final String optionId;
+
+  /// Create a copy of CarbonCalculateEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $CarbonCalculateAnswerSelectedCopyWith<CarbonCalculateAnswerSelected>
+      get copyWith => _$CarbonCalculateAnswerSelectedCopyWithImpl<
+          CarbonCalculateAnswerSelected>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is CarbonCalculateFinishPressed);
+            other is CarbonCalculateAnswerSelected &&
+            (identical(other.questionId, questionId) ||
+                other.questionId == questionId) &&
+            (identical(other.optionId, optionId) ||
+                other.optionId == optionId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, questionId, optionId);
+
+  @override
+  String toString() {
+    return 'CarbonCalculateEvent.answerSelected(questionId: $questionId, optionId: $optionId)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $CarbonCalculateAnswerSelectedCopyWith<$Res>
+    implements $CarbonCalculateEventCopyWith<$Res> {
+  factory $CarbonCalculateAnswerSelectedCopyWith(
+          CarbonCalculateAnswerSelected value,
+          $Res Function(CarbonCalculateAnswerSelected) _then) =
+      _$CarbonCalculateAnswerSelectedCopyWithImpl;
+  @useResult
+  $Res call({String questionId, String optionId});
+}
+
+/// @nodoc
+class _$CarbonCalculateAnswerSelectedCopyWithImpl<$Res>
+    implements $CarbonCalculateAnswerSelectedCopyWith<$Res> {
+  _$CarbonCalculateAnswerSelectedCopyWithImpl(this._self, this._then);
+
+  final CarbonCalculateAnswerSelected _self;
+  final $Res Function(CarbonCalculateAnswerSelected) _then;
+
+  /// Create a copy of CarbonCalculateEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? questionId = null,
+    Object? optionId = null,
+  }) {
+    return _then(CarbonCalculateAnswerSelected(
+      questionId: null == questionId
+          ? _self.questionId
+          : questionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      optionId: null == optionId
+          ? _self.optionId
+          : optionId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class CarbonCalculateSaveDraftRequested implements CarbonCalculateEvent {
+  const CarbonCalculateSaveDraftRequested();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is CarbonCalculateSaveDraftRequested);
   }
 
   @override
@@ -468,7 +490,28 @@ class CarbonCalculateFinishPressed implements CarbonCalculateEvent {
 
   @override
   String toString() {
-    return 'CarbonCalculateEvent.finishPressed()';
+    return 'CarbonCalculateEvent.saveDraftRequested()';
+  }
+}
+
+/// @nodoc
+
+class CarbonCalculateSubmitAnswersRequested implements CarbonCalculateEvent {
+  const CarbonCalculateSubmitAnswersRequested();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is CarbonCalculateSubmitAnswersRequested);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'CarbonCalculateEvent.submitAnswersRequested()';
   }
 }
 
@@ -511,82 +554,6 @@ class CarbonCalculateGoToHomePressed implements CarbonCalculateEvent {
   @override
   String toString() {
     return 'CarbonCalculateEvent.goToHomePressed()';
-  }
-}
-
-/// @nodoc
-
-class CarbonCalculateAnswerSelected implements CarbonCalculateEvent {
-  const CarbonCalculateAnswerSelected(
-      {required this.questionIndex, required this.value});
-
-  final int questionIndex;
-  final dynamic value;
-
-  /// Create a copy of CarbonCalculateEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $CarbonCalculateAnswerSelectedCopyWith<CarbonCalculateAnswerSelected>
-      get copyWith => _$CarbonCalculateAnswerSelectedCopyWithImpl<
-          CarbonCalculateAnswerSelected>(this, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is CarbonCalculateAnswerSelected &&
-            (identical(other.questionIndex, questionIndex) ||
-                other.questionIndex == questionIndex) &&
-            const DeepCollectionEquality().equals(other.value, value));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, questionIndex, const DeepCollectionEquality().hash(value));
-
-  @override
-  String toString() {
-    return 'CarbonCalculateEvent.answerSelected(questionIndex: $questionIndex, value: $value)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $CarbonCalculateAnswerSelectedCopyWith<$Res>
-    implements $CarbonCalculateEventCopyWith<$Res> {
-  factory $CarbonCalculateAnswerSelectedCopyWith(
-          CarbonCalculateAnswerSelected value,
-          $Res Function(CarbonCalculateAnswerSelected) _then) =
-      _$CarbonCalculateAnswerSelectedCopyWithImpl;
-  @useResult
-  $Res call({int questionIndex, dynamic value});
-}
-
-/// @nodoc
-class _$CarbonCalculateAnswerSelectedCopyWithImpl<$Res>
-    implements $CarbonCalculateAnswerSelectedCopyWith<$Res> {
-  _$CarbonCalculateAnswerSelectedCopyWithImpl(this._self, this._then);
-
-  final CarbonCalculateAnswerSelected _self;
-  final $Res Function(CarbonCalculateAnswerSelected) _then;
-
-  /// Create a copy of CarbonCalculateEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? questionIndex = null,
-    Object? value = freezed,
-  }) {
-    return _then(CarbonCalculateAnswerSelected(
-      questionIndex: null == questionIndex
-          ? _self.questionIndex
-          : questionIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      value: freezed == value
-          ? _self.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-    ));
   }
 }
 

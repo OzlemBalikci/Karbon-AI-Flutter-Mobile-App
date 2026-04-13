@@ -55,6 +55,8 @@ import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate
     as _i357;
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote_impl.dart'
     as _i408;
+import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote_mock.dart'
+    as _i596;
 import 'package:karbon/features/carboncalculate/data/repositories/carbon_calculaterepository_impl.dart'
     as _i180;
 import 'package:karbon/features/carboncalculate/domain/repositories/carboncalculate_repository.dart'
@@ -94,15 +96,23 @@ import 'package:karbon/features/dailyactivites/domain/usacases/post_answer_useca
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart'
     as _i391;
 import 'package:karbon/features/home/data/datasources/home_remote.dart' as _i25;
+import 'package:karbon/features/home/data/datasources/home_remote_impl.dart'
+    as _i701;
+import 'package:karbon/features/home/data/datasources/home_remote_mock.dart'
+    as _i318;
 import 'package:karbon/features/home/data/repositories/home_repository_impl.dart'
     as _i274;
 import 'package:karbon/features/home/domain/repositories/home_repository.dart'
     as _i406;
+import 'package:karbon/features/home/domain/usecases/get_home_usecase.dart'
+    as _i702;
 import 'package:karbon/features/home/presentation/bloc/home_bloc.dart' as _i591;
 import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote.dart'
     as _i1036;
 import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote_impl.dart'
     as _i679;
+import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote_mock.dart'
+    as _i637;
 import 'package:karbon/features/leaderofmont/data/repositories/leaderboard_repository_impl.dart'
     as _i966;
 import 'package:karbon/features/leaderofmont/domain/repositories/leaderboard_repository.dart'
@@ -166,24 +176,40 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i614.SettingsBloc>(() => _i614.SettingsBloc());
     gh.lazySingleton<_i366.CarbonCalculateLocal>(
         () => _i177.CarbonCalculateLocalImpl(gh<_i460.SharedPreferences>()));
+    gh.lazySingleton<_i357.CarbonCalculateRemote>(
+        () => _i596.CarbonCalculateRemoteMock());
     gh.lazySingleton<_i102.AuthLocal>(
         () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i505.UsefulinfoRemote>(
         () => _i964.UsefulinfoRemoteMock());
+    gh.lazySingleton<_i1036.LeaderboardRemote>(
+        () => _i637.LeaderboardRemoteMock());
+    gh.lazySingleton<_i25.HomeRemote>(() => _i318.HomeRemoteMock());
+    gh.lazySingleton<_i406.HomeRepository>(
+        () => _i274.HomeRepositoryImpl(gh<_i25.HomeRemote>()));
     gh.lazySingleton<_i71.UsefulinfoRepository>(
         () => _i233.UsefulinfoRepositoryImpl(gh<_i505.UsefulinfoRemote>()));
     gh.singleton<_i361.Dio>(() => registerModule.dio(
           gh<_i102.AuthLocal>(),
           gh<_i557.CookieJar>(),
         ));
+    gh.lazySingleton<_i77.LeaderboardRepository>(
+        () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
+    gh.lazySingleton<_i666.CarbonCalculateRepository>(
+        () => _i180.CarbonCalculateRepositoryImpl(
+              gh<_i357.CarbonCalculateRemote>(),
+              gh<_i366.CarbonCalculateLocal>(),
+            ));
     gh.factory<_i97.GetUsefulInfosUseCase>(
         () => _i97.GetUsefulInfosUseCase(gh<_i71.UsefulinfoRepository>()));
-    gh.lazySingleton<_i1036.LeaderboardRemote>(
-        () => _i679.LeaderboardRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i434.UsefulinfoBloc>(
         () => _i434.UsefulinfoBloc(gh<_i97.GetUsefulInfosUseCase>()));
     gh.lazySingleton<_i614.DailyActivitiesRemote>(
         () => _i261.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
+    gh.factory<_i679.LeaderboardRemoteImpl>(
+        () => _i679.LeaderboardRemoteImpl(gh<_i361.Dio>()));
+    gh.factory<_i701.HomeRemoteImpl>(
+        () => _i701.HomeRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i483.ProfileRemote>(
@@ -198,37 +224,40 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i524.GetDonationsUsecase(gh<_i48.ProfileRepository>()));
     gh.factory<_i812.GetProfileUseCase>(
         () => _i812.GetProfileUseCase(gh<_i48.ProfileRepository>()));
-    gh.lazySingleton<_i25.HomeRemote>(
-        () => _i25.HomeRemoteImpl(gh<_i361.Dio>()));
-    gh.lazySingleton<_i357.CarbonCalculateRemote>(
+    gh.factory<_i520.GetLeaderboardDataUseCase>(() =>
+        _i520.GetLeaderboardDataUseCase(gh<_i77.LeaderboardRepository>()));
+    gh.factory<_i959.CarbonCalculateBloc>(
+        () => _i959.CarbonCalculateBloc(gh<_i666.CarbonCalculateRepository>()));
+    gh.factory<_i408.CarbonCalculateRemoteImpl>(
         () => _i408.CarbonCalculateRemoteImpl(
               gh<_i361.Dio>(),
               gh<_i366.CarbonCalculateLocal>(),
             ));
+    gh.factory<_i702.GetHomeUseCase>(
+        () => _i702.GetHomeUseCase(gh<_i406.HomeRepository>()));
     gh.factory<_i111.ProfileBloc>(() => _i111.ProfileBloc(
           gh<_i812.GetProfileUseCase>(),
           gh<_i524.GetDonationsUsecase>(),
           gh<_i26.DonateTreesUsecase>(),
         ));
-    gh.lazySingleton<_i406.HomeRepository>(() => _i274.HomeRepositoryImpl(
-          gh<_i25.HomeRemote>(),
-          gh<_i460.SharedPreferences>(),
-        ));
+    gh.factory<_i926.GetActivePollUseCase>(() =>
+        _i926.GetActivePollUseCase(gh<_i666.CarbonCalculateRepository>()));
+    gh.factory<_i980.GetPollResultsUseCase>(() =>
+        _i980.GetPollResultsUseCase(gh<_i666.CarbonCalculateRepository>()));
+    gh.factory<_i715.SavePollDraftUseCase>(() =>
+        _i715.SavePollDraftUseCase(gh<_i666.CarbonCalculateRepository>()));
+    gh.factory<_i630.SubmitPollAnswersUseCase>(() =>
+        _i630.SubmitPollAnswersUseCase(gh<_i666.CarbonCalculateRepository>()));
     gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
           gh<_i413.AuthRemote>(),
           gh<_i102.AuthLocal>(),
         ));
-    gh.lazySingleton<_i77.LeaderboardRepository>(
-        () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
-    gh.lazySingleton<_i666.CarbonCalculateRepository>(
-        () => _i180.CarbonCalculateRepositoryImpl(
-              gh<_i357.CarbonCalculateRemote>(),
-              gh<_i366.CarbonCalculateLocal>(),
-            ));
-    gh.factory<_i591.HomeBloc>(
-        () => _i591.HomeBloc(gh<_i406.HomeRepository>()));
+    gh.factory<_i748.LeaderofmonthBloc>(
+        () => _i748.LeaderofmonthBloc(gh<_i520.GetLeaderboardDataUseCase>()));
     gh.lazySingleton<_i320.DailyActivitiesRepository>(() =>
         _i449.DailyActivitiesRepositoryImpl(gh<_i614.DailyActivitiesRemote>()));
+    gh.factory<_i591.HomeBloc>(
+        () => _i591.HomeBloc(gh<_i702.GetHomeUseCase>()));
     gh.factory<_i1025.GetCalendarUsecase>(
         () => _i1025.GetCalendarUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i715.GetDetailsUsecase>(
@@ -244,8 +273,6 @@ extension GetItInjectableX on _i174.GetIt {
         _i671.GetTodayQuestionsUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i902.PostAnswerUsecase>(
         () => _i902.PostAnswerUsecase(gh<_i320.DailyActivitiesRepository>()));
-    gh.factory<_i520.GetLeaderboardDataUseCase>(() =>
-        _i520.GetLeaderboardDataUseCase(gh<_i77.LeaderboardRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i210.ForgotPasswordUseCase>(
@@ -262,20 +289,10 @@ extension GetItInjectableX on _i174.GetIt {
         forgotPasswordUseCase: gh<_i210.ForgotPasswordUseCase>()));
     gh.factory<_i171.LoginBloc>(
         () => _i171.LoginBloc(gh<_i1010.LoginUseCase>()));
-    gh.factory<_i959.CarbonCalculateBloc>(
-        () => _i959.CarbonCalculateBloc(gh<_i666.CarbonCalculateRepository>()));
     gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(
           gh<_i793.CheckSessionUseCase>(),
           gh<_i566.LogoutUseCase>(),
         ));
-    gh.factory<_i926.GetActivePollUseCase>(() =>
-        _i926.GetActivePollUseCase(gh<_i666.CarbonCalculateRepository>()));
-    gh.factory<_i980.GetPollResultsUseCase>(() =>
-        _i980.GetPollResultsUseCase(gh<_i666.CarbonCalculateRepository>()));
-    gh.factory<_i715.SavePollDraftUseCase>(() =>
-        _i715.SavePollDraftUseCase(gh<_i666.CarbonCalculateRepository>()));
-    gh.factory<_i630.SubmitPollAnswersUseCase>(() =>
-        _i630.SubmitPollAnswersUseCase(gh<_i666.CarbonCalculateRepository>()));
     gh.factory<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
           gh<_i671.GetTodayQuestionsUsecase>(),
           gh<_i448.GetPendingStatusUsecase>(),
@@ -283,8 +300,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i902.PostAnswerUsecase>(),
           gh<_i793.CheckSessionUseCase>(),
         ));
-    gh.factory<_i748.LeaderofmonthBloc>(
-        () => _i748.LeaderofmonthBloc(gh<_i520.GetLeaderboardDataUseCase>()));
     gh.factory<_i78.RegisterBloc>(() => _i78.RegisterBloc(
           gh<_i558.RegisterUseCase>(),
           gh<_i564.AuthBloc>(),

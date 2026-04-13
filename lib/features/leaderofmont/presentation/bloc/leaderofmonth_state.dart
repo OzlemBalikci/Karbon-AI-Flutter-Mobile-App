@@ -17,6 +17,7 @@ abstract class LeaderofmonthState with _$LeaderofmonthState {
   const factory LeaderofmonthState({
     @Default(LeaderofmonthStatus.initial) LeaderofmonthStatus status,
     @Default([]) List<LeaderboardLeaderEntity> leaders,
+    @Default([]) List<LeaderboardLeaderEntity> podium,
     @Default(3) int podiumSize,
     CurrentUserRankEntity? currentUserRank,
     String? error,

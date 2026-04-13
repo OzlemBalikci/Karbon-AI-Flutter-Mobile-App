@@ -14,12 +14,23 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$CarbonCalculateState {
+  CarbonCalculateStatus get status;
   int get currentStep;
-  Map<int, dynamic> get answers;
-  bool get isLoading;
+
+  /// Aktif anket ID'si — taslak ve gönderim için gerekli.
+  String? get pollSetId;
+
+  /// Anket açıklama metni (bilgi adımında gösterilir).
+  String get pollDescription;
+
+  /// Anket soruları; yüklenince dolar.
+  List<PollQuestionEntity> get questions;
+
+  /// Seçilen cevaplar: `questionId → optionId`
+  Map<String, String> get answers;
   String? get error;
-  List<Map<String, dynamic>> get questions;
   bool get goToHomeRequested;
+  PollSubmissionResultEntity? get submissionResult;
 
   /// Create a copy of CarbonCalculateState
   /// with the given fields replaced by the non-null parameter values.
@@ -34,30 +45,38 @@ mixin _$CarbonCalculateState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is CarbonCalculateState &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
-            const DeepCollectionEquality().equals(other.answers, answers) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.error, error) || other.error == error) &&
+            (identical(other.pollSetId, pollSetId) ||
+                other.pollSetId == pollSetId) &&
+            (identical(other.pollDescription, pollDescription) ||
+                other.pollDescription == pollDescription) &&
             const DeepCollectionEquality().equals(other.questions, questions) &&
+            const DeepCollectionEquality().equals(other.answers, answers) &&
+            (identical(other.error, error) || other.error == error) &&
             (identical(other.goToHomeRequested, goToHomeRequested) ||
-                other.goToHomeRequested == goToHomeRequested));
+                other.goToHomeRequested == goToHomeRequested) &&
+            (identical(other.submissionResult, submissionResult) ||
+                other.submissionResult == submissionResult));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      status,
       currentStep,
-      const DeepCollectionEquality().hash(answers),
-      isLoading,
-      error,
+      pollSetId,
+      pollDescription,
       const DeepCollectionEquality().hash(questions),
-      goToHomeRequested);
+      const DeepCollectionEquality().hash(answers),
+      error,
+      goToHomeRequested,
+      submissionResult);
 
   @override
   String toString() {
-    return 'CarbonCalculateState(currentStep: $currentStep, answers: $answers, isLoading: $isLoading, error: $error, questions: $questions, goToHomeRequested: $goToHomeRequested)';
+    return 'CarbonCalculateState(status: $status, currentStep: $currentStep, pollSetId: $pollSetId, pollDescription: $pollDescription, questions: $questions, answers: $answers, error: $error, goToHomeRequested: $goToHomeRequested, submissionResult: $submissionResult)';
   }
 }
 
@@ -68,12 +87,15 @@ abstract mixin class $CarbonCalculateStateCopyWith<$Res> {
       _$CarbonCalculateStateCopyWithImpl;
   @useResult
   $Res call(
-      {int currentStep,
-      Map<int, dynamic> answers,
-      bool isLoading,
+      {CarbonCalculateStatus status,
+      int currentStep,
+      String? pollSetId,
+      String pollDescription,
+      List<PollQuestionEntity> questions,
+      Map<String, String> answers,
       String? error,
-      List<Map<String, dynamic>> questions,
-      bool goToHomeRequested});
+      bool goToHomeRequested,
+      PollSubmissionResultEntity? submissionResult});
 }
 
 /// @nodoc
@@ -89,38 +111,53 @@ class _$CarbonCalculateStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? status = null,
     Object? currentStep = null,
-    Object? answers = null,
-    Object? isLoading = null,
-    Object? error = freezed,
+    Object? pollSetId = freezed,
+    Object? pollDescription = null,
     Object? questions = null,
+    Object? answers = null,
+    Object? error = freezed,
     Object? goToHomeRequested = null,
+    Object? submissionResult = freezed,
   }) {
     return _then(_self.copyWith(
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as CarbonCalculateStatus,
       currentStep: null == currentStep
           ? _self.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as int,
+      pollSetId: freezed == pollSetId
+          ? _self.pollSetId
+          : pollSetId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pollDescription: null == pollDescription
+          ? _self.pollDescription
+          : pollDescription // ignore: cast_nullable_to_non_nullable
+              as String,
+      questions: null == questions
+          ? _self.questions
+          : questions // ignore: cast_nullable_to_non_nullable
+              as List<PollQuestionEntity>,
       answers: null == answers
           ? _self.answers
           : answers // ignore: cast_nullable_to_non_nullable
-              as Map<int, dynamic>,
-      isLoading: null == isLoading
-          ? _self.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as Map<String, String>,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-      questions: null == questions
-          ? _self.questions
-          : questions // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
       goToHomeRequested: null == goToHomeRequested
           ? _self.goToHomeRequested
           : goToHomeRequested // ignore: cast_nullable_to_non_nullable
               as bool,
+      submissionResult: freezed == submissionResult
+          ? _self.submissionResult
+          : submissionResult // ignore: cast_nullable_to_non_nullable
+              as PollSubmissionResultEntity?,
     ));
   }
 }
@@ -219,20 +256,31 @@ extension CarbonCalculateStatePatterns on CarbonCalculateState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
+            CarbonCalculateStatus status,
             int currentStep,
-            Map<int, dynamic> answers,
-            bool isLoading,
+            String? pollSetId,
+            String pollDescription,
+            List<PollQuestionEntity> questions,
+            Map<String, String> answers,
             String? error,
-            List<Map<String, dynamic>> questions,
-            bool goToHomeRequested)?
+            bool goToHomeRequested,
+            PollSubmissionResultEntity? submissionResult)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _CarbonCalculateState() when $default != null:
-        return $default(_that.currentStep, _that.answers, _that.isLoading,
-            _that.error, _that.questions, _that.goToHomeRequested);
+        return $default(
+            _that.status,
+            _that.currentStep,
+            _that.pollSetId,
+            _that.pollDescription,
+            _that.questions,
+            _that.answers,
+            _that.error,
+            _that.goToHomeRequested,
+            _that.submissionResult);
       case _:
         return orElse();
     }
@@ -254,19 +302,30 @@ extension CarbonCalculateStatePatterns on CarbonCalculateState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
+            CarbonCalculateStatus status,
             int currentStep,
-            Map<int, dynamic> answers,
-            bool isLoading,
+            String? pollSetId,
+            String pollDescription,
+            List<PollQuestionEntity> questions,
+            Map<String, String> answers,
             String? error,
-            List<Map<String, dynamic>> questions,
-            bool goToHomeRequested)
+            bool goToHomeRequested,
+            PollSubmissionResultEntity? submissionResult)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _CarbonCalculateState():
-        return $default(_that.currentStep, _that.answers, _that.isLoading,
-            _that.error, _that.questions, _that.goToHomeRequested);
+        return $default(
+            _that.status,
+            _that.currentStep,
+            _that.pollSetId,
+            _that.pollDescription,
+            _that.questions,
+            _that.answers,
+            _that.error,
+            _that.goToHomeRequested,
+            _that.submissionResult);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -287,19 +346,30 @@ extension CarbonCalculateStatePatterns on CarbonCalculateState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
+            CarbonCalculateStatus status,
             int currentStep,
-            Map<int, dynamic> answers,
-            bool isLoading,
+            String? pollSetId,
+            String pollDescription,
+            List<PollQuestionEntity> questions,
+            Map<String, String> answers,
             String? error,
-            List<Map<String, dynamic>> questions,
-            bool goToHomeRequested)?
+            bool goToHomeRequested,
+            PollSubmissionResultEntity? submissionResult)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _CarbonCalculateState() when $default != null:
-        return $default(_that.currentStep, _that.answers, _that.isLoading,
-            _that.error, _that.questions, _that.goToHomeRequested);
+        return $default(
+            _that.status,
+            _that.currentStep,
+            _that.pollSetId,
+            _that.pollDescription,
+            _that.questions,
+            _that.answers,
+            _that.error,
+            _that.goToHomeRequested,
+            _that.submissionResult);
       case _:
         return null;
     }
@@ -310,45 +380,66 @@ extension CarbonCalculateStatePatterns on CarbonCalculateState {
 
 class _CarbonCalculateState extends CarbonCalculateState {
   const _CarbonCalculateState(
-      {this.currentStep = 0,
-      final Map<int, dynamic> answers = const {},
-      this.isLoading = false,
+      {this.status = CarbonCalculateStatus.initial,
+      this.currentStep = 0,
+      this.pollSetId,
+      this.pollDescription = '',
+      final List<PollQuestionEntity> questions = const [],
+      final Map<String, String> answers = const {},
       this.error,
-      final List<Map<String, dynamic>> questions = const [],
-      this.goToHomeRequested = false})
-      : _answers = answers,
-        _questions = questions,
+      this.goToHomeRequested = false,
+      this.submissionResult})
+      : _questions = questions,
+        _answers = answers,
         super._();
 
   @override
   @JsonKey()
-  final int currentStep;
-  final Map<int, dynamic> _answers;
+  final CarbonCalculateStatus status;
   @override
   @JsonKey()
-  Map<int, dynamic> get answers {
+  final int currentStep;
+
+  /// Aktif anket ID'si — taslak ve gönderim için gerekli.
+  @override
+  final String? pollSetId;
+
+  /// Anket açıklama metni (bilgi adımında gösterilir).
+  @override
+  @JsonKey()
+  final String pollDescription;
+
+  /// Anket soruları; yüklenince dolar.
+  final List<PollQuestionEntity> _questions;
+
+  /// Anket soruları; yüklenince dolar.
+  @override
+  @JsonKey()
+  List<PollQuestionEntity> get questions {
+    if (_questions is EqualUnmodifiableListView) return _questions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_questions);
+  }
+
+  /// Seçilen cevaplar: `questionId → optionId`
+  final Map<String, String> _answers;
+
+  /// Seçilen cevaplar: `questionId → optionId`
+  @override
+  @JsonKey()
+  Map<String, String> get answers {
     if (_answers is EqualUnmodifiableMapView) return _answers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_answers);
   }
 
   @override
-  @JsonKey()
-  final bool isLoading;
-  @override
   final String? error;
-  final List<Map<String, dynamic>> _questions;
-  @override
-  @JsonKey()
-  List<Map<String, dynamic>> get questions {
-    if (_questions is EqualUnmodifiableListView) return _questions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_questions);
-  }
-
   @override
   @JsonKey()
   final bool goToHomeRequested;
+  @override
+  final PollSubmissionResultEntity? submissionResult;
 
   /// Create a copy of CarbonCalculateState
   /// with the given fields replaced by the non-null parameter values.
@@ -364,31 +455,39 @@ class _CarbonCalculateState extends CarbonCalculateState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CarbonCalculateState &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.currentStep, currentStep) ||
                 other.currentStep == currentStep) &&
-            const DeepCollectionEquality().equals(other._answers, _answers) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.error, error) || other.error == error) &&
+            (identical(other.pollSetId, pollSetId) ||
+                other.pollSetId == pollSetId) &&
+            (identical(other.pollDescription, pollDescription) ||
+                other.pollDescription == pollDescription) &&
             const DeepCollectionEquality()
                 .equals(other._questions, _questions) &&
+            const DeepCollectionEquality().equals(other._answers, _answers) &&
+            (identical(other.error, error) || other.error == error) &&
             (identical(other.goToHomeRequested, goToHomeRequested) ||
-                other.goToHomeRequested == goToHomeRequested));
+                other.goToHomeRequested == goToHomeRequested) &&
+            (identical(other.submissionResult, submissionResult) ||
+                other.submissionResult == submissionResult));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      status,
       currentStep,
-      const DeepCollectionEquality().hash(_answers),
-      isLoading,
-      error,
+      pollSetId,
+      pollDescription,
       const DeepCollectionEquality().hash(_questions),
-      goToHomeRequested);
+      const DeepCollectionEquality().hash(_answers),
+      error,
+      goToHomeRequested,
+      submissionResult);
 
   @override
   String toString() {
-    return 'CarbonCalculateState(currentStep: $currentStep, answers: $answers, isLoading: $isLoading, error: $error, questions: $questions, goToHomeRequested: $goToHomeRequested)';
+    return 'CarbonCalculateState(status: $status, currentStep: $currentStep, pollSetId: $pollSetId, pollDescription: $pollDescription, questions: $questions, answers: $answers, error: $error, goToHomeRequested: $goToHomeRequested, submissionResult: $submissionResult)';
   }
 }
 
@@ -401,12 +500,15 @@ abstract mixin class _$CarbonCalculateStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int currentStep,
-      Map<int, dynamic> answers,
-      bool isLoading,
+      {CarbonCalculateStatus status,
+      int currentStep,
+      String? pollSetId,
+      String pollDescription,
+      List<PollQuestionEntity> questions,
+      Map<String, String> answers,
       String? error,
-      List<Map<String, dynamic>> questions,
-      bool goToHomeRequested});
+      bool goToHomeRequested,
+      PollSubmissionResultEntity? submissionResult});
 }
 
 /// @nodoc
@@ -422,38 +524,53 @@ class __$CarbonCalculateStateCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
+    Object? status = null,
     Object? currentStep = null,
-    Object? answers = null,
-    Object? isLoading = null,
-    Object? error = freezed,
+    Object? pollSetId = freezed,
+    Object? pollDescription = null,
     Object? questions = null,
+    Object? answers = null,
+    Object? error = freezed,
     Object? goToHomeRequested = null,
+    Object? submissionResult = freezed,
   }) {
     return _then(_CarbonCalculateState(
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as CarbonCalculateStatus,
       currentStep: null == currentStep
           ? _self.currentStep
           : currentStep // ignore: cast_nullable_to_non_nullable
               as int,
+      pollSetId: freezed == pollSetId
+          ? _self.pollSetId
+          : pollSetId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pollDescription: null == pollDescription
+          ? _self.pollDescription
+          : pollDescription // ignore: cast_nullable_to_non_nullable
+              as String,
+      questions: null == questions
+          ? _self._questions
+          : questions // ignore: cast_nullable_to_non_nullable
+              as List<PollQuestionEntity>,
       answers: null == answers
           ? _self._answers
           : answers // ignore: cast_nullable_to_non_nullable
-              as Map<int, dynamic>,
-      isLoading: null == isLoading
-          ? _self.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as Map<String, String>,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
-      questions: null == questions
-          ? _self._questions
-          : questions // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
       goToHomeRequested: null == goToHomeRequested
           ? _self.goToHomeRequested
           : goToHomeRequested // ignore: cast_nullable_to_non_nullable
               as bool,
+      submissionResult: freezed == submissionResult
+          ? _self.submissionResult
+          : submissionResult // ignore: cast_nullable_to_non_nullable
+              as PollSubmissionResultEntity?,
     ));
   }
 }

@@ -1,6 +1,5 @@
 part of '../leaderofmonth.dart';
 
-// leaderofmonth_feature_section.dart
 class LeaderofmonthFeatureSection extends StatelessWidget {
   const LeaderofmonthFeatureSection({super.key});
 
@@ -8,20 +7,44 @@ class LeaderofmonthFeatureSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          LeaderRankSelector(
-            builder: (leaders) => LeaderboardContent(leaders: leaders),
+      child: LeaderofmonthStatusSelector(
+        onInitial: () => SizedBox(
+          height: 120.h,
+          child: Center(
+            child: CircularProgressIndicator(color: context.colors.primary),
           ),
-          SizedBox(height: AppThemeSpacing.s10.h),
-          CurrentUserRankSelector(
-            builder: (rank) {
-              if (rank == null) return const SizedBox.shrink();
-              return LeaderboardUserStatus(entity: rank);
-            },
+        ),
+        onLoading: () => SizedBox(
+          height: 200.h,
+          child: Center(
+            child: CircularProgressIndicator(color: context.colors.primary),
           ),
-        ],
+        ),
+        onError: (error) => Padding(
+          padding: EdgeInsets.symmetric(vertical: AppThemeSpacing.s24.h),
+          child: Center(
+            child: Text(
+              error,
+              textAlign: TextAlign.center,
+              style: context.typographiesSp.bodyMedium,
+            ),
+          ),
+        ),
+        onSuccess: () => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            LeaderRankSelector(
+              builder: (leaders) => LeaderboardContent(leaders: leaders),
+            ),
+            SizedBox(height: AppThemeSpacing.s10.h),
+            CurrentUserRankSelector(
+              builder: (rank) {
+                if (rank == null) return const SizedBox.shrink();
+                return LeaderboardUserStatus(entity: rank);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

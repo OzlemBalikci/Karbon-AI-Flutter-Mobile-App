@@ -5,12 +5,9 @@ part 'home_event.freezed.dart';
 
 @freezed
 sealed class HomeEvent with _$HomeEvent {
-  const factory HomeEvent.started() = HomeStarted;
-  const factory HomeEvent.surveyCompleted({
-    required double carbonResult,
-  }) = HomeSurveyCompleted;
+  const factory HomeEvent.fetchRequested() = HomeFetchRequested;
   const factory HomeEvent.refreshRequested() = HomeRefreshRequested;
-  const factory HomeEvent.returnedFromCarbonCalculate() =
-      HomeReturnedFromCarbonCalculate;
-  const factory HomeEvent.loadFailed(String message) = HomeLoadFailed;
+
+  /// Anket tamamlandı — API çağrısı yapmadan doğrudan `main` görünüme geç.
+  const factory HomeEvent.pollCompleted() = HomePollCompleted;
 }

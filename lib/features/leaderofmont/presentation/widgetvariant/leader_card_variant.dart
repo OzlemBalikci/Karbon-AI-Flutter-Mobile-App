@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum LeaderCardVariant {
-  compact, //AnaSayfa(iconsuz hal + seeother)
+  compact, //Home
   expanded, // leaderofmonth
 }
 

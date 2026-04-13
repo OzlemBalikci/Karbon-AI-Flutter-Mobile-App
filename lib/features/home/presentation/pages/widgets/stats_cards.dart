@@ -9,6 +9,7 @@ class StatsCards extends StatelessWidget {
     required this.borderColor,
     this.hasShadow = false,
     this.onTap,
+    this.remainingFooter,
   });
 
   final String title;
@@ -17,6 +18,9 @@ class StatsCards extends StatelessWidget {
   final Color borderColor;
   final VoidCallback? onTap;
   final bool hasShadow;
+
+  /// Alt şerit: örn. "120.000 ağaç kaldı." — null ise şerit gösterilmez.
+  final String? remainingFooter;
 
   @override
   Widget build(BuildContext context) {
@@ -55,33 +59,34 @@ class StatsCards extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          bottom: -16.h,
-          left: 0,
-          right: 0,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
-            child: Container(
-              width: double.infinity,
-              height: 44.h,
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(AppThemeSpacing.r10.r)),
-                border: Border.all(color: Color(0xFFA9C5B8), width: 1.w),
-                color: Color(0xFFF1FBF6),
-              ),
-              child: Center(
-                child: Text(
-                  "12.0000 ağaç kaldı.",
-                  style: context.typographiesSp.bodyExtraSmall.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: context.colors.carbonQuestion,
+        if (remainingFooter != null && remainingFooter!.isNotEmpty)
+          Positioned(
+            bottom: -16.h,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
+              child: Container(
+                width: double.infinity,
+                height: 44.h,
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(AppThemeSpacing.r10.r)),
+                  border: Border.all(color: Color(0xFFA9C5B8), width: 1.w),
+                  color: Color(0xFFF1FBF6),
+                ),
+                child: Center(
+                  child: Text(
+                    remainingFooter!,
+                    style: context.typographiesSp.bodyExtraSmall.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: context.colors.carbonQuestion,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
       ],
     );
   }

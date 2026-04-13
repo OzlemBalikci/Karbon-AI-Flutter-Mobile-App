@@ -1,110 +1,71 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:karbon/features/home/domain/usecases/get_home_usecase.dart';
 import 'package:karbon/features/home/presentation/bloc/home_event.dart';
 import 'package:karbon/features/home/presentation/bloc/home_state.dart';
-import 'package:karbon/features/home/domain/repositories/home_repository.dart';
 
 @injectable
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final HomeRepository _homeRepository;
-
-  HomeBloc(this._homeRepository) : super(HomeState.initial()) {
-    on<HomeStarted>(_onStarted);
-    on<HomeSurveyCompleted>(_onSurveyCompleted);
+  HomeBloc(this._getHome) : super(HomeState.initial()) {
+    on<HomeFetchRequested>(_onFetchRequested);
     on<HomeRefreshRequested>(_onRefreshRequested);
-    on<HomeLoadFailed>(_onLoadFailed);
-    on<HomeReturnedFromCarbonCalculate>(_onReturnedFromCarbonCalculate);
+    on<HomePollCompleted>(_onPollCompleted);
   }
 
-  Future<void> _onStarted(HomeStarted event, Emitter<HomeState> emit) async {
+  final GetHomeUseCase _getHome;
+
+  Future<void> _fetchHome(Emitter<HomeState> emit) async {
+    final result = await _getHome();
+    result.fold(
+      (e) => emit(state.copyWith(
+        status: HomeStatus.error,
+        error: e.toString(),
+      )),
+      (dashboard) => emit(state.copyWith(
+        status: HomeStatus.success,
+        viewType: dashboard.hasCompletedPoll
+            ? HomeViewType.main
+            : HomeViewType.initial,
+        hasCompletedPoll: dashboard.hasCompletedPoll,
+        globalTarget: dashboard.globalTarget,
+        monthlyTarget: dashboard.monthlyTarget,
+        topLeaders: dashboard.topLeaders ?? [],
+        error: null,
+      )),
+    );
+  }
+
+  Future<void> _onFetchRequested(
+    HomeFetchRequested event,
+    Emitter<HomeState> emit,
+  ) async {
     try {
       emit(state.copyWith(status: HomeStatus.loading, error: null));
-      final now = DateTime.now();
-      final lastDate = await _homeRepository.getLastSurveyDate();
-      final isNewMonth = lastDate == null || _isDifferentMonth(lastDate, now);
-      final dashboardResult = await _homeRepository.getMonthlyLeaderboard(
-        month: now.month,
-        year: now.year,
-      );
-      dashboardResult.fold(
-        (e) => emit(state.copyWith(
-          status: HomeStatus.failed,
-          error: e.toString(),
-        )),
-        (dashboard) => emit(state.copyWith(
-          status: HomeStatus.loaded,
-          viewType: isNewMonth ? HomeViewType.initial : HomeViewType.main,
-          yearlyTreeCount: dashboard.yearlyTreeCount,
-          monthlyTreeCount: dashboard.monthlyTreeCount,
-        )),
-      );
+      await _fetchHome(emit);
     } on Exception catch (e) {
-      emit(state.copyWith(status: HomeStatus.failed, error: e.toString()));
-    }
-  }
-
-  Future<void> _onSurveyCompleted(
-      HomeSurveyCompleted event, Emitter<HomeState> emit) async {
-    try {
-      await _homeRepository.saveLastSurveyDate(DateTime.now());
-
-      emit(state.copyWith(
-        status: HomeStatus.loaded,
-        viewType: HomeViewType.main,
-        totalCarbon: event.carbonResult,
-      ));
-    } on Exception catch (e) {
-      emit(state.copyWith(
-        status: HomeStatus.failed,
-        error: e.toString(),
-      ));
+      emit(state.copyWith(status: HomeStatus.error, error: e.toString()));
     }
   }
 
   Future<void> _onRefreshRequested(
-      HomeRefreshRequested event, Emitter<HomeState> emit) async {
+    HomeRefreshRequested event,
+    Emitter<HomeState> emit,
+  ) async {
     try {
-      emit(state.copyWith(status: HomeStatus.loading));
-      // TODO: veri yenileme
-      emit(state.copyWith(status: HomeStatus.loaded));
+      emit(state.copyWith(status: HomeStatus.loading, error: null));
+      await _fetchHome(emit);
     } on Exception catch (e) {
-      emit(state.copyWith(
-        status: HomeStatus.failed,
-        error: e.toString(),
-      ));
+      emit(state.copyWith(status: HomeStatus.error, error: e.toString()));
     }
   }
 
-  Future<void> _onLoadFailed(
-      HomeLoadFailed event, Emitter<HomeState> emit) async {
-    try {
-      emit(state.copyWith(
-        status: HomeStatus.failed,
-        error: event.message,
-      ));
-    } on Exception catch (e) {
-      emit(state.copyWith(
-        status: HomeStatus.failed,
-        error: e.toString(),
-      ));
-    }
+  void _onPollCompleted(
+    HomePollCompleted event,
+    Emitter<HomeState> emit,
+  ) {
+    emit(state.copyWith(
+      hasCompletedPoll: true,
+      viewType: HomeViewType.main,
+    ));
   }
-
-  Future<void> _onReturnedFromCarbonCalculate(
-      HomeReturnedFromCarbonCalculate event, Emitter<HomeState> emit) async {
-    try {
-      emit(state.copyWith(
-        status: HomeStatus.loaded,
-        viewType: HomeViewType.main,
-      ));
-    } on Exception catch (e) {
-      emit(state.copyWith(
-        status: HomeStatus.failed,
-        error: e.toString(),
-      ));
-    }
-  }
-
-  bool _isDifferentMonth(DateTime a, DateTime b) =>
-      a.year != b.year || a.month != b.month;
 }

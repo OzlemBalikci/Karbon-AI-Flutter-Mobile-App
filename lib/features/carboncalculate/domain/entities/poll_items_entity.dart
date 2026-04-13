@@ -49,7 +49,9 @@ class PollOptionEntity {
   final String? nextPollQuestionId;
 }
 
-/// POST `/api/v1/polls/draft` ve `/api/v1/polls/answers` — domain; JSON için [PollAnswerItemEntity].
+/// POST `/api/v1/polls/draft` ve `/api/v1/polls/answers` — domain cevap satırı.
+/// İstek serileştirme: `PollAnswerItemRequestDto` (`poll_submission_result_dto.dart`).
+
 class PollAnswerItemEntity {
   const PollAnswerItemEntity({
     required this.questionId,
@@ -58,11 +60,6 @@ class PollAnswerItemEntity {
 
   final String questionId;
   final String optionId;
-
-  Map<String, dynamic> toJson() => {
-        'questionId': questionId,
-        'optionId': optionId,
-      };
 }
 
 /// POST `/api/v1/polls/draft` ve `/api/v1/polls/answers` — domain; JSON için [PollSubmissionResultEntity].

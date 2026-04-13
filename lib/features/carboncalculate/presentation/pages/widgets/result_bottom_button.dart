@@ -26,10 +26,8 @@ class CarbonCalculateResultBottomButton extends StatelessWidget {
             foregroundColor: context.colors.textOnPrimary,
             borderColor: context.colors.primary,
             onPressed: () {
-              context
-                  .read<HomeBloc>()
-                  .add(const HomeEvent.returnedFromCarbonCalculate());
-              context.router.replaceAll([const HomeShellRoute()]);
+              context.read<HomeBloc>().add(const HomeEvent.pollCompleted());
+              context.router.replaceAll([const HomeRoute()]);
             },
           ),
         ],

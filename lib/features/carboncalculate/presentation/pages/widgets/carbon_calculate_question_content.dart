@@ -12,12 +12,13 @@ class CarbonCalculateQuestionContent extends StatelessWidget {
             ? CarbonCalculateQuestion(
                 questionText: questionData.questionText,
                 options: questionData.options,
-                selectedValue: questionData.selectedValue,
+                selectedOptionId: questionData.selectedOptionId,
                 onOptionSelected: (val) {
+                  if (val == null) return;
                   context.read<CarbonCalculateBloc>().add(
                         CarbonCalculateEvent.answerSelected(
-                          questionIndex: questionData.questionIndex,
-                          value: val,
+                          questionId: questionData.questionId,
+                          optionId: val,
                         ),
                       );
                 },

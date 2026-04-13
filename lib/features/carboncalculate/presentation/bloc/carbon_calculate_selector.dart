@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_bloc.dart';
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_state.dart';
 import 'package:karbon/features/carboncalculate/domain/carbon_calculate_phase.dart';
+import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 
 typedef CarbonProgressData = ({int? current, int? max});
 typedef CarbonQuestionViewData = ({
+  String questionId,
   String questionText,
-  List<dynamic> options,
-  int? selectedValue,
+  List<PollOptionEntity> options,
+  String? selectedOptionId,
   int questionIndex
 });
 
@@ -19,6 +21,32 @@ class CarbonCalculateSelector<T>
     required super.selector,
     required Widget Function(T) builder,
   }) : super(builder: (_, value) => builder(value));
+}
+
+class CarbonCalculateStatusSelector
+    extends CarbonCalculateSelector<CarbonCalculateStatus> {
+  CarbonCalculateStatusSelector({
+    super.key,
+    required Widget Function() onLoading,
+    required Widget Function(String error) onError,
+    required Widget Function() onSuccess,
+    required Widget Function() onSubmitting,
+    Widget Function()? onInitial,
+  }) : super(
+          selector: (state) => state.status,
+          builder: (status) => switch (status) {
+            CarbonCalculateStatus.initial =>
+              onInitial?.call() ?? const SizedBox.shrink(),
+            CarbonCalculateStatus.loading => onLoading(),
+            CarbonCalculateStatus.error =>
+              BlocSelector<CarbonCalculateBloc, CarbonCalculateState, String?>(
+                selector: (state) => state.error,
+                builder: (_, error) => onError(error ?? 'Bir hata oluştu'),
+              ),
+            CarbonCalculateStatus.success => onSuccess(),
+            CarbonCalculateStatus.submitting => onSubmitting(),
+          },
+        );
 }
 
 class CarbonPhaseSelector
@@ -51,11 +79,7 @@ class CarbonInfoTextSelector extends CarbonCalculateSelector<String> {
     super.key,
     required Widget Function(String infoText) builder,
   }) : super(
-          selector: (state) => state.questions.isNotEmpty &&
-                  state.questionIndex < state.questions.length
-              ? (state.questions[state.questionIndex]['infoText'] as String? ??
-                  '')
-              : '',
+          selector: (state) => state.pollDescription,
           builder: builder,
         );
 }
@@ -75,9 +99,10 @@ class CarbonQuestionContentSelector
               return null;
             final q = state.questions[questionIndex];
             return (
-              questionText: q['question'] as String? ?? '',
-              options: q['options'] as List<dynamic>? ?? [],
-              selectedValue: state.answers[state.questionIndex] as int?,
+              questionId: q.id,
+              questionText: q.text,
+              options: q.options,
+              selectedOptionId: state.answers[q.id],
               questionIndex: questionIndex,
             );
           },

@@ -7,7 +7,8 @@ import 'package:karbon/features/leaderofmont/data/models/leaderboard_data_dto.da
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
 /// Canlı HTTP — GET `/api/v1/user-results/leaderboard`.
-@LazySingleton(as: LeaderboardRemote)
+/// Mock için [LeaderboardRemoteMock] kayıtlıyken bu sınıf `@Injectable()` kalır.
+@Injectable()
 class LeaderboardRemoteImpl implements LeaderboardRemote {
   LeaderboardRemoteImpl(this._dio);
 

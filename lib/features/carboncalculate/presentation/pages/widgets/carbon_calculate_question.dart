@@ -5,19 +5,19 @@ class CarbonCalculateQuestion extends StatelessWidget {
     super.key,
     required this.questionText,
     required this.options,
-    required this.selectedValue,
+    required this.selectedOptionId,
     required this.onOptionSelected,
   });
 
   final String questionText;
-  final List<dynamic> options;
-  final int? selectedValue;
-  final ValueChanged<int?> onOptionSelected;
+  final List<PollOptionEntity> options;
+  final String? selectedOptionId;
+  final ValueChanged<String?> onOptionSelected;
 
   @override
   Widget build(BuildContext context) {
-    return RadioGroup<int>(
-      groupValue: selectedValue,
+    return RadioGroup<String>(
+      groupValue: selectedOptionId,
       onChanged: onOptionSelected,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -30,11 +30,10 @@ class CarbonCalculateQuestion extends StatelessWidget {
           ),
           SizedBox(height: AppThemeSpacing.s30.h),
           ...options.map((opt) {
-            final map = opt as Map<String, dynamic>;
             return CarbonCalculateRadioOption(
-              label: map['label'] as String? ?? '',
-              value: map['value'] as int,
-              selectedValue: selectedValue,
+              label: opt.text,
+              value: opt.id,
+              selectedValue: selectedOptionId,
             );
           }),
         ],

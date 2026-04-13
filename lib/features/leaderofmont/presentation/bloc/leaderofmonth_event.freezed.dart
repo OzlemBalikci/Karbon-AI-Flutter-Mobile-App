@@ -51,14 +51,14 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(LeaderofmonthInitialized value)? initialized,
+    TResult Function(LeaderofmonthFetchRequested value)? fetchRequested,
     TResult Function(LeaderofmonthRefreshRequested value)? refreshRequested,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthInitialized() when initialized != null:
-        return initialized(_that);
+      case LeaderofmonthFetchRequested() when fetchRequested != null:
+        return fetchRequested(_that);
       case LeaderofmonthRefreshRequested() when refreshRequested != null:
         return refreshRequested(_that);
       case _:
@@ -81,14 +81,14 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(LeaderofmonthInitialized value) initialized,
+    required TResult Function(LeaderofmonthFetchRequested value) fetchRequested,
     required TResult Function(LeaderofmonthRefreshRequested value)
         refreshRequested,
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthInitialized():
-        return initialized(_that);
+      case LeaderofmonthFetchRequested():
+        return fetchRequested(_that);
       case LeaderofmonthRefreshRequested():
         return refreshRequested(_that);
     }
@@ -108,13 +108,13 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(LeaderofmonthInitialized value)? initialized,
+    TResult? Function(LeaderofmonthFetchRequested value)? fetchRequested,
     TResult? Function(LeaderofmonthRefreshRequested value)? refreshRequested,
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthInitialized() when initialized != null:
-        return initialized(_that);
+      case LeaderofmonthFetchRequested() when fetchRequested != null:
+        return fetchRequested(_that);
       case LeaderofmonthRefreshRequested() when refreshRequested != null:
         return refreshRequested(_that);
       case _:
@@ -136,14 +136,14 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int month, int year)? initialized,
+    TResult Function()? fetchRequested,
     TResult Function()? refreshRequested,
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthInitialized() when initialized != null:
-        return initialized(_that.month, _that.year);
+      case LeaderofmonthFetchRequested() when fetchRequested != null:
+        return fetchRequested();
       case LeaderofmonthRefreshRequested() when refreshRequested != null:
         return refreshRequested();
       case _:
@@ -166,13 +166,13 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int month, int year) initialized,
+    required TResult Function() fetchRequested,
     required TResult Function() refreshRequested,
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthInitialized():
-        return initialized(_that.month, _that.year);
+      case LeaderofmonthFetchRequested():
+        return fetchRequested();
       case LeaderofmonthRefreshRequested():
         return refreshRequested();
     }
@@ -192,13 +192,13 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int month, int year)? initialized,
+    TResult? Function()? fetchRequested,
     TResult? Function()? refreshRequested,
   }) {
     final _that = this;
     switch (_that) {
-      case LeaderofmonthInitialized() when initialized != null:
-        return initialized(_that.month, _that.year);
+      case LeaderofmonthFetchRequested() when fetchRequested != null:
+        return fetchRequested();
       case LeaderofmonthRefreshRequested() when refreshRequested != null:
         return refreshRequested();
       case _:
@@ -209,73 +209,22 @@ extension LeaderofmonthEventPatterns on LeaderofmonthEvent {
 
 /// @nodoc
 
-class LeaderofmonthInitialized implements LeaderofmonthEvent {
-  const LeaderofmonthInitialized({required this.month, required this.year});
-
-  final int month;
-  final int year;
-
-  /// Create a copy of LeaderofmonthEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $LeaderofmonthInitializedCopyWith<LeaderofmonthInitialized> get copyWith =>
-      _$LeaderofmonthInitializedCopyWithImpl<LeaderofmonthInitialized>(
-          this, _$identity);
+class LeaderofmonthFetchRequested implements LeaderofmonthEvent {
+  const LeaderofmonthFetchRequested();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is LeaderofmonthInitialized &&
-            (identical(other.month, month) || other.month == month) &&
-            (identical(other.year, year) || other.year == year));
+            other is LeaderofmonthFetchRequested);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, month, year);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   String toString() {
-    return 'LeaderofmonthEvent.initialized(month: $month, year: $year)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $LeaderofmonthInitializedCopyWith<$Res>
-    implements $LeaderofmonthEventCopyWith<$Res> {
-  factory $LeaderofmonthInitializedCopyWith(LeaderofmonthInitialized value,
-          $Res Function(LeaderofmonthInitialized) _then) =
-      _$LeaderofmonthInitializedCopyWithImpl;
-  @useResult
-  $Res call({int month, int year});
-}
-
-/// @nodoc
-class _$LeaderofmonthInitializedCopyWithImpl<$Res>
-    implements $LeaderofmonthInitializedCopyWith<$Res> {
-  _$LeaderofmonthInitializedCopyWithImpl(this._self, this._then);
-
-  final LeaderofmonthInitialized _self;
-  final $Res Function(LeaderofmonthInitialized) _then;
-
-  /// Create a copy of LeaderofmonthEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? month = null,
-    Object? year = null,
-  }) {
-    return _then(LeaderofmonthInitialized(
-      month: null == month
-          ? _self.month
-          : month // ignore: cast_nullable_to_non_nullable
-              as int,
-      year: null == year
-          ? _self.year
-          : year // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
+    return 'LeaderofmonthEvent.fetchRequested()';
   }
 }
 

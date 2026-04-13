@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
-import 'package:karbon/features/leaderofmont/presentation/models/leader_card_variant.dart';
+import 'package:karbon/features/leaderofmont/presentation/widgetvariant/leader_card_variant.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_selector.dart';

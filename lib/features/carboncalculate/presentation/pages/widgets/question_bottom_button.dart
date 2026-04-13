@@ -34,7 +34,8 @@ class CarbonCalculateQuestionBottom extends StatelessWidget {
                   onPressed: isAnswered
                       ? () => context.read<CarbonCalculateBloc>().add(
                             isLastQuestion
-                                ? const CarbonCalculateEvent.finishPressed()
+                                ? const CarbonCalculateEvent
+                                    .submitAnswersRequested()
                                 : const CarbonCalculateEvent.nextPressed(),
                           )
                       : null,
