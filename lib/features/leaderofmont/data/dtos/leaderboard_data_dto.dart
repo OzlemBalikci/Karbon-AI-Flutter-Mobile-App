@@ -1,6 +1,5 @@
-import 'package:karbon/features/leaderofmont/data/models/leaderboard_leader_dto.dart';
-import 'package:karbon/features/leaderofmont/data/models/currentuser_rank_dto.dart';
-import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
+import 'package:karbon/features/leaderofmont/data/dtos/currentuser_rank_dto.dart';
+import 'package:karbon/features/leaderofmont/data/dtos/leaderboard_leader_dto.dart';
 
 class LeaderboardDataDto {
   const LeaderboardDataDto({
@@ -38,10 +37,4 @@ class LeaderboardDataDto {
           : CurrentUserRankDto.fromJson(const {}),
     );
   }
-
-  LeaderboardDataEntity toEntity() => LeaderboardDataEntity(
-        podium: podium.map((e) => e.toEntity()).toList(),
-        leaders: leaders.map((e) => e.toEntity()).toList(),
-        currentUserRank: currentUserRank.toEntity(),
-      );
 }

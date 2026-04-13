@@ -1,5 +1,3 @@
-import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
-
 class LeaderboardLeaderDto {
   const LeaderboardLeaderDto({
     required this.rank,
@@ -21,11 +19,4 @@ class LeaderboardLeaderDto {
       isCurrentUser: json['isCurrentUser'] as bool? ?? false,
     );
   }
-
-  LeaderboardLeaderEntity toEntity() => LeaderboardLeaderEntity(
-        rank: rank,
-        fullName: fullName,
-        treeCount: treeCount,
-        isCurrentUser: isCurrentUser,
-      );
 }

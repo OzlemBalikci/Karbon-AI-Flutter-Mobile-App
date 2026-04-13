@@ -1,5 +1,3 @@
-import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
-
 class CurrentUserRankDto {
   const CurrentUserRankDto({
     required this.rank,
@@ -18,10 +16,4 @@ class CurrentUserRankDto {
       message: json['message'] as String? ?? '',
     );
   }
-
-  CurrentUserRankEntity toEntity() => CurrentUserRankEntity(
-        rank: rank,
-        treeCount: treeCount,
-        message: message,
-      );
 }

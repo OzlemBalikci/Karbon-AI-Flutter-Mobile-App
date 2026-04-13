@@ -3,7 +3,8 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote.dart';
-import 'package:karbon/features/leaderofmont/data/models/leaderboard_data_dto.dart';
+import 'package:karbon/features/leaderofmont/data/dtos/leaderboard_data_dto.dart';
+import 'package:karbon/features/leaderofmont/data/mapper/leaderboard_mapper.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
 /// Canlı HTTP — GET `/api/v1/user-results/leaderboard`.
@@ -36,6 +37,7 @@ class LeaderboardRemoteImpl implements LeaderboardRemote {
       );
     }
     final map = unwrapDataMap(raw);
-    return LeaderboardDataDto.fromJson(map).toEntity();
+    return LeaderboardMapper.toLeaderboardDataEntity(
+        LeaderboardDataDto.fromJson(map));
   }
 }

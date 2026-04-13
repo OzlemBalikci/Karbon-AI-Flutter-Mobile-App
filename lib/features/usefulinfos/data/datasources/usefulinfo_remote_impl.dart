@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart';
-import 'package:karbon/features/usefulinfos/data/models/usefulinfo_dto.dart';
+import 'package:karbon/features/usefulinfos/data/dtos/usefulinfo_dto.dart';
 import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
 
 /// Gerçek HTTP uygulaması — GET `/api/v1/useful-information`.

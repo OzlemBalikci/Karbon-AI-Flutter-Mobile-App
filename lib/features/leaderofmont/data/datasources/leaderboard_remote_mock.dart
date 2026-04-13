@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote.dart';
-import 'package:karbon/features/leaderofmont/data/models/leaderboard_data_dto.dart';
+import 'package:karbon/features/leaderofmont/data/dtos/leaderboard_data_dto.dart';
+import 'package:karbon/features/leaderofmont/data/mapper/leaderboard_mapper.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
 /// Geliştirme: ana sayfa [LeaderCardRow] + liderlik ekranı için örnek veri.
@@ -13,7 +14,9 @@ class LeaderboardRemoteMock implements LeaderboardRemote {
     required int year,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 100));
-    return LeaderboardDataDto.fromJson(_sampleData).toEntity();
+    return LeaderboardMapper.toLeaderboardDataEntity(
+        LeaderboardDataDto.fromJson(_sampleData));
+
   }
 
   static final Map<String, dynamic> _sampleData = <String, dynamic>{
