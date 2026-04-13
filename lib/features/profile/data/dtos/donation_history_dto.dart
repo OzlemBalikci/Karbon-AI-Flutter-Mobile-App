@@ -1,5 +1,4 @@
-import 'package:karbon/features/profile/data/models/donation_item_dto.dart';
-import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
+import 'package:karbon/features/profile/data/dtos/donation_item_dto.dart';
 
 class DonationHistoryDto {
   const DonationHistoryDto({
@@ -20,9 +19,4 @@ class DonationHistoryDto {
           .toList(),
     );
   }
-
-  DonationHistoryEntity toEntity() => DonationHistoryEntity(
-        totalDonatedTreeCount: totalDonatedTreeCount,
-        donations: donations.map((e) => e.toEntity()).toList(),
-      );
 }

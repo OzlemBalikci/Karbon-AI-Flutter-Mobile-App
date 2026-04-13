@@ -1,5 +1,3 @@
-import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
-
 class UserProfileDto {
   const UserProfileDto({
     required this.identityNumber,
@@ -30,14 +28,4 @@ class UserProfileDto {
       availableTreeCount: (json['availableTreeCount'] as num?)?.toInt() ?? 0,
     );
   }
-
-  UserProfileEntity toEntity() => UserProfileEntity(
-        identityNumber: identityNumber,
-        name: name,
-        surname: surname,
-        birthDate: birthDate,
-        totalPoints: totalPoints,
-        donatedTreeCount: donatedTreeCount,
-        availableTreeCount: availableTreeCount,
-      );
 }

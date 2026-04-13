@@ -1,5 +1,7 @@
+import 'package:equatable/equatable.dart';
+
 /// GET `/api/v1/users/me/profile`
-class UserProfileEntity {
+class UserProfileEntity extends Equatable {
   const UserProfileEntity({
     required this.identityNumber,
     required this.name,
@@ -17,10 +19,20 @@ class UserProfileEntity {
   final double totalPoints;
   final int donatedTreeCount;
   final int availableTreeCount;
+  @override
+  List<Object?> get props => [
+        identityNumber,
+        name,
+        surname,
+        birthDate,
+        totalPoints,
+        donatedTreeCount,
+        availableTreeCount
+      ];
 }
 
 /// GET `/api/v1/users/me/donations` — `donations` listesindeki öğe.
-class DonationItemEntity {
+class DonationItemEntity extends Equatable {
   const DonationItemEntity({
     required this.treeCount,
     required this.pointsSpent,
@@ -30,10 +42,12 @@ class DonationItemEntity {
   final int treeCount;
   final double pointsSpent;
   final DateTime donationDate;
+  @override
+  List<Object?> get props => [treeCount, pointsSpent, donationDate];
 }
 
 /// GET `/api/v1/users/me/donations`
-class DonationHistoryEntity {
+class DonationHistoryEntity extends Equatable {
   const DonationHistoryEntity({
     required this.totalDonatedTreeCount,
     required this.donations,
@@ -41,10 +55,12 @@ class DonationHistoryEntity {
 
   final int totalDonatedTreeCount;
   final List<DonationItemEntity> donations;
+  @override
+  List<Object?> get props => [totalDonatedTreeCount, donations];
 }
 
 /// POST `/api/v1/users/me/donations`
-class DonateTreesResultEntity {
+class DonateTreesResultEntity extends Equatable {
   const DonateTreesResultEntity({
     required this.donatedTreeCount,
     required this.totalDonatedTreeCount,
@@ -52,4 +68,6 @@ class DonateTreesResultEntity {
 
   final int donatedTreeCount;
   final int totalDonatedTreeCount;
+  @override
+  List<Object?> get props => [donatedTreeCount, totalDonatedTreeCount];
 }

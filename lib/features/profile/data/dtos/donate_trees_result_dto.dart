@@ -1,5 +1,3 @@
-import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
-
 class DonateTreesResultDto {
   const DonateTreesResultDto({
     required this.donatedTreeCount,
@@ -16,9 +14,4 @@ class DonateTreesResultDto {
           (json['totalDonatedTreeCount'] as num?)?.toInt() ?? 0,
     );
   }
-
-  DonateTreesResultEntity toEntity() => DonateTreesResultEntity(
-        donatedTreeCount: donatedTreeCount,
-        totalDonatedTreeCount: totalDonatedTreeCount,
-      );
 }

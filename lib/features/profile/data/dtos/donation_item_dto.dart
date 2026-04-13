@@ -1,5 +1,3 @@
-import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
-
 class DonationItemDto {
   const DonationItemDto({
     required this.treeCount,
@@ -18,10 +16,4 @@ class DonationItemDto {
       donationDate: DateTime.parse(json['donationDate'] as String),
     );
   }
-
-  DonationItemEntity toEntity() => DonationItemEntity(
-        treeCount: treeCount,
-        pointsSpent: pointsSpent,
-        donationDate: donationDate,
-      );
 }

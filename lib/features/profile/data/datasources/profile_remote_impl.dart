@@ -4,7 +4,10 @@ import 'package:karbon/core/networks/api_config.dart';
 import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/profile/data/datasources/profile_mock_data.dart';
 import 'package:karbon/features/profile/data/datasources/profile_remote.dart';
-import 'package:karbon/features/profile/data/models/profile_dtos.dart';
+import 'package:karbon/features/profile/data/dtos/donate_trees_result_dto.dart';
+import 'package:karbon/features/profile/data/dtos/donation_history_dto.dart';
+import 'package:karbon/features/profile/data/dtos/user_profile_dto.dart';
+import 'package:karbon/features/profile/data/mapper/profile_mapper.dart';
 import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
 
 /// Gerçek HTTP + geliştirme mock’u.
@@ -33,7 +36,7 @@ class ProfileRemoteImpl implements ProfileRemote {
     }
     final res = await _dio.get<dynamic>(_profilePath);
     final data = unwrapDataMap(res.data);
-    return UserProfileDto.fromJson(data).toEntity();
+    return ProfileMapper.toUserProfileEntity(UserProfileDto.fromJson(data));
   }
 
   @override
@@ -44,7 +47,8 @@ class ProfileRemoteImpl implements ProfileRemote {
     }
     final res = await _dio.get<dynamic>(_donationsPath);
     final data = unwrapDataMap(res.data);
-    return DonationHistoryDto.fromJson(data).toEntity();
+    return ProfileMapper.toDonationHistoryEntity(
+        DonationHistoryDto.fromJson(data));
   }
 
   @override
@@ -55,7 +59,8 @@ class ProfileRemoteImpl implements ProfileRemote {
     }
     final res = await _dio.post<dynamic>(_donationsPath);
     final data = unwrapDataMap(res.data);
-    return DonateTreesResultDto.fromJson(data).toEntity();
+    return ProfileMapper.toDonateTreesResultEntity(
+        DonateTreesResultDto.fromJson(data));
   }
 
   @override
