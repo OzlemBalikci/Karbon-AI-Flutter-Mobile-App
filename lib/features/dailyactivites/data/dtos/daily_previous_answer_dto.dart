@@ -1,5 +1,3 @@
-import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
-
 class DailyPreviousAnswerItemDto {
   const DailyPreviousAnswerItemDto({
     required this.questionText,
@@ -21,11 +19,25 @@ class DailyPreviousAnswerItemDto {
       date: json['date'] as String? ?? '',
     );
   }
+}
 
-  DailyPreviousAnswerItemEntity toEntity() => DailyPreviousAnswerItemEntity(
-        questionText: questionText,
-        answerText: answerText,
-        score: score,
-        date: date,
-      );
+class DailyPreviousAnswersByDateDto {
+  const DailyPreviousAnswersByDateDto({
+    required this.date,
+    required this.answers,
+  });
+
+  final String date;
+  final List<DailyPreviousAnswerItemDto> answers;
+
+  factory DailyPreviousAnswersByDateDto.fromJson(Map<String, dynamic> json) {
+    final raw = json['answers'] as List<dynamic>? ?? [];
+    return DailyPreviousAnswersByDateDto(
+      date: json['date'] as String? ?? '',
+      answers: raw
+          .map((e) =>
+              DailyPreviousAnswerItemDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+  }
 }

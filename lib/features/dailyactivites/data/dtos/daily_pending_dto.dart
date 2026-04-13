@@ -1,5 +1,3 @@
-import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
-
 class DailyPendingDto {
   const DailyPendingDto({
     required this.hasPending,
@@ -15,9 +13,4 @@ class DailyPendingDto {
       pendingCount: (json['pendingCount'] as num?)?.toInt() ?? 0,
     );
   }
-
-  DailyPendingEntity toEntity() => DailyPendingEntity(
-        hasPending: hasPending,
-        pendingCount: pendingCount,
-      );
 }

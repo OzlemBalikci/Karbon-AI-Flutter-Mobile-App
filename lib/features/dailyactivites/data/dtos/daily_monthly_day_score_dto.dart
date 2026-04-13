@@ -1,5 +1,19 @@
-import 'package:karbon/features/dailyactivites/data/models/daily_monthly_day_score_dto.dart';
-import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
+class DailyMonthlyDayScoreDto {
+  const DailyMonthlyDayScoreDto({
+    required this.date,
+    required this.totalScore,
+  });
+
+  final String date;
+  final double totalScore;
+
+  factory DailyMonthlyDayScoreDto.fromJson(Map<String, dynamic> json) {
+    return DailyMonthlyDayScoreDto(
+      date: json['date'] as String? ?? '',
+      totalScore: (json['totalScore'] as num?)?.toDouble() ?? 0,
+    );
+  }
+}
 
 class DailyMonthlyActivitiesDto {
   const DailyMonthlyActivitiesDto({
@@ -15,8 +29,7 @@ class DailyMonthlyActivitiesDto {
   factory DailyMonthlyActivitiesDto.fromJson(Map<String, dynamic> json) {
     final raw = json['dailyScores'] as List<dynamic>? ?? [];
     return DailyMonthlyActivitiesDto(
-      totalMonthlyScore:
-          (json['totalMonthlyScore'] as num?)?.toDouble() ?? 0,
+      totalMonthlyScore: (json['totalMonthlyScore'] as num?)?.toDouble() ?? 0,
       totalPeriodScore: (json['totalPeriodScore'] as num?)?.toDouble() ?? 0,
       dailyScores: raw
           .map((e) =>
@@ -24,10 +37,4 @@ class DailyMonthlyActivitiesDto {
           .toList(),
     );
   }
-
-  DailyMonthlyActivitiesEntity toEntity() => DailyMonthlyActivitiesEntity(
-        totalMonthlyScore: totalMonthlyScore,
-        totalPeriodScore: totalPeriodScore,
-        dailyScores: dailyScores.map((e) => e.toEntity()).toList(),
-      );
 }

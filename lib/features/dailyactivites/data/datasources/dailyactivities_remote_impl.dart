@@ -1,4 +1,11 @@
-import 'package:karbon/features/dailyactivites/data/models/daily_activities_dtos.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_pending_dto.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_previous_answer_dto.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_calendar_dto.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_monthly_day_score_dto.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_day_activity_dto.dart';
+import 'package:karbon/features/dailyactivites/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart';
 import 'package:karbon/core/networks/api_envelope.dart';
@@ -25,8 +32,9 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     final res = await _dio.get<dynamic>('$_v1/questions');
     final raw = unwrapDataList(res.data);
     return raw
-        .map((e) =>
-            DailyQuestionDto.fromJson(e as Map<String, dynamic>).toEntity())
+        .map((e) => DailyActivityMapper.toQuestionEntity(
+              DailyQuestionDto.fromJson(e as Map<String, dynamic>),
+            ))
         .toList();
   }
 
@@ -41,7 +49,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       queryParameters: <String, dynamic>{'status': 'pending'},
     );
     final data = unwrapDataMap(res.data);
-    return DailyPendingDto.fromJson(data).toEntity();
+    return DailyActivityMapper.toPendingEntity(DailyPendingDto.fromJson(data));
   }
 
   @override
@@ -53,9 +61,11 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     final res = await _dio.get<dynamic>('$_v1/previous-answers');
     final raw = unwrapDataList(res.data);
     return raw
-        .map((e) => DailyPreviousAnswersByDateDto.fromJson(
-              e as Map<String, dynamic>,
-            ).toEntity())
+        .map((e) => DailyActivityMapper.toPreviousAnswersByDateEntity(
+              DailyPreviousAnswersByDateDto.fromJson(
+                e as Map<String, dynamic>,
+              ),
+            ))
         .toList();
   }
 
@@ -78,7 +88,8 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       },
     );
     final data = unwrapDataMap(res.data);
-    return DailyCalendarResponseDto.fromJson(data).toEntity();
+    return DailyActivityMapper.toCalendarEntity(
+        DailyCalendarResponseDto.fromJson(data));
   }
 
   @override
@@ -100,7 +111,8 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       },
     );
     final data = unwrapDataMap(res.data);
-    return DailyMonthlyActivitiesDto.fromJson(data).toEntity();
+    return DailyActivityMapper.toMonthlyActivitiesEntity(
+        DailyMonthlyActivitiesDto.fromJson(data));
   }
 
   @override
@@ -125,7 +137,8 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       },
     );
     final data = unwrapDataMap(res.data);
-    return DailyPostAnswerResponseDto.fromJson(data).toEntity();
+    return DailyActivityMapper.toAnswerResultEntity(
+        DailyAnswerResultDto.fromJson(data));
   }
 
   @override
@@ -139,7 +152,8 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       queryParameters: <String, dynamic>{'date': date},
     );
     final data = unwrapDataMap(res.data);
-    return DailyDayDetailDto.fromJson(data).toEntity();
+    return DailyActivityMapper.toDayDetailEntity(
+        DailyDayDetailDto.fromJson(data));
   }
 
   static DailyAnswerResultEntity _mockPostAnswer({
