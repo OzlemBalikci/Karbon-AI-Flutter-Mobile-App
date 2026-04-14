@@ -23,6 +23,7 @@ const _fullScreenRoutes = <String>{
   SelectedQuestionRoute.name,
   SeeAllRoute.name,
   DayDetailRoute.name,
+  CalendarSelectedQuestionDetailRoute.name,
   UsefulinfoRoute.name,
   CarbonCalculateRoute.name,
   LeaderofmonthRoute.name,

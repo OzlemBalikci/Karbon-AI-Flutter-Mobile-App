@@ -27,6 +27,82 @@ class CalendarFirstOpenRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CalendarSelectedQuestionDetailPage]
+class CalendarSelectedQuestionDetailRoute
+    extends PageRouteInfo<CalendarSelectedQuestionDetailRouteArgs> {
+  CalendarSelectedQuestionDetailRoute({
+    Key? key,
+    required String questionText,
+    required String answerText,
+    required double score,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CalendarSelectedQuestionDetailRoute.name,
+          args: CalendarSelectedQuestionDetailRouteArgs(
+            key: key,
+            questionText: questionText,
+            answerText: answerText,
+            score: score,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CalendarSelectedQuestionDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CalendarSelectedQuestionDetailRouteArgs>();
+      return CalendarSelectedQuestionDetailPage(
+        key: args.key,
+        questionText: args.questionText,
+        answerText: args.answerText,
+        score: args.score,
+      );
+    },
+  );
+}
+
+class CalendarSelectedQuestionDetailRouteArgs {
+  const CalendarSelectedQuestionDetailRouteArgs({
+    this.key,
+    required this.questionText,
+    required this.answerText,
+    required this.score,
+  });
+
+  final Key? key;
+
+  final String questionText;
+
+  final String answerText;
+
+  final double score;
+
+  @override
+  String toString() {
+    return 'CalendarSelectedQuestionDetailRouteArgs{key: $key, questionText: $questionText, answerText: $answerText, score: $score}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CalendarSelectedQuestionDetailRouteArgs) return false;
+    return key == other.key &&
+        questionText == other.questionText &&
+        answerText == other.answerText &&
+        score == other.score;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^
+      questionText.hashCode ^
+      answerText.hashCode ^
+      score.hashCode;
+}
+
+/// generated route for
 /// [CalendarShellPage]
 class CalendarShellRoute extends PageRouteInfo<void> {
   const CalendarShellRoute({List<PageRouteInfo>? children})

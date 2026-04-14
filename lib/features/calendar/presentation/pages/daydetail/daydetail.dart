@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:karbon/router/navigation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:karbon/core/constants/extensions.dart';
@@ -7,13 +8,15 @@ import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/di/di.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 import 'package:karbon/features/calendar/domain/usecases/get_details_usecase.dart';
-import 'package:karbon/features/calendar/presentation/pages/daydetail/sections/daydetail_section.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
-import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/widgets/score_card.dart';
+import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/widgets/score_badge.dart';
 
 part 'sections/daydetail_header_section.dart';
+part 'sections/daydetail_list_section.dart';
+part 'widgets/day_detail_list.dart';
 
 String _formatDayDetailScore(double value) {
   if (value == value.roundToDouble()) {
@@ -85,7 +88,8 @@ class _DayDetailPageState extends State<DayDetailPage> {
                     dayLabel: _dayLabel,
                     dayScore: _dayScoreLabel,
                   ),
-                  DayDetailSection(detail: _detail),
+                  SizedBox(height: AppThemeSpacing.s20.h),
+                  DayDetailListSection(detail: _detail),
                 ],
               ),
             ),

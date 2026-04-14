@@ -31,7 +31,7 @@ class DaydetailHeaderSection extends StatelessWidget {
           ),
           SizedBox(height: AppThemeSpacing.s20.h),
           Text(
-            context.text.leaderofmonth_bottom_footer_text,
+            context.text.lorem_ipsum,
             style: context.typographiesSp.bodyExtraSmall
                 .withColor(context.colors.textOnQuestion),
             textAlign: TextAlign.center,

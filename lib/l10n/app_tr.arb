@@ -102,6 +102,8 @@
     "calendar_metric_carbon_points": "Karbon Puanı",
     "calendar_metric_footprint_score": "Karbon Ayak İzi Skoru",
     "calendar_seeallcard_title": "Cevap Detaylarını Gör",
+    "calendar_daydetail_title": "Günlük Aktivite Cevaplarınız",
+    "selected_question_info_banner_text": "Cevaplarınızı gözden geçirebilirsiniz.",
     "lorem_ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
     "points": "puan",
     "tree": "Ağaç"

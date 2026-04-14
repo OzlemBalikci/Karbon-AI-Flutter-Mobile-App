@@ -1,12 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+part of '../daydetail.dart';
 
-import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
-import 'package:karbon/features/calendar/presentation/pages/daydetail/widgets/day_detail_list.dart';
-
-class DayDetailSection extends StatelessWidget {
-  const DayDetailSection({
+class DayDetailListSection extends StatelessWidget {
+  const DayDetailListSection({
     super.key,
     this.detail,
   });
@@ -20,6 +15,12 @@ class DayDetailSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Text(
+            context.text.calendar_daydetail_title,
+            style: context.typographiesSp.bodyMediumSmall
+                .withColor(context.colors.textBlack)
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
           if (detail != null)
             DayDetailHistorySection(activities: detail!.activities),
         ],

@@ -610,6 +610,18 @@ abstract class AppLocalizations {
   /// **'Cevap Detaylarını Gör'**
   String get calendar_seeallcard_title;
 
+  /// No description provided for @calendar_daydetail_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük Aktivite Cevaplarınız'**
+  String get calendar_daydetail_title;
+
+  /// No description provided for @selected_question_info_banner_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Cevaplarınızı gözden geçirebilirsiniz.'**
+  String get selected_question_info_banner_text;
+
   /// No description provided for @lorem_ipsum.
   ///
   /// In tr, this message translates to:

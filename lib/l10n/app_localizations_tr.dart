@@ -292,6 +292,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get calendar_seeallcard_title => 'Cevap Detaylarını Gör';
 
   @override
+  String get calendar_daydetail_title => 'Günlük Aktivite Cevaplarınız';
+
+  @override
+  String get selected_question_info_banner_text =>
+      'Cevaplarınızı gözden geçirebilirsiniz.';
+
+  @override
   String get lorem_ipsum =>
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.';
 

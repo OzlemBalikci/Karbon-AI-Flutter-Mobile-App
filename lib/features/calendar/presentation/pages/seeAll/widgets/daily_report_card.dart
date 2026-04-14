@@ -34,11 +34,10 @@ class DailyReportCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
           boxShadow: [
             BoxShadow(
-              color: Color(0x26000000).withValues(alpha: 0.15),
-              offset: const Offset(0, 4),
-              spreadRadius: 0,
-              blurRadius: 25,
-            ),
+              color: Color(0xFFE4E6E9),
+              offset: Offset(0, 2),
+              blurRadius: 23,
+            )
           ],
         ),
         clipBehavior: Clip.antiAlias,
