@@ -47,6 +47,20 @@ import 'package:karbon/features/auth/presentation/bloc/register/register_bloc.da
     as _i78;
 import 'package:karbon/features/auth/presentation/bloc/settings/settings_bloc.dart'
     as _i614;
+import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart'
+    as _i279;
+import 'package:karbon/features/calendar/data/datasources/calendar_remote_impl.dart'
+    as _i673;
+import 'package:karbon/features/calendar/data/repositories/calendar_repository_impl.dart'
+    as _i800;
+import 'package:karbon/features/calendar/domain/repositories/calendar_repository.dart'
+    as _i623;
+import 'package:karbon/features/calendar/domain/usecases/get_calendar_usecase.dart'
+    as _i24;
+import 'package:karbon/features/calendar/domain/usecases/get_details_usecase.dart'
+    as _i996;
+import 'package:karbon/features/calendar/domain/usecases/get_monthly_activities_usecase.dart'
+    as _i753;
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_local.dart'
     as _i366;
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_local_impl.dart'
@@ -79,12 +93,6 @@ import 'package:karbon/features/dailyactivites/data/repositories/daily_activitie
     as _i449;
 import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart'
     as _i320;
-import 'package:karbon/features/dailyactivites/domain/usacases/get_calendar_usecase.dart'
-    as _i1025;
-import 'package:karbon/features/dailyactivites/domain/usacases/get_details_usecase.dart'
-    as _i715;
-import 'package:karbon/features/dailyactivites/domain/usacases/get_monthly_activities_usecase.dart'
-    as _i519;
 import 'package:karbon/features/dailyactivites/domain/usacases/get_pending_status_usecase.dart'
     as _i448;
 import 'package:karbon/features/dailyactivites/domain/usacases/get_previous_answers_usecase.dart'
@@ -202,6 +210,8 @@ extension GetItInjectableX on _i174.GetIt {
             ));
     gh.factory<_i97.GetUsefulInfosUseCase>(
         () => _i97.GetUsefulInfosUseCase(gh<_i71.UsefulinfoRepository>()));
+    gh.lazySingleton<_i279.CalendarRemote>(
+        () => _i673.CalendarRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i434.UsefulinfoBloc>(
         () => _i434.UsefulinfoBloc(gh<_i97.GetUsefulInfosUseCase>()));
     gh.lazySingleton<_i614.DailyActivitiesRemote>(
@@ -214,6 +224,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i483.ProfileRemote>(
         () => _i103.ProfileRemoteImpl(gh<_i361.Dio>()));
+    gh.lazySingleton<_i623.CalendarRepository>(
+        () => _i800.CalendarRepositoryImpl(gh<_i279.CalendarRemote>()));
     gh.lazySingleton<_i48.ProfileRepository>(
         () => _i758.ProfileRepositoryImpl(gh<_i483.ProfileRemote>()));
     gh.factory<_i1049.DeleteAccountUsecase>(
@@ -258,13 +270,6 @@ extension GetItInjectableX on _i174.GetIt {
         _i449.DailyActivitiesRepositoryImpl(gh<_i614.DailyActivitiesRemote>()));
     gh.factory<_i591.HomeBloc>(
         () => _i591.HomeBloc(gh<_i702.GetHomeUseCase>()));
-    gh.factory<_i1025.GetCalendarUsecase>(
-        () => _i1025.GetCalendarUsecase(gh<_i320.DailyActivitiesRepository>()));
-    gh.factory<_i715.GetDetailsUsecase>(
-        () => _i715.GetDetailsUsecase(gh<_i320.DailyActivitiesRepository>()));
-    gh.factory<_i519.GetMonthlyActivitiesUsecase>(() =>
-        _i519.GetMonthlyActivitiesUsecase(
-            gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i448.GetPendingStatusUsecase>(() =>
         _i448.GetPendingStatusUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i495.GetPreviousAnswersUsecase>(() =>
@@ -273,6 +278,12 @@ extension GetItInjectableX on _i174.GetIt {
         _i671.GetTodayQuestionsUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i902.PostAnswerUsecase>(
         () => _i902.PostAnswerUsecase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i24.GetCalendarUsecase>(
+        () => _i24.GetCalendarUsecase(gh<_i623.CalendarRepository>()));
+    gh.factory<_i753.GetMonthlyActivitiesUsecase>(() =>
+        _i753.GetMonthlyActivitiesUsecase(gh<_i623.CalendarRepository>()));
+    gh.factory<_i996.GetDetailsUsecase>(
+        () => _i996.GetDetailsUsecase(gh<_i623.CalendarRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i210.ForgotPasswordUseCase>(
@@ -289,16 +300,16 @@ extension GetItInjectableX on _i174.GetIt {
         forgotPasswordUseCase: gh<_i210.ForgotPasswordUseCase>()));
     gh.factory<_i171.LoginBloc>(
         () => _i171.LoginBloc(gh<_i1010.LoginUseCase>()));
-    gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(
-          gh<_i793.CheckSessionUseCase>(),
-          gh<_i566.LogoutUseCase>(),
-        ));
     gh.factory<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
           gh<_i671.GetTodayQuestionsUsecase>(),
           gh<_i448.GetPendingStatusUsecase>(),
-          gh<_i1025.GetCalendarUsecase>(),
+          gh<_i24.GetCalendarUsecase>(),
           gh<_i902.PostAnswerUsecase>(),
           gh<_i793.CheckSessionUseCase>(),
+        ));
+    gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(
+          gh<_i793.CheckSessionUseCase>(),
+          gh<_i566.LogoutUseCase>(),
         ));
     gh.factory<_i78.RegisterBloc>(() => _i78.RegisterBloc(
           gh<_i558.RegisterUseCase>(),

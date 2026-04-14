@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:karbon/features/auth/presentation/pages/customfirstopen/customfirstopen.dart';
 import 'package:karbon/features/auth/presentation/pages/login/login.dart';
 import 'package:karbon/features/auth/presentation/pages/forgotpassword/forgot_password.dart';
@@ -16,8 +17,9 @@ import 'package:karbon/router/home_tab_shell.dart';
 import 'package:karbon/router/daily_activities_shell.dart';
 import 'package:karbon/features/auth/presentation/pages/splash/splash.dart';
 import 'package:karbon/router/calendar_shell.dart';
-import 'package:karbon/features/calendar/presentation/calendar_first_open/calendar_first_open_page.dart';
-import 'package:karbon/features/calendar/presentation/seeAll/see_all_page.dart';
+import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/calendar_first_open_page.dart';
+import 'package:karbon/features/calendar/presentation/pages/daydetail/daydetail.dart';
+import 'package:karbon/features/calendar/presentation/pages/seeAll/see_all_page.dart';
 
 part 'navigation.gr.dart';
 
@@ -88,6 +90,10 @@ class AppRouter extends RootStackRouter {
                   AutoRoute(
                     path: 'see-all',
                     page: SeeAllRoute.page,
+                  ),
+                  AutoRoute(
+                    path: 'day-detail',
+                    page: DayDetailRoute.page,
                   ),
                 ]),
             AutoRoute(path: 'profile', page: ProfileRoute.page),

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
 part 'dailyactivities_state.freezed.dart';

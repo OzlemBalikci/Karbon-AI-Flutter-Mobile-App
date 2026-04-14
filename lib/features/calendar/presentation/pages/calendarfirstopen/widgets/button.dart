@@ -131,7 +131,16 @@ class MonthChangeButtonRow extends StatelessWidget {
 }
 
 class DayButton extends StatelessWidget {
-  const DayButton({super.key});
+  const DayButton({
+    super.key,
+    required this.monthLabel,
+    required this.period,
+    required this.onPeriodSelected,
+  });
+
+  final String monthLabel;
+  final int period;
+  final ValueChanged<int> onPeriodSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -140,14 +149,18 @@ class DayButton extends StatelessWidget {
         Expanded(
           child: SizedBox(
             width: double.infinity,
-            child: CalendarButtonShell(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s8.w),
-                child: Text(
-                  '1-15 Aralık',
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+            child: GestureDetector(
+              onTap: () => onPeriodSelected(1),
+              child: CalendarButtonShell(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: AppThemeSpacing.s8.w),
+                  child: Text(
+                    '1–15 $monthLabel',
+                    textAlign: TextAlign.center,
+                    style: context.typographiesSp.bodySmall
+                        .withColor(context.colors.textOnSecondary),
+                  ),
                 ),
               ),
             ),
@@ -157,14 +170,18 @@ class DayButton extends StatelessWidget {
         Expanded(
           child: SizedBox(
             width: double.infinity,
-            child: CalendarButtonShell(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s8.w),
-                child: Text(
-                  '16-31 Aralık',
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+            child: GestureDetector(
+              onTap: () => onPeriodSelected(2),
+              child: CalendarButtonShell(
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: AppThemeSpacing.s8.w),
+                  child: Text(
+                    '16–31 $monthLabel',
+                    textAlign: TextAlign.center,
+                    style: context.typographiesSp.bodySmall
+                        .withColor(context.colors.textOnSecondary),
+                  ),
                 ),
               ),
             ),

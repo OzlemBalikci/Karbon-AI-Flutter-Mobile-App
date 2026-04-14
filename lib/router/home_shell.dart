@@ -22,6 +22,7 @@ import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calcula
 const _fullScreenRoutes = <String>{
   SelectedQuestionRoute.name,
   SeeAllRoute.name,
+  DayDetailRoute.name,
   UsefulinfoRoute.name,
   CarbonCalculateRoute.name,
   LeaderofmonthRoute.name,

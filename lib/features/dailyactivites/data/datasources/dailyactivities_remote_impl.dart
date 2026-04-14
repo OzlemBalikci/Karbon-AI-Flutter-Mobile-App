@@ -1,10 +1,7 @@
 import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_pending_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_previous_answer_dto.dart';
-import 'package:karbon/features/dailyactivites/data/dtos/daily_calendar_dto.dart';
-import 'package:karbon/features/dailyactivites/data/dtos/daily_monthly_day_score_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto.dart';
-import 'package:karbon/features/dailyactivites/data/dtos/daily_day_activity_dto.dart';
 import 'package:karbon/features/dailyactivites/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart';
@@ -70,52 +67,6 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   }
 
   @override
-  Future<DailyCalendarEntity> getCalendar({
-    required int year,
-    int? month,
-    int? period,
-  }) async {
-    if (_useMocks) {
-      await Future<void>.delayed(const Duration(milliseconds: 150));
-      return _mockCalendar;
-    }
-    final res = await _dio.get<dynamic>(
-      '$_v1/calendar',
-      queryParameters: <String, dynamic>{
-        'year': year,
-        if (month != null) 'month': month,
-        if (period != null) 'period': period,
-      },
-    );
-    final data = unwrapDataMap(res.data);
-    return DailyActivityMapper.toCalendarEntity(
-        DailyCalendarResponseDto.fromJson(data));
-  }
-
-  @override
-  Future<DailyMonthlyActivitiesEntity> getMonthlyActivities({
-    required int year,
-    required int month,
-    required int period,
-  }) async {
-    if (_useMocks) {
-      await Future<void>.delayed(const Duration(milliseconds: 150));
-      return _mockMonthly;
-    }
-    final res = await _dio.get<dynamic>(
-      '$_v1/monthly',
-      queryParameters: <String, dynamic>{
-        'year': year,
-        'month': month,
-        'period': period,
-      },
-    );
-    final data = unwrapDataMap(res.data);
-    return DailyActivityMapper.toMonthlyActivitiesEntity(
-        DailyMonthlyActivitiesDto.fromJson(data));
-  }
-
-  @override
   Future<DailyAnswerResultEntity> postAnswer({
     required String questionId,
     required String selectedOptionId,
@@ -139,21 +90,6 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     final data = unwrapDataMap(res.data);
     return DailyActivityMapper.toAnswerResultEntity(
         DailyAnswerResultDto.fromJson(data));
-  }
-
-  @override
-  Future<DailyDayDetailEntity> getDetails({required String date}) async {
-    if (_useMocks) {
-      await Future<void>.delayed(const Duration(milliseconds: 150));
-      return _mockDayDetail;
-    }
-    final res = await _dio.get<dynamic>(
-      _v1,
-      queryParameters: <String, dynamic>{'date': date},
-    );
-    final data = unwrapDataMap(res.data);
-    return DailyActivityMapper.toDayDetailEntity(
-        DailyDayDetailDto.fromJson(data));
   }
 
   static DailyAnswerResultEntity _mockPostAnswer({
@@ -197,15 +133,6 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     pendingCount: 1,
   );
 
-  static const _mockCalendar = DailyCalendarEntity(
-    totalScore: 120.5,
-    items: [
-      DailyCalendarItemEntity(date: '2026-03-10', score: 4.5, hasDetails: true),
-      DailyCalendarItemEntity(date: '2026-03-09', score: 2.0, hasDetails: true),
-      DailyCalendarItemEntity(date: '2026-03-08', score: 7.0, hasDetails: true),
-    ],
-  );
-
   static const _mockPreviousAnswers = <DailyPreviousAnswersByDateEntity>[
     DailyPreviousAnswersByDateEntity(
       date: '2026-03-10T00:00:00Z',
@@ -219,34 +146,6 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       ],
     ),
   ];
-
-  static const _mockMonthly = DailyMonthlyActivitiesEntity(
-    totalMonthlyScore: 670,
-    totalPeriodScore: 335,
-    dailyScores: [
-      DailyMonthlyDayScoreEntity(
-        date: '2026-03-01T00:00:00Z',
-        totalScore: 13,
-      ),
-      DailyMonthlyDayScoreEntity(
-        date: '2026-03-04T00:00:00Z',
-        totalScore: 83,
-      ),
-    ],
-  );
-
-  static const _mockDayDetail = DailyDayDetailEntity(
-    date: '2026-03-10T00:00:00Z',
-    totalScore: 15,
-    activities: [
-      DailyDayActivityEntity(
-        questionText: 'Örnek soru',
-        selectedOptionText: 'Toplu Ulaşım',
-        score: 25,
-        activityDate: '2026-03-10T08:30:00Z',
-      ),
-    ],
-  );
 
   static final List<DailyQuestionEntity> _mockTodayQuestions = [
     DailyQuestionEntity(

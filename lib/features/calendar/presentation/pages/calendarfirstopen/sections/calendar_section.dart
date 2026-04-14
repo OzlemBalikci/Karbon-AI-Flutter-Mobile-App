@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
@@ -13,6 +14,8 @@ class CalendarSection extends StatelessWidget {
     super.key,
     required this.focusedDay,
     required this.selectedDay,
+    required this.monthTotalScore,
+    required this.selectedDayScore,
     required this.onDaySelected,
     required this.onPageChanged,
     required this.onPreviousMonth,
@@ -22,6 +25,8 @@ class CalendarSection extends StatelessWidget {
 
   final DateTime focusedDay;
   final DateTime selectedDay;
+  final String monthTotalScore;
+  final String selectedDayScore;
   final void Function(DateTime selected, DateTime focused) onDaySelected;
   final ValueChanged<DateTime> onPageChanged;
   final VoidCallback onPreviousMonth;
@@ -30,6 +35,9 @@ class CalendarSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final monthTitle = DateFormat('MMMM yyyy', 'tr').format(focusedDay);
+    final selectedDayTitle = DateFormat.yMMMMd('tr').format(selectedDay);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -63,17 +71,17 @@ class CalendarSection extends StatelessWidget {
               ScoreCard(
                 bgColor: Color(0xFF4E9E75).withValues(alpha: 0.2),
                 bgImage: null,
-                title: 'Aralık 2024',
+                title: monthTitle,
                 text: 'Ayı Karbon Puanı',
-                score: '670',
+                score: monthTotalScore,
               ),
               SizedBox(height: AppThemeSpacing.s10.h),
               ScoreCard(
                 bgColor: context.colors.secondary,
                 bgImage: Assets.images.calendarMask2.provider(),
-                title: '6 Aralık 2024',
+                title: selectedDayTitle,
                 text: 'Karbon Ayak İzi Skoru',
-                score: '67',
+                score: selectedDayScore,
               ),
             ],
           ),

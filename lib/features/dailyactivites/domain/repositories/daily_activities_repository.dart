@@ -15,20 +15,4 @@ abstract class DailyActivitiesRepository {
 
   Future<Either<Exception, List<DailyPreviousAnswersByDateEntity>>>
       getPreviousAnswers();
-
-  Future<Either<Exception, DailyCalendarEntity>> getCalendar({
-    required int year,
-    int? month,
-    int? period,
-  });
-
-  Future<Either<Exception, DailyMonthlyActivitiesEntity>> getMonthlyActivities({
-    required int year,
-    required int month,
-    required int period,
-  });
-
-  Future<Either<Exception, DailyDayDetailEntity>> getDetails({
-    required String date,
-  });
 }

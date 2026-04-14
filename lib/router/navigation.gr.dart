@@ -107,6 +107,53 @@ class DailyActivitiesShellRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [DayDetailPage]
+class DayDetailRoute extends PageRouteInfo<DayDetailRouteArgs> {
+  DayDetailRoute({
+    Key? key,
+    required String date,
+    List<PageRouteInfo>? children,
+  }) : super(
+          DayDetailRoute.name,
+          args: DayDetailRouteArgs(key: key, date: date),
+          initialChildren: children,
+        );
+
+  static const String name = 'DayDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<DayDetailRouteArgs>();
+      return DayDetailPage(key: args.key, date: args.date);
+    },
+  );
+}
+
+class DayDetailRouteArgs {
+  const DayDetailRouteArgs({this.key, required this.date});
+
+  final Key? key;
+
+  final String date;
+
+  @override
+  String toString() {
+    return 'DayDetailRouteArgs{key: $key, date: $date}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! DayDetailRouteArgs) return false;
+    return key == other.key && date == other.date;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ date.hashCode;
+}
+
+/// generated route for
 /// [ForgotPasswordPage]
 class ForgotPasswordRoute extends PageRouteInfo<void> {
   const ForgotPasswordRoute({List<PageRouteInfo>? children})
@@ -252,18 +299,74 @@ class ResetPasswordRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [SeeAllPage]
-class SeeAllRoute extends PageRouteInfo<void> {
-  const SeeAllRoute({List<PageRouteInfo>? children})
-      : super(SeeAllRoute.name, initialChildren: children);
+class SeeAllRoute extends PageRouteInfo<SeeAllRouteArgs> {
+  SeeAllRoute({
+    Key? key,
+    required int year,
+    required int month,
+    required int period,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SeeAllRoute.name,
+          args: SeeAllRouteArgs(
+            key: key,
+            year: year,
+            month: month,
+            period: period,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'SeeAllRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SeeAllPage();
+      final args = data.argsAs<SeeAllRouteArgs>();
+      return SeeAllPage(
+        key: args.key,
+        year: args.year,
+        month: args.month,
+        period: args.period,
+      );
     },
   );
+}
+
+class SeeAllRouteArgs {
+  const SeeAllRouteArgs({
+    this.key,
+    required this.year,
+    required this.month,
+    required this.period,
+  });
+
+  final Key? key;
+
+  final int year;
+
+  final int month;
+
+  final int period;
+
+  @override
+  String toString() {
+    return 'SeeAllRouteArgs{key: $key, year: $year, month: $month, period: $period}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! SeeAllRouteArgs) return false;
+    return key == other.key &&
+        year == other.year &&
+        month == other.month &&
+        period == other.period;
+  }
+
+  @override
+  int get hashCode =>
+      key.hashCode ^ year.hashCode ^ month.hashCode ^ period.hashCode;
 }
 
 /// generated route for
