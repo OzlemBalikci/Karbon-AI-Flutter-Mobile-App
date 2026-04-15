@@ -24,7 +24,6 @@ class ProfileRemoteImpl implements ProfileRemote {
 
   static const _profilePath = '/api/v1/users/me/profile';
   static const _donationsPath = '/api/v1/users/me/donations';
-  static const _mePath = '/api/v1/users/me';
 
   bool get _useMocks => ApiConfig.baseUrl.isEmpty;
 
@@ -61,15 +60,5 @@ class ProfileRemoteImpl implements ProfileRemote {
     final data = unwrapDataMap(res.data);
     return ProfileMapper.toDonateTreesResultEntity(
         DonateTreesResultDto.fromJson(data));
-  }
-
-  @override
-  Future<void> deleteAccount() async {
-    if (_useMocks) {
-      await Future<void>.delayed(const Duration(milliseconds: 200));
-      return;
-    }
-    final res = await _dio.delete<dynamic>(_mePath);
-    unwrapDataMap(res.data);
   }
 }

@@ -3,6 +3,12 @@ part of '../customfirstopen.dart';
 class CustomFirstOpenBottomRegisterSection extends StatelessWidget {
   const CustomFirstOpenBottomRegisterSection({super.key});
 
+  Future<void> _go(BuildContext context, PageRouteInfo route) async {
+    await getIt<AuthLaunchLocal>().setCustomFirstOpenCompleted();
+    if (!context.mounted) return;
+    context.router.replace(route);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -14,7 +20,7 @@ class CustomFirstOpenBottomRegisterSection extends StatelessWidget {
           backgroundColor: context.colors.secondary,
           foregroundColor: context.colors.textOnSecondary,
           borderColor: Colors.white70,
-          onPressed: () => context.router.replace(const LoginRoute()),
+          onPressed: () => _go(context, const LoginRoute()),
         ),
         SizedBox(height: AppThemeSpacing.s30.h),
         AppButton(
@@ -22,7 +28,7 @@ class CustomFirstOpenBottomRegisterSection extends StatelessWidget {
           backgroundColor: Colors.transparent,
           foregroundColor: context.colors.textOnPrimary,
           borderColor: Colors.white70,
-          onPressed: () => context.router.replace(const RegisterRoute()),
+          onPressed: () => _go(context, const RegisterRoute()),
         ),
       ],
     );

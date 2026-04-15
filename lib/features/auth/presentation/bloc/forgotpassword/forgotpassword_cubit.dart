@@ -1,37 +1,23 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/domain/usecases/forgotpassword_usecase.dart';
-import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_event.dart';
 import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_state.dart';
-import 'package:injectable/injectable.dart';
 
 @injectable
-class ForgotPasswordBloc
-    extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
+class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
+  ForgotPasswordCubit(this._forgotPasswordUseCase)
+      : super(const ForgotPasswordState());
+
   final ForgotPasswordUseCase _forgotPasswordUseCase;
 
-  ForgotPasswordBloc({
-    required ForgotPasswordUseCase forgotPasswordUseCase,
-  })  : _forgotPasswordUseCase = forgotPasswordUseCase,
-        super(const ForgotPasswordState()) {
-    on<ForgotPasswordPhoneNumberChanged>(_onPhoneNumberChanged);
-    on<ForgotPasswordSendCodePressed>(_onSendCodePressed);
-  }
+  void phoneNumberChanged(String value) => emit(state.copyWith(
+        phoneNumber: value,
+        phoneNumberError: null,
+        error: null,
+      ));
 
-  void _onPhoneNumberChanged(
-    ForgotPasswordPhoneNumberChanged event,
-    Emitter<ForgotPasswordState> emit,
-  ) {
-    emit(state.copyWith(
-      phoneNumber: event.phoneNumber,
-      phoneNumberError: null,
-    ));
-  }
-
-  Future<void> _onSendCodePressed(
-    ForgotPasswordSendCodePressed event,
-    Emitter<ForgotPasswordState> emit,
-  ) async {
+  Future<void> sendCode() async {
     emit(state.copyWith(
       status: ForgotPasswordPageStatus.loading,
       phoneNumberError: null,
@@ -44,10 +30,11 @@ class ForgotPasswordBloc
 
     result.fold(
       (exception) {
-        if (exception is BadRequestException) {
+        if (exception is ValidationException ||
+            exception is BadRequestException) {
           emit(state.copyWith(
             status: ForgotPasswordPageStatus.failure,
-            phoneNumberError: exception.message,
+            phoneNumberError: (exception as AppException).message,
           ));
         } else if (exception is NotFoundException) {
           emit(state.copyWith(

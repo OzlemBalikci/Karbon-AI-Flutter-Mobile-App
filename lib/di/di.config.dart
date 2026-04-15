@@ -11,9 +11,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:cookie_jar/cookie_jar.dart' as _i557;
 import 'package:dio/dio.dart' as _i361;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:karbon/di/di.dart' as _i314;
+import 'package:karbon/features/auth/data/datasources/auth_launch_local.dart'
+    as _i560;
+import 'package:karbon/features/auth/data/datasources/auth_launch_local_impl.dart'
+    as _i709;
 import 'package:karbon/features/auth/data/datasources/auth_local.dart' as _i102;
 import 'package:karbon/features/auth/data/datasources/auth_local_impl.dart'
     as _i312;
@@ -27,6 +32,10 @@ import 'package:karbon/features/auth/domain/repositories/auth_repository.dart'
     as _i252;
 import 'package:karbon/features/auth/domain/usecases/checksession_usecase.dart'
     as _i793;
+import 'package:karbon/features/auth/domain/usecases/clear_local_session_usecase.dart'
+    as _i382;
+import 'package:karbon/features/auth/domain/usecases/delete_account_usecase.dart'
+    as _i1015;
 import 'package:karbon/features/auth/domain/usecases/forgotpassword_usecase.dart'
     as _i210;
 import 'package:karbon/features/auth/domain/usecases/login_usecase.dart'
@@ -39,12 +48,12 @@ import 'package:karbon/features/auth/domain/usecases/resetpassword_usecase.dart'
     as _i1018;
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart'
     as _i564;
-import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_bloc.dart'
-    as _i823;
-import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart'
-    as _i171;
-import 'package:karbon/features/auth/presentation/bloc/register/register_bloc.dart'
-    as _i78;
+import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_cubit.dart'
+    as _i208;
+import 'package:karbon/features/auth/presentation/bloc/login/login_cubit.dart'
+    as _i514;
+import 'package:karbon/features/auth/presentation/bloc/register/register_cubit.dart'
+    as _i121;
 import 'package:karbon/features/auth/presentation/bloc/settings/settings_bloc.dart'
     as _i614;
 import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart'
@@ -137,8 +146,6 @@ import 'package:karbon/features/profile/data/repositories/profile_repository_imp
     as _i758;
 import 'package:karbon/features/profile/domain/repositories/profile_repository.dart'
     as _i48;
-import 'package:karbon/features/profile/domain/usecases/delete_account_usecase.dart'
-    as _i1049;
 import 'package:karbon/features/profile/domain/usecases/donate_trees_usecase.dart'
     as _i26;
 import 'package:karbon/features/profile/domain/usecases/get_donation_usecase.dart'
@@ -181,18 +188,22 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
+    gh.singleton<_i558.FlutterSecureStorage>(
+        () => registerModule.secureStorage);
     gh.lazySingleton<_i614.SettingsBloc>(() => _i614.SettingsBloc());
     gh.lazySingleton<_i366.CarbonCalculateLocal>(
         () => _i177.CarbonCalculateLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i357.CarbonCalculateRemote>(
         () => _i596.CarbonCalculateRemoteMock());
     gh.lazySingleton<_i102.AuthLocal>(
-        () => _i312.AuthLocalImpl(gh<_i460.SharedPreferences>()));
+        () => _i312.AuthLocalImpl(gh<_i558.FlutterSecureStorage>()));
     gh.lazySingleton<_i505.UsefulinfoRemote>(
         () => _i964.UsefulinfoRemoteMock());
     gh.lazySingleton<_i1036.LeaderboardRemote>(
         () => _i637.LeaderboardRemoteMock());
     gh.lazySingleton<_i25.HomeRemote>(() => _i318.HomeRemoteMock());
+    gh.lazySingleton<_i560.AuthLaunchLocal>(
+        () => _i709.AuthLaunchLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i406.HomeRepository>(
         () => _i274.HomeRepositoryImpl(gh<_i25.HomeRemote>()));
     gh.lazySingleton<_i71.UsefulinfoRepository>(
@@ -216,10 +227,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i434.UsefulinfoBloc(gh<_i97.GetUsefulInfosUseCase>()));
     gh.lazySingleton<_i614.DailyActivitiesRemote>(
         () => _i261.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
-    gh.factory<_i679.LeaderboardRemoteImpl>(
-        () => _i679.LeaderboardRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i701.HomeRemoteImpl>(
         () => _i701.HomeRemoteImpl(gh<_i361.Dio>()));
+    gh.factory<_i679.LeaderboardRemoteImpl>(
+        () => _i679.LeaderboardRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i483.ProfileRemote>(
@@ -228,8 +239,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i800.CalendarRepositoryImpl(gh<_i279.CalendarRemote>()));
     gh.lazySingleton<_i48.ProfileRepository>(
         () => _i758.ProfileRepositoryImpl(gh<_i483.ProfileRemote>()));
-    gh.factory<_i1049.DeleteAccountUsecase>(
-        () => _i1049.DeleteAccountUsecase(gh<_i48.ProfileRepository>()));
     gh.factory<_i26.DonateTreesUsecase>(
         () => _i26.DonateTreesUsecase(gh<_i48.ProfileRepository>()));
     gh.factory<_i524.GetDonationsUsecase>(
@@ -252,6 +261,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i524.GetDonationsUsecase>(),
           gh<_i26.DonateTreesUsecase>(),
         ));
+    gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
+          gh<_i413.AuthRemote>(),
+          gh<_i102.AuthLocal>(),
+          gh<_i557.CookieJar>(),
+          gh<_i560.AuthLaunchLocal>(),
+        ));
     gh.factory<_i926.GetActivePollUseCase>(() =>
         _i926.GetActivePollUseCase(gh<_i666.CarbonCalculateRepository>()));
     gh.factory<_i980.GetPollResultsUseCase>(() =>
@@ -260,10 +275,6 @@ extension GetItInjectableX on _i174.GetIt {
         _i715.SavePollDraftUseCase(gh<_i666.CarbonCalculateRepository>()));
     gh.factory<_i630.SubmitPollAnswersUseCase>(() =>
         _i630.SubmitPollAnswersUseCase(gh<_i666.CarbonCalculateRepository>()));
-    gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
-          gh<_i413.AuthRemote>(),
-          gh<_i102.AuthLocal>(),
-        ));
     gh.factory<_i748.LeaderofmonthBloc>(
         () => _i748.LeaderofmonthBloc(gh<_i520.GetLeaderboardDataUseCase>()));
     gh.lazySingleton<_i320.DailyActivitiesRepository>(() =>
@@ -280,12 +291,16 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i902.PostAnswerUsecase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i24.GetCalendarUsecase>(
         () => _i24.GetCalendarUsecase(gh<_i623.CalendarRepository>()));
-    gh.factory<_i753.GetMonthlyActivitiesUsecase>(() =>
-        _i753.GetMonthlyActivitiesUsecase(gh<_i623.CalendarRepository>()));
     gh.factory<_i996.GetDetailsUsecase>(
         () => _i996.GetDetailsUsecase(gh<_i623.CalendarRepository>()));
+    gh.factory<_i753.GetMonthlyActivitiesUsecase>(() =>
+        _i753.GetMonthlyActivitiesUsecase(gh<_i623.CalendarRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
+    gh.factory<_i382.ClearLocalSessionUseCase>(
+        () => _i382.ClearLocalSessionUseCase(gh<_i252.AuthRepository>()));
+    gh.factory<_i1015.DeleteAccountUseCase>(
+        () => _i1015.DeleteAccountUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i210.ForgotPasswordUseCase>(
         () => _i210.ForgotPasswordUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i1010.LoginUseCase>(
@@ -296,10 +311,13 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i558.RegisterUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i1018.ResetPasswordUseCase>(
         () => _i1018.ResetPasswordUseCase(gh<_i252.AuthRepository>()));
-    gh.factory<_i823.ForgotPasswordBloc>(() => _i823.ForgotPasswordBloc(
-        forgotPasswordUseCase: gh<_i210.ForgotPasswordUseCase>()));
-    gh.factory<_i171.LoginBloc>(
-        () => _i171.LoginBloc(gh<_i1010.LoginUseCase>()));
+    gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(
+          gh<_i793.CheckSessionUseCase>(),
+          gh<_i566.LogoutUseCase>(),
+          gh<_i382.ClearLocalSessionUseCase>(),
+        ));
+    gh.factory<_i208.ForgotPasswordCubit>(
+        () => _i208.ForgotPasswordCubit(gh<_i210.ForgotPasswordUseCase>()));
     gh.factory<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
           gh<_i671.GetTodayQuestionsUsecase>(),
           gh<_i448.GetPendingStatusUsecase>(),
@@ -307,13 +325,14 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i902.PostAnswerUsecase>(),
           gh<_i793.CheckSessionUseCase>(),
         ));
-    gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(
-          gh<_i793.CheckSessionUseCase>(),
-          gh<_i566.LogoutUseCase>(),
-        ));
-    gh.factory<_i78.RegisterBloc>(() => _i78.RegisterBloc(
+    gh.factory<_i121.RegisterCubit>(() => _i121.RegisterCubit(
           gh<_i558.RegisterUseCase>(),
           gh<_i564.AuthBloc>(),
+          gh<_i560.AuthLaunchLocal>(),
+        ));
+    gh.factory<_i514.LoginCubit>(() => _i514.LoginCubit(
+          gh<_i1010.LoginUseCase>(),
+          gh<_i560.AuthLaunchLocal>(),
         ));
     return this;
   }

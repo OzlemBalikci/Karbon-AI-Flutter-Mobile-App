@@ -37,14 +37,4 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Left(unwrapDioException(e));
     }
   }
-
-  @override
-  Future<Either<Exception, void>> deleteAccount() async {
-    try {
-      await _remote.deleteAccount();
-      return const Right(null);
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
-    }
-  }
 }

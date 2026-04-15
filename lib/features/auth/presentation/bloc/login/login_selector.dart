@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart';
+import 'package:karbon/features/auth/presentation/bloc/login/login_cubit.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_state.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 
-class LoginSelector<T> extends BlocSelector<LoginBloc, LoginState, T> {
+class LoginSelector<T> extends BlocSelector<LoginCubit, LoginState, T> {
   LoginSelector({
     super.key,
     required T Function(LoginState) selector,
@@ -29,13 +29,3 @@ class LoginObscurePasswordSelector extends LoginSelector<bool> {
           ),
         );
 }
-
-//class LoginNavigateToForgotPasswordSelector extends LoginSelector<bool> {
-  //LoginNavigateToForgotPasswordSelector({
-  //  super.key,
-  //  required Widget Function(bool navigateToForgotPassword) builder,
-  //}) : super(
-  //    selector: (state) => state.navigateToForgotPassword,
-  //    builder: (navigateToForgotPassword) => builder(navigateToForgotPassword),
-  //  );
-//}

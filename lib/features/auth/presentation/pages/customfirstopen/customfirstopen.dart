@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
-import 'package:karbon/features/auth/presentation/bloc/auth/auth_event.dart';
 import 'package:karbon/router/navigation.dart';
-import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/di/di.dart';
+import 'package:karbon/features/auth/data/datasources/auth_launch_local.dart';
 
 part 'widgets/customfirstopen_bottom_register.dart';
 part 'widgets/customfirstopen_logo.dart';
@@ -21,11 +19,8 @@ class CustomFirstOpenPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          getIt.get<AuthBloc>()..add(const AuthEvent.appStarted()),
-      child: Scaffold(
-          body: Stack(
+    return Scaffold(
+      body: Stack(
         children: [
           Positioned.fill(
             child: Stack(
@@ -44,8 +39,9 @@ class CustomFirstOpenPage extends StatelessWidget {
           SafeArea(
             child: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: AppThemeSpacing.s25.w,
-                  vertical: AppThemeSpacing.s25.h),
+                horizontal: AppThemeSpacing.s25.w,
+                vertical: AppThemeSpacing.s25.h,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
@@ -58,7 +54,7 @@ class CustomFirstOpenPage extends StatelessWidget {
             ),
           ),
         ],
-      )),
+      ),
     );
   }
 }

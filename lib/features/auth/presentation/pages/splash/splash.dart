@@ -4,10 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/features/auth/presentation/pages/splash/splash_loading.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:karbon/features/auth/data/datasources/auth_launch_local.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_event.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_state.dart';
 import 'package:karbon/router/navigation.dart';
+import 'package:karbon/di/di.dart';
 
 @RoutePage()
 class SplashPage extends StatefulWidget {
@@ -27,16 +29,25 @@ class _SplashPageState extends State<SplashPage> {
     });
   }
 
-  void _navigateForState(BuildContext context, AuthState state) {
-    state.when(
-      sessionChecking: () {},
-      authenticated: (_) {
+  Future<void> _navigateForState(BuildContext context, AuthState state) async {
+    await state.when(
+      sessionChecking: () async {},
+      authenticated: (_) async {
+        if (!context.mounted) return;
         context.router.replaceAll([const HomeShellRoute()]);
       },
-      unauthenticated: () {
-        context.router.replaceAll([const LoginRoute()]);
+      unauthenticated: () async {
+        final done =
+            await getIt<AuthLaunchLocal>().isCustomFirstOpenCompleted();
+        if (!context.mounted) return;
+        if (done) {
+          context.router.replaceAll([const LoginRoute()]);
+        } else {
+          context.router.replaceAll([const CustomFirstOpenRoute()]);
+        }
       },
-      authFailure: (reason, failureType, code) {
+      authFailure: (reason, failureType, code) async {
+        if (!context.mounted) return;
         context.router.replaceAll([const LoginRoute()]);
       },
     );

@@ -3,12 +3,12 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/features/auth/domain/repositories/auth_repository.dart';
 
 @injectable
-class LogoutUseCase {
-  LogoutUseCase(this._repository);
+class ClearLocalSessionUseCase {
+  ClearLocalSessionUseCase(this._repository);
   final AuthRepository _repository;
 
   Future<Either<Exception, Unit>> call() async {
-    await _repository.logout();
+    await _repository.clearLocalSession();
     return const Right(unit);
   }
 }

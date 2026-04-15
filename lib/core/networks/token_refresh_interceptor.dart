@@ -3,13 +3,23 @@ import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/auth/data/datasources/auth_local.dart';
 import 'package:karbon/features/auth/data/dtos/login_response_dto.dart';
 
-/// Access token header ekler; 401 sonrası [POST /users/token/refresh] ile yeniler ve isteği tekrarlar.
-/// [CookieManager] ile gelen `refresh_token` çerezi aynı [Dio] üzerinden gider.
+/// Her istek: `Authorization: Bearer <accessToken>` ([AuthLocal] / Secure Storage).
+/// 401 → `POST /users/token/refresh` (refresh **HttpOnly cookie** ile gider).
+/// Yeni access token → yalnızca Secure Storage güncellenir; refresh cookie sunucu/cookie jar ile kalır.
+///
+/// `POST .../token/refresh` 401 dönerse: [onSessionExpired] (logout + login ekranı tetiklenir).
 class TokenRefreshInterceptor extends QueuedInterceptor {
-  TokenRefreshInterceptor(this._dio, this._authLocal);
+  TokenRefreshInterceptor(
+    this._dio,
+    this._authLocal, {
+    this.onSessionExpired,
+  });
 
   final Dio _dio;
   final AuthLocal _authLocal;
+
+  /// Refresh başarısız (veya refresh endpoint 401) — oturumu kapat.
+  final void Function()? onSessionExpired;
 
   static const _refreshCall = '_refreshCall';
   static const _retried = '_retried';
@@ -49,6 +59,9 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
     if (path.contains('/users/token/refresh') ||
         path.contains('/users/login') ||
         path.contains('/users/register')) {
+      if (path.contains('/users/token/refresh')) {
+        onSessionExpired?.call();
+      }
       handler.next(err);
       return;
     }
@@ -66,7 +79,6 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
       final data = unwrapDataMap(refreshRes.data);
       final tokens = LoginResponseModel.fromJson(data);
       await _authLocal.saveToken(tokens.accessToken);
-      await _authLocal.saveRefreshToken(tokens.refreshToken);
 
       ro.headers['Authorization'] = 'Bearer ${tokens.accessToken}';
       ro.extra[_retried] = true;
@@ -74,6 +86,7 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
       final response = await _dio.fetch(ro);
       handler.resolve(response);
     } catch (_) {
+      onSessionExpired?.call();
       handler.next(err);
     }
   }

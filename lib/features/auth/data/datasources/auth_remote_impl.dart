@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:karbon/core/networks/api_config.dart';
 import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/auth/data/datasources/auth_remote.dart';
 import 'package:karbon/features/auth/data/dtos/forgotpassword_dto.dart';
@@ -14,6 +15,8 @@ import 'package:karbon/features/auth/data/dtos/user_model.dart';
 class AuthRemoteImpl implements AuthRemote {
   AuthRemoteImpl(this._dio);
   final Dio _dio;
+
+  bool get _useMocks => ApiConfig.baseUrl.isEmpty;
 
   @override
   Future<LoginResponseModel> login(LoginRequestModel request) async {
@@ -77,5 +80,15 @@ class AuthRemoteImpl implements AuthRemote {
   Future<void> logout() async {
     final res = await _dio.post('/api/v1/users/logout');
     assertApiSuccess(res.data as Map<String, dynamic>);
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    if (_useMocks) {
+      await Future<void>.delayed(const Duration(milliseconds: 200));
+      return;
+    }
+    final res = await _dio.delete<dynamic>('/api/v1/users/me');
+    unwrapDataMap(res.data);
   }
 }

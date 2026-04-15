@@ -49,10 +49,42 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                child: HomeViewTypeSelector(
-                  builder: (viewType) => switch (viewType) {
-                    HomeViewType.initial => HomeInitialView(),
-                    HomeViewType.main => HomeMainView(),
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  buildWhen: (prev, curr) =>
+                      prev.status != curr.status ||
+                      prev.viewType != curr.viewType ||
+                      prev.globalTarget != curr.globalTarget ||
+                      prev.monthlyTarget != curr.monthlyTarget ||
+                      prev.topLeaders != curr.topLeaders ||
+                      prev.error != curr.error,
+                  builder: (context, state) {
+                    if (state.status == HomeStatus.error) {
+                      return Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          child: Text(
+                            state.error ?? 'Bir hata oluştu',
+                            textAlign: TextAlign.center,
+                            style: context.typographiesSp.bodyMedium
+                                .withColor(context.colors.text),
+                          ),
+                        ),
+                      );
+                    }
+                    if (state.status == HomeStatus.loading) {
+                      final hasCachedDashboard = state.globalTarget != null ||
+                          state.monthlyTarget != null ||
+                          state.topLeaders.isNotEmpty;
+                      if (!hasCachedDashboard) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    }
+                    return switch (state.viewType) {
+                      HomeViewType.initial => HomeInitialView(),
+                      HomeViewType.main => HomeMainView(),
+                    };
                   },
                 ),
               ),

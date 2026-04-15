@@ -5,10 +5,12 @@ class ProfilePopupBase extends StatelessWidget {
     super.key,
     required this.title,
     required this.text,
+    required this.onConfirm,
   });
 
   final String title;
   final String text;
+  final Future<void> Function(BuildContext context) onConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +55,7 @@ class ProfilePopupBase extends StatelessWidget {
             children: [
               AppButton(
                 text: context.text.logout_popup_accept_button_text,
-                onPressed: () {
-                  final router = context.router;
-                  final authBloc = context.read<AuthBloc>();
-                  router.pop();
-                  authBloc.add(const AuthEvent.signOutRequested());
-                  router.replaceAll([const CustomFirstOpenRoute()]);
-                },
+                onPressed: () => onConfirm(context),
                 backgroundColor: context.colors.primary,
                 foregroundColor: context.colors.textOnPrimary,
                 borderColor: context.colors.secondary,
@@ -86,14 +82,36 @@ enum ProfilePopupKind {
 }
 
 Future<void> showProfilePopup(BuildContext context, ProfilePopupKind kind) {
+  Future<void> confirmLogout(BuildContext ctx) async {
+    final router = ctx.router;
+    final authBloc = ctx.read<AuthBloc>();
+    router.pop();
+    authBloc.add(const AuthEvent.signOutRequested());
+    router.replaceAll([const LoginRoute()]);
+  }
+
+  Future<void> confirmDeleteAccount(BuildContext ctx) async {
+    final router = ctx.router;
+    final authBloc = ctx.read<AuthBloc>();
+    final result = await getIt<DeleteAccountUseCase>()();
+    if (!ctx.mounted) return;
+    result.fold((_) {}, (_) {
+      router.pop();
+      authBloc.add(const AuthEvent.sessionCheckRequested());
+      router.replaceAll([const LoginRoute()]);
+    });
+  }
+
   final Widget child = switch (kind) {
     ProfilePopupKind.logout => ProfilePopupBase(
         title: context.text.logout_popup_header_title,
         text: context.text.logout_popup_text,
+        onConfirm: confirmLogout,
       ),
     ProfilePopupKind.deleteAccount => ProfilePopupBase(
         title: context.text.delete_account_popup_header_title,
         text: context.text.delete_account_popup_text,
+        onConfirm: confirmDeleteAccount,
       ),
   };
 

@@ -22,9 +22,8 @@ class LoginFormWidget extends StatelessWidget {
                 builder: (obscure, icon) => TextFieldWidget(
                     obscureText: obscure,
                     suffixIcon: GestureDetector(
-                      onTap: () => context
-                          .read<LoginBloc>()
-                          .add(LoginEvent.togglePasswordVisibility()),
+                      onTap: () =>
+                          context.read<LoginCubit>().togglePasswordVisibility(),
                       child: icon,
                     ),
                     hintText: context.text.login_password_textfield_text,

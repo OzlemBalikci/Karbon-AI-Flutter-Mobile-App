@@ -2,10 +2,12 @@ import 'package:dartz/dartz.dart';
 import 'package:karbon/features/auth/domain/entities/app_user.dart';
 
 abstract class AuthRepository {
+  /// Yerelde geçerli access token var mı (depo kontrolü).
   Future<bool> get checkSession;
 
-  /// Yerel token yoksa `Right(null)`; varsa profil yüklenir (`getProfile`).
-  Future<Either<Exception, AppUser?>> resolveSession();
+  /// **Önkoşul:** [checkSession] true olmalı. GET `/users/me/profile` ile kullanıcıyü yükler;
+  /// 401 durumunda [TokenRefreshInterceptor] devreye girer. Oturum kontrolü için [CheckSessionUseCase] kullanın.
+  Future<Either<Exception, AppUser>> loadCurrentUser();
 
   Future<Either<Exception, AppUser>> login({
     required String emailOrIdentityNumber,
@@ -39,5 +41,10 @@ abstract class AuthRepository {
 
   Future<void> logout();
 
-  // Future<void> deleteAccount();
+  /// Sunucu [logout] çağrısı olmadan yerel access token ve API çerezlerini siler.
+  /// Refresh başarısız olduğunda kullanılır (uzaktaki çıkış isteği anlamlı olmayabilir).
+  Future<void> clearLocalSession();
+
+  /// DELETE `/api/v1/users/me` — başarıda yerel oturum da temizlenir.
+  Future<Either<Exception, void>> deleteAccount();
 }

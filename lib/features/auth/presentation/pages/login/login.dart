@@ -12,10 +12,9 @@ import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/app_logo.dart';
 import 'package:karbon/widgets/screen_titles.dart';
 import 'package:karbon/features/auth/presentation/controllers/login_controller.dart';
-import 'package:karbon/features/auth/presentation/bloc/login/login_bloc.dart';
+import 'package:karbon/features/auth/presentation/bloc/login/login_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_selector.dart';
-import 'package:karbon/features/auth/presentation/bloc/login/login_event.dart';
 import 'package:karbon/di/di.dart';
 
 part 'widgets/login_forgot_password.dart';
@@ -53,8 +52,8 @@ class _LoginPageState extends State<LoginPage> {
     final keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
     final keyboardOpen = keyboardInset > 0;
     return BlocProvider(
-      create: (context) => getIt<LoginBloc>(),
-      child: BlocListener<LoginBloc, LoginState>(
+      create: (context) => getIt<LoginCubit>(),
+      child: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state.status == LoginPageStatus.success) {
             context.router.replaceAll([const HomeShellRoute()]);

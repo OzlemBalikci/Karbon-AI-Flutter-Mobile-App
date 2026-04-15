@@ -1,6 +1,8 @@
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/core/errors/exception_unwrapper.dart';
+import 'package:karbon/features/auth/data/datasources/auth_launch_local.dart';
 import 'package:karbon/features/auth/data/datasources/auth_local.dart';
 import 'package:karbon/features/auth/data/datasources/auth_remote.dart';
 import 'package:karbon/features/auth/data/mapper/dto_mapper.dart';
@@ -9,16 +11,27 @@ import 'package:karbon/features/auth/domain/repositories/auth_repository.dart';
 
 @LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this._remote, this._local);
+  AuthRepositoryImpl(
+    this._remote,
+    this._local,
+    this._cookieJar,
+    this._authLaunchLocal,
+  );
   final AuthRemote _remote;
   final AuthLocal _local;
+  final CookieJar _cookieJar;
+  final AuthLaunchLocal _authLaunchLocal;
+
+  Future<void> _clearClientSession() async {
+    await _local.clearSession();
+    await _cookieJar.deleteAll();
+  }
 
   @override
   Future<bool> get checkSession => _local.hasSession();
 
   @override
-  Future<Either<Exception, AppUser?>> resolveSession() async {
-    if (!await checkSession) return const Right(null);
+  Future<Either<Exception, AppUser>> loadCurrentUser() async {
     try {
       final profile = await _remote.getProfile();
       return Right(AuthMapper.toAppUser(profile));
@@ -40,7 +53,7 @@ class AuthRepositoryImpl implements AuthRepository {
         ),
       );
       await _local.saveToken(loginResponse.accessToken);
-      await _local.saveRefreshToken(loginResponse.refreshToken);
+      // Refresh token yalnızca HttpOnly cookie (login yanıtı); yerelde saklanmaz.
       final profile = await _remote.getProfile();
       return Right(AuthMapper.toAppUser(profile));
     } on Exception catch (e) {
@@ -84,7 +97,6 @@ class AuthRepositoryImpl implements AuthRepository {
         ),
       );
       await _local.saveToken(loginResponse.accessToken);
-      await _local.saveRefreshToken(loginResponse.refreshToken);
 
       // 3. Profili çek ve AppUser döndür
       final profile = await _remote.getProfile();
@@ -133,11 +145,23 @@ class AuthRepositoryImpl implements AuthRepository {
     } on Exception catch (_) {
       // Token zaten geçersiz olabilir; yerel temizlik yine de yapılır.
     }
-    await _local.clearSession();
+    await _clearClientSession();
   }
 
-  // @override
-  // Future<void> deleteAccount() async {
-  //   await _remote.deleteAccount();
-  // }
+  @override
+  Future<void> clearLocalSession() async {
+    await _clearClientSession();
+  }
+
+  @override
+  Future<Either<Exception, void>> deleteAccount() async {
+    try {
+      await _remote.deleteAccount();
+      await _authLaunchLocal.clearCustomFirstOpenCompleted();
+      await _clearClientSession();
+      return const Right(null);
+    } on Exception catch (e) {
+      return Left(unwrapDioException(e));
+    }
+  }
 }

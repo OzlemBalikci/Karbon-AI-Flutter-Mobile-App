@@ -11,7 +11,4 @@ abstract class ProfileRepository {
 
   /// POST `/api/v1/users/me/donations`
   Future<Either<Exception, DonateTreesResultEntity>> donateTrees();
-
-  /// DELETE `/api/v1/users/me`
-  Future<Either<Exception, void>> deleteAccount();
 }
