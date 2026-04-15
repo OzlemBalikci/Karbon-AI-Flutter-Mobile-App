@@ -27,8 +27,8 @@ class RegisterCubit extends Cubit<RegisterState> {
   void emailChanged(String value) =>
       emit(state.copyWith(email: value, error: null));
 
-  void birthDateChanged(DateTime date) =>
-      emit(state.copyWith(birthDate: date.toUtc().toIso8601String(), error: null));
+  void birthDateChanged(DateTime date) => emit(
+      state.copyWith(birthDate: date.toUtc().toIso8601String(), error: null));
 
   void passwordChanged(String value) =>
       emit(state.copyWith(password: value, error: null));

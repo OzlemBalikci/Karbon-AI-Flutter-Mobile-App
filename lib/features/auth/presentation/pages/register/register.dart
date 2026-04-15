@@ -16,6 +16,7 @@ import 'package:karbon/widgets/screen_titles.dart';
 part 'widgets/register_form.dart';
 part 'widgets/register_info.dart';
 part 'widgets/register_kvkk.dart';
+part 'widgets/password_validation_text.dart';
 part 'sections/register_feature.dart';
 part 'sections/register_bottom.dart';
 

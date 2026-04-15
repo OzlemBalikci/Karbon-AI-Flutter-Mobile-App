@@ -48,12 +48,16 @@ import 'package:karbon/features/auth/domain/usecases/resetpassword_usecase.dart'
     as _i1018;
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart'
     as _i564;
+import 'package:karbon/features/auth/presentation/bloc/customfirstopen/customfirstopen_cubit.dart'
+    as _i232;
 import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_cubit.dart'
     as _i208;
 import 'package:karbon/features/auth/presentation/bloc/login/login_cubit.dart'
     as _i514;
 import 'package:karbon/features/auth/presentation/bloc/register/register_cubit.dart'
     as _i121;
+import 'package:karbon/features/auth/presentation/bloc/resetpassword/resetpassword_cubit.dart'
+    as _i544;
 import 'package:karbon/features/auth/presentation/bloc/settings/settings_bloc.dart'
     as _i614;
 import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart'
@@ -221,6 +225,8 @@ extension GetItInjectableX on _i174.GetIt {
             ));
     gh.factory<_i97.GetUsefulInfosUseCase>(
         () => _i97.GetUsefulInfosUseCase(gh<_i71.UsefulinfoRepository>()));
+    gh.factory<_i232.CustomFirstOpenCubit>(
+        () => _i232.CustomFirstOpenCubit(gh<_i560.AuthLaunchLocal>()));
     gh.lazySingleton<_i279.CalendarRemote>(
         () => _i673.CalendarRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i434.UsefulinfoBloc>(
@@ -330,6 +336,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i564.AuthBloc>(),
           gh<_i560.AuthLaunchLocal>(),
         ));
+    gh.factory<_i544.ResetPasswordCubit>(
+        () => _i544.ResetPasswordCubit(gh<_i1018.ResetPasswordUseCase>()));
     gh.factory<_i514.LoginCubit>(() => _i514.LoginCubit(
           gh<_i1010.LoginUseCase>(),
           gh<_i560.AuthLaunchLocal>(),

@@ -23,6 +23,11 @@ abstract class RegisterState with _$RegisterState {
     @Default('') String confirmPassword,
     @Default('') String phoneNumber,
     @Default(false) bool kvkkApproved,
+    String? emailError,
+    String? identityNumberError,
+    String? passwordError,
+    String? confirmPasswordError,
+    String? phoneNumberError,
     String? error,
   }) = _RegisterState;
 

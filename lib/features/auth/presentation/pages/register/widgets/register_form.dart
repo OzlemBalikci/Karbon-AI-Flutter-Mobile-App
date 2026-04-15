@@ -12,6 +12,7 @@ class RegisterFormWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFieldWidget(
                   obscureText: false,
@@ -42,6 +43,8 @@ class RegisterFormWidget extends StatelessWidget {
                   suffixIcon: Assets.icons.eyeSlashOpened.svg(),
                   hintText: context.text.register_password_textfield_text,
                   controller: TextEditingController()),
+              SizedBox(height: AppThemeSpacing.s10.h),
+              PasswordValidationText(),
               SizedBox(height: AppThemeSpacing.s20.h),
               TextFieldWidget(
                   obscureText: false,

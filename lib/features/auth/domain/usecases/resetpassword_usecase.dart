@@ -27,9 +27,7 @@ class ResetPasswordUseCase {
     }
 
     if (!_otpRegex.hasMatch(resetCode)) {
-      return Future.value(
-        Left(ValidationException('OTP kodu 5 haneli rakamdan oluşmalıdır.')),
-      );
+      return Future.value(Left(ValidationException(_otpErrorMessage)));
     }
 
     final passwordError = _validatePasswordComplexity(newPassword);
@@ -67,6 +65,11 @@ class ResetPasswordUseCase {
     }
     return null;
   }
+
+  /// Cubit tarafında OTP doğrulama hatasını tanımlamak için kullanılır.
+  static bool isOtpError(String message) => message == _otpErrorMessage;
+
+  static const _otpErrorMessage = 'OTP kodu 5 haneli rakamdan oluşmalıdır.';
 
   /// +90 ile başlayan, 5 ile devam eden 10 haneli numara: +905XXXXXXXXX
   static final _phoneRegex = RegExp(r'^\+905[0-9]{9}$');

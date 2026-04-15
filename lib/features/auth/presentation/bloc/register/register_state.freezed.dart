@@ -24,6 +24,11 @@ mixin _$RegisterState {
   String get confirmPassword;
   String get phoneNumber;
   bool get kvkkApproved;
+  String? get emailError;
+  String? get identityNumberError;
+  String? get passwordError;
+  String? get confirmPasswordError;
+  String? get phoneNumberError;
   String? get error;
 
   /// Create a copy of RegisterState
@@ -57,6 +62,16 @@ mixin _$RegisterState {
                 other.phoneNumber == phoneNumber) &&
             (identical(other.kvkkApproved, kvkkApproved) ||
                 other.kvkkApproved == kvkkApproved) &&
+            (identical(other.emailError, emailError) ||
+                other.emailError == emailError) &&
+            (identical(other.identityNumberError, identityNumberError) ||
+                other.identityNumberError == identityNumberError) &&
+            (identical(other.passwordError, passwordError) ||
+                other.passwordError == passwordError) &&
+            (identical(other.confirmPasswordError, confirmPasswordError) ||
+                other.confirmPasswordError == confirmPasswordError) &&
+            (identical(other.phoneNumberError, phoneNumberError) ||
+                other.phoneNumberError == phoneNumberError) &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -73,11 +88,16 @@ mixin _$RegisterState {
       confirmPassword,
       phoneNumber,
       kvkkApproved,
+      emailError,
+      identityNumberError,
+      passwordError,
+      confirmPasswordError,
+      phoneNumberError,
       error);
 
   @override
   String toString() {
-    return 'RegisterState(status: $status, email: $email, identityNumber: $identityNumber, firstName: $firstName, lastName: $lastName, birthDate: $birthDate, password: $password, confirmPassword: $confirmPassword, phoneNumber: $phoneNumber, kvkkApproved: $kvkkApproved, error: $error)';
+    return 'RegisterState(status: $status, email: $email, identityNumber: $identityNumber, firstName: $firstName, lastName: $lastName, birthDate: $birthDate, password: $password, confirmPassword: $confirmPassword, phoneNumber: $phoneNumber, kvkkApproved: $kvkkApproved, emailError: $emailError, identityNumberError: $identityNumberError, passwordError: $passwordError, confirmPasswordError: $confirmPasswordError, phoneNumberError: $phoneNumberError, error: $error)';
   }
 }
 
@@ -98,6 +118,11 @@ abstract mixin class $RegisterStateCopyWith<$Res> {
       String confirmPassword,
       String phoneNumber,
       bool kvkkApproved,
+      String? emailError,
+      String? identityNumberError,
+      String? passwordError,
+      String? confirmPasswordError,
+      String? phoneNumberError,
       String? error});
 }
 
@@ -124,6 +149,11 @@ class _$RegisterStateCopyWithImpl<$Res>
     Object? confirmPassword = null,
     Object? phoneNumber = null,
     Object? kvkkApproved = null,
+    Object? emailError = freezed,
+    Object? identityNumberError = freezed,
+    Object? passwordError = freezed,
+    Object? confirmPasswordError = freezed,
+    Object? phoneNumberError = freezed,
     Object? error = freezed,
   }) {
     return _then(_self.copyWith(
@@ -167,6 +197,26 @@ class _$RegisterStateCopyWithImpl<$Res>
           ? _self.kvkkApproved
           : kvkkApproved // ignore: cast_nullable_to_non_nullable
               as bool,
+      emailError: freezed == emailError
+          ? _self.emailError
+          : emailError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      identityNumberError: freezed == identityNumberError
+          ? _self.identityNumberError
+          : identityNumberError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      passwordError: freezed == passwordError
+          ? _self.passwordError
+          : passwordError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      confirmPasswordError: freezed == confirmPasswordError
+          ? _self.confirmPasswordError
+          : confirmPasswordError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumberError: freezed == phoneNumberError
+          ? _self.phoneNumberError
+          : phoneNumberError // ignore: cast_nullable_to_non_nullable
+              as String?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -279,6 +329,11 @@ extension RegisterStatePatterns on RegisterState {
             String confirmPassword,
             String phoneNumber,
             bool kvkkApproved,
+            String? emailError,
+            String? identityNumberError,
+            String? passwordError,
+            String? confirmPasswordError,
+            String? phoneNumberError,
             String? error)?
         $default, {
     required TResult orElse(),
@@ -297,6 +352,11 @@ extension RegisterStatePatterns on RegisterState {
             _that.confirmPassword,
             _that.phoneNumber,
             _that.kvkkApproved,
+            _that.emailError,
+            _that.identityNumberError,
+            _that.passwordError,
+            _that.confirmPasswordError,
+            _that.phoneNumberError,
             _that.error);
       case _:
         return orElse();
@@ -329,6 +389,11 @@ extension RegisterStatePatterns on RegisterState {
             String confirmPassword,
             String phoneNumber,
             bool kvkkApproved,
+            String? emailError,
+            String? identityNumberError,
+            String? passwordError,
+            String? confirmPasswordError,
+            String? phoneNumberError,
             String? error)
         $default,
   ) {
@@ -346,6 +411,11 @@ extension RegisterStatePatterns on RegisterState {
             _that.confirmPassword,
             _that.phoneNumber,
             _that.kvkkApproved,
+            _that.emailError,
+            _that.identityNumberError,
+            _that.passwordError,
+            _that.confirmPasswordError,
+            _that.phoneNumberError,
             _that.error);
       case _:
         throw StateError('Unexpected subclass');
@@ -377,6 +447,11 @@ extension RegisterStatePatterns on RegisterState {
             String confirmPassword,
             String phoneNumber,
             bool kvkkApproved,
+            String? emailError,
+            String? identityNumberError,
+            String? passwordError,
+            String? confirmPasswordError,
+            String? phoneNumberError,
             String? error)?
         $default,
   ) {
@@ -394,6 +469,11 @@ extension RegisterStatePatterns on RegisterState {
             _that.confirmPassword,
             _that.phoneNumber,
             _that.kvkkApproved,
+            _that.emailError,
+            _that.identityNumberError,
+            _that.passwordError,
+            _that.confirmPasswordError,
+            _that.phoneNumberError,
             _that.error);
       case _:
         return null;
@@ -415,6 +495,11 @@ class _RegisterState extends RegisterState {
       this.confirmPassword = '',
       this.phoneNumber = '',
       this.kvkkApproved = false,
+      this.emailError,
+      this.identityNumberError,
+      this.passwordError,
+      this.confirmPasswordError,
+      this.phoneNumberError,
       this.error})
       : super._();
 
@@ -449,6 +534,16 @@ class _RegisterState extends RegisterState {
   @JsonKey()
   final bool kvkkApproved;
   @override
+  final String? emailError;
+  @override
+  final String? identityNumberError;
+  @override
+  final String? passwordError;
+  @override
+  final String? confirmPasswordError;
+  @override
+  final String? phoneNumberError;
+  @override
   final String? error;
 
   /// Create a copy of RegisterState
@@ -482,6 +577,16 @@ class _RegisterState extends RegisterState {
                 other.phoneNumber == phoneNumber) &&
             (identical(other.kvkkApproved, kvkkApproved) ||
                 other.kvkkApproved == kvkkApproved) &&
+            (identical(other.emailError, emailError) ||
+                other.emailError == emailError) &&
+            (identical(other.identityNumberError, identityNumberError) ||
+                other.identityNumberError == identityNumberError) &&
+            (identical(other.passwordError, passwordError) ||
+                other.passwordError == passwordError) &&
+            (identical(other.confirmPasswordError, confirmPasswordError) ||
+                other.confirmPasswordError == confirmPasswordError) &&
+            (identical(other.phoneNumberError, phoneNumberError) ||
+                other.phoneNumberError == phoneNumberError) &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -498,11 +603,16 @@ class _RegisterState extends RegisterState {
       confirmPassword,
       phoneNumber,
       kvkkApproved,
+      emailError,
+      identityNumberError,
+      passwordError,
+      confirmPasswordError,
+      phoneNumberError,
       error);
 
   @override
   String toString() {
-    return 'RegisterState(status: $status, email: $email, identityNumber: $identityNumber, firstName: $firstName, lastName: $lastName, birthDate: $birthDate, password: $password, confirmPassword: $confirmPassword, phoneNumber: $phoneNumber, kvkkApproved: $kvkkApproved, error: $error)';
+    return 'RegisterState(status: $status, email: $email, identityNumber: $identityNumber, firstName: $firstName, lastName: $lastName, birthDate: $birthDate, password: $password, confirmPassword: $confirmPassword, phoneNumber: $phoneNumber, kvkkApproved: $kvkkApproved, emailError: $emailError, identityNumberError: $identityNumberError, passwordError: $passwordError, confirmPasswordError: $confirmPasswordError, phoneNumberError: $phoneNumberError, error: $error)';
   }
 }
 
@@ -525,6 +635,11 @@ abstract mixin class _$RegisterStateCopyWith<$Res>
       String confirmPassword,
       String phoneNumber,
       bool kvkkApproved,
+      String? emailError,
+      String? identityNumberError,
+      String? passwordError,
+      String? confirmPasswordError,
+      String? phoneNumberError,
       String? error});
 }
 
@@ -551,6 +666,11 @@ class __$RegisterStateCopyWithImpl<$Res>
     Object? confirmPassword = null,
     Object? phoneNumber = null,
     Object? kvkkApproved = null,
+    Object? emailError = freezed,
+    Object? identityNumberError = freezed,
+    Object? passwordError = freezed,
+    Object? confirmPasswordError = freezed,
+    Object? phoneNumberError = freezed,
     Object? error = freezed,
   }) {
     return _then(_RegisterState(
@@ -594,6 +714,26 @@ class __$RegisterStateCopyWithImpl<$Res>
           ? _self.kvkkApproved
           : kvkkApproved // ignore: cast_nullable_to_non_nullable
               as bool,
+      emailError: freezed == emailError
+          ? _self.emailError
+          : emailError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      identityNumberError: freezed == identityNumberError
+          ? _self.identityNumberError
+          : identityNumberError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      passwordError: freezed == passwordError
+          ? _self.passwordError
+          : passwordError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      confirmPasswordError: freezed == confirmPasswordError
+          ? _self.confirmPasswordError
+          : confirmPasswordError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phoneNumberError: freezed == phoneNumberError
+          ? _self.phoneNumberError
+          : phoneNumberError // ignore: cast_nullable_to_non_nullable
+              as String?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
