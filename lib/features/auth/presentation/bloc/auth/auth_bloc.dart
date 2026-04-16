@@ -61,8 +61,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthState.sessionChecking());
-    await _logout();
-    emit(const AuthState.unauthenticated());
+    final logoutResult = await _logout();
+    emit(
+      logoutResult.fold(
+        _failureFromException,
+        (_) => const AuthState.unauthenticated(),
+      ),
+    );
   }
 
   Future<void> _onTokenExpired(
@@ -70,8 +75,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthState.sessionChecking());
-    await _clearLocalSession();
-    emit(const AuthState.unauthenticated());
+    final cleared = await _clearLocalSession();
+    emit(
+      cleared.fold(
+        _failureFromException,
+        (_) => const AuthState.unauthenticated(),
+      ),
+    );
   }
 
   // ── Yardımcılar ──────────────────────────────────────────────────────────

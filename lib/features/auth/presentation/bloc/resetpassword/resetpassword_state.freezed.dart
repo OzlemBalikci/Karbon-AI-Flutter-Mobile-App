@@ -15,13 +15,6 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ResetPasswordState {
   ResetPasswordPageStatus get status;
-  String get resetCode;
-  String get newPassword;
-  String get confirmNewPassword;
-  bool get isRateLimited;
-  String get rateLimitMessage;
-  String? get resetCodeError;
-  String? get newPasswordError;
   String? get error;
 
   /// Create a copy of ResetPasswordState
@@ -38,39 +31,15 @@ mixin _$ResetPasswordState {
         (other.runtimeType == runtimeType &&
             other is ResetPasswordState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.resetCode, resetCode) ||
-                other.resetCode == resetCode) &&
-            (identical(other.newPassword, newPassword) ||
-                other.newPassword == newPassword) &&
-            (identical(other.confirmNewPassword, confirmNewPassword) ||
-                other.confirmNewPassword == confirmNewPassword) &&
-            (identical(other.isRateLimited, isRateLimited) ||
-                other.isRateLimited == isRateLimited) &&
-            (identical(other.rateLimitMessage, rateLimitMessage) ||
-                other.rateLimitMessage == rateLimitMessage) &&
-            (identical(other.resetCodeError, resetCodeError) ||
-                other.resetCodeError == resetCodeError) &&
-            (identical(other.newPasswordError, newPasswordError) ||
-                other.newPasswordError == newPasswordError) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      status,
-      resetCode,
-      newPassword,
-      confirmNewPassword,
-      isRateLimited,
-      rateLimitMessage,
-      resetCodeError,
-      newPasswordError,
-      error);
+  int get hashCode => Object.hash(runtimeType, status, error);
 
   @override
   String toString() {
-    return 'ResetPasswordState(status: $status, resetCode: $resetCode, newPassword: $newPassword, confirmNewPassword: $confirmNewPassword, isRateLimited: $isRateLimited, rateLimitMessage: $rateLimitMessage, resetCodeError: $resetCodeError, newPasswordError: $newPasswordError, error: $error)';
+    return 'ResetPasswordState(status: $status, error: $error)';
   }
 }
 
@@ -80,16 +49,7 @@ abstract mixin class $ResetPasswordStateCopyWith<$Res> {
           ResetPasswordState value, $Res Function(ResetPasswordState) _then) =
       _$ResetPasswordStateCopyWithImpl;
   @useResult
-  $Res call(
-      {ResetPasswordPageStatus status,
-      String resetCode,
-      String newPassword,
-      String confirmNewPassword,
-      bool isRateLimited,
-      String rateLimitMessage,
-      String? resetCodeError,
-      String? newPasswordError,
-      String? error});
+  $Res call({ResetPasswordPageStatus status, String? error});
 }
 
 /// @nodoc
@@ -106,13 +66,6 @@ class _$ResetPasswordStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? resetCode = null,
-    Object? newPassword = null,
-    Object? confirmNewPassword = null,
-    Object? isRateLimited = null,
-    Object? rateLimitMessage = null,
-    Object? resetCodeError = freezed,
-    Object? newPasswordError = freezed,
     Object? error = freezed,
   }) {
     return _then(_self.copyWith(
@@ -120,34 +73,6 @@ class _$ResetPasswordStateCopyWithImpl<$Res>
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as ResetPasswordPageStatus,
-      resetCode: null == resetCode
-          ? _self.resetCode
-          : resetCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      newPassword: null == newPassword
-          ? _self.newPassword
-          : newPassword // ignore: cast_nullable_to_non_nullable
-              as String,
-      confirmNewPassword: null == confirmNewPassword
-          ? _self.confirmNewPassword
-          : confirmNewPassword // ignore: cast_nullable_to_non_nullable
-              as String,
-      isRateLimited: null == isRateLimited
-          ? _self.isRateLimited
-          : isRateLimited // ignore: cast_nullable_to_non_nullable
-              as bool,
-      rateLimitMessage: null == rateLimitMessage
-          ? _self.rateLimitMessage
-          : rateLimitMessage // ignore: cast_nullable_to_non_nullable
-              as String,
-      resetCodeError: freezed == resetCodeError
-          ? _self.resetCodeError
-          : resetCodeError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      newPasswordError: freezed == newPasswordError
-          ? _self.newPasswordError
-          : newPasswordError // ignore: cast_nullable_to_non_nullable
-              as String?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -249,32 +174,13 @@ extension ResetPasswordStatePatterns on ResetPasswordState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(
-            ResetPasswordPageStatus status,
-            String resetCode,
-            String newPassword,
-            String confirmNewPassword,
-            bool isRateLimited,
-            String rateLimitMessage,
-            String? resetCodeError,
-            String? newPasswordError,
-            String? error)?
-        $default, {
+    TResult Function(ResetPasswordPageStatus status, String? error)? $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ResetPasswordState() when $default != null:
-        return $default(
-            _that.status,
-            _that.resetCode,
-            _that.newPassword,
-            _that.confirmNewPassword,
-            _that.isRateLimited,
-            _that.rateLimitMessage,
-            _that.resetCodeError,
-            _that.newPasswordError,
-            _that.error);
+        return $default(_that.status, _that.error);
       case _:
         return orElse();
     }
@@ -295,31 +201,12 @@ extension ResetPasswordStatePatterns on ResetPasswordState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(
-            ResetPasswordPageStatus status,
-            String resetCode,
-            String newPassword,
-            String confirmNewPassword,
-            bool isRateLimited,
-            String rateLimitMessage,
-            String? resetCodeError,
-            String? newPasswordError,
-            String? error)
-        $default,
+    TResult Function(ResetPasswordPageStatus status, String? error) $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ResetPasswordState():
-        return $default(
-            _that.status,
-            _that.resetCode,
-            _that.newPassword,
-            _that.confirmNewPassword,
-            _that.isRateLimited,
-            _that.rateLimitMessage,
-            _that.resetCodeError,
-            _that.newPasswordError,
-            _that.error);
+        return $default(_that.status, _that.error);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -339,31 +226,12 @@ extension ResetPasswordStatePatterns on ResetPasswordState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(
-            ResetPasswordPageStatus status,
-            String resetCode,
-            String newPassword,
-            String confirmNewPassword,
-            bool isRateLimited,
-            String rateLimitMessage,
-            String? resetCodeError,
-            String? newPasswordError,
-            String? error)?
-        $default,
+    TResult? Function(ResetPasswordPageStatus status, String? error)? $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ResetPasswordState() when $default != null:
-        return $default(
-            _that.status,
-            _that.resetCode,
-            _that.newPassword,
-            _that.confirmNewPassword,
-            _that.isRateLimited,
-            _that.rateLimitMessage,
-            _that.resetCodeError,
-            _that.newPasswordError,
-            _that.error);
+        return $default(_that.status, _that.error);
       case _:
         return null;
     }
@@ -374,39 +242,12 @@ extension ResetPasswordStatePatterns on ResetPasswordState {
 
 class _ResetPasswordState extends ResetPasswordState {
   const _ResetPasswordState(
-      {this.status = ResetPasswordPageStatus.initial,
-      this.resetCode = '',
-      this.newPassword = '',
-      this.confirmNewPassword = '',
-      this.isRateLimited = false,
-      this.rateLimitMessage = '',
-      this.resetCodeError,
-      this.newPasswordError,
-      this.error})
+      {this.status = ResetPasswordPageStatus.initial, this.error})
       : super._();
 
   @override
   @JsonKey()
   final ResetPasswordPageStatus status;
-  @override
-  @JsonKey()
-  final String resetCode;
-  @override
-  @JsonKey()
-  final String newPassword;
-  @override
-  @JsonKey()
-  final String confirmNewPassword;
-  @override
-  @JsonKey()
-  final bool isRateLimited;
-  @override
-  @JsonKey()
-  final String rateLimitMessage;
-  @override
-  final String? resetCodeError;
-  @override
-  final String? newPasswordError;
   @override
   final String? error;
 
@@ -424,39 +265,15 @@ class _ResetPasswordState extends ResetPasswordState {
         (other.runtimeType == runtimeType &&
             other is _ResetPasswordState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.resetCode, resetCode) ||
-                other.resetCode == resetCode) &&
-            (identical(other.newPassword, newPassword) ||
-                other.newPassword == newPassword) &&
-            (identical(other.confirmNewPassword, confirmNewPassword) ||
-                other.confirmNewPassword == confirmNewPassword) &&
-            (identical(other.isRateLimited, isRateLimited) ||
-                other.isRateLimited == isRateLimited) &&
-            (identical(other.rateLimitMessage, rateLimitMessage) ||
-                other.rateLimitMessage == rateLimitMessage) &&
-            (identical(other.resetCodeError, resetCodeError) ||
-                other.resetCodeError == resetCodeError) &&
-            (identical(other.newPasswordError, newPasswordError) ||
-                other.newPasswordError == newPasswordError) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      status,
-      resetCode,
-      newPassword,
-      confirmNewPassword,
-      isRateLimited,
-      rateLimitMessage,
-      resetCodeError,
-      newPasswordError,
-      error);
+  int get hashCode => Object.hash(runtimeType, status, error);
 
   @override
   String toString() {
-    return 'ResetPasswordState(status: $status, resetCode: $resetCode, newPassword: $newPassword, confirmNewPassword: $confirmNewPassword, isRateLimited: $isRateLimited, rateLimitMessage: $rateLimitMessage, resetCodeError: $resetCodeError, newPasswordError: $newPasswordError, error: $error)';
+    return 'ResetPasswordState(status: $status, error: $error)';
   }
 }
 
@@ -468,16 +285,7 @@ abstract mixin class _$ResetPasswordStateCopyWith<$Res>
       __$ResetPasswordStateCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {ResetPasswordPageStatus status,
-      String resetCode,
-      String newPassword,
-      String confirmNewPassword,
-      bool isRateLimited,
-      String rateLimitMessage,
-      String? resetCodeError,
-      String? newPasswordError,
-      String? error});
+  $Res call({ResetPasswordPageStatus status, String? error});
 }
 
 /// @nodoc
@@ -494,13 +302,6 @@ class __$ResetPasswordStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? status = null,
-    Object? resetCode = null,
-    Object? newPassword = null,
-    Object? confirmNewPassword = null,
-    Object? isRateLimited = null,
-    Object? rateLimitMessage = null,
-    Object? resetCodeError = freezed,
-    Object? newPasswordError = freezed,
     Object? error = freezed,
   }) {
     return _then(_ResetPasswordState(
@@ -508,34 +309,6 @@ class __$ResetPasswordStateCopyWithImpl<$Res>
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as ResetPasswordPageStatus,
-      resetCode: null == resetCode
-          ? _self.resetCode
-          : resetCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      newPassword: null == newPassword
-          ? _self.newPassword
-          : newPassword // ignore: cast_nullable_to_non_nullable
-              as String,
-      confirmNewPassword: null == confirmNewPassword
-          ? _self.confirmNewPassword
-          : confirmNewPassword // ignore: cast_nullable_to_non_nullable
-              as String,
-      isRateLimited: null == isRateLimited
-          ? _self.isRateLimited
-          : isRateLimited // ignore: cast_nullable_to_non_nullable
-              as bool,
-      rateLimitMessage: null == rateLimitMessage
-          ? _self.rateLimitMessage
-          : rateLimitMessage // ignore: cast_nullable_to_non_nullable
-              as String,
-      resetCodeError: freezed == resetCodeError
-          ? _self.resetCodeError
-          : resetCodeError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      newPasswordError: freezed == newPasswordError
-          ? _self.newPasswordError
-          : newPasswordError // ignore: cast_nullable_to_non_nullable
-              as String?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable

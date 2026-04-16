@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
@@ -11,6 +12,9 @@ import 'package:karbon/widgets/app_logo.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/screen_titles.dart';
 import 'package:karbon/router/navigation.dart';
+import 'package:karbon/di/di.dart';
+import 'package:karbon/features/auth/presentation/bloc/resetpassword/resetpassword_cubit.dart';
+import 'package:karbon/features/auth/presentation/bloc/resetpassword/resetpassword_state.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/services.dart';
 
@@ -22,7 +26,12 @@ part 'sections/reset_password_bottom.dart';
 
 @RoutePage()
 class ResetPasswordPage extends StatefulWidget {
-  const ResetPasswordPage({super.key});
+  const ResetPasswordPage({
+    super.key,
+    required this.phoneNumber,
+  });
+
+  final String phoneNumber;
 
   @override
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
@@ -30,10 +39,14 @@ class ResetPasswordPage extends StatefulWidget {
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
   final _pinController = TextEditingController();
+  final _newPasswordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
     _pinController.dispose();
+    _newPasswordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -42,52 +55,72 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     final keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
     final keyboardOpen = keyboardInset > 0;
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: context.colors.primary,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Image.asset(
-                Assets.images.loginMask.path,
-                width: double.infinity,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-          SafeArea(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  physics: keyboardOpen
-                      ? const ClampingScrollPhysics()
-                      : const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: keyboardInset),
-                  child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: constraints.maxHeight),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        ResetPasswordFeatureSection(
-                            pinController: _pinController),
-                        ResetPasswordBottomSection(),
-                      ],
-                    ),
+    return BlocProvider(
+      create: (_) => getIt<ResetPasswordCubit>(),
+      child: BlocListener<ResetPasswordCubit, ResetPasswordState>(
+        listenWhen: (p, c) =>
+            p.status != c.status && c.status == ResetPasswordPageStatus.success,
+        listener: (context, state) {
+          context.router.push(const LoginRoute());
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: context.colors.primary,
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(
+                    Assets.images.loginMask.path,
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
                   ),
-                );
-              },
-            ),
+                ),
+              ),
+              SafeArea(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SingleChildScrollView(
+                      physics: keyboardOpen
+                          ? const ClampingScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: keyboardInset),
+                      child: ConstrainedBox(
+                        constraints:
+                            BoxConstraints(minHeight: constraints.maxHeight),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            ResetPasswordFeatureSection(
+                              pinController: _pinController,
+                              newPasswordController: _newPasswordController,
+                              confirmPasswordController:
+                                  _confirmPasswordController,
+                            ),
+                            ResetPasswordBottomSection(
+                              phoneNumber: widget.phoneNumber,
+                              pinController: _pinController,
+                              newPasswordController: _newPasswordController,
+                              confirmPasswordController:
+                                  _confirmPasswordController,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).padding.top,
+                left: 25.w,
+                child: const BackIconButton(),
+              ),
+            ],
           ),
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: 25.w,
-            child: BackIconButton(),
-          ),
-        ],
+        ),
       ),
     );
   }

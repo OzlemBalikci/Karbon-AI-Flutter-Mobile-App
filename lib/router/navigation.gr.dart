@@ -359,18 +359,49 @@ class RegisterRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [ResetPasswordPage]
-class ResetPasswordRoute extends PageRouteInfo<void> {
-  const ResetPasswordRoute({List<PageRouteInfo>? children})
-      : super(ResetPasswordRoute.name, initialChildren: children);
+class ResetPasswordRoute extends PageRouteInfo<ResetPasswordRouteArgs> {
+  ResetPasswordRoute({
+    Key? key,
+    required String phoneNumber,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ResetPasswordRoute.name,
+          args: ResetPasswordRouteArgs(key: key, phoneNumber: phoneNumber),
+          initialChildren: children,
+        );
 
   static const String name = 'ResetPasswordRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ResetPasswordPage();
+      final args = data.argsAs<ResetPasswordRouteArgs>();
+      return ResetPasswordPage(key: args.key, phoneNumber: args.phoneNumber);
     },
   );
+}
+
+class ResetPasswordRouteArgs {
+  const ResetPasswordRouteArgs({this.key, required this.phoneNumber});
+
+  final Key? key;
+
+  final String phoneNumber;
+
+  @override
+  String toString() {
+    return 'ResetPasswordRouteArgs{key: $key, phoneNumber: $phoneNumber}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ResetPasswordRouteArgs) return false;
+    return key == other.key && phoneNumber == other.phoneNumber;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ phoneNumber.hashCode;
 }
 
 /// generated route for

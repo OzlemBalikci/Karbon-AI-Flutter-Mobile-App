@@ -1,7 +1,12 @@
 part of '../forgot_password.dart';
 
 class ForgotPasswordFormWidget extends StatelessWidget {
-  const ForgotPasswordFormWidget({super.key});
+  const ForgotPasswordFormWidget({
+    super.key,
+    required this.controller,
+  });
+
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +19,10 @@ class ForgotPasswordFormWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFieldWidget(
-                  obscureText: false,
-                  hintText: context.text.forgot_password_textfield_text,
-                  controller: TextEditingController()),
+                obscureText: false,
+                hintText: context.text.forgot_password_textfield_text,
+                controller: controller,
+              ),
             ],
           ),
         ),

@@ -4,23 +4,39 @@ import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
 
 class CheckboxWidget extends StatefulWidget {
-  const CheckboxWidget({super.key});
+  const CheckboxWidget({
+    super.key,
+    this.value,
+    this.onChanged,
+  });
+
+  final bool? value;
+  final ValueChanged<bool>? onChanged;
 
   @override
   State<CheckboxWidget> createState() => _CheckboxWidgetState();
 }
 
 class _CheckboxWidgetState extends State<CheckboxWidget> {
-  bool _isChecked = false;
+  bool _internalChecked = false;
 
   @override
   Widget build(BuildContext context) {
+    final controlled = widget.onChanged != null;
+    final effectiveValue =
+        controlled ? (widget.value ?? false) : _internalChecked;
+
     return Checkbox(
-      value: _isChecked,
+      value: effectiveValue,
       onChanged: (value) {
-        setState(() {
-          _isChecked = value ?? false;
-        });
+        final next = value ?? false;
+        if (controlled) {
+          widget.onChanged!(next);
+        } else {
+          setState(() {
+            _internalChecked = next;
+          });
+        }
       },
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppThemeSpacing.r5.r)),

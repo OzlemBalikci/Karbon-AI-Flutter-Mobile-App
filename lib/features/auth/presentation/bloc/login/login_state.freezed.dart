@@ -15,14 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginState {
   LoginPageStatus get status;
-  String get emailOrIdentityNumber;
-  String get password;
-  bool get navigateToForgotPassword;
-  String? get emailOrIdentityNumberError;
-  String? get passwordError;
-  String? get error;
-  AppUser? get user;
   bool get obscurePassword;
+  String? get error;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -37,41 +31,17 @@ mixin _$LoginState {
         (other.runtimeType == runtimeType &&
             other is LoginState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.emailOrIdentityNumber, emailOrIdentityNumber) ||
-                other.emailOrIdentityNumber == emailOrIdentityNumber) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(
-                    other.navigateToForgotPassword, navigateToForgotPassword) ||
-                other.navigateToForgotPassword == navigateToForgotPassword) &&
-            (identical(other.emailOrIdentityNumberError,
-                    emailOrIdentityNumberError) ||
-                other.emailOrIdentityNumberError ==
-                    emailOrIdentityNumberError) &&
-            (identical(other.passwordError, passwordError) ||
-                other.passwordError == passwordError) &&
-            (identical(other.error, error) || other.error == error) &&
-            (identical(other.user, user) || other.user == user) &&
             (identical(other.obscurePassword, obscurePassword) ||
-                other.obscurePassword == obscurePassword));
+                other.obscurePassword == obscurePassword) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      status,
-      emailOrIdentityNumber,
-      password,
-      navigateToForgotPassword,
-      emailOrIdentityNumberError,
-      passwordError,
-      error,
-      user,
-      obscurePassword);
+  int get hashCode => Object.hash(runtimeType, status, obscurePassword, error);
 
   @override
   String toString() {
-    return 'LoginState(status: $status, emailOrIdentityNumber: $emailOrIdentityNumber, password: $password, navigateToForgotPassword: $navigateToForgotPassword, emailOrIdentityNumberError: $emailOrIdentityNumberError, passwordError: $passwordError, error: $error, user: $user, obscurePassword: $obscurePassword)';
+    return 'LoginState(status: $status, obscurePassword: $obscurePassword, error: $error)';
   }
 }
 
@@ -81,16 +51,7 @@ abstract mixin class $LoginStateCopyWith<$Res> {
           LoginState value, $Res Function(LoginState) _then) =
       _$LoginStateCopyWithImpl;
   @useResult
-  $Res call(
-      {LoginPageStatus status,
-      String emailOrIdentityNumber,
-      String password,
-      bool navigateToForgotPassword,
-      String? emailOrIdentityNumberError,
-      String? passwordError,
-      String? error,
-      AppUser? user,
-      bool obscurePassword});
+  $Res call({LoginPageStatus status, bool obscurePassword, String? error});
 }
 
 /// @nodoc
@@ -106,52 +67,22 @@ class _$LoginStateCopyWithImpl<$Res> implements $LoginStateCopyWith<$Res> {
   @override
   $Res call({
     Object? status = null,
-    Object? emailOrIdentityNumber = null,
-    Object? password = null,
-    Object? navigateToForgotPassword = null,
-    Object? emailOrIdentityNumberError = freezed,
-    Object? passwordError = freezed,
-    Object? error = freezed,
-    Object? user = freezed,
     Object? obscurePassword = null,
+    Object? error = freezed,
   }) {
     return _then(_self.copyWith(
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as LoginPageStatus,
-      emailOrIdentityNumber: null == emailOrIdentityNumber
-          ? _self.emailOrIdentityNumber
-          : emailOrIdentityNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _self.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      navigateToForgotPassword: null == navigateToForgotPassword
-          ? _self.navigateToForgotPassword
-          : navigateToForgotPassword // ignore: cast_nullable_to_non_nullable
-              as bool,
-      emailOrIdentityNumberError: freezed == emailOrIdentityNumberError
-          ? _self.emailOrIdentityNumberError
-          : emailOrIdentityNumberError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      passwordError: freezed == passwordError
-          ? _self.passwordError
-          : passwordError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      error: freezed == error
-          ? _self.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-      user: freezed == user
-          ? _self.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as AppUser?,
       obscurePassword: null == obscurePassword
           ? _self.obscurePassword
           : obscurePassword // ignore: cast_nullable_to_non_nullable
               as bool,
+      error: freezed == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -250,31 +181,14 @@ extension LoginStatePatterns on LoginState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            LoginPageStatus status,
-            String emailOrIdentityNumber,
-            String password,
-            bool navigateToForgotPassword,
-            String? emailOrIdentityNumberError,
-            String? passwordError,
-            String? error,
-            AppUser? user,
-            bool obscurePassword)?
+            LoginPageStatus status, bool obscurePassword, String? error)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _LoginState() when $default != null:
-        return $default(
-            _that.status,
-            _that.emailOrIdentityNumber,
-            _that.password,
-            _that.navigateToForgotPassword,
-            _that.emailOrIdentityNumberError,
-            _that.passwordError,
-            _that.error,
-            _that.user,
-            _that.obscurePassword);
+        return $default(_that.status, _that.obscurePassword, _that.error);
       case _:
         return orElse();
     }
@@ -296,30 +210,13 @@ extension LoginStatePatterns on LoginState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            LoginPageStatus status,
-            String emailOrIdentityNumber,
-            String password,
-            bool navigateToForgotPassword,
-            String? emailOrIdentityNumberError,
-            String? passwordError,
-            String? error,
-            AppUser? user,
-            bool obscurePassword)
+            LoginPageStatus status, bool obscurePassword, String? error)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _LoginState():
-        return $default(
-            _that.status,
-            _that.emailOrIdentityNumber,
-            _that.password,
-            _that.navigateToForgotPassword,
-            _that.emailOrIdentityNumberError,
-            _that.passwordError,
-            _that.error,
-            _that.user,
-            _that.obscurePassword);
+        return $default(_that.status, _that.obscurePassword, _that.error);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -340,30 +237,13 @@ extension LoginStatePatterns on LoginState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            LoginPageStatus status,
-            String emailOrIdentityNumber,
-            String password,
-            bool navigateToForgotPassword,
-            String? emailOrIdentityNumberError,
-            String? passwordError,
-            String? error,
-            AppUser? user,
-            bool obscurePassword)?
+            LoginPageStatus status, bool obscurePassword, String? error)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _LoginState() when $default != null:
-        return $default(
-            _that.status,
-            _that.emailOrIdentityNumber,
-            _that.password,
-            _that.navigateToForgotPassword,
-            _that.emailOrIdentityNumberError,
-            _that.passwordError,
-            _that.error,
-            _that.user,
-            _that.obscurePassword);
+        return $default(_that.status, _that.obscurePassword, _that.error);
       case _:
         return null;
     }
@@ -375,14 +255,8 @@ extension LoginStatePatterns on LoginState {
 class _LoginState extends LoginState {
   const _LoginState(
       {this.status = LoginPageStatus.initial,
-      this.emailOrIdentityNumber = '',
-      this.password = '',
-      this.navigateToForgotPassword = false,
-      this.emailOrIdentityNumberError,
-      this.passwordError,
-      this.error,
-      this.user,
-      this.obscurePassword = true})
+      this.obscurePassword = true,
+      this.error})
       : super._();
 
   @override
@@ -390,24 +264,9 @@ class _LoginState extends LoginState {
   final LoginPageStatus status;
   @override
   @JsonKey()
-  final String emailOrIdentityNumber;
-  @override
-  @JsonKey()
-  final String password;
-  @override
-  @JsonKey()
-  final bool navigateToForgotPassword;
-  @override
-  final String? emailOrIdentityNumberError;
-  @override
-  final String? passwordError;
+  final bool obscurePassword;
   @override
   final String? error;
-  @override
-  final AppUser? user;
-  @override
-  @JsonKey()
-  final bool obscurePassword;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -423,41 +282,17 @@ class _LoginState extends LoginState {
         (other.runtimeType == runtimeType &&
             other is _LoginState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.emailOrIdentityNumber, emailOrIdentityNumber) ||
-                other.emailOrIdentityNumber == emailOrIdentityNumber) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(
-                    other.navigateToForgotPassword, navigateToForgotPassword) ||
-                other.navigateToForgotPassword == navigateToForgotPassword) &&
-            (identical(other.emailOrIdentityNumberError,
-                    emailOrIdentityNumberError) ||
-                other.emailOrIdentityNumberError ==
-                    emailOrIdentityNumberError) &&
-            (identical(other.passwordError, passwordError) ||
-                other.passwordError == passwordError) &&
-            (identical(other.error, error) || other.error == error) &&
-            (identical(other.user, user) || other.user == user) &&
             (identical(other.obscurePassword, obscurePassword) ||
-                other.obscurePassword == obscurePassword));
+                other.obscurePassword == obscurePassword) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      status,
-      emailOrIdentityNumber,
-      password,
-      navigateToForgotPassword,
-      emailOrIdentityNumberError,
-      passwordError,
-      error,
-      user,
-      obscurePassword);
+  int get hashCode => Object.hash(runtimeType, status, obscurePassword, error);
 
   @override
   String toString() {
-    return 'LoginState(status: $status, emailOrIdentityNumber: $emailOrIdentityNumber, password: $password, navigateToForgotPassword: $navigateToForgotPassword, emailOrIdentityNumberError: $emailOrIdentityNumberError, passwordError: $passwordError, error: $error, user: $user, obscurePassword: $obscurePassword)';
+    return 'LoginState(status: $status, obscurePassword: $obscurePassword, error: $error)';
   }
 }
 
@@ -469,16 +304,7 @@ abstract mixin class _$LoginStateCopyWith<$Res>
       __$LoginStateCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {LoginPageStatus status,
-      String emailOrIdentityNumber,
-      String password,
-      bool navigateToForgotPassword,
-      String? emailOrIdentityNumberError,
-      String? passwordError,
-      String? error,
-      AppUser? user,
-      bool obscurePassword});
+  $Res call({LoginPageStatus status, bool obscurePassword, String? error});
 }
 
 /// @nodoc
@@ -494,52 +320,22 @@ class __$LoginStateCopyWithImpl<$Res> implements _$LoginStateCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? status = null,
-    Object? emailOrIdentityNumber = null,
-    Object? password = null,
-    Object? navigateToForgotPassword = null,
-    Object? emailOrIdentityNumberError = freezed,
-    Object? passwordError = freezed,
-    Object? error = freezed,
-    Object? user = freezed,
     Object? obscurePassword = null,
+    Object? error = freezed,
   }) {
     return _then(_LoginState(
       status: null == status
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as LoginPageStatus,
-      emailOrIdentityNumber: null == emailOrIdentityNumber
-          ? _self.emailOrIdentityNumber
-          : emailOrIdentityNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _self.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      navigateToForgotPassword: null == navigateToForgotPassword
-          ? _self.navigateToForgotPassword
-          : navigateToForgotPassword // ignore: cast_nullable_to_non_nullable
-              as bool,
-      emailOrIdentityNumberError: freezed == emailOrIdentityNumberError
-          ? _self.emailOrIdentityNumberError
-          : emailOrIdentityNumberError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      passwordError: freezed == passwordError
-          ? _self.passwordError
-          : passwordError // ignore: cast_nullable_to_non_nullable
-              as String?,
-      error: freezed == error
-          ? _self.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-      user: freezed == user
-          ? _self.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as AppUser?,
       obscurePassword: null == obscurePassword
           ? _self.obscurePassword
           : obscurePassword // ignore: cast_nullable_to_non_nullable
               as bool,
+      error: freezed == error
+          ? _self.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }

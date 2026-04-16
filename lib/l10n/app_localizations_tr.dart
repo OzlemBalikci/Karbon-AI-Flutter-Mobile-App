@@ -82,6 +82,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get register_birth_date_textfield_text => 'Doğum Tarihiniz';
 
   @override
+  String get register_birth_date_invalid =>
+      'Geçerli bir doğum tarihi giriniz (GG/AA/YYYY).';
+
+  @override
   String get register_password_textfield_text => 'Şifrenizi Giriniz';
 
   @override
@@ -307,4 +311,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tree => 'Ağaç';
+
+  @override
+  String get ok => 'Tamam';
 }

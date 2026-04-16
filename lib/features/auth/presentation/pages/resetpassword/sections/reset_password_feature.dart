@@ -1,9 +1,16 @@
 part of '../reset_password.dart';
 
 class ResetPasswordFeatureSection extends StatelessWidget {
-  const ResetPasswordFeatureSection({super.key, required this.pinController});
+  const ResetPasswordFeatureSection({
+    super.key,
+    required this.pinController,
+    required this.newPasswordController,
+    required this.confirmPasswordController,
+  });
 
   final TextEditingController pinController;
+  final TextEditingController newPasswordController;
+  final TextEditingController confirmPasswordController;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +26,10 @@ class ResetPasswordFeatureSection extends StatelessWidget {
         SizedBox(height: AppThemeSpacing.s30.h),
         PinProgressField(controller: pinController),
         SizedBox(height: AppThemeSpacing.s25.h),
-        ResetPasswordForm(),
+        ResetPasswordForm(
+          newPasswordController: newPasswordController,
+          confirmPasswordController: confirmPasswordController,
+        ),
       ],
     );
   }

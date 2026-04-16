@@ -1,7 +1,12 @@
 part of '../forgot_password.dart';
 
 class ForgotPasswordFeatureSection extends StatelessWidget {
-  const ForgotPasswordFeatureSection({super.key});
+  const ForgotPasswordFeatureSection({
+    super.key,
+    required this.phoneController,
+  });
+
+  final TextEditingController phoneController;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class ForgotPasswordFeatureSection extends StatelessWidget {
         SizedBox(height: AppThemeSpacing.s30.h),
         ForgotPasswordInfoWidget(),
         SizedBox(height: AppThemeSpacing.s30.h),
-        ForgotPasswordFormWidget(),
+        ForgotPasswordFormWidget(controller: phoneController),
       ],
     );
   }

@@ -7,8 +7,8 @@ class LogoutUseCase {
   LogoutUseCase(this._repository);
   final AuthRepository _repository;
 
-  Future<Either<Exception, Unit>> call() async {
+  Future<Either<Exception, void>> call() async {
     await _repository.logout();
-    return const Right(unit);
+    return const Right(null);
   }
 }

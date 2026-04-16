@@ -11,49 +11,26 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
   final ForgotPasswordUseCase _forgotPasswordUseCase;
 
-  void phoneNumberChanged(String value) => emit(state.copyWith(
-        phoneNumber: value,
-        phoneNumberError: null,
-        error: null,
-      ));
-
-  Future<void> sendCode() async {
+  Future<void> sendCode({required String phoneNumber}) async {
     emit(state.copyWith(
       status: ForgotPasswordPageStatus.loading,
-      phoneNumberError: null,
       error: null,
     ));
 
     final result = await _forgotPasswordUseCase(
-      phoneNumber: state.phoneNumber,
+      phoneNumber: phoneNumber,
     );
 
-    result.fold(
-      (exception) {
-        if (exception is ValidationException ||
-            exception is BadRequestException) {
-          emit(state.copyWith(
-            status: ForgotPasswordPageStatus.failure,
-            phoneNumberError: (exception as AppException).message,
-          ));
-        } else if (exception is NotFoundException) {
-          emit(state.copyWith(
-            status: ForgotPasswordPageStatus.failure,
-            error: exception.message,
-          ));
-        } else if (exception is AppException) {
-          emit(state.copyWith(
-            status: ForgotPasswordPageStatus.failure,
-            error: exception.message,
-          ));
-        } else {
-          emit(state.copyWith(
-            status: ForgotPasswordPageStatus.failure,
-            error: exception.toString(),
-          ));
-        }
-      },
-      (_) => emit(state.copyWith(status: ForgotPasswordPageStatus.success)),
+    await result.fold<Future<void>>(
+      (exception) async => emit(state.copyWith(
+        status: ForgotPasswordPageStatus.failure,
+        error: exception is AppException
+            ? exception.message
+            : exception.toString(),
+      )),
+      (_) async => emit(
+        state.copyWith(status: ForgotPasswordPageStatus.success),
+      ),
     );
   }
 }

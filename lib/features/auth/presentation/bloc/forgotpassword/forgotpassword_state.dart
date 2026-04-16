@@ -14,8 +14,6 @@ abstract class ForgotPasswordState with _$ForgotPasswordState {
   const ForgotPasswordState._();
   const factory ForgotPasswordState({
     @Default(ForgotPasswordPageStatus.initial) ForgotPasswordPageStatus status,
-    @Default('') String phoneNumber,
-    String? phoneNumberError,
     String? error,
   }) = _ForgotPasswordState;
 

@@ -15,8 +15,6 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ForgotPasswordState {
   ForgotPasswordPageStatus get status;
-  String get phoneNumber;
-  String? get phoneNumberError;
   String? get error;
 
   /// Create a copy of ForgotPasswordState
@@ -33,20 +31,15 @@ mixin _$ForgotPasswordState {
         (other.runtimeType == runtimeType &&
             other is ForgotPasswordState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
-            (identical(other.phoneNumberError, phoneNumberError) ||
-                other.phoneNumberError == phoneNumberError) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, phoneNumber, phoneNumberError, error);
+  int get hashCode => Object.hash(runtimeType, status, error);
 
   @override
   String toString() {
-    return 'ForgotPasswordState(status: $status, phoneNumber: $phoneNumber, phoneNumberError: $phoneNumberError, error: $error)';
+    return 'ForgotPasswordState(status: $status, error: $error)';
   }
 }
 
@@ -56,11 +49,7 @@ abstract mixin class $ForgotPasswordStateCopyWith<$Res> {
           ForgotPasswordState value, $Res Function(ForgotPasswordState) _then) =
       _$ForgotPasswordStateCopyWithImpl;
   @useResult
-  $Res call(
-      {ForgotPasswordPageStatus status,
-      String phoneNumber,
-      String? phoneNumberError,
-      String? error});
+  $Res call({ForgotPasswordPageStatus status, String? error});
 }
 
 /// @nodoc
@@ -77,8 +66,6 @@ class _$ForgotPasswordStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? status = null,
-    Object? phoneNumber = null,
-    Object? phoneNumberError = freezed,
     Object? error = freezed,
   }) {
     return _then(_self.copyWith(
@@ -86,14 +73,6 @@ class _$ForgotPasswordStateCopyWithImpl<$Res>
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as ForgotPasswordPageStatus,
-      phoneNumber: null == phoneNumber
-          ? _self.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneNumberError: freezed == phoneNumberError
-          ? _self.phoneNumberError
-          : phoneNumberError // ignore: cast_nullable_to_non_nullable
-              as String?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -195,16 +174,14 @@ extension ForgotPasswordStatePatterns on ForgotPasswordState {
 
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(ForgotPasswordPageStatus status, String phoneNumber,
-            String? phoneNumberError, String? error)?
+    TResult Function(ForgotPasswordPageStatus status, String? error)?
         $default, {
     required TResult orElse(),
   }) {
     final _that = this;
     switch (_that) {
       case _ForgotPasswordState() when $default != null:
-        return $default(_that.status, _that.phoneNumber, _that.phoneNumberError,
-            _that.error);
+        return $default(_that.status, _that.error);
       case _:
         return orElse();
     }
@@ -225,15 +202,12 @@ extension ForgotPasswordStatePatterns on ForgotPasswordState {
 
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(ForgotPasswordPageStatus status, String phoneNumber,
-            String? phoneNumberError, String? error)
-        $default,
+    TResult Function(ForgotPasswordPageStatus status, String? error) $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ForgotPasswordState():
-        return $default(_that.status, _that.phoneNumber, _that.phoneNumberError,
-            _that.error);
+        return $default(_that.status, _that.error);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -253,15 +227,12 @@ extension ForgotPasswordStatePatterns on ForgotPasswordState {
 
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(ForgotPasswordPageStatus status, String phoneNumber,
-            String? phoneNumberError, String? error)?
-        $default,
+    TResult? Function(ForgotPasswordPageStatus status, String? error)? $default,
   ) {
     final _that = this;
     switch (_that) {
       case _ForgotPasswordState() when $default != null:
-        return $default(_that.status, _that.phoneNumber, _that.phoneNumberError,
-            _that.error);
+        return $default(_that.status, _that.error);
       case _:
         return null;
     }
@@ -272,20 +243,12 @@ extension ForgotPasswordStatePatterns on ForgotPasswordState {
 
 class _ForgotPasswordState extends ForgotPasswordState {
   const _ForgotPasswordState(
-      {this.status = ForgotPasswordPageStatus.initial,
-      this.phoneNumber = '',
-      this.phoneNumberError,
-      this.error})
+      {this.status = ForgotPasswordPageStatus.initial, this.error})
       : super._();
 
   @override
   @JsonKey()
   final ForgotPasswordPageStatus status;
-  @override
-  @JsonKey()
-  final String phoneNumber;
-  @override
-  final String? phoneNumberError;
   @override
   final String? error;
 
@@ -304,20 +267,15 @@ class _ForgotPasswordState extends ForgotPasswordState {
         (other.runtimeType == runtimeType &&
             other is _ForgotPasswordState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.phoneNumber, phoneNumber) ||
-                other.phoneNumber == phoneNumber) &&
-            (identical(other.phoneNumberError, phoneNumberError) ||
-                other.phoneNumberError == phoneNumberError) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, status, phoneNumber, phoneNumberError, error);
+  int get hashCode => Object.hash(runtimeType, status, error);
 
   @override
   String toString() {
-    return 'ForgotPasswordState(status: $status, phoneNumber: $phoneNumber, phoneNumberError: $phoneNumberError, error: $error)';
+    return 'ForgotPasswordState(status: $status, error: $error)';
   }
 }
 
@@ -329,11 +287,7 @@ abstract mixin class _$ForgotPasswordStateCopyWith<$Res>
       __$ForgotPasswordStateCopyWithImpl;
   @override
   @useResult
-  $Res call(
-      {ForgotPasswordPageStatus status,
-      String phoneNumber,
-      String? phoneNumberError,
-      String? error});
+  $Res call({ForgotPasswordPageStatus status, String? error});
 }
 
 /// @nodoc
@@ -350,8 +304,6 @@ class __$ForgotPasswordStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   $Res call({
     Object? status = null,
-    Object? phoneNumber = null,
-    Object? phoneNumberError = freezed,
     Object? error = freezed,
   }) {
     return _then(_ForgotPasswordState(
@@ -359,14 +311,6 @@ class __$ForgotPasswordStateCopyWithImpl<$Res>
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as ForgotPasswordPageStatus,
-      phoneNumber: null == phoneNumber
-          ? _self.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      phoneNumberError: freezed == phoneNumberError
-          ? _self.phoneNumberError
-          : phoneNumberError // ignore: cast_nullable_to_non_nullable
-              as String?,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable

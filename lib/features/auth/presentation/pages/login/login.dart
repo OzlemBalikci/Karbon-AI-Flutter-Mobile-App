@@ -11,7 +11,6 @@ import 'package:karbon/widgets/infocard.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/app_logo.dart';
 import 'package:karbon/widgets/screen_titles.dart';
-import 'package:karbon/features/auth/presentation/controllers/login_controller.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_selector.dart';
@@ -33,20 +32,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late final LoginController _logincontroller;
-
-  @override
-  void initState() {
-    super.initState();
-    _logincontroller = LoginController();
-  }
-
-  @override
-  void dispose() {
-    _logincontroller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
@@ -89,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            LoginFeatureSection(controller: _logincontroller),
+                            LoginFeatureSection(),
                             LoginBottomRegisterSection(),
                           ],
                         ),

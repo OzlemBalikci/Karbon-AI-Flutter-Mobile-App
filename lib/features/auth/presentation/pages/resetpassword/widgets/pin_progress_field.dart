@@ -3,13 +3,12 @@ part of '../reset_password.dart';
 class PinProgressField extends StatelessWidget {
   const PinProgressField({
     super.key,
-    required this.controller,
     this.length = 5,
+    required this.controller,
   });
 
-  final TextEditingController controller;
   final int length;
-
+  final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
     final baseTheme = PinTheme(

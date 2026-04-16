@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/data/datasources/auth_launch_local.dart';
 import 'package:karbon/features/auth/domain/usecases/register_usecase.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
@@ -15,52 +16,38 @@ class RegisterCubit extends Cubit<RegisterState> {
   final AuthBloc _authBloc;
   final AuthLaunchLocal _authLaunchLocal;
 
-  void firstNameChanged(String value) =>
-      emit(state.copyWith(firstName: value, error: null));
-
-  void lastNameChanged(String value) =>
-      emit(state.copyWith(lastName: value, error: null));
-
-  void identityNumberChanged(String value) =>
-      emit(state.copyWith(identityNumber: value, error: null));
-
-  void emailChanged(String value) =>
-      emit(state.copyWith(email: value, error: null));
-
-  void birthDateChanged(DateTime date) => emit(
-      state.copyWith(birthDate: date.toUtc().toIso8601String(), error: null));
-
-  void passwordChanged(String value) =>
-      emit(state.copyWith(password: value, error: null));
-
-  void confirmPasswordChanged(String value) =>
-      emit(state.copyWith(confirmPassword: value, error: null));
-
-  void phoneNumberChanged(String value) =>
-      emit(state.copyWith(phoneNumber: value, error: null));
-
   void kvkkApprovedChanged(bool value) =>
       emit(state.copyWith(kvkkApproved: value, error: null));
 
-  Future<void> register() async {
+  Future<void> register({
+    required String email,
+    required String identityNumber,
+    required String firstName,
+    required String lastName,
+    required String birthDate,
+    required String phoneNumber,
+    required String password,
+    required String confirmPassword,
+    required bool isKvkkApproved,
+  }) async {
     emit(state.copyWith(status: RegisterPageStatus.loading, error: null));
 
     final result = await _registerUseCase(
-      email: state.email,
-      identityNumber: state.identityNumber,
-      firstName: state.firstName,
-      lastName: state.lastName,
-      birthDate: state.birthDate,
-      phoneNumber: state.phoneNumber,
-      password: state.password,
-      confirmPassword: state.confirmPassword,
-      isKvkkApproved: state.kvkkApproved,
+      email: email,
+      identityNumber: identityNumber,
+      firstName: firstName,
+      lastName: lastName,
+      birthDate: birthDate,
+      phoneNumber: phoneNumber,
+      password: password,
+      confirmPassword: confirmPassword,
+      isKvkkApproved: isKvkkApproved,
     );
 
     await result.fold<Future<void>>(
       (failure) async => emit(state.copyWith(
         status: RegisterPageStatus.failure,
-        error: failure.toString(),
+        error: failure is AppException ? failure.message : failure.toString(),
       )),
       (user) async {
         await _authLaunchLocal.setCustomFirstOpenCompleted();

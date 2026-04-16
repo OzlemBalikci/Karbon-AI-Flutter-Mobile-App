@@ -226,6 +226,12 @@ abstract class AppLocalizations {
   /// **'Doğum Tarihiniz'**
   String get register_birth_date_textfield_text;
 
+  /// No description provided for @register_birth_date_invalid.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçerli bir doğum tarihi giriniz (GG/AA/YYYY).'**
+  String get register_birth_date_invalid;
+
   /// No description provided for @register_password_textfield_text.
   ///
   /// In tr, this message translates to:
@@ -639,6 +645,12 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Ağaç'**
   String get tree;
+
+  /// No description provided for @ok.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tamam'**
+  String get ok;
 }
 
 class _AppLocalizationsDelegate

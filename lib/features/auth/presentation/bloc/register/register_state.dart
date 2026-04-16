@@ -14,20 +14,7 @@ abstract class RegisterState with _$RegisterState {
   const RegisterState._();
   const factory RegisterState({
     @Default(RegisterPageStatus.initial) RegisterPageStatus status,
-    @Default('') String email,
-    @Default('') String identityNumber,
-    @Default('') String firstName,
-    @Default('') String lastName,
-    @Default('') String birthDate,
-    @Default('') String password,
-    @Default('') String confirmPassword,
-    @Default('') String phoneNumber,
     @Default(false) bool kvkkApproved,
-    String? emailError,
-    String? identityNumberError,
-    String? passwordError,
-    String? confirmPasswordError,
-    String? phoneNumberError,
     String? error,
   }) = _RegisterState;
 

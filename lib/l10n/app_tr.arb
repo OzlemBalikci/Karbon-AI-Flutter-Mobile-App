@@ -23,6 +23,7 @@
     "register_name_textfield_text": "Adınız",
     "register_surname_textfield_text": "Soyadınız",
     "register_birth_date_textfield_text": "Doğum Tarihiniz",
+    "register_birth_date_invalid": "Geçerli bir doğum tarihi giriniz (GG/AA/YYYY).",
     "register_password_textfield_text": "Şifrenizi Giriniz",
     "register_confirm_password_textfield_text": "Şifreniz Tekrar Giriniz",
     "register_phone_textfield_text": "Cep Telefonu",
@@ -106,5 +107,6 @@
     "selected_question_info_banner_text": "Cevaplarınızı gözden geçirebilirsiniz.",
     "lorem_ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.",
     "points": "puan",
-    "tree": "Ağaç"
+    "tree": "Ağaç",
+    "ok": "Tamam"
   }

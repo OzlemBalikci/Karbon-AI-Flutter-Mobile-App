@@ -331,6 +331,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i902.PostAnswerUsecase>(),
           gh<_i793.CheckSessionUseCase>(),
         ));
+    gh.factory<_i514.LoginCubit>(() => _i514.LoginCubit(
+          gh<_i1010.LoginUseCase>(),
+          gh<_i564.AuthBloc>(),
+        ));
     gh.factory<_i121.RegisterCubit>(() => _i121.RegisterCubit(
           gh<_i558.RegisterUseCase>(),
           gh<_i564.AuthBloc>(),
@@ -338,10 +342,6 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i544.ResetPasswordCubit>(
         () => _i544.ResetPasswordCubit(gh<_i1018.ResetPasswordUseCase>()));
-    gh.factory<_i514.LoginCubit>(() => _i514.LoginCubit(
-          gh<_i1010.LoginUseCase>(),
-          gh<_i560.AuthLaunchLocal>(),
-        ));
     return this;
   }
 }
