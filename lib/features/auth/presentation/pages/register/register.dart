@@ -56,8 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
           if (state.hasError) {
             showDialog<void>(
               context: context,
-              builder: (dialogContext) =>
-                  ErrorPopupWidget(error: state.error!),
+              builder: (dialogContext) => ErrorPopupWidget(error: state.error!),
             );
           }
         },
@@ -82,7 +81,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         RegisterBottomSection(
                           formController: _formController,
                         ),
-                        SizedBox(height: AppThemeSpacing.s30.h),
                       ],
                     ),
                   ),
