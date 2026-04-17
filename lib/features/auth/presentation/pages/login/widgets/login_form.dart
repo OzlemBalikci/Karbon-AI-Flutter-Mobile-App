@@ -1,10 +1,16 @@
 part of '../login.dart';
 
 class LoginFormWidget extends StatelessWidget {
-  const LoginFormWidget({super.key});
+  const LoginFormWidget({
+    super.key,
+    required this.formController,
+  });
+
+  final LoginFormController formController;
 
   @override
   Widget build(BuildContext context) {
+    final c = formController;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -16,7 +22,10 @@ class LoginFormWidget extends StatelessWidget {
               TextFieldWidget(
                 obscureText: false,
                 hintText: context.text.login_tc_or_email_textfield_text,
+                controller: c.emailOrTc,
+                focusNode: c.emailOrTcFocus,
                 textInputAction: TextInputAction.next,
+                onSubmitted: (_) => c.passwordFocus.requestFocus(),
               ),
               SizedBox(height: AppThemeSpacing.s20.h),
               LoginObscurePasswordSelector(
@@ -28,6 +37,8 @@ class LoginFormWidget extends StatelessWidget {
                     child: icon,
                   ),
                   hintText: context.text.login_password_textfield_text,
+                  controller: c.password,
+                  focusNode: c.passwordFocus,
                   textInputAction: TextInputAction.done,
                   onSubmitted: (_) =>
                       FocusManager.instance.primaryFocus?.unfocus(),
@@ -38,7 +49,13 @@ class LoginFormWidget extends StatelessWidget {
               SizedBox(height: AppThemeSpacing.s30.h),
               AppButton(
                 text: context.text.login_button_title_bizizmir,
-                onPressed: () => context.router.push(const HomeShellRoute()),
+                onPressed: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  context.read<LoginCubit>().login(
+                        emailOrIdentityNumber: c.emailOrTc.text.trim(),
+                        password: c.password.text,
+                      );
+                },
                 backgroundColor: context.colors.secondary,
                 foregroundColor: context.colors.textOnSecondary,
                 borderColor: Colors.white70,

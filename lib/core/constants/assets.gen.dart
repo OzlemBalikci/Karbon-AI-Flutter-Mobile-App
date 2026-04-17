@@ -40,6 +40,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/dropdown.svg
   SvgGenImage get dropdown => const SvgGenImage('assets/icons/dropdown.svg');
 
+  /// File path: assets/icons/error.svg
+  SvgGenImage get error => const SvgGenImage('assets/icons/error.svg');
+
   /// File path: assets/icons/eye_slash_closed.svg
   SvgGenImage get eyeSlashClosed => const SvgGenImage('assets/icons/eye_slash_closed.svg');
 
@@ -85,6 +88,7 @@ class $AssetsIconsGen {
         tree,
         calendarMonthOutlined,
         dropdown,
+        error,
         eyeSlashClosed,
         eyeSlashOpened,
         favorites,

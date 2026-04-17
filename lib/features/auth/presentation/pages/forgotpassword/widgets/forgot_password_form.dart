@@ -3,10 +3,10 @@ part of '../forgot_password.dart';
 class ForgotPasswordFormWidget extends StatelessWidget {
   const ForgotPasswordFormWidget({
     super.key,
-    required this.controller,
+    required this.formController,
   });
 
-  final TextEditingController controller;
+  final ForgotPasswordFormController formController;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,10 @@ class ForgotPasswordFormWidget extends StatelessWidget {
               TextFieldWidget(
                 obscureText: false,
                 hintText: context.text.forgot_password_textfield_text,
-                controller: controller,
+                controller: formController.phoneNumber,
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
               ),
             ],
           ),

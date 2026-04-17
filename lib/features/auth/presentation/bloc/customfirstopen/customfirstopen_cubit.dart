@@ -11,6 +11,7 @@ class CustomFirstOpenCubit extends Cubit<CustomFirstOpenState> {
   final AuthLaunchLocal _authLaunchLocal;
 
   Future<void> completeFirstOpen() async {
+    if (state.isLoading) return;
     emit(state.copyWith(status: CustomFirstOpenStatus.loading, error: null));
     try {
       await _authLaunchLocal.setCustomFirstOpenCompleted();

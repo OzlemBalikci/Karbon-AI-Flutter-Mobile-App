@@ -3,10 +3,10 @@ part of '../forgot_password.dart';
 class ForgotPasswordBottomSendCodeSection extends StatelessWidget {
   const ForgotPasswordBottomSendCodeSection({
     super.key,
-    required this.phoneController,
+    required this.formController,
   });
 
-  final TextEditingController phoneController;
+  final ForgotPasswordFormController formController;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +18,12 @@ class ForgotPasswordBottomSendCodeSection extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
           child: AppButton(
               text: context.text.forgot_password_button_title,
-              onPressed: () => context.read<ForgotPasswordCubit>().sendCode(
-                    phoneNumber: phoneController.text.trim(),
-                  ),
+              onPressed: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                context.read<ForgotPasswordCubit>().sendCode(
+                      phoneNumber: formController.phoneNumber.text.trim(),
+                    );
+              },
               backgroundColor: context.colors.secondary,
               foregroundColor: context.colors.textOnSecondary,
               borderColor: Colors.white70),

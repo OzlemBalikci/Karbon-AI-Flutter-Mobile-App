@@ -3,12 +3,6 @@ part of '../customfirstopen.dart';
 class CustomFirstOpenBottomRegisterSection extends StatelessWidget {
   const CustomFirstOpenBottomRegisterSection({super.key});
 
-  Future<void> _go(BuildContext context, PageRouteInfo route) async {
-    await getIt<AuthLaunchLocal>().setCustomFirstOpenCompleted();
-    if (!context.mounted) return;
-    context.router.replace(route);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,7 +14,15 @@ class CustomFirstOpenBottomRegisterSection extends StatelessWidget {
           backgroundColor: context.colors.secondary,
           foregroundColor: context.colors.textOnSecondary,
           borderColor: Colors.white70,
-          onPressed: () => _go(context, const LoginRoute()),
+          onPressed: () async {
+            FocusManager.instance.primaryFocus?.unfocus();
+            final cubit = context.read<CustomFirstOpenCubit>();
+            await cubit.completeFirstOpen();
+            if (!context.mounted) return;
+            if (cubit.state.status == CustomFirstOpenStatus.success) {
+              context.router.push(const LoginRoute());
+            }
+          },
         ),
         SizedBox(height: AppThemeSpacing.s30.h),
         AppButton(
@@ -28,7 +30,15 @@ class CustomFirstOpenBottomRegisterSection extends StatelessWidget {
           backgroundColor: Colors.transparent,
           foregroundColor: context.colors.textOnPrimary,
           borderColor: Colors.white70,
-          onPressed: () => _go(context, const RegisterRoute()),
+          onPressed: () async {
+            FocusManager.instance.primaryFocus?.unfocus();
+            final cubit = context.read<CustomFirstOpenCubit>();
+            await cubit.completeFirstOpen();
+            if (!context.mounted) return;
+            if (cubit.state.status == CustomFirstOpenStatus.success) {
+              context.router.push(const RegisterRoute());
+            }
+          },
         ),
       ],
     );

@@ -18,4 +18,8 @@ abstract class ResetPasswordState with _$ResetPasswordState {
   }) = _ResetPasswordState;
 
   factory ResetPasswordState.initial() => const ResetPasswordState();
+
+  bool get isLoading => status == ResetPasswordPageStatus.loading;
+  bool get hasError =>
+      status == ResetPasswordPageStatus.failure && error != null;
 }

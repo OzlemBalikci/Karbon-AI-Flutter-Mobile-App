@@ -5,6 +5,7 @@ import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_state.dart';
+import 'package:karbon/features/auth/presentation/pages/error_popup_widget.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/textfield.dart';
 import 'package:karbon/widgets/infocard.dart';
@@ -15,6 +16,7 @@ import 'package:karbon/features/auth/presentation/bloc/login/login_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/login/login_selector.dart';
 import 'package:karbon/di/di.dart';
+import 'package:karbon/features/auth/presentation/controllers/login_form_controller.dart';
 
 part 'widgets/login_forgot_password.dart';
 
@@ -32,6 +34,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formController = LoginFormController();
+
+  @override
+  void dispose() {
+    _formController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
@@ -42,6 +52,12 @@ class _LoginPageState extends State<LoginPage> {
         listener: (context, state) {
           if (state.status == LoginPageStatus.success) {
             context.router.replaceAll([const HomeShellRoute()]);
+          }
+          if (state.hasError) {
+            showDialog(
+              context: context,
+              builder: (context) => ErrorPopupWidget(error: state.error!),
+            );
           }
         },
         child: Scaffold(
@@ -74,7 +90,9 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            LoginFeatureSection(),
+                            LoginFeatureSection(
+                              formController: _formController,
+                            ),
                             LoginBottomRegisterSection(),
                           ],
                         ),

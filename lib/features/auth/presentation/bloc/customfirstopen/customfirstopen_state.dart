@@ -19,4 +19,7 @@ abstract class CustomFirstOpenState with _$CustomFirstOpenState {
   }) = _CustomFirstOpenState;
 
   factory CustomFirstOpenState.initial() => const CustomFirstOpenState();
+
+  bool get isLoading => status == CustomFirstOpenStatus.loading;
+  bool get hasError => status == CustomFirstOpenStatus.failure && error != null;
 }

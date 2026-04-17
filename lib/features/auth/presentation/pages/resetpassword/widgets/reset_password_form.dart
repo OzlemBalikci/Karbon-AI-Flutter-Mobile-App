@@ -3,12 +3,10 @@ part of '../reset_password.dart';
 class ResetPasswordForm extends StatelessWidget {
   const ResetPasswordForm({
     super.key,
-    required this.newPasswordController,
-    required this.confirmPasswordController,
+    required this.formController,
   });
 
-  final TextEditingController newPasswordController;
-  final TextEditingController confirmPasswordController;
+  final ResetPasswordFormController formController;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,11 @@ class ResetPasswordForm extends StatelessWidget {
                 obscureText: false,
                 suffixIcon: Assets.icons.eyeSlashOpened.svg(),
                 hintText: context.text.reset_password_textfield_text,
-                controller: newPasswordController,
+                controller: formController.newPassword,
+                focusNode: formController.newPasswordFocus,
+                textInputAction: TextInputAction.next,
+                onSubmitted: (_) =>
+                    formController.confirmPasswordFocus.requestFocus(),
               ),
               SizedBox(height: AppThemeSpacing.s25.h),
               TextFieldWidget(
@@ -32,7 +34,11 @@ class ResetPasswordForm extends StatelessWidget {
                 suffixIcon: Assets.icons.eyeSlashOpened.svg(),
                 hintText:
                     context.text.reset_password_confirm_password_textfield_text,
-                controller: confirmPasswordController,
+                controller: formController.confirmPassword,
+                focusNode: formController.confirmPasswordFocus,
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) =>
+                    FocusManager.instance.primaryFocus?.unfocus(),
               ),
             ],
           ),

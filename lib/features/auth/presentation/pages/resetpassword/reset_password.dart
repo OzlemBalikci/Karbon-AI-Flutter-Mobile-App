@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
+import 'package:karbon/features/auth/presentation/pages/error_popup_widget.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/widgets/textfield.dart';
 import 'package:karbon/widgets/infocard.dart';
@@ -15,8 +17,8 @@ import 'package:karbon/router/navigation.dart';
 import 'package:karbon/di/di.dart';
 import 'package:karbon/features/auth/presentation/bloc/resetpassword/resetpassword_cubit.dart';
 import 'package:karbon/features/auth/presentation/bloc/resetpassword/resetpassword_state.dart';
+import 'package:karbon/features/auth/presentation/controllers/reset_password_form_controller.dart';
 import 'package:pinput/pinput.dart';
-import 'package:flutter/services.dart';
 
 part 'widgets/pin_progress_field.dart';
 part 'widgets/reset_password_form.dart';
@@ -38,15 +40,10 @@ class ResetPasswordPage extends StatefulWidget {
 }
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
-  final _pinController = TextEditingController();
-  final _newPasswordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-
+  late final _formController = ResetPasswordFormController();
   @override
   void dispose() {
-    _pinController.dispose();
-    _newPasswordController.dispose();
-    _confirmPasswordController.dispose();
+    _formController.dispose();
     super.dispose();
   }
 
@@ -58,10 +55,18 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     return BlocProvider(
       create: (_) => getIt<ResetPasswordCubit>(),
       child: BlocListener<ResetPasswordCubit, ResetPasswordState>(
-        listenWhen: (p, c) =>
-            p.status != c.status && c.status == ResetPasswordPageStatus.success,
+        listenWhen: (p, c) => p.status != c.status,
         listener: (context, state) {
-          context.router.push(const LoginRoute());
+          if (state.status == ResetPasswordPageStatus.success) {
+            context.router.push(const LoginRoute());
+          }
+          if (state.hasError) {
+            showDialog<void>(
+              context: context,
+              builder: (dialogContext) =>
+                  ErrorPopupWidget(error: state.error!),
+            );
+          }
         },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -94,17 +99,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             ResetPasswordFeatureSection(
-                              pinController: _pinController,
-                              newPasswordController: _newPasswordController,
-                              confirmPasswordController:
-                                  _confirmPasswordController,
+                              formController: _formController,
                             ),
                             ResetPasswordBottomSection(
                               phoneNumber: widget.phoneNumber,
-                              pinController: _pinController,
-                              newPasswordController: _newPasswordController,
-                              confirmPasswordController:
-                                  _confirmPasswordController,
+                              formController: _formController,
                             ),
                           ],
                         ),

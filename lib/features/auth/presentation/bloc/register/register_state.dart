@@ -20,4 +20,7 @@ abstract class RegisterState with _$RegisterState {
 
   factory RegisterState.initial() =>
       const RegisterState(status: RegisterPageStatus.initial);
+
+  bool get isLoading => status == RegisterPageStatus.loading;
+  bool get hasError => status == RegisterPageStatus.failure && error != null;
 }

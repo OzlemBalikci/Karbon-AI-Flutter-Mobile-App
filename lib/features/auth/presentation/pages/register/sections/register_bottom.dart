@@ -1,7 +1,12 @@
 part of '../register.dart';
 
 class RegisterBottomSection extends StatelessWidget {
-  const RegisterBottomSection({super.key});
+  const RegisterBottomSection({
+    super.key,
+    required this.formController,
+  });
+
+  final RegisterFormController formController;
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +31,30 @@ class RegisterBottomSection extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
               child: AppButton(
                 text: context.text.register_button_title,
-                onPressed: () => context.router.replace(const HomeShellRoute()),
+                onPressed: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  context.read<RegisterCubit>().register(
+                        email: formController.email.text.trim(),
+                        identityNumber:
+                            formController.identityNumber.text.trim(),
+                        firstName: formController.firstName.text.trim(),
+                        lastName: formController.lastName.text.trim(),
+                        birthDate: formController.birthDate.text.trim(),
+                        phoneNumber: formController.phoneNumber.text.trim(),
+                        password: formController.password.text,
+                        confirmPassword: formController.confirmPassword.text,
+                        isKvkkApproved:
+                            context.read<RegisterCubit>().state.kvkkApproved,
+                      );
+                },
                 backgroundColor: context.colors.primary,
                 foregroundColor: context.colors.textOnPrimary,
                 borderColor: Colors.white70,
               ),
             ),
-            SizedBox(height: AppThemeSpacing.s20.h),
           ],
         ),
+        SizedBox(height: AppThemeSpacing.s20.h),
       ],
     );
   }

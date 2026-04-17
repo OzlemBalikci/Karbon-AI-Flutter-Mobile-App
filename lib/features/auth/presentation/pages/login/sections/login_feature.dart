@@ -1,7 +1,12 @@
 part of '../login.dart';
 
 class LoginFeatureSection extends StatelessWidget {
-  const LoginFeatureSection({super.key});
+  const LoginFeatureSection({
+    super.key,
+    required this.formController,
+  });
+
+  final LoginFormController formController;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class LoginFeatureSection extends StatelessWidget {
         SizedBox(height: AppThemeSpacing.s25.h),
         const LoginInfoWidget(),
         SizedBox(height: AppThemeSpacing.s25.h),
-        LoginFormWidget(),
+        LoginFormWidget(formController: formController),
       ],
     );
   }

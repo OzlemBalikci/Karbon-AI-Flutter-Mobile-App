@@ -1,7 +1,12 @@
 part of '../register.dart';
 
 class RegisterFeatureSection extends StatelessWidget {
-  const RegisterFeatureSection({super.key});
+  const RegisterFeatureSection({
+    super.key,
+    required this.formController,
+  });
+
+  final RegisterFormController formController;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class RegisterFeatureSection extends StatelessWidget {
         SizedBox(height: AppThemeSpacing.s25.h),
         RegisterInfoWidget(),
         SizedBox(height: AppThemeSpacing.s25.h),
-        RegisterFormWidget(),
+        RegisterFormWidget(formController: formController),
         SizedBox(height: AppThemeSpacing.s25.h),
         RegisterKvkkWidget(),
       ],

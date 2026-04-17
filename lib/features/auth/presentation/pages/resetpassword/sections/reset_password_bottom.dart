@@ -4,15 +4,10 @@ class ResetPasswordBottomSection extends StatelessWidget {
   const ResetPasswordBottomSection({
     super.key,
     required this.phoneNumber,
-    required this.pinController,
-    required this.newPasswordController,
-    required this.confirmPasswordController,
+    required this.formController,
   });
-
   final String phoneNumber;
-  final TextEditingController pinController;
-  final TextEditingController newPasswordController;
-  final TextEditingController confirmPasswordController;
+  final ResetPasswordFormController formController;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +15,15 @@ class ResetPasswordBottomSection extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s24.w),
       child: AppButton(
         text: context.text.reset_password_button_title,
-        onPressed: () =>
-            context.read<ResetPasswordCubit>().submitReset(
-                  phoneNumber: phoneNumber,
-                  resetCode: pinController.text.trim(),
-                  newPassword: newPasswordController.text,
-                  confirmNewPassword: confirmPasswordController.text,
-                ),
+        onPressed: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+          context.read<ResetPasswordCubit>().submitReset(
+                phoneNumber: phoneNumber,
+                resetCode: formController.pin.text.trim(),
+                newPassword: formController.newPassword.text,
+                confirmNewPassword: formController.confirmPassword.text,
+              );
+        },
         backgroundColor: context.colors.secondary,
         foregroundColor: context.colors.textOnSecondary,
         borderColor: Colors.white70,

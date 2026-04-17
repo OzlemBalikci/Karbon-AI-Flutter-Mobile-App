@@ -3,12 +3,12 @@ part of '../reset_password.dart';
 class PinProgressField extends StatelessWidget {
   const PinProgressField({
     super.key,
+    required this.formController,
     this.length = 5,
-    required this.controller,
   });
 
   final int length;
-  final TextEditingController controller;
+  final ResetPasswordFormController formController;
   @override
   Widget build(BuildContext context) {
     final baseTheme = PinTheme(
@@ -29,7 +29,8 @@ class PinProgressField extends StatelessWidget {
       child: SizedBox(
         width: double.infinity,
         child: Pinput(
-          controller: controller,
+          controller: formController.pin,
+          focusNode: formController.pinFocusNode,
           length: length,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           keyboardType: TextInputType.number,
@@ -48,12 +49,9 @@ class PinProgressField extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.15),
             ),
           ),
-          onChanged: (value) {
-            // burada progress/validasyon yapabilirsin
-            // örn: value.length ile kaç hane dolu
-          },
-          onCompleted: (value) {
-            // PIN dolunca tetiklenir
+          onChanged: (value) {},
+          onCompleted: (_) {
+            formController.newPasswordFocus.requestFocus();
           },
         ),
       ),

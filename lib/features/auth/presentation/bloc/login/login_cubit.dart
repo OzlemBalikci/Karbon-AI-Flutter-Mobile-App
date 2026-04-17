@@ -20,6 +20,7 @@ class LoginCubit extends Cubit<LoginState> {
     required String emailOrIdentityNumber,
     required String password,
   }) async {
+    if (state.status == LoginPageStatus.loading) return;
     emit(state.copyWith(status: LoginPageStatus.loading, error: null));
 
     final result = await _loginUseCase(
@@ -37,5 +38,11 @@ class LoginCubit extends Cubit<LoginState> {
         emit(state.copyWith(status: LoginPageStatus.success, error: null));
       },
     );
+  }
+
+  void resetError() {
+    if (state.status == LoginPageStatus.failure) {
+      emit(state.copyWith(status: LoginPageStatus.initial, error: null));
+    }
   }
 }

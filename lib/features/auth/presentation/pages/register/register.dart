@@ -16,6 +16,8 @@ import 'package:karbon/widgets/screen_titles.dart';
 import 'package:karbon/di/di.dart';
 import 'package:karbon/features/auth/presentation/bloc/register/register_cubit.dart';
 import 'package:karbon/features/auth/presentation/bloc/register/register_state.dart';
+import 'package:karbon/features/auth/presentation/controllers/register_form_controller.dart';
+import 'package:karbon/features/auth/presentation/pages/error_popup_widget.dart';
 
 part 'widgets/register_form.dart';
 part 'widgets/register_info.dart';
@@ -33,31 +35,60 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _formController = RegisterFormController();
+
+  @override
+  void dispose() {
+    _formController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<RegisterCubit>(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: context.colors.primary,
-        body: SafeArea(
-          bottom: false,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      RegisterFeatureSection(),
-                      RegisterBottomSection(),
-                    ],
+      child: BlocListener<RegisterCubit, RegisterState>(
+        listenWhen: (p, c) => p.status != c.status,
+        listener: (context, state) {
+          if (state.status == RegisterPageStatus.success) {
+            context.router.replace(const HomeShellRoute());
+          }
+          if (state.hasError) {
+            showDialog<void>(
+              context: context,
+              builder: (dialogContext) =>
+                  ErrorPopupWidget(error: state.error!),
+            );
+          }
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: context.colors.primary,
+          body: SafeArea(
+            bottom: false,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraints.maxHeight),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RegisterFeatureSection(
+                          formController: _formController,
+                        ),
+                        RegisterBottomSection(
+                          formController: _formController,
+                        ),
+                        SizedBox(height: AppThemeSpacing.s30.h),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),

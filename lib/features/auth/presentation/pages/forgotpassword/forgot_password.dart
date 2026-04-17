@@ -15,6 +15,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:karbon/di/di.dart';
 import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_cubit.dart';
 import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_state.dart';
+import 'package:karbon/features/auth/presentation/controllers/forgot_password_form_controller.dart';
+import 'package:karbon/features/auth/presentation/pages/error_popup_widget.dart';
 
 part 'sections/forgot_password_bottom.dart';
 part 'sections/forgot_password_feature.dart';
@@ -30,11 +32,10 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  final _phoneController = TextEditingController();
-
+  late final _formController = ForgotPasswordFormController();
   @override
   void dispose() {
-    _phoneController.dispose();
+    _formController.dispose();
     super.dispose();
   }
 
@@ -46,13 +47,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return BlocProvider(
       create: (_) => getIt<ForgotPasswordCubit>(),
       child: BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
-        listenWhen: (p, c) =>
-            p.status != c.status &&
-            c.status == ForgotPasswordPageStatus.success,
+        listenWhen: (p, c) => p.status != c.status,
         listener: (context, state) {
-          context.router.push(
-            ResetPasswordRoute(phoneNumber: _phoneController.text.trim()),
-          );
+          if (state.status == ForgotPasswordPageStatus.success) {
+            context.router.push(
+              ResetPasswordRoute(
+                phoneNumber: _formController.phoneNumber.text.trim(),
+              ),
+            );
+          }
+          if (state.hasError) {
+            showDialog<void>(
+              context: context,
+              builder: (dialogContext) =>
+                  ErrorPopupWidget(error: state.error!),
+            );
+          }
         },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -85,10 +95,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             ForgotPasswordFeatureSection(
-                              phoneController: _phoneController,
+                              formController: _formController,
                             ),
                             ForgotPasswordBottomSendCodeSection(
-                              phoneController: _phoneController,
+                              formController: _formController,
                             ),
                           ],
                         ),

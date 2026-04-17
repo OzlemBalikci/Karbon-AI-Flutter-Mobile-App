@@ -18,4 +18,8 @@ abstract class ForgotPasswordState with _$ForgotPasswordState {
   }) = _ForgotPasswordState;
 
   factory ForgotPasswordState.initial() => const ForgotPasswordState();
+
+  bool get isLoading => status == ForgotPasswordPageStatus.loading;
+  bool get hasError =>
+      status == ForgotPasswordPageStatus.failure && error != null;
 }

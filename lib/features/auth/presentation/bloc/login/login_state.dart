@@ -20,4 +20,7 @@ abstract class LoginState with _$LoginState {
 
   factory LoginState.initial() =>
       const LoginState(status: LoginPageStatus.initial);
+
+  bool get isLoading => status == LoginPageStatus.loading;
+  bool get hasError => status == LoginPageStatus.failure && error != null;
 }
