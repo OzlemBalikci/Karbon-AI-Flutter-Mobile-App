@@ -8,8 +8,12 @@ import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.
 import 'package:karbon/features/leaderofmont/presentation/widgetvariant/leader_card_variant.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
+import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_bloc.dart';
+import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_event.dart';
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_selector.dart';
+import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_state.dart';
 import 'package:karbon/features/leaderofmont/presentation/pages/widgets/leader_card_row.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'sections/leaderofmonth_header_section.dart';
 part 'sections/leaderofmonth_feature_section.dart';
@@ -26,6 +30,15 @@ class LeaderofmonthPage extends StatefulWidget {
 }
 
 class _LeaderofmonthPageState extends State<LeaderofmonthPage> {
+  @override
+  void initState() {
+    super.initState();
+    final bloc = context.read<LeaderofmonthBloc>();
+    if (bloc.state.status == LeaderofmonthStatus.initial) {
+      bloc.add(const LeaderofmonthEvent.fetchRequested());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

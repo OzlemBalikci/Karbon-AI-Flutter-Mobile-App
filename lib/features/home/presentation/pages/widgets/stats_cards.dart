@@ -9,7 +9,9 @@ class StatsCards extends StatelessWidget {
     required this.borderColor,
     this.hasShadow = false,
     this.onTap,
-    this.remainingFooter,
+    this.remainingTreeCount,
+    this.targetTreeCount,
+    this.progressPercent,
   });
 
   final String title;
@@ -18,9 +20,35 @@ class StatsCards extends StatelessWidget {
   final Color borderColor;
   final VoidCallback? onTap;
   final bool hasShadow;
+  final int? remainingTreeCount;
+  final int? targetTreeCount;
+  final double? progressPercent;
 
-  /// Alt şerit: örn. "120.000 ağaç kaldı." — null ise şerit gösterilmez.
-  final String? remainingFooter;
+  Color _resolveRowColor() {
+    if (progressPercent == null || targetTreeCount == null) {
+      return const Color(0xFFF1FBF6); // varsayılan açık yeşil
+    }
+
+    if (remainingTreeCount == 0) {
+      // Hedefe ulaşıldı → koyu yeşil
+      return const Color(0xFFA9C5B8);
+    }
+
+    final double progress = progressPercent!.clamp(0.0, 100.0) / 100.0;
+
+    // 0% → açık/nötr, 100% → koyu yeşil
+    return Color.lerp(
+      const Color(0xFFF1FBF6), // başlangıç: çok açık yeşil
+      const Color(0xFF4CAF82), // bitiş: orta-koyu yeşil
+      progress,
+    )!;
+  }
+
+  Color _resolveTextColor() {
+    final double progress = (progressPercent ?? 0).clamp(0.0, 100.0) / 100.0;
+    // %50'nin üzerinde arka plan koyulaşınca yazıyı beyaza çek
+    return progress > 0.5 ? Colors.white : const Color(0xFF2E7D5A);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,34 +87,37 @@ class StatsCards extends StatelessWidget {
             ),
           ),
         ),
-        if (remainingFooter != null && remainingFooter!.isNotEmpty)
-          Positioned(
-            bottom: -16.h,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
-              child: Container(
-                width: double.infinity,
-                height: 44.h,
-                decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(AppThemeSpacing.r10.r)),
-                  border: Border.all(color: Color(0xFFA9C5B8), width: 1.w),
-                  color: Color(0xFFF1FBF6),
-                ),
-                child: Center(
-                  child: Text(
-                    remainingFooter!,
-                    style: context.typographiesSp.bodyExtraSmall.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: context.colors.carbonQuestion,
-                    ),
+        Positioned(
+          bottom: -16.h,
+          left: 0,
+          right: 0,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+              width: double.infinity,
+              height: 44.h,
+              decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(AppThemeSpacing.r10.r)),
+                border: Border.all(color: Color(0xFFA9C5B8), width: 1.w),
+                color: _resolveRowColor(),
+              ),
+              child: Center(
+                child: Text(
+                  remainingTreeCount != null
+                      ? '${NumberFormat.decimalPattern('tr_TR').format(remainingTreeCount!)} ağaç kaldı'
+                      : context.text.home_stats_succeed_text,
+                  style: context.typographiesSp.bodyExtraSmall.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: context.colors.carbonQuestion,
                   ),
                 ),
               ),
             ),
           ),
+        ),
       ],
     );
   }

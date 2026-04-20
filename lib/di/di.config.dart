@@ -74,6 +74,8 @@ import 'package:karbon/features/calendar/domain/usecases/get_details_usecase.dar
     as _i996;
 import 'package:karbon/features/calendar/domain/usecases/get_monthly_activities_usecase.dart'
     as _i753;
+import 'package:karbon/features/calendar/presentation/bloc/calendar_bloc.dart'
+    as _i682;
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_local.dart'
     as _i366;
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_local_impl.dart'
@@ -301,6 +303,11 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i996.GetDetailsUsecase(gh<_i623.CalendarRepository>()));
     gh.factory<_i753.GetMonthlyActivitiesUsecase>(() =>
         _i753.GetMonthlyActivitiesUsecase(gh<_i623.CalendarRepository>()));
+    gh.factory<_i682.CalendarBloc>(() => _i682.CalendarBloc(
+          gh<_i24.GetCalendarUsecase>(),
+          gh<_i753.GetMonthlyActivitiesUsecase>(),
+          gh<_i996.GetDetailsUsecase>(),
+        ));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i382.ClearLocalSessionUseCase>(
@@ -317,19 +324,21 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i558.RegisterUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i1018.ResetPasswordUseCase>(
         () => _i1018.ResetPasswordUseCase(gh<_i252.AuthRepository>()));
-    gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(
-          gh<_i793.CheckSessionUseCase>(),
-          gh<_i566.LogoutUseCase>(),
-          gh<_i382.ClearLocalSessionUseCase>(),
-        ));
-    gh.factory<_i208.ForgotPasswordCubit>(
-        () => _i208.ForgotPasswordCubit(gh<_i210.ForgotPasswordUseCase>()));
     gh.factory<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
           gh<_i671.GetTodayQuestionsUsecase>(),
           gh<_i448.GetPendingStatusUsecase>(),
           gh<_i24.GetCalendarUsecase>(),
           gh<_i902.PostAnswerUsecase>(),
           gh<_i793.CheckSessionUseCase>(),
+          gh<_i495.GetPreviousAnswersUsecase>(),
+        ));
+    gh.factory<_i208.ForgotPasswordCubit>(
+        () => _i208.ForgotPasswordCubit(gh<_i210.ForgotPasswordUseCase>()));
+    gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(
+          gh<_i793.CheckSessionUseCase>(),
+          gh<_i566.LogoutUseCase>(),
+          gh<_i382.ClearLocalSessionUseCase>(),
+          gh<_i1015.DeleteAccountUseCase>(),
         ));
     gh.factory<_i514.LoginCubit>(() => _i514.LoginCubit(
           gh<_i1010.LoginUseCase>(),

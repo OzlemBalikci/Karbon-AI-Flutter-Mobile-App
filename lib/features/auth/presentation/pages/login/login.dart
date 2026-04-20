@@ -47,64 +47,63 @@ class _LoginPageState extends State<LoginPage> {
     final keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
     final keyboardOpen = keyboardInset > 0;
     return BlocProvider(
-      create: (context) => getIt<LoginCubit>(),
-      child: BlocListener<LoginCubit, LoginState>(
-        listener: (context, state) {
-          if (state.status == LoginPageStatus.success) {
-            context.router.replaceAll([const HomeShellRoute()]);
-          }
-          if (state.hasError) {
-            showDialog(
-              context: context,
-              builder: (context) => ErrorPopupWidget(error: state.error!),
-            );
-          }
-        },
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: context.colors.primary,
-          body: Stack(
-            children: [
-              Positioned.fill(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Image.asset(
-                    Assets.images.loginMask.path,
-                    width: double.infinity,
-                    fit: BoxFit.fitWidth,
+        create: (context) => getIt<LoginCubit>(),
+        child: BlocListener<LoginCubit, LoginState>(
+          listener: (context, state) {
+            if (state.status == LoginPageStatus.success) {
+              context.router.replaceAll([const HomeShellRoute()]);
+            }
+            if (state.hasError) {
+              showDialog(
+                context: context,
+                builder: (context) => ErrorPopupWidget(error: state.error!),
+              );
+            }
+          },
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: context.colors.primary,
+            body: Stack(
+              children: [
+                Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Image.asset(
+                      Assets.images.loginMask.path,
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ),
-              ),
-              SafeArea(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return SingleChildScrollView(
-                      physics: keyboardOpen
-                          ? const ClampingScrollPhysics()
-                          : const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.only(bottom: keyboardInset),
-                      child: ConstrainedBox(
-                        constraints:
-                            BoxConstraints(minHeight: constraints.maxHeight),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            LoginFeatureSection(
-                              formController: _formController,
-                            ),
-                            LoginBottomRegisterSection(),
-                          ],
+                SafeArea(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return SingleChildScrollView(
+                        physics: keyboardOpen
+                            ? const ClampingScrollPhysics()
+                            : const NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.only(bottom: keyboardInset),
+                        child: ConstrainedBox(
+                          constraints:
+                              BoxConstraints(minHeight: constraints.maxHeight),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              LoginFeatureSection(
+                                formController: _formController,
+                              ),
+                              LoginBottomRegisterSection(),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

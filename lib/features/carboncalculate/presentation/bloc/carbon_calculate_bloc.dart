@@ -29,7 +29,7 @@ class CarbonCalculateBloc
     final result = await _repo.getActivePoll();
     result.fold(
       (e) => emit(state.copyWith(
-        status: CarbonCalculateStatus.error,
+        status: CarbonCalculateStatus.failure,
         error: e.toString(),
       )),
       (poll) {
@@ -114,7 +114,7 @@ class CarbonCalculateBloc
     );
     result.fold(
       (e) => emit(state.copyWith(
-        status: CarbonCalculateStatus.error,
+        status: CarbonCalculateStatus.failure,
         error: e.toString(),
       )),
       (submissionResult) => emit(state.copyWith(

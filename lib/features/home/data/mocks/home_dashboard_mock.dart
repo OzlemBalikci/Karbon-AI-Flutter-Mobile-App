@@ -1,4 +1,5 @@
 import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
+import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
 /// `project_docs/home.md` — anketi tamamlamış kullanıcı örneği.
 /// Backend boşken geliştirme için [HomeRemoteMock] bu varlığı döner.
@@ -20,13 +21,13 @@ abstract final class HomeDashboardMock {
       progressPercent: 82.1,
     ),
     topLeaders: [
-      HomeTopLeaderEntity(
+      LeaderboardLeaderEntity(
         rank: 1,
         fullName: 'Zeynep Kaya',
         treeCount: 1280,
         isCurrentUser: false,
       ),
-      HomeTopLeaderEntity(
+      LeaderboardLeaderEntity(
         rank: 2,
         fullName: 'Ahmet Yılmaz',
         treeCount: 940,

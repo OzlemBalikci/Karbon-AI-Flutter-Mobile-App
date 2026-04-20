@@ -15,25 +15,11 @@ class LeaderofmonthSelector<T>
 
 class LeaderofmonthStatusSelector
     extends LeaderofmonthSelector<LeaderofmonthStatus> {
-  LeaderofmonthStatusSelector({
-    super.key,
-    required Widget Function() onLoading,
-    required Widget Function(String error) onError,
-    required Widget Function() onSuccess,
-    Widget Function()? onInitial,
-  }) : super(
+  LeaderofmonthStatusSelector(Widget Function(LeaderofmonthStatus) builder,
+      {super.key})
+      : super(
           selector: (state) => state.status,
-          builder: (status) => switch (status) {
-            LeaderofmonthStatus.initial =>
-              onInitial?.call() ?? const SizedBox.shrink(),
-            LeaderofmonthStatus.loading => onLoading(),
-            LeaderofmonthStatus.error =>
-              BlocSelector<LeaderofmonthBloc, LeaderofmonthState, String?>(
-                selector: (state) => state.error,
-                builder: (_, error) => onError(error ?? 'Bir hata oluştu'),
-              ),
-            LeaderofmonthStatus.success => onSuccess(),
-          },
+          builder: builder,
         );
 }
 

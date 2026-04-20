@@ -19,6 +19,7 @@ class HomeMainFeatureSection extends StatelessWidget {
             HomeTopLeadersSelector(
               builder: (leaders) {
                 return LeaderCardRow(
+                  leaders: leaders,
                   variant: LeaderCardVariant.compact,
                   seeOtherCard: SeeOtherLeaderCard(),
                 );

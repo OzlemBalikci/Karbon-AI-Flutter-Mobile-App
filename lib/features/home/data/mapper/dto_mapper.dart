@@ -3,6 +3,7 @@ import 'package:karbon/features/home/data/dtos/home_dashboard_dto.dart';
 import 'package:karbon/features/home/data/dtos/home_top_leader_dto.dart';
 import 'package:karbon/features/home/data/dtos/monthly_target_dto.dart';
 import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
+import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
 class HomeMapper {
   HomeMapper._();
@@ -25,8 +26,8 @@ class HomeMapper {
         progressPercent: dto.progressPercent,
       );
 
-  static HomeTopLeaderEntity toTopLeaderEntity(HomeTopLeaderDto dto) =>
-      HomeTopLeaderEntity(
+  static LeaderboardLeaderEntity toLeaderboardLeaderEntity(HomeTopLeaderDto dto) =>
+      LeaderboardLeaderEntity(
         rank: dto.rank,
         fullName: dto.fullName,
         treeCount: dto.treeCount,
@@ -42,6 +43,6 @@ class HomeMapper {
         monthlyTarget: dto.monthlyTarget != null
             ? toMonthlyTargetEntity(dto.monthlyTarget!)
             : null,
-        topLeaders: dto.topLeaders?.map(toTopLeaderEntity).toList(),
+        topLeaders: dto.topLeaders?.map(toLeaderboardLeaderEntity).toList(),
       );
 }

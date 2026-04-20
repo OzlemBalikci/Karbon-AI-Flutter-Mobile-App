@@ -342,6 +342,22 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ProfileTabShellPage]
+class ProfileTabShellRoute extends PageRouteInfo<void> {
+  const ProfileTabShellRoute({List<PageRouteInfo>? children})
+      : super(ProfileTabShellRoute.name, initialChildren: children);
+
+  static const String name = 'ProfileTabShellRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProfileTabShellPage();
+    },
+  );
+}
+
+/// generated route for
 /// [RegisterPage]
 class RegisterRoute extends PageRouteInfo<void> {
   const RegisterRoute({List<PageRouteInfo>? children})

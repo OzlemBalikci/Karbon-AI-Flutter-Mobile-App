@@ -25,27 +25,11 @@ class CarbonCalculateSelector<T>
 
 class CarbonCalculateStatusSelector
     extends CarbonCalculateSelector<CarbonCalculateStatus> {
-  CarbonCalculateStatusSelector({
-    super.key,
-    required Widget Function() onLoading,
-    required Widget Function(String error) onError,
-    required Widget Function() onSuccess,
-    required Widget Function() onSubmitting,
-    Widget Function()? onInitial,
-  }) : super(
+  CarbonCalculateStatusSelector(Widget Function(CarbonCalculateStatus) builder,
+      {super.key})
+      : super(
           selector: (state) => state.status,
-          builder: (status) => switch (status) {
-            CarbonCalculateStatus.initial =>
-              onInitial?.call() ?? const SizedBox.shrink(),
-            CarbonCalculateStatus.loading => onLoading(),
-            CarbonCalculateStatus.error =>
-              BlocSelector<CarbonCalculateBloc, CarbonCalculateState, String?>(
-                selector: (state) => state.error,
-                builder: (_, error) => onError(error ?? 'Bir hata oluştu'),
-              ),
-            CarbonCalculateStatus.success => onSuccess(),
-            CarbonCalculateStatus.submitting => onSubmitting(),
-          },
+          builder: builder,
         );
 }
 

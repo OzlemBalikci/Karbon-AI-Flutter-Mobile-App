@@ -7,7 +7,5 @@ part 'home_event.freezed.dart';
 sealed class HomeEvent with _$HomeEvent {
   const factory HomeEvent.fetchRequested() = HomeFetchRequested;
   const factory HomeEvent.refreshRequested() = HomeRefreshRequested;
-
-  /// Anket tamamlandı — API çağrısı yapmadan doğrudan `main` görünüme geç.
   const factory HomeEvent.pollCompleted() = HomePollCompleted;
 }

@@ -9,9 +9,6 @@ sealed class DailyActivitiesEvent with _$DailyActivitiesEvent {
   const factory DailyActivitiesEvent.loadRequested() =
       DailyActivitiesLoadRequested;
 
-  const factory DailyActivitiesEvent.loadFailed(String error) =
-      DailyActivitiesLoadFailed;
-
   /// Karttan / listeden soru detayına (Seçili Soru ekranı)
   const factory DailyActivitiesEvent.questionSelected(
     DailyQuestionEntity question,

@@ -10,7 +10,7 @@ class ProfilePopupBase extends StatelessWidget {
 
   final String title;
   final String text;
-  final Future<void> Function(BuildContext context) onConfirm;
+  final void Function(BuildContext context) onConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -81,37 +81,28 @@ enum ProfilePopupKind {
   deleteAccount,
 }
 
+/// Oturum aksiyonları [AuthBloc] üzerinden gider; popup sadece onayı iletip kapanır.
+void _dispatchSignOutAndCloseDialog(BuildContext context) {
+  context.read<AuthBloc>().add(const AuthEvent.signOutRequested());
+  context.router.pop();
+}
+
+void _dispatchDeleteAccountAndCloseDialog(BuildContext context) {
+  context.read<AuthBloc>().add(const AuthEvent.deleteAccountRequested());
+  context.router.pop();
+}
+
 Future<void> showProfilePopup(BuildContext context, ProfilePopupKind kind) {
-  Future<void> confirmLogout(BuildContext ctx) async {
-    final router = ctx.router;
-    final authBloc = ctx.read<AuthBloc>();
-    router.pop();
-    authBloc.add(const AuthEvent.signOutRequested());
-    router.replaceAll([const LoginRoute()]);
-  }
-
-  Future<void> confirmDeleteAccount(BuildContext ctx) async {
-    final router = ctx.router;
-    final authBloc = ctx.read<AuthBloc>();
-    final result = await getIt<DeleteAccountUseCase>()();
-    if (!ctx.mounted) return;
-    result.fold((_) {}, (_) {
-      router.pop();
-      authBloc.add(const AuthEvent.sessionCheckRequested());
-      router.replaceAll([const LoginRoute()]);
-    });
-  }
-
   final Widget child = switch (kind) {
     ProfilePopupKind.logout => ProfilePopupBase(
         title: context.text.logout_popup_header_title,
         text: context.text.logout_popup_text,
-        onConfirm: confirmLogout,
+        onConfirm: _dispatchSignOutAndCloseDialog,
       ),
     ProfilePopupKind.deleteAccount => ProfilePopupBase(
         title: context.text.delete_account_popup_header_title,
         text: context.text.delete_account_popup_text,
-        onConfirm: confirmDeleteAccount,
+        onConfirm: _dispatchDeleteAccountAndCloseDialog,
       ),
   };
 

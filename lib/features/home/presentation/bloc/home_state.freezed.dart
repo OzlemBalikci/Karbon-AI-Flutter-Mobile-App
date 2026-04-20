@@ -15,11 +15,12 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState implements DiagnosticableTreeMixin {
   HomeStatus get status;
-  HomeViewType get viewType;
+
+  /// GET home `data.hasCompletedPoll`; false = anket yok / ilk ekran.
   bool get hasCompletedPoll;
   GlobalTargetEntity? get globalTarget;
   MonthlyTargetEntity? get monthlyTarget;
-  List<HomeTopLeaderEntity> get topLeaders;
+  List<LeaderboardLeaderEntity> get topLeaders;
   String? get error;
 
   /// Create a copy of HomeState
@@ -34,7 +35,6 @@ mixin _$HomeState implements DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'HomeState'))
       ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('viewType', viewType))
       ..add(DiagnosticsProperty('hasCompletedPoll', hasCompletedPoll))
       ..add(DiagnosticsProperty('globalTarget', globalTarget))
       ..add(DiagnosticsProperty('monthlyTarget', monthlyTarget))
@@ -48,8 +48,6 @@ mixin _$HomeState implements DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is HomeState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.viewType, viewType) ||
-                other.viewType == viewType) &&
             (identical(other.hasCompletedPoll, hasCompletedPoll) ||
                 other.hasCompletedPoll == hasCompletedPoll) &&
             (identical(other.globalTarget, globalTarget) ||
@@ -65,7 +63,6 @@ mixin _$HomeState implements DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType,
       status,
-      viewType,
       hasCompletedPoll,
       globalTarget,
       monthlyTarget,
@@ -74,7 +71,7 @@ mixin _$HomeState implements DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeState(status: $status, viewType: $viewType, hasCompletedPoll: $hasCompletedPoll, globalTarget: $globalTarget, monthlyTarget: $monthlyTarget, topLeaders: $topLeaders, error: $error)';
+    return 'HomeState(status: $status, hasCompletedPoll: $hasCompletedPoll, globalTarget: $globalTarget, monthlyTarget: $monthlyTarget, topLeaders: $topLeaders, error: $error)';
   }
 }
 
@@ -85,11 +82,10 @@ abstract mixin class $HomeStateCopyWith<$Res> {
   @useResult
   $Res call(
       {HomeStatus status,
-      HomeViewType viewType,
       bool hasCompletedPoll,
       GlobalTargetEntity? globalTarget,
       MonthlyTargetEntity? monthlyTarget,
-      List<HomeTopLeaderEntity> topLeaders,
+      List<LeaderboardLeaderEntity> topLeaders,
       String? error});
 }
 
@@ -106,7 +102,6 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
   @override
   $Res call({
     Object? status = null,
-    Object? viewType = null,
     Object? hasCompletedPoll = null,
     Object? globalTarget = freezed,
     Object? monthlyTarget = freezed,
@@ -118,10 +113,6 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as HomeStatus,
-      viewType: null == viewType
-          ? _self.viewType
-          : viewType // ignore: cast_nullable_to_non_nullable
-              as HomeViewType,
       hasCompletedPoll: null == hasCompletedPoll
           ? _self.hasCompletedPoll
           : hasCompletedPoll // ignore: cast_nullable_to_non_nullable
@@ -137,7 +128,7 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
       topLeaders: null == topLeaders
           ? _self.topLeaders
           : topLeaders // ignore: cast_nullable_to_non_nullable
-              as List<HomeTopLeaderEntity>,
+              as List<LeaderboardLeaderEntity>,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -241,11 +232,10 @@ extension HomeStatePatterns on HomeState {
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
             HomeStatus status,
-            HomeViewType viewType,
             bool hasCompletedPoll,
             GlobalTargetEntity? globalTarget,
             MonthlyTargetEntity? monthlyTarget,
-            List<HomeTopLeaderEntity> topLeaders,
+            List<LeaderboardLeaderEntity> topLeaders,
             String? error)?
         $default, {
     required TResult orElse(),
@@ -255,7 +245,6 @@ extension HomeStatePatterns on HomeState {
       case _HomeState() when $default != null:
         return $default(
             _that.status,
-            _that.viewType,
             _that.hasCompletedPoll,
             _that.globalTarget,
             _that.monthlyTarget,
@@ -283,11 +272,10 @@ extension HomeStatePatterns on HomeState {
   TResult when<TResult extends Object?>(
     TResult Function(
             HomeStatus status,
-            HomeViewType viewType,
             bool hasCompletedPoll,
             GlobalTargetEntity? globalTarget,
             MonthlyTargetEntity? monthlyTarget,
-            List<HomeTopLeaderEntity> topLeaders,
+            List<LeaderboardLeaderEntity> topLeaders,
             String? error)
         $default,
   ) {
@@ -296,7 +284,6 @@ extension HomeStatePatterns on HomeState {
       case _HomeState():
         return $default(
             _that.status,
-            _that.viewType,
             _that.hasCompletedPoll,
             _that.globalTarget,
             _that.monthlyTarget,
@@ -323,11 +310,10 @@ extension HomeStatePatterns on HomeState {
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
             HomeStatus status,
-            HomeViewType viewType,
             bool hasCompletedPoll,
             GlobalTargetEntity? globalTarget,
             MonthlyTargetEntity? monthlyTarget,
-            List<HomeTopLeaderEntity> topLeaders,
+            List<LeaderboardLeaderEntity> topLeaders,
             String? error)?
         $default,
   ) {
@@ -336,7 +322,6 @@ extension HomeStatePatterns on HomeState {
       case _HomeState() when $default != null:
         return $default(
             _that.status,
-            _that.viewType,
             _that.hasCompletedPoll,
             _that.globalTarget,
             _that.monthlyTarget,
@@ -352,12 +337,11 @@ extension HomeStatePatterns on HomeState {
 
 class _HomeState extends HomeState with DiagnosticableTreeMixin {
   const _HomeState(
-      {this.status = HomeStatus.loading,
-      this.viewType = HomeViewType.initial,
+      {this.status = HomeStatus.initial,
       this.hasCompletedPoll = false,
       this.globalTarget,
       this.monthlyTarget,
-      final List<HomeTopLeaderEntity> topLeaders = const [],
+      final List<LeaderboardLeaderEntity> topLeaders = const [],
       this.error})
       : _topLeaders = topLeaders,
         super._();
@@ -365,9 +349,8 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final HomeStatus status;
-  @override
-  @JsonKey()
-  final HomeViewType viewType;
+
+  /// GET home `data.hasCompletedPoll`; false = anket yok / ilk ekran.
   @override
   @JsonKey()
   final bool hasCompletedPoll;
@@ -375,10 +358,10 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
   final GlobalTargetEntity? globalTarget;
   @override
   final MonthlyTargetEntity? monthlyTarget;
-  final List<HomeTopLeaderEntity> _topLeaders;
+  final List<LeaderboardLeaderEntity> _topLeaders;
   @override
   @JsonKey()
-  List<HomeTopLeaderEntity> get topLeaders {
+  List<LeaderboardLeaderEntity> get topLeaders {
     if (_topLeaders is EqualUnmodifiableListView) return _topLeaders;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_topLeaders);
@@ -400,7 +383,6 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
     properties
       ..add(DiagnosticsProperty('type', 'HomeState'))
       ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('viewType', viewType))
       ..add(DiagnosticsProperty('hasCompletedPoll', hasCompletedPoll))
       ..add(DiagnosticsProperty('globalTarget', globalTarget))
       ..add(DiagnosticsProperty('monthlyTarget', monthlyTarget))
@@ -414,8 +396,6 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
         (other.runtimeType == runtimeType &&
             other is _HomeState &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.viewType, viewType) ||
-                other.viewType == viewType) &&
             (identical(other.hasCompletedPoll, hasCompletedPoll) ||
                 other.hasCompletedPoll == hasCompletedPoll) &&
             (identical(other.globalTarget, globalTarget) ||
@@ -431,7 +411,6 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
   int get hashCode => Object.hash(
       runtimeType,
       status,
-      viewType,
       hasCompletedPoll,
       globalTarget,
       monthlyTarget,
@@ -440,7 +419,7 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HomeState(status: $status, viewType: $viewType, hasCompletedPoll: $hasCompletedPoll, globalTarget: $globalTarget, monthlyTarget: $monthlyTarget, topLeaders: $topLeaders, error: $error)';
+    return 'HomeState(status: $status, hasCompletedPoll: $hasCompletedPoll, globalTarget: $globalTarget, monthlyTarget: $monthlyTarget, topLeaders: $topLeaders, error: $error)';
   }
 }
 
@@ -454,11 +433,10 @@ abstract mixin class _$HomeStateCopyWith<$Res>
   @useResult
   $Res call(
       {HomeStatus status,
-      HomeViewType viewType,
       bool hasCompletedPoll,
       GlobalTargetEntity? globalTarget,
       MonthlyTargetEntity? monthlyTarget,
-      List<HomeTopLeaderEntity> topLeaders,
+      List<LeaderboardLeaderEntity> topLeaders,
       String? error});
 }
 
@@ -475,7 +453,6 @@ class __$HomeStateCopyWithImpl<$Res> implements _$HomeStateCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? status = null,
-    Object? viewType = null,
     Object? hasCompletedPoll = null,
     Object? globalTarget = freezed,
     Object? monthlyTarget = freezed,
@@ -487,10 +464,6 @@ class __$HomeStateCopyWithImpl<$Res> implements _$HomeStateCopyWith<$Res> {
           ? _self.status
           : status // ignore: cast_nullable_to_non_nullable
               as HomeStatus,
-      viewType: null == viewType
-          ? _self.viewType
-          : viewType // ignore: cast_nullable_to_non_nullable
-              as HomeViewType,
       hasCompletedPoll: null == hasCompletedPoll
           ? _self.hasCompletedPoll
           : hasCompletedPoll // ignore: cast_nullable_to_non_nullable
@@ -506,7 +479,7 @@ class __$HomeStateCopyWithImpl<$Res> implements _$HomeStateCopyWith<$Res> {
       topLeaders: null == topLeaders
           ? _self._topLeaders
           : topLeaders // ignore: cast_nullable_to_non_nullable
-              as List<HomeTopLeaderEntity>,
+              as List<LeaderboardLeaderEntity>,
       error: freezed == error
           ? _self.error
           : error // ignore: cast_nullable_to_non_nullable

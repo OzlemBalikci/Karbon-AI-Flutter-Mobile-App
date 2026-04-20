@@ -42,7 +42,7 @@ class LeaderofmonthBloc extends Bloc<LeaderofmonthEvent, LeaderofmonthState> {
       result.fold(
         (exception) => emit(
           state.copyWith(
-            status: LeaderofmonthStatus.error,
+            status: LeaderofmonthStatus.failure,
             error: exception.toString(),
           ),
         ),
@@ -60,7 +60,7 @@ class LeaderofmonthBloc extends Bloc<LeaderofmonthEvent, LeaderofmonthState> {
       addError(error, stackTrace);
       emit(
         state.copyWith(
-          status: LeaderofmonthStatus.error,
+          status: LeaderofmonthStatus.failure,
           error: error.toString(),
         ),
       );

@@ -7,7 +7,7 @@ enum AsyncStatus {
   initial,
   loading,
   success,
-  error,
+  failure,
 }
 
 @freezed
@@ -19,14 +19,14 @@ abstract class ProfileState with _$ProfileState {
   const factory ProfileState({
     @Default(AsyncStatus.initial) AsyncStatus profileStatus,
     UserProfileEntity? profile,
+    String? profileError,
     @Default(AsyncStatus.initial) AsyncStatus donationHistoryStatus,
     DonationHistoryEntity? donationHistory,
+    String? donationHistoryError,
     @Default(AsyncStatus.initial) AsyncStatus donateStatus,
     DonateTreesResultEntity? donateResult,
-    @Default(0) int selectedTab,
-    String? profileError,
-    String? donationHistoryError,
     String? donateError,
+    @Default(0) int selectedTab,
   }) = _ProfileState;
 
   factory ProfileState.initial() => const ProfileState();

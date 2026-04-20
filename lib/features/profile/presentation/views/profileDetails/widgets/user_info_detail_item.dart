@@ -1,52 +1,36 @@
 part of '../../../profile.dart';
 
 class UserInfoDetailItem extends StatelessWidget {
-  const UserInfoDetailItem({super.key});
+  const UserInfoDetailItem({super.key, required this.profile});
+
+  final UserProfileEntity profile;
 
   @override
   Widget build(BuildContext context) {
-    return ProfileAsyncStatusSelector<UserProfileEntity>(
-      statusSelector: (s) => s.profileStatus,
-      errorSelector: (s) => s.profileError,
-      dataSelector: (s) => s.profile,
-      onLoading: () => Center(
-        child: Padding(
-          padding: EdgeInsets.all(24.w),
-          child: AppLoadingLottie(width: 120.w, height: 120.w),
+    final birthStr = DateFormat('dd.MM.yyyy', 'tr')
+        .format(profile.birthDate.toLocal());
+    return Column(
+      children: [
+        _InfoDetailItem(
+          title: context.text.register_tcno_textfield_text,
+          value: profile.identityNumber,
         ),
-      ),
-      onError: (error) => Text(
-        error,
-        style: context.typographiesSp.bodySmall
-            .copyWith(color: context.colors.error),
-      ),
-      onSuccess: (profile) {
-        final birthStr =
-            DateFormat('dd.MM.yyyy', 'tr').format(profile.birthDate.toLocal());
-        return Column(
-          children: [
-            _InfoDetailItem(
-              title: context.text.register_tcno_textfield_text,
-              value: profile.identityNumber,
-            ),
-            SizedBox(height: AppThemeSpacing.s20.h),
-            _InfoDetailItem(
-              title: context.text.register_name_textfield_text,
-              value: profile.name,
-            ),
-            SizedBox(height: AppThemeSpacing.s20.h),
-            _InfoDetailItem(
-              title: context.text.register_surname_textfield_text,
-              value: profile.surname,
-            ),
-            SizedBox(height: AppThemeSpacing.s20.h),
-            _InfoDetailItem(
-              title: context.text.register_birth_date_textfield_text,
-              value: birthStr,
-            ),
-          ],
-        );
-      },
+        SizedBox(height: AppThemeSpacing.s20.h),
+        _InfoDetailItem(
+          title: context.text.register_name_textfield_text,
+          value: profile.name,
+        ),
+        SizedBox(height: AppThemeSpacing.s20.h),
+        _InfoDetailItem(
+          title: context.text.register_surname_textfield_text,
+          value: profile.surname,
+        ),
+        SizedBox(height: AppThemeSpacing.s20.h),
+        _InfoDetailItem(
+          title: context.text.register_birth_date_textfield_text,
+          value: birthStr,
+        ),
+      ],
     );
   }
 }

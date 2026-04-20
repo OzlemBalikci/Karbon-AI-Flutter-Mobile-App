@@ -9,7 +9,7 @@ enum CarbonCalculateStatus {
   loading,
   success,
   submitting,
-  error,
+  failure,
 }
 
 @freezed

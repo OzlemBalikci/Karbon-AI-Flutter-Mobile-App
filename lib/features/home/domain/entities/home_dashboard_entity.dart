@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
 /// GET `/api/v1/user-results/home` → `data.globalTarget`
 class GlobalTargetEntity extends Equatable {
@@ -48,27 +49,6 @@ class MonthlyTargetEntity extends Equatable {
       ];
 }
 
-/// GET `/api/v1/user-results/home` → `data.topLeaders[]` (`project_docs/home.md`)
-class HomeTopLeaderEntity extends Equatable {
-  const HomeTopLeaderEntity({
-    required this.rank,
-    required this.fullName,
-    required this.treeCount,
-    required this.isCurrentUser,
-  });
-
-  final int rank;
-  final String fullName;
-  final int treeCount;
-  final bool isCurrentUser;
-
-  /// UI metinleri için (örn. "100 Ağaç").
-  String get valueDisplay => '$treeCount Ağaç';
-
-  @override
-  List<Object?> get props => [rank, fullName, treeCount, isCurrentUser];
-}
-
 /// GET `/api/v1/user-results/home` yanıtındaki `data` gövdesi (`project_docs/home.md`).
 class HomeDashboardEntity extends Equatable {
   const HomeDashboardEntity({
@@ -81,7 +61,7 @@ class HomeDashboardEntity extends Equatable {
   final bool hasCompletedPoll;
   final GlobalTargetEntity? globalTarget;
   final MonthlyTargetEntity? monthlyTarget;
-  final List<HomeTopLeaderEntity>? topLeaders;
+  final List<LeaderboardLeaderEntity>? topLeaders;
 
   @override
   List<Object?> get props =>

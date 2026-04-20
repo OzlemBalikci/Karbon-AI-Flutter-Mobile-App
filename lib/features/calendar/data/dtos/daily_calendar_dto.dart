@@ -10,10 +10,17 @@ class DailyCalendarItemDto {
   final bool hasDetails;
 
   factory DailyCalendarItemDto.fromJson(Map<String, dynamic> json) {
+    final rawDate = json['date'];
+    final dateStr = rawDate is String
+        ? rawDate
+        : rawDate?.toString() ?? '';
+    final hasDetails = json['hasDetails'] as bool? ??
+        json['hasActivity'] as bool? ??
+        false;
     return DailyCalendarItemDto(
-      date: json['date'] as String? ?? '',
+      date: dateStr,
       score: (json['score'] as num?)?.toDouble() ?? 0,
-      hasDetails: json['hasDetails'] as bool? ?? false,
+      hasDetails: hasDetails,
     );
   }
 }

@@ -1,14 +1,14 @@
-import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
+import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import 'package:karbon/core/networks/api_config.dart';
+import 'package:karbon/core/networks/api_envelope.dart';
+import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_pending_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_previous_answer_dto.dart';
-import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
 import 'package:karbon/features/dailyactivites/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
-import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart';
-import 'package:karbon/core/networks/api_envelope.dart';
-import 'package:karbon/core/networks/api_config.dart';
-import 'package:injectable/injectable.dart';
-import 'package:dio/dio.dart';
 
 @LazySingleton(as: DailyActivitiesRemote)
 class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
@@ -55,15 +55,23 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       await Future<void>.delayed(const Duration(milliseconds: 150));
       return _mockPreviousAnswers;
     }
-    final res = await _dio.get<dynamic>('$_v1/previous-answers');
-    final raw = unwrapDataList(res.data);
-    return raw
-        .map((e) => DailyActivityMapper.toPreviousAnswersByDateEntity(
-              DailyPreviousAnswersByDateDto.fromJson(
-                e as Map<String, dynamic>,
-              ),
-            ))
-        .toList();
+    try {
+      final res = await _dio.get<dynamic>('$_v1/previous-answers');
+      final raw = unwrapDataList(res.data);
+      return raw
+          .map((e) => DailyActivityMapper.toPreviousAnswersByDateEntity(
+                DailyPreviousAnswersByDateDto.fromJson(
+                  e as Map<String, dynamic>,
+                ),
+              ))
+          .toList();
+    } on DioException catch (e) {
+      /// [daily-activities.md]: hiç cevap yoksa `404 PreviousAnswersNotFound`.
+      if (e.response?.statusCode == 404) {
+        return <DailyPreviousAnswersByDateEntity>[];
+      }
+      rethrow;
+    }
   }
 
   @override

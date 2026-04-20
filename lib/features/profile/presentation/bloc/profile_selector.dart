@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_state.dart';
+
+typedef ProfileAsyncSlice<T> = ({AsyncStatus status, String? error, T? data});
 
 class ProfileSelector<T> extends BlocSelector<ProfileBloc, ProfileState, T> {
   ProfileSelector({
@@ -11,53 +14,56 @@ class ProfileSelector<T> extends BlocSelector<ProfileBloc, ProfileState, T> {
   }) : super(builder: (_, value) => builder(value));
 }
 
-class ProfileAsyncStatusSelector<T> extends StatelessWidget {
-  const ProfileAsyncStatusSelector({
+class ProfileAsyncSelector<T> extends ProfileSelector<ProfileAsyncSlice<T>> {
+  ProfileAsyncSelector({
     super.key,
-    required this.statusSelector,
-    required this.errorSelector,
-    required this.dataSelector,
-    required this.onLoading,
-    required this.onError,
-    required this.onSuccess,
-    this.onInitial,
-  });
+    required AsyncStatus Function(ProfileState) statusSelector,
+    required String? Function(ProfileState) errorSelector,
+    required T? Function(ProfileState) dataSelector,
+    required Widget Function(ProfileAsyncSlice<T> slice) builder,
+  }) : super(
+          selector: (s) => (
+            status: statusSelector(s),
+            error: errorSelector(s),
+            data: dataSelector(s),
+          ),
+          builder: builder,
+        );
+}
 
-  final AsyncStatus Function(ProfileState) statusSelector;
-  final String? Function(ProfileState) errorSelector;
-  final T? Function(ProfileState) dataSelector;
-  final Widget Function() onLoading;
-  final Widget Function(String error) onError;
-  final Widget Function(T data) onSuccess;
-  final Widget Function()? onInitial;
+class ProfileUserAsyncSelector extends ProfileAsyncSelector<UserProfileEntity> {
+  ProfileUserAsyncSelector({
+    super.key,
+    required super.builder,
+  }) : super(
+          statusSelector: (s) => s.profileStatus,
+          errorSelector: (s) => s.profileError,
+          dataSelector: (s) => s.profile,
+        );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocSelector<ProfileBloc, ProfileState, AsyncStatus>(
-      selector: statusSelector,
-      builder: (context, status) {
-        switch (status) {
-          case AsyncStatus.initial:
-            return onInitial?.call() ?? const SizedBox.shrink();
-          case AsyncStatus.loading:
-            return onLoading();
-          case AsyncStatus.error:
-            return BlocSelector<ProfileBloc, ProfileState, String?>(
-              selector: errorSelector,
-              builder: (_, error) => onError(error ?? 'Bir hata oluştu'),
-            );
-          case AsyncStatus.success:
-            return BlocSelector<ProfileBloc, ProfileState, T?>(
-              selector: dataSelector,
-              builder: (_, data) {
-                if (data == null) return const SizedBox.shrink();
-                return onSuccess(data);
-              },
-            );
-        }
-      },
-    );
-  }
+class ProfileDonationHistoryAsyncSelector
+    extends ProfileAsyncSelector<DonationHistoryEntity> {
+  ProfileDonationHistoryAsyncSelector({
+    super.key,
+    required super.builder,
+  }) : super(
+          statusSelector: (s) => s.donationHistoryStatus,
+          errorSelector: (s) => s.donationHistoryError,
+          dataSelector: (s) => s.donationHistory,
+        );
+}
+
+class ProfileDonateAsyncSelector
+    extends ProfileAsyncSelector<DonateTreesResultEntity> {
+  ProfileDonateAsyncSelector({
+    super.key,
+    required super.builder,
+  }) : super(
+          statusSelector: (s) => s.donateStatus,
+          errorSelector: (s) => s.donateError,
+          dataSelector: (s) => s.donateResult,
+        );
 }
 
 class ProfileTabSelector extends ProfileSelector<int> {

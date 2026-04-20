@@ -6,7 +6,7 @@ enum UsefulinfoStatus {
   initial,
   loading,
   success,
-  error,
+  failure,
 }
 
 @freezed

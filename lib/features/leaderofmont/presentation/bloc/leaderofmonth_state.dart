@@ -8,7 +8,7 @@ enum LeaderofmonthStatus {
   initial,
   loading,
   success,
-  error,
+  failure,
 }
 
 @freezed

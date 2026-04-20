@@ -14,48 +14,39 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final GetHomeUseCase _getHome;
 
-  Future<void> _fetchHome(Emitter<HomeState> emit) async {
-    final result = await _getHome();
-    result.fold(
-      (e) => emit(state.copyWith(
-        status: HomeStatus.error,
-        error: e.toString(),
-      )),
-      (dashboard) => emit(state.copyWith(
-        status: HomeStatus.success,
-        viewType: dashboard.hasCompletedPoll
-            ? HomeViewType.main
-            : HomeViewType.initial,
-        hasCompletedPoll: dashboard.hasCompletedPoll,
-        globalTarget: dashboard.globalTarget,
-        monthlyTarget: dashboard.monthlyTarget,
-        topLeaders: dashboard.topLeaders ?? [],
-        error: null,
-      )),
-    );
-  }
-
   Future<void> _onFetchRequested(
     HomeFetchRequested event,
     Emitter<HomeState> emit,
-  ) async {
-    try {
-      emit(state.copyWith(status: HomeStatus.loading, error: null));
-      await _fetchHome(emit);
-    } on Exception catch (e) {
-      emit(state.copyWith(status: HomeStatus.error, error: e.toString()));
-    }
-  }
+  ) =>
+      _loadDashboard(emit);
 
   Future<void> _onRefreshRequested(
     HomeRefreshRequested event,
     Emitter<HomeState> emit,
-  ) async {
+  ) =>
+      _loadDashboard(emit);
+
+  Future<void> _loadDashboard(Emitter<HomeState> emit) async {
     try {
       emit(state.copyWith(status: HomeStatus.loading, error: null));
-      await _fetchHome(emit);
+      final result = await _getHome();
+      result.fold(
+        (e) => emit(state.copyWith(
+          status: HomeStatus.failure,
+          error: e.toString(),
+        )),
+        (dashboard) => emit(state.copyWith(
+          status: HomeStatus.success,
+          // project_docs/home.md — false iken ilk ekran (anket yok)
+          hasCompletedPoll: dashboard.hasCompletedPoll,
+          globalTarget: dashboard.globalTarget,
+          monthlyTarget: dashboard.monthlyTarget,
+          topLeaders: dashboard.topLeaders ?? [],
+          error: null,
+        )),
+      );
     } on Exception catch (e) {
-      emit(state.copyWith(status: HomeStatus.error, error: e.toString()));
+      emit(state.copyWith(status: HomeStatus.failure, error: e.toString()));
     }
   }
 
@@ -63,9 +54,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomePollCompleted event,
     Emitter<HomeState> emit,
   ) {
-    emit(state.copyWith(
-      hasCompletedPoll: true,
-      viewType: HomeViewType.main,
-    ));
+    emit(state.copyWith(hasCompletedPoll: true));
   }
 }

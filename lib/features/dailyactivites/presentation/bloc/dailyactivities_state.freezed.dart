@@ -30,8 +30,11 @@ mixin _$DailyActivitiesState {
   /// Başarı modalı (Tebrikler X puan)
   bool get showSuccessDialog;
 
-  /// API gelince: getHistory() ile doldurursun
+  /// Oturumda bu ekranda cevaplanan soruların stub'ları (geçici).
   List<DailyQuestionEntity> get answeredQuestionStubs;
+
+  /// GET `/api/v1/daily-activities/previous-answers` — en son cevaplanmış gün.
+  List<DailyPreviousAnswersByDateEntity> get previousAnswers;
 
   /// Create a copy of DailyActivitiesState
   /// with the given fields replaced by the non-null parameter values.
@@ -71,7 +74,9 @@ mixin _$DailyActivitiesState {
             (identical(other.showSuccessDialog, showSuccessDialog) ||
                 other.showSuccessDialog == showSuccessDialog) &&
             const DeepCollectionEquality()
-                .equals(other.answeredQuestionStubs, answeredQuestionStubs));
+                .equals(other.answeredQuestionStubs, answeredQuestionStubs) &&
+            const DeepCollectionEquality()
+                .equals(other.previousAnswers, previousAnswers));
   }
 
   @override
@@ -90,11 +95,12 @@ mixin _$DailyActivitiesState {
       lastPostAnswerResult,
       const DeepCollectionEquality().hash(questionScore),
       showSuccessDialog,
-      const DeepCollectionEquality().hash(answeredQuestionStubs));
+      const DeepCollectionEquality().hash(answeredQuestionStubs),
+      const DeepCollectionEquality().hash(previousAnswers));
 
   @override
   String toString() {
-    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, questionSolvedAt: $questionSolvedAt, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, questionScore: $questionScore, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs)';
+    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, questionSolvedAt: $questionSolvedAt, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, questionScore: $questionScore, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs, previousAnswers: $previousAnswers)';
   }
 }
 
@@ -118,7 +124,8 @@ abstract mixin class $DailyActivitiesStateCopyWith<$Res> {
       DailyAnswerResultEntity? lastPostAnswerResult,
       Map<String, double> questionScore,
       bool showSuccessDialog,
-      List<DailyQuestionEntity> answeredQuestionStubs});
+      List<DailyQuestionEntity> answeredQuestionStubs,
+      List<DailyPreviousAnswersByDateEntity> previousAnswers});
 }
 
 /// @nodoc
@@ -148,6 +155,7 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
     Object? questionScore = null,
     Object? showSuccessDialog = null,
     Object? answeredQuestionStubs = null,
+    Object? previousAnswers = null,
   }) {
     return _then(_self.copyWith(
       screenStatus: null == screenStatus
@@ -206,6 +214,10 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self.answeredQuestionStubs
           : answeredQuestionStubs // ignore: cast_nullable_to_non_nullable
               as List<DailyQuestionEntity>,
+      previousAnswers: null == previousAnswers
+          ? _self.previousAnswers
+          : previousAnswers // ignore: cast_nullable_to_non_nullable
+              as List<DailyPreviousAnswersByDateEntity>,
     ));
   }
 }
@@ -317,7 +329,8 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             DailyAnswerResultEntity? lastPostAnswerResult,
             Map<String, double> questionScore,
             bool showSuccessDialog,
-            List<DailyQuestionEntity> answeredQuestionStubs)?
+            List<DailyQuestionEntity> answeredQuestionStubs,
+            List<DailyPreviousAnswersByDateEntity> previousAnswers)?
         $default, {
     required TResult orElse(),
   }) {
@@ -338,7 +351,8 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             _that.lastPostAnswerResult,
             _that.questionScore,
             _that.showSuccessDialog,
-            _that.answeredQuestionStubs);
+            _that.answeredQuestionStubs,
+            _that.previousAnswers);
       case _:
         return orElse();
     }
@@ -373,7 +387,8 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             DailyAnswerResultEntity? lastPostAnswerResult,
             Map<String, double> questionScore,
             bool showSuccessDialog,
-            List<DailyQuestionEntity> answeredQuestionStubs)
+            List<DailyQuestionEntity> answeredQuestionStubs,
+            List<DailyPreviousAnswersByDateEntity> previousAnswers)
         $default,
   ) {
     final _that = this;
@@ -393,7 +408,8 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             _that.lastPostAnswerResult,
             _that.questionScore,
             _that.showSuccessDialog,
-            _that.answeredQuestionStubs);
+            _that.answeredQuestionStubs,
+            _that.previousAnswers);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -427,7 +443,8 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             DailyAnswerResultEntity? lastPostAnswerResult,
             Map<String, double> questionScore,
             bool showSuccessDialog,
-            List<DailyQuestionEntity> answeredQuestionStubs)?
+            List<DailyQuestionEntity> answeredQuestionStubs,
+            List<DailyPreviousAnswersByDateEntity> previousAnswers)?
         $default,
   ) {
     final _that = this;
@@ -447,7 +464,8 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             _that.lastPostAnswerResult,
             _that.questionScore,
             _that.showSuccessDialog,
-            _that.answeredQuestionStubs);
+            _that.answeredQuestionStubs,
+            _that.previousAnswers);
       case _:
         return null;
     }
@@ -471,13 +489,15 @@ class _DailyActivitiesState implements DailyActivitiesState {
       this.lastPostAnswerResult,
       final Map<String, double> questionScore = const {},
       this.showSuccessDialog = false,
-      final List<DailyQuestionEntity> answeredQuestionStubs = const []})
+      final List<DailyQuestionEntity> answeredQuestionStubs = const [],
+      final List<DailyPreviousAnswersByDateEntity> previousAnswers = const []})
       : _questions = questions,
         _historyItems = historyItems,
         _questionSolvedAt = questionSolvedAt,
         _branchPath = branchPath,
         _questionScore = questionScore,
-        _answeredQuestionStubs = answeredQuestionStubs;
+        _answeredQuestionStubs = answeredQuestionStubs,
+        _previousAnswers = previousAnswers;
 
   @override
   @JsonKey()
@@ -545,10 +565,10 @@ class _DailyActivitiesState implements DailyActivitiesState {
   @JsonKey()
   final bool showSuccessDialog;
 
-  /// API gelince: getHistory() ile doldurursun
+  /// Oturumda bu ekranda cevaplanan soruların stub'ları (geçici).
   final List<DailyQuestionEntity> _answeredQuestionStubs;
 
-  /// API gelince: getHistory() ile doldurursun
+  /// Oturumda bu ekranda cevaplanan soruların stub'ları (geçici).
   @override
   @JsonKey()
   List<DailyQuestionEntity> get answeredQuestionStubs {
@@ -556,6 +576,18 @@ class _DailyActivitiesState implements DailyActivitiesState {
       return _answeredQuestionStubs;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_answeredQuestionStubs);
+  }
+
+  /// GET `/api/v1/daily-activities/previous-answers` — en son cevaplanmış gün.
+  final List<DailyPreviousAnswersByDateEntity> _previousAnswers;
+
+  /// GET `/api/v1/daily-activities/previous-answers` — en son cevaplanmış gün.
+  @override
+  @JsonKey()
+  List<DailyPreviousAnswersByDateEntity> get previousAnswers {
+    if (_previousAnswers is EqualUnmodifiableListView) return _previousAnswers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_previousAnswers);
   }
 
   /// Create a copy of DailyActivitiesState
@@ -598,7 +630,9 @@ class _DailyActivitiesState implements DailyActivitiesState {
             (identical(other.showSuccessDialog, showSuccessDialog) ||
                 other.showSuccessDialog == showSuccessDialog) &&
             const DeepCollectionEquality()
-                .equals(other._answeredQuestionStubs, _answeredQuestionStubs));
+                .equals(other._answeredQuestionStubs, _answeredQuestionStubs) &&
+            const DeepCollectionEquality()
+                .equals(other._previousAnswers, _previousAnswers));
   }
 
   @override
@@ -617,11 +651,12 @@ class _DailyActivitiesState implements DailyActivitiesState {
       lastPostAnswerResult,
       const DeepCollectionEquality().hash(_questionScore),
       showSuccessDialog,
-      const DeepCollectionEquality().hash(_answeredQuestionStubs));
+      const DeepCollectionEquality().hash(_answeredQuestionStubs),
+      const DeepCollectionEquality().hash(_previousAnswers));
 
   @override
   String toString() {
-    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, questionSolvedAt: $questionSolvedAt, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, questionScore: $questionScore, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs)';
+    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, questionSolvedAt: $questionSolvedAt, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, questionScore: $questionScore, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs, previousAnswers: $previousAnswers)';
   }
 }
 
@@ -647,7 +682,8 @@ abstract mixin class _$DailyActivitiesStateCopyWith<$Res>
       DailyAnswerResultEntity? lastPostAnswerResult,
       Map<String, double> questionScore,
       bool showSuccessDialog,
-      List<DailyQuestionEntity> answeredQuestionStubs});
+      List<DailyQuestionEntity> answeredQuestionStubs,
+      List<DailyPreviousAnswersByDateEntity> previousAnswers});
 }
 
 /// @nodoc
@@ -677,6 +713,7 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
     Object? questionScore = null,
     Object? showSuccessDialog = null,
     Object? answeredQuestionStubs = null,
+    Object? previousAnswers = null,
   }) {
     return _then(_DailyActivitiesState(
       screenStatus: null == screenStatus
@@ -735,6 +772,10 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self._answeredQuestionStubs
           : answeredQuestionStubs // ignore: cast_nullable_to_non_nullable
               as List<DailyQuestionEntity>,
+      previousAnswers: null == previousAnswers
+          ? _self._previousAnswers
+          : previousAnswers // ignore: cast_nullable_to_non_nullable
+              as List<DailyPreviousAnswersByDateEntity>,
     ));
   }
 }

@@ -12,10 +12,15 @@ class DailyDayActivityDto {
   final String activityDate;
 
   factory DailyDayActivityDto.fromJson(Map<String, dynamic> json) {
+    final rawScore = json['score'] ?? json['carbonValue'];
     return DailyDayActivityDto(
       questionText: json['questionText'] as String? ?? '',
-      selectedOptionText: json['selectedOptionText'] as String? ?? '',
-      score: (json['score'] as num?)?.toDouble() ?? 0,
+      selectedOptionText: json['selectedOptionText'] as String? ??
+          json['answerText'] as String? ??
+          '',
+      score: (rawScore is num)
+          ? rawScore.toDouble()
+          : double.tryParse('$rawScore') ?? 0,
       activityDate: json['activityDate'] as String? ?? '',
     );
   }

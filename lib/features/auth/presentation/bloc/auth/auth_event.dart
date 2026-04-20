@@ -14,5 +14,7 @@ sealed class AuthEvent with _$AuthEvent {
     required AppUser user,
   }) = AuthRegistered;
   const factory AuthEvent.signOutRequested() = AuthSignOutRequested;
+  const factory AuthEvent.deleteAccountRequested() =
+      AuthDeleteAccountRequested;
   const factory AuthEvent.tokenExpired() = AuthTokenExpired;
 }

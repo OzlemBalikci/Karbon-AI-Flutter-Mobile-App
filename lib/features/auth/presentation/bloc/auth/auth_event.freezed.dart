@@ -55,6 +55,7 @@ extension AuthEventPatterns on AuthEvent {
     TResult Function(AuthLoggedIn value)? loggedIn,
     TResult Function(AuthRegistered value)? registered,
     TResult Function(AuthSignOutRequested value)? signOutRequested,
+    TResult Function(AuthDeleteAccountRequested value)? deleteAccountRequested,
     TResult Function(AuthTokenExpired value)? tokenExpired,
     required TResult orElse(),
   }) {
@@ -70,6 +71,8 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that);
       case AuthSignOutRequested() when signOutRequested != null:
         return signOutRequested(_that);
+      case AuthDeleteAccountRequested() when deleteAccountRequested != null:
+        return deleteAccountRequested(_that);
       case AuthTokenExpired() when tokenExpired != null:
         return tokenExpired(_that);
       case _:
@@ -98,6 +101,8 @@ extension AuthEventPatterns on AuthEvent {
     required TResult Function(AuthLoggedIn value) loggedIn,
     required TResult Function(AuthRegistered value) registered,
     required TResult Function(AuthSignOutRequested value) signOutRequested,
+    required TResult Function(AuthDeleteAccountRequested value)
+        deleteAccountRequested,
     required TResult Function(AuthTokenExpired value) tokenExpired,
   }) {
     final _that = this;
@@ -112,6 +117,8 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that);
       case AuthSignOutRequested():
         return signOutRequested(_that);
+      case AuthDeleteAccountRequested():
+        return deleteAccountRequested(_that);
       case AuthTokenExpired():
         return tokenExpired(_that);
     }
@@ -136,6 +143,7 @@ extension AuthEventPatterns on AuthEvent {
     TResult? Function(AuthLoggedIn value)? loggedIn,
     TResult? Function(AuthRegistered value)? registered,
     TResult? Function(AuthSignOutRequested value)? signOutRequested,
+    TResult? Function(AuthDeleteAccountRequested value)? deleteAccountRequested,
     TResult? Function(AuthTokenExpired value)? tokenExpired,
   }) {
     final _that = this;
@@ -150,6 +158,8 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that);
       case AuthSignOutRequested() when signOutRequested != null:
         return signOutRequested(_that);
+      case AuthDeleteAccountRequested() when deleteAccountRequested != null:
+        return deleteAccountRequested(_that);
       case AuthTokenExpired() when tokenExpired != null:
         return tokenExpired(_that);
       case _:
@@ -176,6 +186,7 @@ extension AuthEventPatterns on AuthEvent {
     TResult Function(AppUser user)? loggedIn,
     TResult Function(AppUser user)? registered,
     TResult Function()? signOutRequested,
+    TResult Function()? deleteAccountRequested,
     TResult Function()? tokenExpired,
     required TResult orElse(),
   }) {
@@ -191,6 +202,8 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that.user);
       case AuthSignOutRequested() when signOutRequested != null:
         return signOutRequested();
+      case AuthDeleteAccountRequested() when deleteAccountRequested != null:
+        return deleteAccountRequested();
       case AuthTokenExpired() when tokenExpired != null:
         return tokenExpired();
       case _:
@@ -218,6 +231,7 @@ extension AuthEventPatterns on AuthEvent {
     required TResult Function(AppUser user) loggedIn,
     required TResult Function(AppUser user) registered,
     required TResult Function() signOutRequested,
+    required TResult Function() deleteAccountRequested,
     required TResult Function() tokenExpired,
   }) {
     final _that = this;
@@ -232,6 +246,8 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that.user);
       case AuthSignOutRequested():
         return signOutRequested();
+      case AuthDeleteAccountRequested():
+        return deleteAccountRequested();
       case AuthTokenExpired():
         return tokenExpired();
     }
@@ -256,6 +272,7 @@ extension AuthEventPatterns on AuthEvent {
     TResult? Function(AppUser user)? loggedIn,
     TResult? Function(AppUser user)? registered,
     TResult? Function()? signOutRequested,
+    TResult? Function()? deleteAccountRequested,
     TResult? Function()? tokenExpired,
   }) {
     final _that = this;
@@ -270,6 +287,8 @@ extension AuthEventPatterns on AuthEvent {
         return registered(_that.user);
       case AuthSignOutRequested() when signOutRequested != null:
         return signOutRequested();
+      case AuthDeleteAccountRequested() when deleteAccountRequested != null:
+        return deleteAccountRequested();
       case AuthTokenExpired() when tokenExpired != null:
         return tokenExpired();
       case _:
@@ -463,6 +482,27 @@ class AuthSignOutRequested implements AuthEvent {
   @override
   String toString() {
     return 'AuthEvent.signOutRequested()';
+  }
+}
+
+/// @nodoc
+
+class AuthDeleteAccountRequested implements AuthEvent {
+  const AuthDeleteAccountRequested();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is AuthDeleteAccountRequested);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'AuthEvent.deleteAccountRequested()';
   }
 }
 

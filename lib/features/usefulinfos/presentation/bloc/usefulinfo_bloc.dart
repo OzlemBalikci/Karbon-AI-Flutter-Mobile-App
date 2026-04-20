@@ -25,7 +25,7 @@ class UsefulinfoBloc extends Bloc<UsefulinfoEvent, UsefulinfoState> {
     result.fold(
       (failure) => emit(
         state.copyWith(
-          status: UsefulinfoStatus.error,
+          status: UsefulinfoStatus.failure,
           error: failure.toString(),
         ),
       ),

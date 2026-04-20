@@ -14,25 +14,11 @@ class UsefulinfoSelector<T>
 }
 
 class UsefulinfoStatusSelector extends UsefulinfoSelector<UsefulinfoStatus> {
-  UsefulinfoStatusSelector({
-    super.key,
-    required Widget Function() onLoading,
-    required Widget Function(String error) onError,
-    required Widget Function() onSuccess,
-    Widget Function()? onInitial,
-  }) : super(
+  UsefulinfoStatusSelector(Widget Function(UsefulinfoStatus) builder,
+      {super.key})
+      : super(
           selector: (state) => state.status,
-          builder: (status) => switch (status) {
-            UsefulinfoStatus.initial =>
-              onInitial?.call() ?? const SizedBox.shrink(),
-            UsefulinfoStatus.loading => onLoading(),
-            UsefulinfoStatus.error =>
-              BlocSelector<UsefulinfoBloc, UsefulinfoState, String?>(
-                selector: (state) => state.error,
-                builder: (_, error) => onError(error ?? 'Bir hata oluştu'),
-              ),
-            UsefulinfoStatus.success => onSuccess(),
-          },
+          builder: builder,
         );
 }
 
@@ -44,19 +30,6 @@ class UsefulinfoListSelector
   }) : super(
           selector: (state) => state.infos,
           builder: builder,
-        );
-}
-
-class UsefulinfoSelectedSelector extends UsefulinfoSelector<UsefulInfoEntity?> {
-  UsefulinfoSelectedSelector({
-    super.key,
-    required Widget Function(UsefulInfoEntity info) onSelected,
-    Widget Function()? onEmpty,
-  }) : super(
-          selector: (state) => state.selectedInfo,
-          builder: (selected) => selected != null
-              ? onSelected(selected)
-              : onEmpty?.call() ?? const SizedBox.shrink(),
         );
 }
 

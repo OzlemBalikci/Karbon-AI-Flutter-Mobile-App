@@ -1,8 +1,14 @@
 import 'package:karbon/core/errors/exceptions.dart';
 
-/// `{ isSuccess, data, errors }` API zarfı.
+/// API zarfı: `isSuccessful` (daily-activities vb.) veya `isSuccess` (diğer uçlar).
+bool isApiEnvelopeSuccessful(Map<String, dynamic> envelope) {
+  if (envelope['isSuccessful'] == true) return true;
+  if (envelope['isSuccess'] == true) return true;
+  return false;
+}
+
 void assertApiSuccess(Map<String, dynamic> envelope) {
-  if (envelope['isSuccess'] == true) return;
+  if (isApiEnvelopeSuccessful(envelope)) return;
   final errors = envelope['errors'];
   final msg = (errors is List && errors.isNotEmpty)
       ? errors.first.toString()

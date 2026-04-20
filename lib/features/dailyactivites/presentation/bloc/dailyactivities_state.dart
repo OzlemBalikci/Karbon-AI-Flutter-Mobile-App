@@ -9,7 +9,7 @@ enum DailyActivitiesScreenStatus {
   initial,
   loading,
   success,
-  error,
+  failure,
 }
 
 /// Cevap gönderme (Puanı Al)
@@ -41,8 +41,11 @@ abstract class DailyActivitiesState with _$DailyActivitiesState {
     /// Başarı modalı (Tebrikler X puan)
     @Default(false) bool showSuccessDialog,
 
-    /// API gelince: getHistory() ile doldurursun
+    /// Oturumda bu ekranda cevaplanan soruların stub'ları (geçici).
     @Default([]) List<DailyQuestionEntity> answeredQuestionStubs,
+
+    /// GET `/api/v1/daily-activities/previous-answers` — en son cevaplanmış gün.
+    @Default([]) List<DailyPreviousAnswersByDateEntity> previousAnswers,
   }) = _DailyActivitiesState;
 
   factory DailyActivitiesState.initial() => const DailyActivitiesState();

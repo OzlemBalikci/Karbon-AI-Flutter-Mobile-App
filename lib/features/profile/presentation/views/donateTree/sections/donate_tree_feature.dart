@@ -5,88 +5,72 @@ class ProfileStarFeatureSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
-      child: BlocBuilder<ProfileBloc, ProfileState>(
-        buildWhen: (p, c) =>
-            p.profile != c.profile ||
-            p.profileStatus != c.profileStatus ||
-            p.donateStatus != c.donateStatus,
-        builder: (context, state) => _ProfileStarBody(state: state),
-      ),
-    );
-  }
-}
-
-class _ProfileStarBody extends StatelessWidget {
-  const _ProfileStarBody({required this.state});
-
-  final ProfileState state;
-
-  @override
-  Widget build(BuildContext context) {
-    final pointsValue =
-        '${NumberFormat.decimalPattern('tr_TR').format(state.profile?.totalPoints ?? 0)} ${context.text.points}';
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        PointScoreOrTreeDonationInfoCard(
-          title: context.text.profile_star_total_point_text,
-          color: const Color(0xFFEA8778),
-          value: pointsValue,
-        ),
-        SizedBox(height: AppThemeSpacing.s30.h),
-        _InfoSection(state: state),
-      ],
-    );
-  }
-}
-
-class _InfoSection extends StatelessWidget {
-  const _InfoSection({required this.state});
-
-  final ProfileState state;
-
-  @override
-  Widget build(BuildContext context) {
-    if (state.profileStatus == AsyncStatus.error) {
-      return Text(
-        state.profileError ?? '',
-        textAlign: TextAlign.center,
-        style: context.typographiesSp.bodySmall
-            .copyWith(color: context.colors.error),
-      );
-    }
-
-    if (state.profileStatus != AsyncStatus.success || state.profile == null) {
-      return SizedBox(
-        height: 120.h,
-        child: const Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    final html = state.canDonate
-        ? context.text.profile_star_text(
-            state.profile!.availableTreeCount.toString(),
-          )
-        : context.text.profile_star_no_trees_hint;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TreeDonationInfo(html: html),
-        if (state.canDonate) ...[
-          SizedBox(height: AppThemeSpacing.s30.h),
-          DonateTreeButton(
-            isLoading: state.donateStatus == AsyncStatus.loading,
-            availableTreeCount: state.profile!.availableTreeCount,
-            onDonate: () => context.read<ProfileBloc>().add(
-                  ProfileEvent.donateTrees(state.profile!.availableTreeCount),
-                ),
+    return BlocListener<ProfileBloc, ProfileState>(
+      listenWhen: (previous, current) {
+        if (current.donateStatus == AsyncStatus.success &&
+            previous.donateStatus != AsyncStatus.success &&
+            current.donateResult != null) {
+          return true;
+        }
+        if (current.donateStatus == AsyncStatus.failure &&
+            previous.donateStatus != AsyncStatus.failure &&
+            current.donateError != null) {
+          return true;
+        }
+        return false;
+      },
+      listener: (context, state) {
+        if (state.donateStatus == AsyncStatus.success &&
+            state.donateResult != null) {
+          final count = state.donateResult!.donatedTreeCount;
+          showAppPopup<void>(
+            context,
+            child: DonateSuccessPopup(
+              title: context.text.donate_succes_popup_title(
+                NumberFormat.decimalPattern('tr_TR').format(count),
+              ),
+              text: context.text.donate_succes_popup_text,
+            ),
+          ).then((_) {
+            if (!context.mounted) return;
+            context.read<ProfileBloc>().add(const ProfileEvent.donateReset());
+          });
+        } else if (state.donateStatus == AsyncStatus.failure &&
+            state.donateError != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.donateError!)),
+          );
+        }
+      },
+      child: SizedBox.expand(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
+          child: ProfileUserAsyncSelector(
+            builder: (slice) {
+              switch (slice.status) {
+                case AsyncStatus.initial:
+                case AsyncStatus.loading:
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                case AsyncStatus.failure:
+                  return Center(
+                    child: Text(
+                      slice.error ?? 'Bir hata oluştu',
+                      textAlign: TextAlign.center,
+                      style: context.typographiesSp.bodySmall
+                          .copyWith(color: context.colors.error),
+                    ),
+                  );
+                case AsyncStatus.success:
+                  final profile = slice.data;
+                  if (profile == null) return const SizedBox.shrink();
+                  return ProfileStarSuccessBody(profile: profile);
+              }
+            },
           ),
-        ],
-      ],
+        ),
+      ),
     );
   }
 }

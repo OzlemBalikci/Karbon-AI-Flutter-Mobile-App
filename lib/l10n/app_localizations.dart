@@ -292,6 +292,12 @@ abstract class AppLocalizations {
   /// **'Karbon Salım'**
   String get home_page_header_text;
 
+  /// No description provided for @home_stats_succeed_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Hedefinize Ulaştınız!'**
+  String get home_stats_succeed_text;
+
   /// No description provided for @home_page_stats_card_1_title.
   ///
   /// In tr, this message translates to:
@@ -430,6 +436,18 @@ abstract class AppLocalizations {
   /// **'Faydalı Bilgiler'**
   String get useful_infos_header_text;
 
+  /// No description provided for @useful_infos_load_error_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Faydalı bilgiler yüklenemedi.'**
+  String get useful_infos_load_error_title;
+
+  /// No description provided for @useful_infos_retry_button.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar Dene'**
+  String get useful_infos_retry_button;
+
   /// No description provided for @leaderofmonth_header_text.
   ///
   /// In tr, this message translates to:
@@ -465,6 +483,24 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Önceki Cevaplarınız'**
   String get daily_activities_history_section_header_text;
+
+  /// No description provided for @daily_activities_success_points_title.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tebrikler {points} Puan Kazandınız.'**
+  String daily_activities_success_points_title(String points);
+
+  /// No description provided for @daily_activities_success_points_body.
+  ///
+  /// In tr, this message translates to:
+  /// **'En kısa sürede size geri dönüş yaparak sorularınızı yanıtlamaktan mutluluk duyacağız.'**
+  String get daily_activities_success_points_body;
+
+  /// No description provided for @daily_activities_success_back_button.
+  ///
+  /// In tr, this message translates to:
+  /// **'Günlük Aktivitelerime Dön'**
+  String get daily_activities_success_back_button;
 
   /// No description provided for @selected_question_header_text.
   ///

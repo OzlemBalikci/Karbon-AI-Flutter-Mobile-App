@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:karbon/widgets/app_header_title.dart';
-import 'package:karbon/core/constants/assets.gen.dart';
-import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/infocard.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';

@@ -15,6 +15,7 @@ class LeaderboardContent extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         LeaderCardRow(
+          leaders: leaders,
           variant: hasPodium
               ? LeaderCardVariant.expanded
               : LeaderCardVariant.compact,

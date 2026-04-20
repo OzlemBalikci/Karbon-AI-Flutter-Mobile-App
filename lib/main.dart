@@ -4,7 +4,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:karbon/app.dart';
 import 'package:karbon/di/di.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:karbon/core/translations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +14,6 @@ void main() async {
 
   await initializeDateFormatting();
   await configureDependencies();
-  await AppTranslations.loadTranslations();
 
   if (kDebugMode) {
     Bloc.observer = AppBlocObserver();

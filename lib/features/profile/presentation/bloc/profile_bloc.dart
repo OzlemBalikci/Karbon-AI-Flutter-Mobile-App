@@ -31,7 +31,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final result = await _getProfile();
     result.fold(
       (failure) => emit(state.copyWith(
-        profileStatus: AsyncStatus.error,
+        profileStatus: AsyncStatus.failure,
         profileError: failure.toString(),
       )),
       (profile) => emit(state.copyWith(
@@ -44,7 +44,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   void _onTabChanged(TabChanged event, Emitter<ProfileState> emit) {
     emit(state.copyWith(selectedTab: event.index));
     if (event.index == 2 &&
-        state.donationHistoryStatus == AsyncStatus.initial) {
+        state.donationHistoryStatus != AsyncStatus.loading) {
       add(const ProfileEvent.fetchDonationHistory());
     }
   }
@@ -57,7 +57,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final result = await _getDonationHistory();
     result.fold(
       (failure) => emit(state.copyWith(
-        donationHistoryStatus: AsyncStatus.error,
+        donationHistoryStatus: AsyncStatus.failure,
         donationHistoryError: failure.toString(),
       )),
       (history) => emit(state.copyWith(
@@ -73,7 +73,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final result = await _donateTrees();
     result.fold(
       (failure) => emit(state.copyWith(
-        donateStatus: AsyncStatus.error,
+        donateStatus: AsyncStatus.failure,
         donateError: failure.toString(),
       )),
       (donateResult) => emit(state.copyWith(
@@ -88,5 +88,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       donateStatus: AsyncStatus.initial,
       donateResult: null,
     ));
+    add(const ProfileEvent.fetchProfile());
   }
 }

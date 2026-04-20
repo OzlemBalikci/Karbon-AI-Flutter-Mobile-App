@@ -8,9 +8,12 @@ class DailyMonthlyDayScoreDto {
   final double totalScore;
 
   factory DailyMonthlyDayScoreDto.fromJson(Map<String, dynamic> json) {
+    final raw = json['totalScore'] ?? json['score'];
     return DailyMonthlyDayScoreDto(
       date: json['date'] as String? ?? '',
-      totalScore: (json['totalScore'] as num?)?.toDouble() ?? 0,
+      totalScore: (raw is num)
+          ? raw.toDouble()
+          : double.tryParse('$raw') ?? 0,
     );
   }
 }
@@ -27,7 +30,9 @@ class DailyMonthlyActivitiesDto {
   final List<DailyMonthlyDayScoreDto> dailyScores;
 
   factory DailyMonthlyActivitiesDto.fromJson(Map<String, dynamic> json) {
-    final raw = json['dailyScores'] as List<dynamic>? ?? [];
+    final raw = json['dailyScores'] as List<dynamic>? ??
+        json['days'] as List<dynamic>? ??
+        [];
     return DailyMonthlyActivitiesDto(
       totalMonthlyScore: (json['totalMonthlyScore'] as num?)?.toDouble() ?? 0,
       totalPeriodScore: (json['totalPeriodScore'] as num?)?.toDouble() ?? 0,

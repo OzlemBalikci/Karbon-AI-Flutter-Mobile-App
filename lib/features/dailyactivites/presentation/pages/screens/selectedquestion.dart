@@ -4,7 +4,9 @@ import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_selector.dart';
+import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
+import 'package:karbon/features/dailyactivites/presentation/widgets/daily_activities_points_success_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 import 'package:karbon/widgets/app_button.dart';
@@ -29,39 +31,51 @@ class SelectedQuestionPage extends StatefulWidget {
 class _SelectedQuestionPageState extends State<SelectedQuestionPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                AppHeaderTitle(
-                  title: context.text.selected_question_header_text,
+    return BlocListener<DailyActivitiesBloc, DailyActivitiesState>(
+        listenWhen: (prev, curr) =>
+            !prev.showSuccessDialog && curr.showSuccessDialog,
+        listener: (context, state) {
+          final score = state.lastPostAnswerResult?.totalCarbonScore ?? 0.0;
+          showDailyActivitiesPointsSuccessDialog(
+            context,
+            totalCarbonScore: score,
+            bloc: context.read<DailyActivitiesBloc>(),
+            onNavigateToDailyList: () => context.router.maybePop(),
+          );
+        },
+        child: Scaffold(
+          body: Stack(
+            children: [
+              SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    AppHeaderTitle(
+                      title: context.text.selected_question_header_text,
+                    ),
+                    SizedBox(height: AppThemeSpacing.s30.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: AppThemeSpacing.s25.w),
+                      child: QuestionFeature(),
+                    ),
+                  ],
                 ),
-                SizedBox(height: AppThemeSpacing.s30.h),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
-                  child: QuestionFeature(),
-                ),
-              ],
-            ),
+              ),
+              Positioned(
+                bottom: MediaQuery.of(context).padding.bottom,
+                left: 0,
+                right: 0,
+                child: BottomButton(),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).padding.top,
+                left: AppThemeSpacing.s25.w,
+                child: const BackIconButton(),
+              ),
+            ],
           ),
-          Positioned(
-            bottom: MediaQuery.of(context).padding.bottom,
-            left: 0,
-            right: 0,
-            child: BottomButton(),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
-            left: AppThemeSpacing.s25.w,
-            child: const BackIconButton(),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }

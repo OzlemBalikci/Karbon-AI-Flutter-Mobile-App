@@ -10,6 +10,7 @@ import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/widgets/infocard.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_event.dart';
+import 'package:karbon/features/carboncalculate/presentation/bloc/carbon_calculate_state.dart';
 import 'package:karbon/features/carboncalculate/domain/carbon_calculate_phase.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,6 +44,15 @@ class CarbonCalculatePage extends StatefulWidget {
 }
 
 class _CarbonCalculatePageState extends State<CarbonCalculatePage> {
+  @override
+  void initState() {
+    super.initState();
+    final bloc = context.read<CarbonCalculateBloc>();
+    if (bloc.state.status == CarbonCalculateStatus.initial) {
+      bloc.add(const CarbonCalculateEvent.loadRequested());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

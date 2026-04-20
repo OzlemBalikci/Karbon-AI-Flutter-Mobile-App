@@ -14,9 +14,10 @@ import 'package:karbon/features/dailyactivites/presentation/pages/screens/select
 import 'package:karbon/features/profile/presentation/profile.dart';
 import 'package:karbon/router/home_shell.dart';
 import 'package:karbon/router/home_tab_shell.dart';
-import 'package:karbon/router/daily_activities_shell.dart';
+import 'package:karbon/router/dailyactivities_tab_shell.dart';
 import 'package:karbon/features/auth/presentation/pages/splash/splash.dart';
-import 'package:karbon/router/calendar_shell.dart';
+import 'package:karbon/router/calendar_tab_shell.dart';
+import 'package:karbon/router/profile_tab_shell.dart';
 import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/calendar_first_open_page.dart';
 import 'package:karbon/features/calendar/presentation/pages/daydetail/daydetail.dart';
 import 'package:karbon/features/calendar/presentation/pages/seeAll/see_all_page.dart';
@@ -101,7 +102,17 @@ class AppRouter extends RootStackRouter {
                     page: CalendarSelectedQuestionDetailRoute.page,
                   ),
                 ]),
-            AutoRoute(path: 'profile', page: ProfileRoute.page),
+            AutoRoute(
+              path: 'profile',
+              page: ProfileTabShellRoute.page,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: ProfileRoute.page,
+                  initial: true,
+                ),
+              ],
+            ),
           ],
         ),
       ];

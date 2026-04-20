@@ -162,3 +162,16 @@ class DailyActivitiesBranchSelector
           builder: builder,
         );
 }
+
+/// GET `/api/v1/daily-activities/previous-answers` sonucu — en son cevaplanan gün.
+class DailyActivitiesPreviousAnswersSelector
+    extends DailyActivitiesSelector<List<DailyPreviousAnswersByDateEntity>> {
+  DailyActivitiesPreviousAnswersSelector({
+    super.key,
+    required Widget Function(List<DailyPreviousAnswersByDateEntity> data)
+        builder,
+  }) : super(
+          selector: (state) => state.previousAnswers,
+          builder: builder,
+        );
+}

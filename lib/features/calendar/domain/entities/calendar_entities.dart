@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 
+/// [project_docs/calendar.md] ile uyumlu domain modelleri.
+
 /// GET `/api/v1/daily-activities?date=` — gün içi aktivite satırı.
 class DailyDayActivityEntity extends Equatable {
   const DailyDayActivityEntity({

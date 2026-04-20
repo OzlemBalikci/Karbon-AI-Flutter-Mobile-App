@@ -52,7 +52,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(DailyActivitiesLoadRequested value)? loadRequested,
-    TResult Function(DailyActivitiesLoadFailed value)? loadFailed,
     TResult Function(DailyActivitiesQuestionSelected value)? questionSelected,
     TResult Function(DailyActivitiesOptionSelected value)? optionSelected,
     TResult Function(DailyActivitiesPostAnswerRequested value)?
@@ -65,8 +64,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     switch (_that) {
       case DailyActivitiesLoadRequested() when loadRequested != null:
         return loadRequested(_that);
-      case DailyActivitiesLoadFailed() when loadFailed != null:
-        return loadFailed(_that);
       case DailyActivitiesQuestionSelected() when questionSelected != null:
         return questionSelected(_that);
       case DailyActivitiesOptionSelected() when optionSelected != null:
@@ -99,7 +96,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(DailyActivitiesLoadRequested value) loadRequested,
-    required TResult Function(DailyActivitiesLoadFailed value) loadFailed,
     required TResult Function(DailyActivitiesQuestionSelected value)
         questionSelected,
     required TResult Function(DailyActivitiesOptionSelected value)
@@ -114,8 +110,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     switch (_that) {
       case DailyActivitiesLoadRequested():
         return loadRequested(_that);
-      case DailyActivitiesLoadFailed():
-        return loadFailed(_that);
       case DailyActivitiesQuestionSelected():
         return questionSelected(_that);
       case DailyActivitiesOptionSelected():
@@ -144,7 +138,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(DailyActivitiesLoadRequested value)? loadRequested,
-    TResult? Function(DailyActivitiesLoadFailed value)? loadFailed,
     TResult? Function(DailyActivitiesQuestionSelected value)? questionSelected,
     TResult? Function(DailyActivitiesOptionSelected value)? optionSelected,
     TResult? Function(DailyActivitiesPostAnswerRequested value)?
@@ -156,8 +149,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     switch (_that) {
       case DailyActivitiesLoadRequested() when loadRequested != null:
         return loadRequested(_that);
-      case DailyActivitiesLoadFailed() when loadFailed != null:
-        return loadFailed(_that);
       case DailyActivitiesQuestionSelected() when questionSelected != null:
         return questionSelected(_that);
       case DailyActivitiesOptionSelected() when optionSelected != null:
@@ -189,7 +180,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadRequested,
-    TResult Function(String error)? loadFailed,
     TResult Function(DailyQuestionEntity question)? questionSelected,
     TResult Function(String optionId)? optionSelected,
     TResult Function()? postAnswerRequested,
@@ -201,8 +191,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     switch (_that) {
       case DailyActivitiesLoadRequested() when loadRequested != null:
         return loadRequested();
-      case DailyActivitiesLoadFailed() when loadFailed != null:
-        return loadFailed(_that.error);
       case DailyActivitiesQuestionSelected() when questionSelected != null:
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected() when optionSelected != null:
@@ -235,7 +223,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loadRequested,
-    required TResult Function(String error) loadFailed,
     required TResult Function(DailyQuestionEntity question) questionSelected,
     required TResult Function(String optionId) optionSelected,
     required TResult Function() postAnswerRequested,
@@ -246,8 +233,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     switch (_that) {
       case DailyActivitiesLoadRequested():
         return loadRequested();
-      case DailyActivitiesLoadFailed():
-        return loadFailed(_that.error);
       case DailyActivitiesQuestionSelected():
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected():
@@ -276,7 +261,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadRequested,
-    TResult? Function(String error)? loadFailed,
     TResult? Function(DailyQuestionEntity question)? questionSelected,
     TResult? Function(String optionId)? optionSelected,
     TResult? Function()? postAnswerRequested,
@@ -287,8 +271,6 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     switch (_that) {
       case DailyActivitiesLoadRequested() when loadRequested != null:
         return loadRequested();
-      case DailyActivitiesLoadFailed() when loadFailed != null:
-        return loadFailed(_that.error);
       case DailyActivitiesQuestionSelected() when questionSelected != null:
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected() when optionSelected != null:
@@ -324,71 +306,6 @@ class DailyActivitiesLoadRequested implements DailyActivitiesEvent {
   @override
   String toString() {
     return 'DailyActivitiesEvent.loadRequested()';
-  }
-}
-
-/// @nodoc
-
-class DailyActivitiesLoadFailed implements DailyActivitiesEvent {
-  const DailyActivitiesLoadFailed(this.error);
-
-  final String error;
-
-  /// Create a copy of DailyActivitiesEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  $DailyActivitiesLoadFailedCopyWith<DailyActivitiesLoadFailed> get copyWith =>
-      _$DailyActivitiesLoadFailedCopyWithImpl<DailyActivitiesLoadFailed>(
-          this, _$identity);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is DailyActivitiesLoadFailed &&
-            (identical(other.error, error) || other.error == error));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, error);
-
-  @override
-  String toString() {
-    return 'DailyActivitiesEvent.loadFailed(error: $error)';
-  }
-}
-
-/// @nodoc
-abstract mixin class $DailyActivitiesLoadFailedCopyWith<$Res>
-    implements $DailyActivitiesEventCopyWith<$Res> {
-  factory $DailyActivitiesLoadFailedCopyWith(DailyActivitiesLoadFailed value,
-          $Res Function(DailyActivitiesLoadFailed) _then) =
-      _$DailyActivitiesLoadFailedCopyWithImpl;
-  @useResult
-  $Res call({String error});
-}
-
-/// @nodoc
-class _$DailyActivitiesLoadFailedCopyWithImpl<$Res>
-    implements $DailyActivitiesLoadFailedCopyWith<$Res> {
-  _$DailyActivitiesLoadFailedCopyWithImpl(this._self, this._then);
-
-  final DailyActivitiesLoadFailed _self;
-  final $Res Function(DailyActivitiesLoadFailed) _then;
-
-  /// Create a copy of DailyActivitiesEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? error = null,
-  }) {
-    return _then(DailyActivitiesLoadFailed(
-      null == error
-          ? _self.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
   }
 }
 

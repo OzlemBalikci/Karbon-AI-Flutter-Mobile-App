@@ -12,54 +12,50 @@ class HomeSelector<T> extends BlocSelector<HomeBloc, HomeState, T> {
   }) : super(builder: (_, value) => builder(value));
 }
 
-class HomeViewTypeSelector extends HomeSelector<HomeViewType> {
-  HomeViewTypeSelector({
+typedef HomeShellSnapshot = ({
+  HomeStatus status,
+  String? error,
+  bool hasCompletedPoll,
+  bool showLoadingSpinner,
+});
+
+HomeShellSnapshot selectHomeShellSnapshot(HomeState s) {
+  final hasCached = s.globalTarget != null ||
+      s.monthlyTarget != null ||
+      s.topLeaders.isNotEmpty;
+  return (
+    status: s.status,
+    error: s.error,
+    hasCompletedPoll: s.hasCompletedPoll,
+    showLoadingSpinner: s.status == HomeStatus.loading && !hasCached,
+  );
+}
+
+class HomeShellSelector extends HomeSelector<HomeShellSnapshot> {
+  HomeShellSelector({
     super.key,
-    required Widget Function(HomeViewType) builder,
+    required Widget Function(HomeShellSnapshot snap) builder,
   }) : super(
-          selector: (state) => state.viewType,
+          selector: selectHomeShellSnapshot,
           builder: builder,
         );
 }
 
 class HomeStatusSelector extends HomeSelector<HomeStatus> {
-  HomeStatusSelector({
-    super.key,
-    required Widget Function() onLoading,
-    required Widget Function(String error) onError,
-    required Widget Function() onSuccess,
-    Widget Function()? onInitial,
-  }) : super(
+  HomeStatusSelector(Widget Function(HomeStatus) builder, {super.key})
+      : super(
           selector: (state) => state.status,
-          builder: (status) => switch (status) {
-            HomeStatus.initial => onInitial?.call() ?? const SizedBox.shrink(),
-            HomeStatus.loading => onLoading(),
-            HomeStatus.error => BlocSelector<HomeBloc, HomeState, String?>(
-                selector: (state) => state.error,
-                builder: (_, error) => onError(error ?? 'Bir hata oluştu'),
-              ),
-            HomeStatus.success => onSuccess(),
-          },
+          builder: builder,
         );
 }
 
-/// `topLeaders` alanını `LeaderCardRow` / lider kartlarıyla uyumlu tipe map eder.
 class HomeTopLeadersSelector
     extends HomeSelector<List<LeaderboardLeaderEntity>> {
   HomeTopLeadersSelector({
     super.key,
     required Widget Function(List<LeaderboardLeaderEntity> leaders) builder,
   }) : super(
-          selector: (state) => state.topLeaders
-              .map(
-                (e) => LeaderboardLeaderEntity(
-                  rank: e.rank,
-                  fullName: e.fullName,
-                  treeCount: e.treeCount,
-                  isCurrentUser: e.isCurrentUser,
-                ),
-              )
-              .toList(),
+          selector: (state) => state.topLeaders,
           builder: builder,
         );
 }

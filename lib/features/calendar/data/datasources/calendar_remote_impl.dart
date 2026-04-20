@@ -25,12 +25,24 @@ class CalendarRemoteImpl implements CalendarRemote {
       await Future<void>.delayed(const Duration(milliseconds: 150));
       return _mockDetailForRequestedDate(date);
     }
-    final res = await _dio.get<dynamic>(
-      _v1,
-      queryParameters: <String, dynamic>{'date': date},
-    );
-    final data = unwrapDataMap(res.data);
-    return CalendarMapper.toDayDetailEntity(DailyDayDetailDto.fromJson(data));
+    try {
+      final res = await _dio.get<dynamic>(
+        _v1,
+        queryParameters: <String, dynamic>{'date': date},
+      );
+      final data = unwrapDataMap(res.data);
+      return CalendarMapper.toDayDetailEntity(DailyDayDetailDto.fromJson(data));
+    } on DioException catch (e) {
+      /// [calendar.md] §5 — o gün aktivite yoksa `404 ActivityNotFound`.
+      if (e.response?.statusCode == 404) {
+        return DailyDayDetailEntity(
+          date: _isoDateFromQuery(date),
+          totalScore: 0,
+          activities: const [],
+        );
+      }
+      rethrow;
+    }
   }
 
   @override
@@ -66,17 +78,36 @@ class CalendarRemoteImpl implements CalendarRemote {
       await Future<void>.delayed(const Duration(milliseconds: 150));
       return _mockMonthlyEntity;
     }
-    final res = await _dio.get<dynamic>(
-      '$_v1/monthly',
-      queryParameters: <String, dynamic>{
-        'year': year,
-        'month': month,
-        'period': period,
-      },
-    );
-    final data = unwrapDataMap(res.data);
-    return CalendarMapper.toMonthlyActivitiesEntity(
-        DailyMonthlyActivitiesDto.fromJson(data));
+    try {
+      final res = await _dio.get<dynamic>(
+        '$_v1/monthly',
+        queryParameters: <String, dynamic>{
+          'year': year,
+          'month': month,
+          'period': period,
+        },
+      );
+      final data = unwrapDataMap(res.data);
+      return CalendarMapper.toMonthlyActivitiesEntity(
+          DailyMonthlyActivitiesDto.fromJson(data));
+    } on DioException catch (e) {
+      /// [calendar.md] §7 — periyotta kayıt yoksa `404 NoActivityFoundForPeriod`.
+      if (e.response?.statusCode == 404) {
+        return const DailyMonthlyActivitiesEntity(
+          totalMonthlyScore: 0,
+          totalPeriodScore: 0,
+          dailyScores: [],
+        );
+      }
+      rethrow;
+    }
+  }
+
+  static String _isoDateFromQuery(String date) {
+    if (date.length >= 10) {
+      return '${date.substring(0, 10)}T00:00:00.000Z';
+    }
+    return date;
   }
 
   // --- Tek mock kaynağı: günlük detaylar; takvim + aylık + getDetails buradan türetilir. ---

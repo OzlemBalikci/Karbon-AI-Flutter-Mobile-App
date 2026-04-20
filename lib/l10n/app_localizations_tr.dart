@@ -119,6 +119,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get home_page_header_text => 'Karbon Salım';
 
   @override
+  String get home_stats_succeed_text => 'Hedefinize Ulaştınız!';
+
+  @override
   String get home_page_stats_card_1_title => 'Ulaşılması Hedeflenen Ağaç';
 
   @override
@@ -192,6 +195,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get useful_infos_header_text => 'Faydalı Bilgiler';
 
   @override
+  String get useful_infos_load_error_title => 'Faydalı bilgiler yüklenemedi.';
+
+  @override
+  String get useful_infos_retry_button => 'Tekrar Dene';
+
+  @override
   String get leaderofmonth_header_text => 'Bu Hedefin Liderleri';
 
   @override
@@ -212,6 +221,19 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get daily_activities_history_section_header_text =>
       'Önceki Cevaplarınız';
+
+  @override
+  String daily_activities_success_points_title(String points) {
+    return 'Tebrikler $points Puan Kazandınız.';
+  }
+
+  @override
+  String get daily_activities_success_points_body =>
+      'En kısa sürede size geri dönüş yaparak sorularınızı yanıtlamaktan mutluluk duyacağız.';
+
+  @override
+  String get daily_activities_success_back_button =>
+      'Günlük Aktivitelerime Dön';
 
   @override
   String get selected_question_header_text => 'Seçili Soru Detayı';

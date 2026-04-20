@@ -3,25 +3,32 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/domain/usecases/checksession_usecase.dart';
 import 'package:karbon/features/auth/domain/usecases/clear_local_session_usecase.dart';
+import 'package:karbon/features/auth/domain/usecases/delete_account_usecase.dart';
 import 'package:karbon/features/auth/domain/usecases/logout_usecase.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_event.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_state.dart';
 
 @lazySingleton
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc(this._checkSession, this._logout, this._clearLocalSession)
-      : super(const AuthState.sessionChecking()) {
+  AuthBloc(
+    this._checkSession,
+    this._logout,
+    this._clearLocalSession,
+    this._deleteAccount,
+  ) : super(const AuthState.sessionChecking()) {
     on<AuthAppStarted>(_onAppStarted);
     on<AuthSessionCheckRequested>(_onSessionCheckRequested);
     on<AuthLoggedIn>(_onLoggedIn);
     on<AuthRegistered>(_onRegistered);
     on<AuthSignOutRequested>(_onSignOutRequested);
+    on<AuthDeleteAccountRequested>(_onDeleteAccountRequested);
     on<AuthTokenExpired>(_onTokenExpired);
   }
 
   final CheckSessionUseCase _checkSession;
   final LogoutUseCase _logout;
   final ClearLocalSessionUseCase _clearLocalSession;
+  final DeleteAccountUseCase _deleteAccount;
 
   Future<void> _onAppStarted(
     AuthAppStarted event,
@@ -64,6 +71,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     final logoutResult = await _logout();
     emit(
       logoutResult.fold(
+        _failureFromException,
+        (_) => const AuthState.unauthenticated(),
+      ),
+    );
+  }
+
+  Future<void> _onDeleteAccountRequested(
+    AuthDeleteAccountRequested event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthState.sessionChecking());
+    final result = await _deleteAccount();
+    emit(
+      result.fold(
         _failureFromException,
         (_) => const AuthState.unauthenticated(),
       ),

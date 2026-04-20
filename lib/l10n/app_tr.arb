@@ -34,6 +34,7 @@
     "reset_password_info_text": "Lütfen telefon numaranıza SMS olarak gelen \n5 haneli kodu giriniz.",
     "reset_password_button_title": "Şifremi Değiştir",
     "home_page_header_text": "Karbon Salım",
+    "home_stats_succeed_text": "Hedefinize Ulaştınız!",
     "home_page_stats_card_1_title": "Ulaşılması Hedeflenen Ağaç",
     "home_page_stats_card_2_title": "Bir Ayda Hedeflenen Ağaç",
     "home_page_leader_of_month_header_text": "Bu Ayın Yaşam Liderleri",
@@ -57,6 +58,8 @@
     "carbon_score_text_title": "Tebrikler!",
     "carbon_score_text_description": "Gezegen için uyguladığın bireysel adımlarınla sürdürülebilir bir çevre ve gelecek kuşaklar için fark yaratıyorsun. Karbon ayak izi farkındalığı ile ilgili uygulamalarını etrafınla paylaşabilir ve bu alışkanlıkların yayılmasına katkıda bulunabilirsin",
     "useful_infos_header_text": "Faydalı Bilgiler",
+    "useful_infos_load_error_title": "Faydalı bilgiler yüklenemedi.",
+    "useful_infos_retry_button": "Tekrar Dene",
     "leaderofmonth_header_text": "Bu Hedefin Liderleri",
     "leaderofmonth_bottom_footer_text": "Kazananları tebrik eder, sıralamaya giren her arkadaşımızın çabası için teşekkür ederiz. Unutmayın bu sırada yer alacak olan yarın sizsiniz!",
     "daily_activities_today_section_header_text": "Günlük Aktivitelerim",
@@ -64,6 +67,16 @@
     "daily_activities_today_section_header_text": "Günlük Aktivitelerim",
     "daily_activities_empty_hint": "Bugün için soru bulunmuyor.",
     "daily_activities_history_section_header_text" : "Önceki Cevaplarınız",
+    "daily_activities_success_points_title": "Tebrikler {points} Puan Kazandınız.",
+    "@daily_activities_success_points_title": {
+        "placeholders": {
+            "points": {
+                "type": "String"
+            }
+        }
+    },
+    "daily_activities_success_points_body": "En kısa sürede size geri dönüş yaparak sorularınızı yanıtlamaktan mutluluk duyacağız.",
+    "daily_activities_success_back_button": "Günlük Aktivitelerime Dön",
     "selected_question_header_text": "Seçili Soru Detayı",
     "selected_question_bottom_button_title": "Puanı Al",
     "profile_header_text" : "Profil",

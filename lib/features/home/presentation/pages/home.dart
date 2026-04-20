@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
 import 'package:karbon/features/home/presentation/bloc/home_bloc.dart';
 import 'package:karbon/features/home/presentation/bloc/home_state.dart';
 import 'package:karbon/features/home/presentation/bloc/home_selector.dart';
@@ -16,7 +15,7 @@ import 'package:karbon/widgets/app_header_title.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:auto_route/auto_route.dart';
-
+import 'package:intl/intl.dart';
 part 'widgets/home_initial_bottom_button.dart';
 part 'widgets/home_initial_text.dart';
 part 'widgets/stats_cards.dart';
@@ -49,21 +48,14 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
-                child: BlocBuilder<HomeBloc, HomeState>(
-                  buildWhen: (prev, curr) =>
-                      prev.status != curr.status ||
-                      prev.viewType != curr.viewType ||
-                      prev.globalTarget != curr.globalTarget ||
-                      prev.monthlyTarget != curr.monthlyTarget ||
-                      prev.topLeaders != curr.topLeaders ||
-                      prev.error != curr.error,
-                  builder: (context, state) {
-                    if (state.status == HomeStatus.error) {
+                child: HomeShellSelector(
+                  builder: (snap) {
+                    if (snap.status == HomeStatus.failure) {
                       return Center(
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 24.w),
                           child: Text(
-                            state.error ?? 'Bir hata oluştu',
+                            snap.error ?? 'Bir hata oluştu',
                             textAlign: TextAlign.center,
                             style: context.typographiesSp.bodyMedium
                                 .withColor(context.colors.text),
@@ -71,20 +63,14 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     }
-                    if (state.status == HomeStatus.loading) {
-                      final hasCachedDashboard = state.globalTarget != null ||
-                          state.monthlyTarget != null ||
-                          state.topLeaders.isNotEmpty;
-                      if (!hasCachedDashboard) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
+                    if (snap.showLoadingSpinner) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                     }
-                    return switch (state.viewType) {
-                      HomeViewType.initial => HomeInitialView(),
-                      HomeViewType.main => HomeMainView(),
-                    };
+                    return snap.hasCompletedPoll
+                        ? const HomeMainView()
+                        : const HomeInitialView();
                   },
                 ),
               ),
