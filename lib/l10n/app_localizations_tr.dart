@@ -223,13 +223,13 @@ class AppLocalizationsTr extends AppLocalizations {
       'Önceki Cevaplarınız';
 
   @override
-  String daily_activities_success_points_title(String points) {
-    return 'Tebrikler $points Puan Kazandınız.';
-  }
+  String get daily_activities_success_total_carbon_body =>
+      'En kısa sürede size geri dönüş yaparak sorularınızı yanıtlamaktan mutluluk duyacağız.';
 
   @override
-  String get daily_activities_success_points_body =>
-      'En kısa sürede size geri dönüş yaparak sorularınızı yanıtlamaktan mutluluk duyacağız.';
+  String daily_activities_success_total_carbon_label(String score) {
+    return 'Tebrikler $score Puan Kazandınız.';
+  }
 
   @override
   String get daily_activities_success_back_button =>

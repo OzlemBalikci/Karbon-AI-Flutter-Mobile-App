@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
-part 'dailyactivites_event.freezed.dart';
+part 'dailyactivities_event.freezed.dart';
 
 @freezed
 sealed class DailyActivitiesEvent with _$DailyActivitiesEvent {
@@ -17,6 +17,10 @@ sealed class DailyActivitiesEvent with _$DailyActivitiesEvent {
   /// Dropdown / seçenek listesinden tek seçim (API tek optionId bekliyor)
   const factory DailyActivitiesEvent.optionSelected(String optionId) =
       DailyActivitiesOptionSelected;
+
+  /// Cevaplanmış bir adıma dönüp cevabı değiştir (bu ve sonraki adımlar silinir)
+  const factory DailyActivitiesEvent.branchStepReopened(int stepIndex) =
+      DailyActivitiesBranchStepReopened;
 
   /// "Puanı Al" — seçenek seçiliyse cevabı gönder
   const factory DailyActivitiesEvent.postAnswerRequested() =

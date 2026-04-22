@@ -19,21 +19,12 @@ mixin _$DailyActivitiesState {
   String? get screenError;
   DailyPendingEntity? get pending;
   List<DailyCalendarItemEntity> get historyItems;
-  Map<String, DateTime> get questionSolvedAt;
   double? get totalScore;
   List<BranchStep> get branchPath;
   DailyActivitiesPostAnswerStatus get postAnswerStatus;
   String? get postAnswerError;
   DailyAnswerResultEntity? get lastPostAnswerResult;
-  Map<String, double> get questionScore;
-
-  /// Başarı modalı (Tebrikler X puan)
   bool get showSuccessDialog;
-
-  /// Oturumda bu ekranda cevaplanan soruların stub'ları (geçici).
-  List<DailyQuestionEntity> get answeredQuestionStubs;
-
-  /// GET `/api/v1/daily-activities/previous-answers` — en son cevaplanmış gün.
   List<DailyPreviousAnswersByDateEntity> get previousAnswers;
 
   /// Create a copy of DailyActivitiesState
@@ -57,8 +48,6 @@ mixin _$DailyActivitiesState {
             (identical(other.pending, pending) || other.pending == pending) &&
             const DeepCollectionEquality()
                 .equals(other.historyItems, historyItems) &&
-            const DeepCollectionEquality()
-                .equals(other.questionSolvedAt, questionSolvedAt) &&
             (identical(other.totalScore, totalScore) ||
                 other.totalScore == totalScore) &&
             const DeepCollectionEquality()
@@ -69,12 +58,8 @@ mixin _$DailyActivitiesState {
                 other.postAnswerError == postAnswerError) &&
             (identical(other.lastPostAnswerResult, lastPostAnswerResult) ||
                 other.lastPostAnswerResult == lastPostAnswerResult) &&
-            const DeepCollectionEquality()
-                .equals(other.questionScore, questionScore) &&
             (identical(other.showSuccessDialog, showSuccessDialog) ||
                 other.showSuccessDialog == showSuccessDialog) &&
-            const DeepCollectionEquality()
-                .equals(other.answeredQuestionStubs, answeredQuestionStubs) &&
             const DeepCollectionEquality()
                 .equals(other.previousAnswers, previousAnswers));
   }
@@ -87,20 +72,17 @@ mixin _$DailyActivitiesState {
       screenError,
       pending,
       const DeepCollectionEquality().hash(historyItems),
-      const DeepCollectionEquality().hash(questionSolvedAt),
       totalScore,
       const DeepCollectionEquality().hash(branchPath),
       postAnswerStatus,
       postAnswerError,
       lastPostAnswerResult,
-      const DeepCollectionEquality().hash(questionScore),
       showSuccessDialog,
-      const DeepCollectionEquality().hash(answeredQuestionStubs),
       const DeepCollectionEquality().hash(previousAnswers));
 
   @override
   String toString() {
-    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, questionSolvedAt: $questionSolvedAt, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, questionScore: $questionScore, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs, previousAnswers: $previousAnswers)';
+    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, showSuccessDialog: $showSuccessDialog, previousAnswers: $previousAnswers)';
   }
 }
 
@@ -116,15 +98,12 @@ abstract mixin class $DailyActivitiesStateCopyWith<$Res> {
       String? screenError,
       DailyPendingEntity? pending,
       List<DailyCalendarItemEntity> historyItems,
-      Map<String, DateTime> questionSolvedAt,
       double? totalScore,
       List<BranchStep> branchPath,
       DailyActivitiesPostAnswerStatus postAnswerStatus,
       String? postAnswerError,
       DailyAnswerResultEntity? lastPostAnswerResult,
-      Map<String, double> questionScore,
       bool showSuccessDialog,
-      List<DailyQuestionEntity> answeredQuestionStubs,
       List<DailyPreviousAnswersByDateEntity> previousAnswers});
 }
 
@@ -146,15 +125,12 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
     Object? screenError = freezed,
     Object? pending = freezed,
     Object? historyItems = null,
-    Object? questionSolvedAt = null,
     Object? totalScore = freezed,
     Object? branchPath = null,
     Object? postAnswerStatus = null,
     Object? postAnswerError = freezed,
     Object? lastPostAnswerResult = freezed,
-    Object? questionScore = null,
     Object? showSuccessDialog = null,
-    Object? answeredQuestionStubs = null,
     Object? previousAnswers = null,
   }) {
     return _then(_self.copyWith(
@@ -178,10 +154,6 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self.historyItems
           : historyItems // ignore: cast_nullable_to_non_nullable
               as List<DailyCalendarItemEntity>,
-      questionSolvedAt: null == questionSolvedAt
-          ? _self.questionSolvedAt
-          : questionSolvedAt // ignore: cast_nullable_to_non_nullable
-              as Map<String, DateTime>,
       totalScore: freezed == totalScore
           ? _self.totalScore
           : totalScore // ignore: cast_nullable_to_non_nullable
@@ -202,18 +174,10 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self.lastPostAnswerResult
           : lastPostAnswerResult // ignore: cast_nullable_to_non_nullable
               as DailyAnswerResultEntity?,
-      questionScore: null == questionScore
-          ? _self.questionScore
-          : questionScore // ignore: cast_nullable_to_non_nullable
-              as Map<String, double>,
       showSuccessDialog: null == showSuccessDialog
           ? _self.showSuccessDialog
           : showSuccessDialog // ignore: cast_nullable_to_non_nullable
               as bool,
-      answeredQuestionStubs: null == answeredQuestionStubs
-          ? _self.answeredQuestionStubs
-          : answeredQuestionStubs // ignore: cast_nullable_to_non_nullable
-              as List<DailyQuestionEntity>,
       previousAnswers: null == previousAnswers
           ? _self.previousAnswers
           : previousAnswers // ignore: cast_nullable_to_non_nullable
@@ -321,15 +285,12 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             String? screenError,
             DailyPendingEntity? pending,
             List<DailyCalendarItemEntity> historyItems,
-            Map<String, DateTime> questionSolvedAt,
             double? totalScore,
             List<BranchStep> branchPath,
             DailyActivitiesPostAnswerStatus postAnswerStatus,
             String? postAnswerError,
             DailyAnswerResultEntity? lastPostAnswerResult,
-            Map<String, double> questionScore,
             bool showSuccessDialog,
-            List<DailyQuestionEntity> answeredQuestionStubs,
             List<DailyPreviousAnswersByDateEntity> previousAnswers)?
         $default, {
     required TResult orElse(),
@@ -343,15 +304,12 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             _that.screenError,
             _that.pending,
             _that.historyItems,
-            _that.questionSolvedAt,
             _that.totalScore,
             _that.branchPath,
             _that.postAnswerStatus,
             _that.postAnswerError,
             _that.lastPostAnswerResult,
-            _that.questionScore,
             _that.showSuccessDialog,
-            _that.answeredQuestionStubs,
             _that.previousAnswers);
       case _:
         return orElse();
@@ -379,15 +337,12 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             String? screenError,
             DailyPendingEntity? pending,
             List<DailyCalendarItemEntity> historyItems,
-            Map<String, DateTime> questionSolvedAt,
             double? totalScore,
             List<BranchStep> branchPath,
             DailyActivitiesPostAnswerStatus postAnswerStatus,
             String? postAnswerError,
             DailyAnswerResultEntity? lastPostAnswerResult,
-            Map<String, double> questionScore,
             bool showSuccessDialog,
-            List<DailyQuestionEntity> answeredQuestionStubs,
             List<DailyPreviousAnswersByDateEntity> previousAnswers)
         $default,
   ) {
@@ -400,15 +355,12 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             _that.screenError,
             _that.pending,
             _that.historyItems,
-            _that.questionSolvedAt,
             _that.totalScore,
             _that.branchPath,
             _that.postAnswerStatus,
             _that.postAnswerError,
             _that.lastPostAnswerResult,
-            _that.questionScore,
             _that.showSuccessDialog,
-            _that.answeredQuestionStubs,
             _that.previousAnswers);
       case _:
         throw StateError('Unexpected subclass');
@@ -435,15 +387,12 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             String? screenError,
             DailyPendingEntity? pending,
             List<DailyCalendarItemEntity> historyItems,
-            Map<String, DateTime> questionSolvedAt,
             double? totalScore,
             List<BranchStep> branchPath,
             DailyActivitiesPostAnswerStatus postAnswerStatus,
             String? postAnswerError,
             DailyAnswerResultEntity? lastPostAnswerResult,
-            Map<String, double> questionScore,
             bool showSuccessDialog,
-            List<DailyQuestionEntity> answeredQuestionStubs,
             List<DailyPreviousAnswersByDateEntity> previousAnswers)?
         $default,
   ) {
@@ -456,15 +405,12 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
             _that.screenError,
             _that.pending,
             _that.historyItems,
-            _that.questionSolvedAt,
             _that.totalScore,
             _that.branchPath,
             _that.postAnswerStatus,
             _that.postAnswerError,
             _that.lastPostAnswerResult,
-            _that.questionScore,
             _that.showSuccessDialog,
-            _that.answeredQuestionStubs,
             _that.previousAnswers);
       case _:
         return null;
@@ -481,22 +427,16 @@ class _DailyActivitiesState implements DailyActivitiesState {
       this.screenError,
       this.pending,
       final List<DailyCalendarItemEntity> historyItems = const [],
-      final Map<String, DateTime> questionSolvedAt = const {},
       this.totalScore,
       final List<BranchStep> branchPath = const [],
       this.postAnswerStatus = DailyActivitiesPostAnswerStatus.idle,
       this.postAnswerError,
       this.lastPostAnswerResult,
-      final Map<String, double> questionScore = const {},
       this.showSuccessDialog = false,
-      final List<DailyQuestionEntity> answeredQuestionStubs = const [],
       final List<DailyPreviousAnswersByDateEntity> previousAnswers = const []})
       : _questions = questions,
         _historyItems = historyItems,
-        _questionSolvedAt = questionSolvedAt,
         _branchPath = branchPath,
-        _questionScore = questionScore,
-        _answeredQuestionStubs = answeredQuestionStubs,
         _previousAnswers = previousAnswers;
 
   @override
@@ -524,15 +464,6 @@ class _DailyActivitiesState implements DailyActivitiesState {
     return EqualUnmodifiableListView(_historyItems);
   }
 
-  final Map<String, DateTime> _questionSolvedAt;
-  @override
-  @JsonKey()
-  Map<String, DateTime> get questionSolvedAt {
-    if (_questionSolvedAt is EqualUnmodifiableMapView) return _questionSolvedAt;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_questionSolvedAt);
-  }
-
   @override
   final double? totalScore;
   final List<BranchStep> _branchPath;
@@ -551,37 +482,10 @@ class _DailyActivitiesState implements DailyActivitiesState {
   final String? postAnswerError;
   @override
   final DailyAnswerResultEntity? lastPostAnswerResult;
-  final Map<String, double> _questionScore;
-  @override
-  @JsonKey()
-  Map<String, double> get questionScore {
-    if (_questionScore is EqualUnmodifiableMapView) return _questionScore;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_questionScore);
-  }
-
-  /// Başarı modalı (Tebrikler X puan)
   @override
   @JsonKey()
   final bool showSuccessDialog;
-
-  /// Oturumda bu ekranda cevaplanan soruların stub'ları (geçici).
-  final List<DailyQuestionEntity> _answeredQuestionStubs;
-
-  /// Oturumda bu ekranda cevaplanan soruların stub'ları (geçici).
-  @override
-  @JsonKey()
-  List<DailyQuestionEntity> get answeredQuestionStubs {
-    if (_answeredQuestionStubs is EqualUnmodifiableListView)
-      return _answeredQuestionStubs;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_answeredQuestionStubs);
-  }
-
-  /// GET `/api/v1/daily-activities/previous-answers` — en son cevaplanmış gün.
   final List<DailyPreviousAnswersByDateEntity> _previousAnswers;
-
-  /// GET `/api/v1/daily-activities/previous-answers` — en son cevaplanmış gün.
   @override
   @JsonKey()
   List<DailyPreviousAnswersByDateEntity> get previousAnswers {
@@ -613,8 +517,6 @@ class _DailyActivitiesState implements DailyActivitiesState {
             (identical(other.pending, pending) || other.pending == pending) &&
             const DeepCollectionEquality()
                 .equals(other._historyItems, _historyItems) &&
-            const DeepCollectionEquality()
-                .equals(other._questionSolvedAt, _questionSolvedAt) &&
             (identical(other.totalScore, totalScore) ||
                 other.totalScore == totalScore) &&
             const DeepCollectionEquality()
@@ -625,12 +527,8 @@ class _DailyActivitiesState implements DailyActivitiesState {
                 other.postAnswerError == postAnswerError) &&
             (identical(other.lastPostAnswerResult, lastPostAnswerResult) ||
                 other.lastPostAnswerResult == lastPostAnswerResult) &&
-            const DeepCollectionEquality()
-                .equals(other._questionScore, _questionScore) &&
             (identical(other.showSuccessDialog, showSuccessDialog) ||
                 other.showSuccessDialog == showSuccessDialog) &&
-            const DeepCollectionEquality()
-                .equals(other._answeredQuestionStubs, _answeredQuestionStubs) &&
             const DeepCollectionEquality()
                 .equals(other._previousAnswers, _previousAnswers));
   }
@@ -643,20 +541,17 @@ class _DailyActivitiesState implements DailyActivitiesState {
       screenError,
       pending,
       const DeepCollectionEquality().hash(_historyItems),
-      const DeepCollectionEquality().hash(_questionSolvedAt),
       totalScore,
       const DeepCollectionEquality().hash(_branchPath),
       postAnswerStatus,
       postAnswerError,
       lastPostAnswerResult,
-      const DeepCollectionEquality().hash(_questionScore),
       showSuccessDialog,
-      const DeepCollectionEquality().hash(_answeredQuestionStubs),
       const DeepCollectionEquality().hash(_previousAnswers));
 
   @override
   String toString() {
-    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, questionSolvedAt: $questionSolvedAt, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, questionScore: $questionScore, showSuccessDialog: $showSuccessDialog, answeredQuestionStubs: $answeredQuestionStubs, previousAnswers: $previousAnswers)';
+    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, showSuccessDialog: $showSuccessDialog, previousAnswers: $previousAnswers)';
   }
 }
 
@@ -674,15 +569,12 @@ abstract mixin class _$DailyActivitiesStateCopyWith<$Res>
       String? screenError,
       DailyPendingEntity? pending,
       List<DailyCalendarItemEntity> historyItems,
-      Map<String, DateTime> questionSolvedAt,
       double? totalScore,
       List<BranchStep> branchPath,
       DailyActivitiesPostAnswerStatus postAnswerStatus,
       String? postAnswerError,
       DailyAnswerResultEntity? lastPostAnswerResult,
-      Map<String, double> questionScore,
       bool showSuccessDialog,
-      List<DailyQuestionEntity> answeredQuestionStubs,
       List<DailyPreviousAnswersByDateEntity> previousAnswers});
 }
 
@@ -704,15 +596,12 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
     Object? screenError = freezed,
     Object? pending = freezed,
     Object? historyItems = null,
-    Object? questionSolvedAt = null,
     Object? totalScore = freezed,
     Object? branchPath = null,
     Object? postAnswerStatus = null,
     Object? postAnswerError = freezed,
     Object? lastPostAnswerResult = freezed,
-    Object? questionScore = null,
     Object? showSuccessDialog = null,
-    Object? answeredQuestionStubs = null,
     Object? previousAnswers = null,
   }) {
     return _then(_DailyActivitiesState(
@@ -736,10 +625,6 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self._historyItems
           : historyItems // ignore: cast_nullable_to_non_nullable
               as List<DailyCalendarItemEntity>,
-      questionSolvedAt: null == questionSolvedAt
-          ? _self._questionSolvedAt
-          : questionSolvedAt // ignore: cast_nullable_to_non_nullable
-              as Map<String, DateTime>,
       totalScore: freezed == totalScore
           ? _self.totalScore
           : totalScore // ignore: cast_nullable_to_non_nullable
@@ -760,18 +645,10 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self.lastPostAnswerResult
           : lastPostAnswerResult // ignore: cast_nullable_to_non_nullable
               as DailyAnswerResultEntity?,
-      questionScore: null == questionScore
-          ? _self._questionScore
-          : questionScore // ignore: cast_nullable_to_non_nullable
-              as Map<String, double>,
       showSuccessDialog: null == showSuccessDialog
           ? _self.showSuccessDialog
           : showSuccessDialog // ignore: cast_nullable_to_non_nullable
               as bool,
-      answeredQuestionStubs: null == answeredQuestionStubs
-          ? _self._answeredQuestionStubs
-          : answeredQuestionStubs // ignore: cast_nullable_to_non_nullable
-              as List<DailyQuestionEntity>,
       previousAnswers: null == previousAnswers
           ? _self._previousAnswers
           : previousAnswers // ignore: cast_nullable_to_non_nullable

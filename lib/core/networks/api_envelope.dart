@@ -1,35 +1,26 @@
-import 'package:karbon/core/errors/exceptions.dart';
+import 'package:karbon/core/errors/api_error.dart';
 
-/// API zarfı: `isSuccessful` (daily-activities vb.) veya `isSuccess` (diğer uçlar).
-bool isApiEnvelopeSuccessful(Map<String, dynamic> envelope) {
-  if (envelope['isSuccessful'] == true) return true;
-  if (envelope['isSuccess'] == true) return true;
-  return false;
-}
+class ApiEnvelope {
+  const ApiEnvelope({
+    required this.isSuccessful,
+    required this.statusCode,
+    this.data,
+    this.errors = const [],
+  });
 
-void assertApiSuccess(Map<String, dynamic> envelope) {
-  if (isApiEnvelopeSuccessful(envelope)) return;
-  final errors = envelope['errors'];
-  final msg = (errors is List && errors.isNotEmpty)
-      ? errors.first.toString()
-      : 'İstek başarısız oldu.';
-  throw BadRequestException(msg, statusCode: 400);
-}
+  final bool isSuccessful;
+  final int statusCode;
+  final dynamic data;
+  final List<ApiError> errors;
 
-/// Başarılı yanıtta `data` alanını [Map] olarak döner; `data` yoksa boş map.
-Map<String, dynamic> unwrapDataMap(dynamic response) {
-  final envelope = response as Map<String, dynamic>;
-  assertApiSuccess(envelope);
-  final data = envelope['data'];
-  if (data == null) return <String, dynamic>{};
-  return Map<String, dynamic>.from(data as Map);
-}
-
-/// Başarılı yanıtta `data` alanını [List] olarak döner; liste değilse boş liste.
-List<dynamic> unwrapDataList(dynamic response) {
-  final envelope = response as Map<String, dynamic>;
-  assertApiSuccess(envelope);
-  final data = envelope['data'];
-  if (data is! List) return <dynamic>[];
-  return data;
+  factory ApiEnvelope.fromJson(Map<String, dynamic> json) => ApiEnvelope(
+        isSuccessful: json['isSuccessful'] as bool? ?? false,
+        statusCode: (json['statusCode'] as num?)?.toInt() ?? 0,
+        data: json['data'],
+        errors: (json['errors'] as List?)
+                ?.whereType<Map<String, dynamic>>()
+                .map(ApiError.fromJson)
+                .toList() ??
+            [],
+      );
 }

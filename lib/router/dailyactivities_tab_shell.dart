@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/di/di.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart';
-import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
+import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_event.dart';
 
 @RoutePage()
 class DailyActivitiesShellPage extends StatelessWidget {

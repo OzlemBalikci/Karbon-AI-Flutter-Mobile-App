@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:karbon/core/errors/app_exception.dart';
 import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 import 'package:karbon/features/carboncalculate/domain/repositories/carboncalculate_repository.dart';
 
@@ -8,7 +9,7 @@ class GetPollResultsUseCase {
   GetPollResultsUseCase(this._repository);
   final CarbonCalculateRepository _repository;
 
-  Future<Either<Exception, PollResultEntity>> call({
+  Future<Either<AppException, PollResultEntity>> call({
     required String pollSetId,
     required int month,
     required int year,

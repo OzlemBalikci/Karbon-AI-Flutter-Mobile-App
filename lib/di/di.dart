@@ -8,7 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/core/networks/api_config.dart';
-import 'package:karbon/core/networks/dio_interceptor.dart';
+import 'package:karbon/core/networks/app_interceptor.dart';
 import 'package:karbon/core/networks/token_refresh_interceptor.dart';
 import 'package:karbon/di/di.config.dart';
 import 'package:karbon/features/auth/data/datasources/auth_local.dart';

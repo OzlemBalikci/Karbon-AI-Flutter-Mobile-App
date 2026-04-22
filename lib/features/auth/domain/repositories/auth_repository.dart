@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:karbon/core/errors/app_exception.dart';
 import 'package:karbon/features/auth/domain/entities/app_user.dart';
 
 abstract class AuthRepository {
@@ -7,14 +8,14 @@ abstract class AuthRepository {
 
   /// **Önkoşul:** [checkSession] true olmalı. GET `/users/me/profile` ile kullanıcıyü yükler;
   /// 401 durumunda [TokenRefreshInterceptor] devreye girer. Oturum kontrolü için [CheckSessionUseCase] kullanın.
-  Future<Either<Exception, AppUser>> loadCurrentUser();
+  Future<Either<AppException, AppUser>> loadCurrentUser();
 
-  Future<Either<Exception, AppUser>> login({
+  Future<Either<AppException, AppUser>> login({
     required String emailOrIdentityNumber,
     required String password,
   });
 
-  Future<Either<Exception, AppUser>> register({
+  Future<Either<AppException, AppUser>> register({
     required String email,
     required String identityNumber,
     required String firstName,
@@ -27,12 +28,12 @@ abstract class AuthRepository {
   });
 
   /// SMS kodu gönderir. Başarıysa Unit döner.
-  Future<Either<Exception, Unit>> forgotPassword({
+  Future<Either<AppException, Unit>> forgotPassword({
     required String phoneNumber,
   });
 
   /// SMS koduyla yeni şifre belirler. Başarıysa Unit döner.
-  Future<Either<Exception, Unit>> resetPassword({
+  Future<Either<AppException, Unit>> resetPassword({
     required String phoneNumber,
     required String resetCode,
     required String newPassword,
@@ -46,5 +47,5 @@ abstract class AuthRepository {
   Future<void> clearLocalSession();
 
   /// DELETE `/api/v1/users/me` — başarıda yerel oturum da temizlenir.
-  Future<Either<Exception, void>> deleteAccount();
+  Future<Either<AppException, void>> deleteAccount();
 }

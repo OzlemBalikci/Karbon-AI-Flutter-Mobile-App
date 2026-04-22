@@ -21,8 +21,7 @@ class QuestionFeature extends StatelessWidget {
               final isLast = index == ui.steps.length - 1;
 
               if (!isLast) {
-                // Cevaplanmış adım → salt okunur özet
-                return _AnsweredStep(step: step);
+                return _AnsweredStep(stepIndex: index, step: step);
               }
 
               // Aktif adım → etkileşimli dropdown
@@ -46,19 +45,21 @@ class QuestionFeature extends StatelessWidget {
 }
 
 class _AnsweredStep extends StatelessWidget {
-  const _AnsweredStep({required this.step});
+  const _AnsweredStep({required this.stepIndex, required this.step});
+
+  final int stepIndex;
   final BranchStep step;
 
   @override
   Widget build(BuildContext context) {
     final option = step.selectedOption!;
-    return Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
           step.question.text,
-          style: context.typographiesSp.bodySmall
-              .copyWith(color: context.colors.textOnQuestion),
+          style: context.typographiesSp.bodySmall.copyWith(
+              color: context.colors.textOnQuestion.withValues(alpha: 0.6)),
         ),
         SizedBox(height: AppThemeSpacing.s8.h),
         Container(
@@ -69,16 +70,46 @@ class _AnsweredStep extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
             border: Border.all(
-              color: context.colors.primary.withValues(alpha: 0.5),
+              color: context.colors.textOnQuestion.withValues(alpha: 0.8),
             ),
           ),
-          child: Text(
-            option.text,
-            style: context.typographiesSp.bodySmall
-                .copyWith(color: context.colors.primary),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  option.text,
+                  style: context.typographiesSp.bodySmall
+                      .copyWith(color: context.colors.textOnQuestion),
+                ),
+              ),
+              Icon(
+                Icons.edit_outlined,
+                size: AppThemeSpacing.s16.w,
+                color: context.colors.textOnQuestion.withValues(alpha: 0.8),
+              ),
+            ],
           ),
         ),
       ],
+    );
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
+        onTap: () {
+          final bloc = context.read<DailyActivitiesBloc>();
+          if (bloc.state.postAnswerStatus ==
+              DailyActivitiesPostAnswerStatus.submitting) {
+            return;
+          }
+          bloc.add(DailyActivitiesEvent.branchStepReopened(stepIndex));
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: AppThemeSpacing.s4.h),
+          child: content,
+        ),
+      ),
     );
   }
 }

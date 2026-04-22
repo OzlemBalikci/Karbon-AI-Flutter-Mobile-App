@@ -124,11 +124,11 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     String? gridErr;
 
     calendarResult.fold(
-      (e) => gridErr = e.toString(),
+      (e) => gridErr = e.message,
       (c) => cal = c,
     );
     monthlyResult.fold(
-      (e) => gridErr ??= e.toString(),
+      (e) => gridErr ??= e.message,
       (m) => mon = m,
     );
 
@@ -162,7 +162,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
         state.copyWith(
           dayDetailStatus: CalendarDayDetailStatus.failure,
           dayDetail: null,
-          dayDetailError: e.toString(),
+          dayDetailError: e.message,
         ),
       ),
       (d) => emit(

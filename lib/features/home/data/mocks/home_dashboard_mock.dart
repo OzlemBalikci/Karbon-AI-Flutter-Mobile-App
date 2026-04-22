@@ -2,7 +2,7 @@ import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart'
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
 /// `project_docs/home.md` — anketi tamamlamış kullanıcı örneği.
-/// Backend boşken geliştirme için [HomeRemoteMock] bu varlığı döner.
+/// Geliştirme için [HomeRemoteMock] bu varlığı döner.
 abstract final class HomeDashboardMock {
   static const HomeDashboardEntity dashboard = HomeDashboardEntity(
     hasCompletedPoll: true,

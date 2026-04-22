@@ -29,22 +29,13 @@ abstract class DailyActivitiesState with _$DailyActivitiesState {
     String? screenError,
     DailyPendingEntity? pending,
     @Default([]) List<DailyCalendarItemEntity> historyItems,
-    @Default({}) Map<String, DateTime> questionSolvedAt,
     double? totalScore,
     @Default([]) List<BranchStep> branchPath,
     @Default(DailyActivitiesPostAnswerStatus.idle)
     DailyActivitiesPostAnswerStatus postAnswerStatus,
     String? postAnswerError,
     DailyAnswerResultEntity? lastPostAnswerResult,
-    @Default({}) Map<String, double> questionScore,
-
-    /// Başarı modalı (Tebrikler X puan)
     @Default(false) bool showSuccessDialog,
-
-    /// Oturumda bu ekranda cevaplanan soruların stub'ları (geçici).
-    @Default([]) List<DailyQuestionEntity> answeredQuestionStubs,
-
-    /// GET `/api/v1/daily-activities/previous-answers` — en son cevaplanmış gün.
     @Default([]) List<DailyPreviousAnswersByDateEntity> previousAnswers,
   }) = _DailyActivitiesState;
 

@@ -67,15 +67,15 @@
     "daily_activities_today_section_header_text": "Günlük Aktivitelerim",
     "daily_activities_empty_hint": "Bugün için soru bulunmuyor.",
     "daily_activities_history_section_header_text" : "Önceki Cevaplarınız",
-    "daily_activities_success_points_title": "Tebrikler {points} Puan Kazandınız.",
-    "@daily_activities_success_points_title": {
+    "daily_activities_success_total_carbon_body": "En kısa sürede size geri dönüş yaparak sorularınızı yanıtlamaktan mutluluk duyacağız.",
+    "daily_activities_success_total_carbon_label": "Tebrikler {score} Puan Kazandınız.",
+    "@daily_activities_success_total_carbon_label": {
         "placeholders": {
-            "points": {
+            "score": {
                 "type": "String"
             }
         }
     },
-    "daily_activities_success_points_body": "En kısa sürede size geri dönüş yaparak sorularınızı yanıtlamaktan mutluluk duyacağız.",
     "daily_activities_success_back_button": "Günlük Aktivitelerime Dön",
     "selected_question_header_text": "Seçili Soru Detayı",
     "selected_question_bottom_button_title": "Puanı Al",

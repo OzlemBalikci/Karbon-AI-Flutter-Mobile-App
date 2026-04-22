@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/domain/usecases/resetpassword_usecase.dart';
 import 'package:karbon/features/auth/presentation/bloc/resetpassword/resetpassword_state.dart';
 
@@ -33,9 +32,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     await result.fold<Future<void>>(
       (exception) async => emit(state.copyWith(
         status: ResetPasswordPageStatus.failure,
-        error: exception is AppException
-            ? exception.message
-            : exception.toString(),
+        error: exception.message,
       )),
       (_) async => emit(
         state.copyWith(status: ResetPasswordPageStatus.success),

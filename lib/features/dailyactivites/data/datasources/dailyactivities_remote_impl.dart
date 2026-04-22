@@ -1,14 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/core/networks/api_config.dart';
-import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart';
+import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote_mocks.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_pending_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_previous_answer_dto.dart';
+import 'package:karbon/features/dailyactivites/data/daily_question_roots_flatten.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
 import 'package:karbon/features/dailyactivites/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
+import 'package:karbon/core/networks/response_ext.dart';
 
 @LazySingleton(as: DailyActivitiesRemote)
 class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
@@ -16,36 +18,31 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
 
   final Dio _dio;
 
-  static const _v1 = '/api/v1/daily-activities';
-
   bool get _useMocks => ApiConfig.baseUrl.isEmpty;
 
   @override
   Future<List<DailyQuestionEntity>> getTodayQuestions() async {
     if (_useMocks) {
       await Future<void>.delayed(const Duration(milliseconds: 300));
-      return _mockTodayQuestions.map((q) => q).toList();
+      return DailyActivitiesRemoteMocks.todayQuestions;
     }
-    final res = await _dio.get<dynamic>('$_v1/questions');
-    final raw = unwrapDataList(res.data);
-    return raw
-        .map((e) => DailyActivityMapper.toQuestionEntity(
-              DailyQuestionDto.fromJson(e as Map<String, dynamic>),
-            ))
-        .toList();
+    final res = await _dio.get<dynamic>('/api/v1/daily-activities/questions');
+    final raw = res.dataList();
+    final roots = raw.map(DailyQuestionDto.fromJson).toList();
+    return flattenDailyQuestionRootsToEntities(roots);
   }
 
   @override
   Future<DailyPendingEntity> getPendingStatus() async {
     if (_useMocks) {
       await Future<void>.delayed(const Duration(milliseconds: 150));
-      return _mockPending;
+      return DailyActivitiesRemoteMocks.pending;
     }
     final res = await _dio.get<dynamic>(
-      _v1,
+      '/api/v1/daily-activities',
       queryParameters: <String, dynamic>{'status': 'pending'},
     );
-    final data = unwrapDataMap(res.data);
+    final data = res.dataMap();
     return DailyActivityMapper.toPendingEntity(DailyPendingDto.fromJson(data));
   }
 
@@ -53,17 +50,18 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   Future<List<DailyPreviousAnswersByDateEntity>> getPreviousAnswers() async {
     if (_useMocks) {
       await Future<void>.delayed(const Duration(milliseconds: 150));
-      return _mockPreviousAnswers;
+      return DailyActivitiesRemoteMocks.previousAnswers;
     }
     try {
-      final res = await _dio.get<dynamic>('$_v1/previous-answers');
-      final raw = unwrapDataList(res.data);
+      final res =
+          await _dio.get<dynamic>('/api/v1/daily-activities/previous-answers');
+      final raw = res.dataList();
       return raw
-          .map((e) => DailyActivityMapper.toPreviousAnswersByDateEntity(
-                DailyPreviousAnswersByDateDto.fromJson(
-                  e as Map<String, dynamic>,
-                ),
-              ))
+          .map(
+            (e) => DailyActivityMapper.toPreviousAnswersByDateEntity(
+              DailyPreviousAnswersByDateDto.fromJson(e),
+            ),
+          )
           .toList();
     } on DioException catch (e) {
       /// [daily-activities.md]: hiç cevap yoksa `404 PreviousAnswersNotFound`.
@@ -82,180 +80,21 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   }) async {
     if (_useMocks) {
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      return _mockPostAnswer(
+      return DailyActivitiesRemoteMocks.postAnswer(
         questionId: questionId,
         selectedOptionId: selectedOptionId,
       );
     }
     final res = await _dio.post<dynamic>(
-      '$_v1/answers',
+      '/api/v1/daily-activities/answers',
       data: <String, dynamic>{
         'questionId': questionId,
         'selectedOptionId': selectedOptionId,
         'userId': userId,
       },
     );
-    final data = unwrapDataMap(res.data);
+    final data = res.dataMap();
     return DailyActivityMapper.toAnswerResultEntity(
         DailyAnswerResultDto.fromJson(data));
   }
-
-  static DailyAnswerResultEntity _mockPostAnswer({
-    required String questionId,
-    required String selectedOptionId,
-  }) {
-    final byId = allMockQuestionsById;
-    final question = byId[questionId];
-    if (question == null) {
-      return const DailyAnswerResultEntity(
-        totalCarbonScore: 0,
-        isFlowCompleted: true,
-        nextQuestion: null,
-      );
-    }
-    DailyQuestionOptionEntity? selected;
-    for (final o in question.options) {
-      if (o.id == selectedOptionId) {
-        selected = o;
-        break;
-      }
-    }
-    if (selected == null) {
-      return const DailyAnswerResultEntity(
-        totalCarbonScore: 0,
-        isFlowCompleted: true,
-        nextQuestion: null,
-      );
-    }
-    final nextId = selected.nextQuestionId;
-    final next = (nextId != null && nextId.isNotEmpty) ? byId[nextId] : null;
-    return DailyAnswerResultEntity(
-      totalCarbonScore: selected.carbonValue,
-      isFlowCompleted: next == null,
-      nextQuestion: next,
-    );
-  }
-
-  static const _mockPending = DailyPendingEntity(
-    hasPending: true,
-    pendingCount: 1,
-  );
-
-  static const _mockPreviousAnswers = <DailyPreviousAnswersByDateEntity>[
-    DailyPreviousAnswersByDateEntity(
-      date: '2026-03-10T00:00:00Z',
-      answers: [
-        DailyPreviousAnswerItemEntity(
-          questionText: 'Örnek soru',
-          answerText: 'Toplu Ulaşım',
-          score: 25,
-          date: '2026-03-10T08:30:00Z',
-        ),
-      ],
-    ),
-  ];
-
-  static final List<DailyQuestionEntity> _mockTodayQuestions = [
-    DailyQuestionEntity(
-      id: 'q1-mock',
-      text: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
-      displayOrder: 1,
-      options: [
-        DailyQuestionOptionEntity(
-          id: 'q1-o1',
-          text: 'Araba',
-          carbonValue: 4.5,
-          nextQuestionId: null,
-        ),
-        DailyQuestionOptionEntity(
-          id: 'q1-o2',
-          text: 'Toplu taşıma',
-          carbonValue: 2.0,
-          nextQuestionId: 'q1-option2-mock',
-        ),
-      ],
-      remainingSeconds: 57600,
-    ),
-    DailyQuestionEntity(
-      id: 'q1-option2-mock',
-      text: 'Kullandığınız ulaşım aracını seçiniz.',
-      displayOrder: 2,
-      options: [
-        DailyQuestionOptionEntity(
-          id: 'q1-o2-o1',
-          text: 'Otobüs',
-          carbonValue: 1.5,
-          nextQuestionId: 'q1-option2-option1-mock',
-        ),
-        DailyQuestionOptionEntity(
-          id: 'q1-o2-o2',
-          text: 'Metro',
-          carbonValue: 3.5,
-          nextQuestionId: null,
-        ),
-        DailyQuestionOptionEntity(
-          id: 'q1-o2-o3',
-          text: 'Bisiklet',
-          carbonValue: 4.5,
-          nextQuestionId: null,
-        ),
-        DailyQuestionOptionEntity(
-          id: 'q1-o2-o4',
-          text: 'Vapur',
-          carbonValue: 2.5,
-          nextQuestionId: null,
-        ),
-      ],
-      remainingSeconds: 57580,
-    ),
-    DailyQuestionEntity(
-      id: 'q1-option2-option1-mock',
-      text: 'Sefer Sayısı',
-      displayOrder: 2,
-      options: [
-        DailyQuestionOptionEntity(
-          id: 'q1-o2-o1-o1',
-          text: '1 Sefer',
-          carbonValue: 4.5,
-          nextQuestionId: null,
-        ),
-        DailyQuestionOptionEntity(
-          id: 'q1-o2-o1-o2',
-          text: '2 Sefer',
-          carbonValue: 3.5,
-          nextQuestionId: null,
-        ),
-        DailyQuestionOptionEntity(
-          id: 'q1-o2-o1-o3',
-          text: '3 Sefer',
-          carbonValue: 2.5,
-          nextQuestionId: null,
-        ),
-      ],
-      remainingSeconds: 57000,
-    ),
-    DailyQuestionEntity(
-      id: 'q2-mock',
-      text: 'Günlük kahve tüketiminiz ne kadar?',
-      displayOrder: 2,
-      options: [
-        DailyQuestionOptionEntity(
-          id: 'o3',
-          text: '0',
-          carbonValue: 0,
-          nextQuestionId: null,
-        ),
-        DailyQuestionOptionEntity(
-          id: 'o4',
-          text: '1–2',
-          carbonValue: 3.0,
-          nextQuestionId: null,
-        ),
-      ],
-      remainingSeconds: 50000,
-    ),
-  ];
-
-  static Map<String, DailyQuestionEntity> get allMockQuestionsById =>
-      {for (final q in _mockTodayQuestions) q.id: q};
 }

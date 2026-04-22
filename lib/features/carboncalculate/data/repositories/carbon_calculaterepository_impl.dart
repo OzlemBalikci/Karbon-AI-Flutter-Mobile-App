@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/errors/exception_unwrapper.dart';
+import 'package:karbon/core/errors/app_exception.dart';
+import 'package:karbon/core/errors/exception_handler.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_local.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote.dart';
 import 'package:karbon/features/carboncalculate/data/dtos/active_pollset_dto.dart';
@@ -18,11 +19,11 @@ class CarbonCalculateRepositoryImpl implements CarbonCalculateRepository {
   final CarbonCalculateLocal _local;
 
   @override
-  Future<Either<Exception, ActivePollSetEntity>> getActivePoll() async {
+  Future<Either<AppException, ActivePollSetEntity>> getActivePoll() async {
     try {
       final poll = await _remote.getActivePoll();
       return Right(poll);
-    } on Exception catch (e) {
+    } catch (e) {
       final raw = await _local.getActivePollJson();
       if (raw != null && raw.isNotEmpty) {
         try {
@@ -31,12 +32,12 @@ class CarbonCalculateRepositoryImpl implements CarbonCalculateRepository {
               PollMapper.toActivePollEntity(ActivePollSetDto.fromJson(map)));
         } catch (_) {}
       }
-      return Left(unwrapDioException(e));
+      return guardLeft(e);
     }
   }
 
   @override
-  Future<Either<Exception, PollSubmissionResultEntity>> savePollDraft({
+  Future<Either<AppException, PollSubmissionResultEntity>> savePollDraft({
     required String pollSetId,
     required List<PollAnswerItemEntity> answers,
   }) async {
@@ -46,13 +47,13 @@ class CarbonCalculateRepositoryImpl implements CarbonCalculateRepository {
         answers: answers,
       );
       return Right(r);
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 
   @override
-  Future<Either<Exception, PollSubmissionResultEntity>> submitPollAnswers({
+  Future<Either<AppException, PollSubmissionResultEntity>> submitPollAnswers({
     required String pollSetId,
     required List<PollAnswerItemEntity> answers,
   }) async {
@@ -62,13 +63,13 @@ class CarbonCalculateRepositoryImpl implements CarbonCalculateRepository {
         answers: answers,
       );
       return Right(r);
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 
   @override
-  Future<Either<Exception, PollResultEntity>> getPollResults({
+  Future<Either<AppException, PollResultEntity>> getPollResults({
     required String pollSetId,
     required int month,
     required int year,
@@ -80,8 +81,8 @@ class CarbonCalculateRepositoryImpl implements CarbonCalculateRepository {
         year: year,
       );
       return Right(r);
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 }

@@ -65,7 +65,7 @@ class _SeeAllSectionState extends State<SeeAllSection> {
     result.fold(
       (e) => setState(() {
         _data = null;
-        _error = e.toString();
+        _error = e.message;
         _loading = false;
       }),
       (m) => setState(() {

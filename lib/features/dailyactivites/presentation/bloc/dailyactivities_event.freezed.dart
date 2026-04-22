@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'dailyactivites_event.dart';
+part of 'dailyactivities_event.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -54,6 +54,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     TResult Function(DailyActivitiesLoadRequested value)? loadRequested,
     TResult Function(DailyActivitiesQuestionSelected value)? questionSelected,
     TResult Function(DailyActivitiesOptionSelected value)? optionSelected,
+    TResult Function(DailyActivitiesBranchStepReopened value)?
+        branchStepReopened,
     TResult Function(DailyActivitiesPostAnswerRequested value)?
         postAnswerRequested,
     TResult Function(DailyActivitiesSuccessDismissed value)? successDismissed,
@@ -68,6 +70,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that);
       case DailyActivitiesOptionSelected() when optionSelected != null:
         return optionSelected(_that);
+      case DailyActivitiesBranchStepReopened() when branchStepReopened != null:
+        return branchStepReopened(_that);
       case DailyActivitiesPostAnswerRequested()
           when postAnswerRequested != null:
         return postAnswerRequested(_that);
@@ -100,6 +104,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         questionSelected,
     required TResult Function(DailyActivitiesOptionSelected value)
         optionSelected,
+    required TResult Function(DailyActivitiesBranchStepReopened value)
+        branchStepReopened,
     required TResult Function(DailyActivitiesPostAnswerRequested value)
         postAnswerRequested,
     required TResult Function(DailyActivitiesSuccessDismissed value)
@@ -114,6 +120,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that);
       case DailyActivitiesOptionSelected():
         return optionSelected(_that);
+      case DailyActivitiesBranchStepReopened():
+        return branchStepReopened(_that);
       case DailyActivitiesPostAnswerRequested():
         return postAnswerRequested(_that);
       case DailyActivitiesSuccessDismissed():
@@ -140,6 +148,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     TResult? Function(DailyActivitiesLoadRequested value)? loadRequested,
     TResult? Function(DailyActivitiesQuestionSelected value)? questionSelected,
     TResult? Function(DailyActivitiesOptionSelected value)? optionSelected,
+    TResult? Function(DailyActivitiesBranchStepReopened value)?
+        branchStepReopened,
     TResult? Function(DailyActivitiesPostAnswerRequested value)?
         postAnswerRequested,
     TResult? Function(DailyActivitiesSuccessDismissed value)? successDismissed,
@@ -153,6 +163,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that);
       case DailyActivitiesOptionSelected() when optionSelected != null:
         return optionSelected(_that);
+      case DailyActivitiesBranchStepReopened() when branchStepReopened != null:
+        return branchStepReopened(_that);
       case DailyActivitiesPostAnswerRequested()
           when postAnswerRequested != null:
         return postAnswerRequested(_that);
@@ -182,6 +194,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     TResult Function()? loadRequested,
     TResult Function(DailyQuestionEntity question)? questionSelected,
     TResult Function(String optionId)? optionSelected,
+    TResult Function(int stepIndex)? branchStepReopened,
     TResult Function()? postAnswerRequested,
     TResult Function()? successDismissed,
     TResult Function()? detailClosed,
@@ -195,6 +208,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected() when optionSelected != null:
         return optionSelected(_that.optionId);
+      case DailyActivitiesBranchStepReopened() when branchStepReopened != null:
+        return branchStepReopened(_that.stepIndex);
       case DailyActivitiesPostAnswerRequested()
           when postAnswerRequested != null:
         return postAnswerRequested();
@@ -225,6 +240,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     required TResult Function() loadRequested,
     required TResult Function(DailyQuestionEntity question) questionSelected,
     required TResult Function(String optionId) optionSelected,
+    required TResult Function(int stepIndex) branchStepReopened,
     required TResult Function() postAnswerRequested,
     required TResult Function() successDismissed,
     required TResult Function() detailClosed,
@@ -237,6 +253,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected():
         return optionSelected(_that.optionId);
+      case DailyActivitiesBranchStepReopened():
+        return branchStepReopened(_that.stepIndex);
       case DailyActivitiesPostAnswerRequested():
         return postAnswerRequested();
       case DailyActivitiesSuccessDismissed():
@@ -263,6 +281,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
     TResult? Function()? loadRequested,
     TResult? Function(DailyQuestionEntity question)? questionSelected,
     TResult? Function(String optionId)? optionSelected,
+    TResult? Function(int stepIndex)? branchStepReopened,
     TResult? Function()? postAnswerRequested,
     TResult? Function()? successDismissed,
     TResult? Function()? detailClosed,
@@ -275,6 +294,8 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected() when optionSelected != null:
         return optionSelected(_that.optionId);
+      case DailyActivitiesBranchStepReopened() when branchStepReopened != null:
+        return branchStepReopened(_that.stepIndex);
       case DailyActivitiesPostAnswerRequested()
           when postAnswerRequested != null:
         return postAnswerRequested();
@@ -439,6 +460,73 @@ class _$DailyActivitiesOptionSelectedCopyWithImpl<$Res>
           ? _self.optionId
           : optionId // ignore: cast_nullable_to_non_nullable
               as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class DailyActivitiesBranchStepReopened implements DailyActivitiesEvent {
+  const DailyActivitiesBranchStepReopened(this.stepIndex);
+
+  final int stepIndex;
+
+  /// Create a copy of DailyActivitiesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $DailyActivitiesBranchStepReopenedCopyWith<DailyActivitiesBranchStepReopened>
+      get copyWith => _$DailyActivitiesBranchStepReopenedCopyWithImpl<
+          DailyActivitiesBranchStepReopened>(this, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is DailyActivitiesBranchStepReopened &&
+            (identical(other.stepIndex, stepIndex) ||
+                other.stepIndex == stepIndex));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, stepIndex);
+
+  @override
+  String toString() {
+    return 'DailyActivitiesEvent.branchStepReopened(stepIndex: $stepIndex)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $DailyActivitiesBranchStepReopenedCopyWith<$Res>
+    implements $DailyActivitiesEventCopyWith<$Res> {
+  factory $DailyActivitiesBranchStepReopenedCopyWith(
+          DailyActivitiesBranchStepReopened value,
+          $Res Function(DailyActivitiesBranchStepReopened) _then) =
+      _$DailyActivitiesBranchStepReopenedCopyWithImpl;
+  @useResult
+  $Res call({int stepIndex});
+}
+
+/// @nodoc
+class _$DailyActivitiesBranchStepReopenedCopyWithImpl<$Res>
+    implements $DailyActivitiesBranchStepReopenedCopyWith<$Res> {
+  _$DailyActivitiesBranchStepReopenedCopyWithImpl(this._self, this._then);
+
+  final DailyActivitiesBranchStepReopened _self;
+  final $Res Function(DailyActivitiesBranchStepReopened) _then;
+
+  /// Create a copy of DailyActivitiesEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? stepIndex = null,
+  }) {
+    return _then(DailyActivitiesBranchStepReopened(
+      null == stepIndex
+          ? _self.stepIndex
+          : stepIndex // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }

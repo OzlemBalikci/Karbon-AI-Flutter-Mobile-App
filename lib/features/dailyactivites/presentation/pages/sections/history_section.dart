@@ -25,41 +25,41 @@ class HistorySection extends StatelessWidget {
                         .withColor(context.colors.textBlack),
                   );
                 }
-                return Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemCount: groups.length,
-                    itemBuilder: (context, gi) {
-                      final group = groups[gi];
-                      final groupDate =
-                          DateTime.tryParse(group.date) ?? DateTime.now();
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Text(
-                            DateFormat.yMMMMd('tr').format(groupDate),
-                            style: context.typographiesSp.bodySmall
-                                .withColor(context.colors.primary)
-                                .copyWith(fontStyle: FontStyle.italic),
-                          ),
-                          SizedBox(height: AppThemeSpacing.s10.h),
-                          ...group.answers.map(
-                            (a) => Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: AppThemeSpacing.s12.h),
-                              child: QuestionCard(
-                                variant: QuestionCardHistory(
-                                  text: a.questionText,
-                                  score: a.score,
-                                ),
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount: groups.length,
+                  itemBuilder: (context, gi) {
+                    final group = groups[gi];
+                    final groupDate =
+                        DateTime.tryParse(group.date) ?? DateTime.now();
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          DateFormat.yMMMMd('tr').format(groupDate),
+                          style: context.typographiesSp.bodySmall
+                              .withColor(context.colors.primary)
+                              .copyWith(fontStyle: FontStyle.italic),
+                        ),
+                        SizedBox(height: AppThemeSpacing.s10.h),
+                        ...group.answers.map(
+                          (a) => Padding(
+                            padding:
+                                EdgeInsets.only(bottom: AppThemeSpacing.s12.h),
+                            child: QuestionCard(
+                              variant: QuestionCardHistory(
+                                text: a.questionText,
+                                score: a.score,
                               ),
                             ),
                           ),
-                          SizedBox(height: AppThemeSpacing.s20.h),
-                        ],
-                      );
-                    },
-                  ),
+                        ),
+                        SizedBox(height: AppThemeSpacing.s20.h),
+                      ],
+                    );
+                  },
                 );
               },
             ),

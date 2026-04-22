@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/errors/exception_unwrapper.dart';
+import 'package:karbon/core/errors/app_exception.dart';
+import 'package:karbon/core/errors/exception_handler.dart';
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart';
@@ -12,17 +13,17 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
   final DailyActivitiesRemote _remote;
 
   @override
-  Future<Either<Exception, List<DailyQuestionEntity>>>
+  Future<Either<AppException, List<DailyQuestionEntity>>>
       getTodayQuestions() async {
     try {
       return Right(await _remote.getTodayQuestions());
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 
   @override
-  Future<Either<Exception, DailyAnswerResultEntity>> postAnswer({
+  Future<Either<AppException, DailyAnswerResultEntity>> postAnswer({
     required String questionId,
     required String selectedOptionId,
     required String userId,
@@ -35,27 +36,27 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
           userId: userId,
         ),
       );
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 
   @override
-  Future<Either<Exception, DailyPendingEntity>> getPendingStatus() async {
+  Future<Either<AppException, DailyPendingEntity>> getPendingStatus() async {
     try {
       return Right(await _remote.getPendingStatus());
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 
   @override
-  Future<Either<Exception, List<DailyPreviousAnswersByDateEntity>>>
+  Future<Either<AppException, List<DailyPreviousAnswersByDateEntity>>>
       getPreviousAnswers() async {
     try {
       return Right(await _remote.getPreviousAnswers());
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 }

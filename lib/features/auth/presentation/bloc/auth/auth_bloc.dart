@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/errors/exceptions.dart';
+import 'package:karbon/core/errors/app_exception.dart';
 import 'package:karbon/features/auth/domain/usecases/checksession_usecase.dart';
 import 'package:karbon/features/auth/domain/usecases/clear_local_session_usecase.dart';
 import 'package:karbon/features/auth/domain/usecases/delete_account_usecase.dart';
@@ -107,26 +107,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   // ── Yardımcılar ──────────────────────────────────────────────────────────
 
-  static AuthState _failureFromException(Exception e) {
-    if (e is AppException) {
+  static AuthState _failureFromException(Object failure) {
+    if (failure is AppException) {
       return AuthState.authFailure(
-        reason: e.message,
-        failureType: _resolveFailureType(e),
-        code: e.statusCode?.toString(),
+        reason: failure.message,
+        failureType: _resolveFailureType(failure),
+        code: failure.statusCode != 0
+            ? failure.statusCode.toString()
+            : null,
       );
     }
     return AuthState.authFailure(
-      reason: e.toString(),
+      reason: failure.toString(),
       failureType: AuthFailureType.unknown,
     );
   }
 
-  static AuthFailureType _resolveFailureType(AppException e) => switch (e) {
-        NetworkException() => AuthFailureType.network,
-        UnauthorizedException() => AuthFailureType.sessionExpired,
-        BadRequestException() ||
-        ValidationException() =>
-          AuthFailureType.invalidToken,
-        _ => AuthFailureType.unknown,
+  static AuthFailureType _resolveFailureType(AppException e) =>
+      switch (e.type) {
+        AppExceptionType.network => AuthFailureType.network,
+        AppExceptionType.unauthorized => AuthFailureType.sessionExpired,
+        AppExceptionType.validation => AuthFailureType.invalidToken,
+        AppExceptionType.business => AuthFailureType.invalidToken,
+        AppExceptionType.forbidden => AuthFailureType.unknown,
+        AppExceptionType.server => AuthFailureType.unknown,
+        AppExceptionType.unexpected => AuthFailureType.unknown,
       };
 }

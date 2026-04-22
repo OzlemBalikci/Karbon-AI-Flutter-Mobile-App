@@ -1,6 +1,6 @@
 import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
 
-//mock kaldırılacak.
+/// [ProfileRemoteImpl] `ApiConfig.baseUrl` boşken kullanır.
 final DateTime mockBirthUtc = DateTime.utc(1998, 2, 12);
 
 final UserProfileEntity kMockUserProfile = UserProfileEntity(
@@ -8,7 +8,7 @@ final UserProfileEntity kMockUserProfile = UserProfileEntity(
   name: 'Ekin Can',
   surname: 'Akın',
   birthDate: mockBirthUtc,
-  totalPoints: 200000,
+  totalPoints: 200000.0,
   donatedTreeCount: 1270,
   availableTreeCount: 1200,
 );

@@ -1,3 +1,4 @@
+import 'package:karbon/features/dailyactivites/data/daily_question_dto_adapt.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_request_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_pending_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
@@ -5,14 +6,9 @@ import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto
 import 'package:karbon/features/dailyactivites/data/dtos/daily_previous_answer_dto.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
-/// Tek sorumluluk: DTO ↔ Entity dönüşümleri.
-/// Hiçbir iş kuralı içermez — sadece alanları eşler.
+/// DTO ↔ Entity alan eşlemesi.
 class DailyActivityMapper {
   DailyActivityMapper._();
-
-  // ───────────────────────────────────────────────────────────────────────────
-  // DTO → Entity  (backend'den gelen veriyi domain'e taşı)
-  // ───────────────────────────────────────────────────────────────────────────
 
   static DailyPendingEntity toPendingEntity(DailyPendingDto dto) =>
       DailyPendingEntity(
@@ -44,7 +40,9 @@ class DailyActivityMapper {
   ) =>
       DailyAnswerResultEntity(
         nextQuestion: dto.nextQuestion != null
-            ? toQuestionEntity(dto.nextQuestion!)
+            ? toQuestionEntity(
+                adaptDailyQuestionDtoForClient(dto.nextQuestion!),
+              )
             : null,
         totalCarbonScore: dto.totalCarbonScore,
         isFlowCompleted: dto.isFlowCompleted,
@@ -67,10 +65,6 @@ class DailyActivityMapper {
         date: dto.date,
         answers: dto.answers.map(toPreviousAnswerItemEntity).toList(),
       );
-
-  // ───────────────────────────────────────────────────────────────────────────
-  // Entity → DTO  (domain verisini backend'e gönder)
-  // ───────────────────────────────────────────────────────────────────────────
 
   static DailyAnswerRequestDto toAnswerRequestDto(
     DailySelectedAnswerEntity entity,

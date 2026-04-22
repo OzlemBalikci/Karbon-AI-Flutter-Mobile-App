@@ -30,7 +30,7 @@ class CarbonCalculateBloc
     result.fold(
       (e) => emit(state.copyWith(
         status: CarbonCalculateStatus.failure,
-        error: e.toString(),
+        error: e.message,
       )),
       (poll) {
         // Taslak varsa (selectedOptionId dolu) kaldığı yerden devam ettir.
@@ -94,7 +94,7 @@ class CarbonCalculateBloc
       answers: state.answerItems,
     );
     result.fold(
-      (e) => emit(state.copyWith(error: e.toString())),
+      (e) => emit(state.copyWith(error: e.message)),
       (_) {},
     );
   }
@@ -115,7 +115,7 @@ class CarbonCalculateBloc
     result.fold(
       (e) => emit(state.copyWith(
         status: CarbonCalculateStatus.failure,
-        error: e.toString(),
+        error: e.message,
       )),
       (submissionResult) => emit(state.copyWith(
         status: CarbonCalculateStatus.success,

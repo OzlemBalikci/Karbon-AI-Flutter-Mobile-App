@@ -55,7 +55,7 @@ class LoginFormWidget extends StatelessWidget {
                   //       emailOrIdentityNumber: c.emailOrTc.text.trim(),
                   //       password: c.password.text,
                   //     );
-                  context.router.replaceAll([const HomeTabShellRoute()]);
+                  context.router.replaceAll([const HomeRoute()]);
                 },
                 backgroundColor: context.colors.secondary,
                 foregroundColor: context.colors.textOnSecondary,

@@ -5,7 +5,7 @@ import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_selector.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
-import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
+import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_event.dart';
 import 'package:karbon/features/dailyactivites/presentation/widgets/daily_activities_points_success_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
@@ -15,6 +15,8 @@ import 'package:karbon/widgets/app_header_title.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/router/navigation.dart';
+import 'package:dropdown_button2/dropdown_button2.dart' as ddb2;
 
 part '../widgets/dropdown_item.dart';
 part '../widgets/bottom_button.dart';
@@ -35,12 +37,18 @@ class _SelectedQuestionPageState extends State<SelectedQuestionPage> {
         listenWhen: (prev, curr) =>
             !prev.showSuccessDialog && curr.showSuccessDialog,
         listener: (context, state) {
-          final score = state.lastPostAnswerResult?.totalCarbonScore ?? 0.0;
+          final result = state.lastPostAnswerResult;
+          if (result == null ||
+              !(result.isFlowCompleted && result.nextQuestion == null)) {
+            return;
+          }
           showDailyActivitiesPointsSuccessDialog(
             context,
-            totalCarbonScore: score,
+            totalCarbonScore: result.totalCarbonScore,
             bloc: context.read<DailyActivitiesBloc>(),
-            onNavigateToDailyList: () => context.router.maybePop(),
+            onNavigateToDailyList: () {
+              context.router.popUntilRouteWithName(DailyActivitiesRoute.name);
+            },
           );
         },
         child: Scaffold(

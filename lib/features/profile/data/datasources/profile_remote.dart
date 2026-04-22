@@ -6,7 +6,4 @@ abstract class ProfileRemote {
   Future<DonationHistoryEntity> getDonations();
 
   Future<DonateTreesResultEntity> donateTrees();
-
-  /// Geliştirme için; `false` iken gerçek HTTP kullanılır.
-  static const bool useMockProfile = true;
 }

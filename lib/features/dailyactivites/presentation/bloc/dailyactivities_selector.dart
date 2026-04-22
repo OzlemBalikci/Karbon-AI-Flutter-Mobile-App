@@ -10,47 +10,11 @@ typedef DailyActivitiesQuestionRowData = (
   DailyQuestionEntity entity
 );
 
-typedef DailyActivitiesSubmitButtonUi = ({
-  bool hasSelection,
-  bool canSubmit,
-});
-
-typedef DailyActivitiesActiveQuestionFormVm = ({
-  DailyQuestionEntity? question,
-  String? selectedOptionId,
-});
-
-typedef DailyActivitiesHistoryData = ({
-  List<DailyQuestionEntity> solvedQuestions,
-  Map<String, DateTime> questionSolvedAt,
-});
-
 typedef DailyActivitiesBranchUi = ({
-  List<BranchStep> steps, // tüm adımlar
-  String? activeSelectedOptionId, // son adımın seçili option id'si (null → henüz yok)
+  List<BranchStep> steps,
+  String? activeSelectedOptionId,
   bool canSubmit,
 });
-
-DailyActivitiesSubmitButtonUi selectSubmitButtonUi(DailyActivitiesState s) => (
-      hasSelection: s.branchPath.isNotEmpty,
-      canSubmit: s.branchPath.isNotEmpty &&
-          s.postAnswerStatus != DailyActivitiesPostAnswerStatus.submitting,
-    );
-
-DailyActivitiesActiveQuestionFormVm selectActiveQuestionForm(
-        DailyActivitiesState s) =>
-    (
-      question: s.branchPath.isEmpty ? null : s.branchPath.last.question,
-      selectedOptionId:
-          s.branchPath.isEmpty ? null : s.branchPath.last.selectedOption?.id,
-    );
-
-DailyActivitiesHistoryData selectHistoryData(DailyActivitiesState state) {
-  return (
-    solvedQuestions: state.answeredQuestionStubs,
-    questionSolvedAt: state.questionSolvedAt
-  );
-}
 
 DailyActivitiesBranchUi selectBranchUi(DailyActivitiesState s) {
   final steps = s.branchPath;
@@ -94,17 +58,21 @@ DailyActivitiesQuestionRowData? selectQuestionRow(
   DailyActivitiesState state,
   String? questionId,
 ) {
-  if (state.questions.isEmpty) return null;
-  final DailyQuestionEntity q;
+  final list = state.questions;
+  if (list.isEmpty) return null;
+
+  DailyQuestionEntity? q;
   if (questionId != null) {
-    try {
-      q = state.questions.firstWhere((e) => e.id == questionId);
-    } on StateError {
-      return null;
+    for (final e in list) {
+      if (e.id == questionId) {
+        q = e;
+        break;
+      }
     }
   } else {
-    q = state.questions.first;
+    q = list.first;
   }
+  if (q == null) return null;
   return (q.text, q);
 }
 
@@ -115,39 +83,6 @@ class DailyActivitiesQuestionsSelector
     required Widget Function(List<DailyQuestionEntity> questions) builder,
   }) : super(
           selector: (state) => rootQuestions(state.questions),
-          builder: builder,
-        );
-}
-
-class DailyActivitiesHistorySelector
-    extends DailyActivitiesSelector<DailyActivitiesHistoryData> {
-  DailyActivitiesHistorySelector({
-    super.key,
-    required Widget Function(DailyActivitiesHistoryData data) builder,
-  }) : super(
-          selector: selectHistoryData,
-          builder: builder,
-        );
-}
-
-class DailyActivitiesActiveQuestionFormSelector
-    extends DailyActivitiesSelector<DailyActivitiesActiveQuestionFormVm> {
-  DailyActivitiesActiveQuestionFormSelector({
-    super.key,
-    required Widget Function(DailyActivitiesActiveQuestionFormVm vm) builder,
-  }) : super(
-          selector: selectActiveQuestionForm,
-          builder: builder,
-        );
-}
-
-class DailyActivitiesSubmitButtonSelector
-    extends DailyActivitiesSelector<DailyActivitiesSubmitButtonUi> {
-  DailyActivitiesSubmitButtonSelector({
-    super.key,
-    required Widget Function(DailyActivitiesSubmitButtonUi ui) builder,
-  }) : super(
-          selector: selectSubmitButtonUi,
           builder: builder,
         );
 }
@@ -163,7 +98,6 @@ class DailyActivitiesBranchSelector
         );
 }
 
-/// GET `/api/v1/daily-activities/previous-answers` sonucu — en son cevaplanan gün.
 class DailyActivitiesPreviousAnswersSelector
     extends DailyActivitiesSelector<List<DailyPreviousAnswersByDateEntity>> {
   DailyActivitiesPreviousAnswersSelector({

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart';
-import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
+import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_event.dart';
 import 'package:karbon/widgets/app_button.dart';
 import 'package:karbon/widgets/app_popup_dialog.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
@@ -11,14 +11,18 @@ import 'package:karbon/core/constants/assets.gen.dart';
 class DailyActivitiesPointsSuccessPopup extends StatelessWidget {
   const DailyActivitiesPointsSuccessPopup({
     super.key,
-    required this.pointsLabel,
+    required this.totalCarbonScore,
     required this.bloc,
     required this.onNavigateToDailyList,
   });
-
-  final String pointsLabel;
+  final double totalCarbonScore;
   final DailyActivitiesBloc bloc;
   final VoidCallback onNavigateToDailyList;
+
+  static String _formatCarbonScore(double v) {
+    if (v == v.roundToDouble()) return v.toInt().toString();
+    return v.toStringAsFixed(2);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +44,16 @@ class DailyActivitiesPointsSuccessPopup extends StatelessWidget {
               ),
               SizedBox(height: AppThemeSpacing.s24.h),
               Text(
-                context.text.daily_activities_success_points_title(pointsLabel),
+                context.text.daily_activities_success_total_carbon_label(
+                  _formatCarbonScore(totalCarbonScore),
+                ),
                 textAlign: TextAlign.center,
-                style: context.typographiesSp.bodyLarge
-                    .withColor(context.colors.primary),
+                style: context.typographiesSp.bodyMedium
+                    .withColor(context.colors.textOnQuestion),
               ),
               SizedBox(height: AppThemeSpacing.s12.h),
               Text(
-                context.text.daily_activities_success_points_body,
+                context.text.daily_activities_success_total_carbon_body,
                 textAlign: TextAlign.center,
                 style: context.typographiesSp.bodyExtraSmall
                     .withColor(context.colors.textOnQuestion),
@@ -56,9 +62,9 @@ class DailyActivitiesPointsSuccessPopup extends StatelessWidget {
               AppButton(
                 text: context.text.daily_activities_success_back_button,
                 onPressed: () {
-                  bloc.add(const DailyActivitiesEvent.successDismissed());
                   Navigator.of(context).pop();
                   onNavigateToDailyList();
+                  bloc.add(const DailyActivitiesEvent.successDismissed());
                 },
                 backgroundColor: context.colors.primary,
                 foregroundColor: context.colors.textOnPrimary,
@@ -82,7 +88,7 @@ Future<void> showDailyActivitiesPointsSuccessDialog(
     context,
     barrierDismissible: false,
     child: DailyActivitiesPointsSuccessPopup(
-      pointsLabel: totalCarbonScore.toString(),
+      totalCarbonScore: totalCarbonScore,
       bloc: bloc,
       onNavigateToDailyList: onNavigateToDailyList,
     ),

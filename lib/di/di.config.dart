@@ -14,6 +14,7 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:karbon/core/networks/dio_client.dart' as _i372;
 import 'package:karbon/di/di.dart' as _i314;
 import 'package:karbon/features/auth/data/datasources/auth_launch_local.dart'
     as _i560;
@@ -162,6 +163,8 @@ import 'package:karbon/features/profile/presentation/bloc/profile_bloc.dart'
     as _i111;
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart'
     as _i505;
+import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote_impl.dart'
+    as _i401;
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote_mock.dart'
     as _i964;
 import 'package:karbon/features/usefulinfos/data/repositories/usefulinfo_repository_impl.dart'
@@ -194,13 +197,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.prefs,
       preResolve: true,
     );
+    gh.factory<_i596.CarbonCalculateRemoteMock>(
+        () => _i596.CarbonCalculateRemoteMock());
     gh.singleton<_i558.FlutterSecureStorage>(
         () => registerModule.secureStorage);
+    gh.lazySingleton<_i372.DioClient>(() => _i372.DioClient());
     gh.lazySingleton<_i614.SettingsBloc>(() => _i614.SettingsBloc());
     gh.lazySingleton<_i366.CarbonCalculateLocal>(
         () => _i177.CarbonCalculateLocalImpl(gh<_i460.SharedPreferences>()));
-    gh.lazySingleton<_i357.CarbonCalculateRemote>(
-        () => _i596.CarbonCalculateRemoteMock());
     gh.lazySingleton<_i102.AuthLocal>(
         () => _i312.AuthLocalImpl(gh<_i558.FlutterSecureStorage>()));
     gh.lazySingleton<_i505.UsefulinfoRemote>(
@@ -220,11 +224,6 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i77.LeaderboardRepository>(
         () => _i966.LeaderboardRepositoryImpl(gh<_i1036.LeaderboardRemote>()));
-    gh.lazySingleton<_i666.CarbonCalculateRepository>(
-        () => _i180.CarbonCalculateRepositoryImpl(
-              gh<_i357.CarbonCalculateRemote>(),
-              gh<_i366.CarbonCalculateLocal>(),
-            ));
     gh.factory<_i97.GetUsefulInfosUseCase>(
         () => _i97.GetUsefulInfosUseCase(gh<_i71.UsefulinfoRepository>()));
     gh.factory<_i232.CustomFirstOpenCubit>(
@@ -239,6 +238,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i701.HomeRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i679.LeaderboardRemoteImpl>(
         () => _i679.LeaderboardRemoteImpl(gh<_i361.Dio>()));
+    gh.factory<_i401.UsefulinfoRemoteImpl>(
+        () => _i401.UsefulinfoRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i483.ProfileRemote>(
@@ -255,9 +256,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i812.GetProfileUseCase(gh<_i48.ProfileRepository>()));
     gh.factory<_i520.GetLeaderboardDataUseCase>(() =>
         _i520.GetLeaderboardDataUseCase(gh<_i77.LeaderboardRepository>()));
-    gh.factory<_i959.CarbonCalculateBloc>(
-        () => _i959.CarbonCalculateBloc(gh<_i666.CarbonCalculateRepository>()));
-    gh.factory<_i408.CarbonCalculateRemoteImpl>(
+    gh.lazySingleton<_i357.CarbonCalculateRemote>(
         () => _i408.CarbonCalculateRemoteImpl(
               gh<_i361.Dio>(),
               gh<_i366.CarbonCalculateLocal>(),
@@ -275,14 +274,11 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i557.CookieJar>(),
           gh<_i560.AuthLaunchLocal>(),
         ));
-    gh.factory<_i926.GetActivePollUseCase>(() =>
-        _i926.GetActivePollUseCase(gh<_i666.CarbonCalculateRepository>()));
-    gh.factory<_i980.GetPollResultsUseCase>(() =>
-        _i980.GetPollResultsUseCase(gh<_i666.CarbonCalculateRepository>()));
-    gh.factory<_i715.SavePollDraftUseCase>(() =>
-        _i715.SavePollDraftUseCase(gh<_i666.CarbonCalculateRepository>()));
-    gh.factory<_i630.SubmitPollAnswersUseCase>(() =>
-        _i630.SubmitPollAnswersUseCase(gh<_i666.CarbonCalculateRepository>()));
+    gh.lazySingleton<_i666.CarbonCalculateRepository>(
+        () => _i180.CarbonCalculateRepositoryImpl(
+              gh<_i357.CarbonCalculateRemote>(),
+              gh<_i366.CarbonCalculateLocal>(),
+            ));
     gh.factory<_i748.LeaderofmonthBloc>(
         () => _i748.LeaderofmonthBloc(gh<_i520.GetLeaderboardDataUseCase>()));
     gh.lazySingleton<_i320.DailyActivitiesRepository>(() =>
@@ -308,6 +304,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i753.GetMonthlyActivitiesUsecase>(),
           gh<_i996.GetDetailsUsecase>(),
         ));
+    gh.factory<_i959.CarbonCalculateBloc>(
+        () => _i959.CarbonCalculateBloc(gh<_i666.CarbonCalculateRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i382.ClearLocalSessionUseCase>(
@@ -344,6 +342,14 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i1010.LoginUseCase>(),
           gh<_i564.AuthBloc>(),
         ));
+    gh.factory<_i926.GetActivePollUseCase>(() =>
+        _i926.GetActivePollUseCase(gh<_i666.CarbonCalculateRepository>()));
+    gh.factory<_i980.GetPollResultsUseCase>(() =>
+        _i980.GetPollResultsUseCase(gh<_i666.CarbonCalculateRepository>()));
+    gh.factory<_i715.SavePollDraftUseCase>(() =>
+        _i715.SavePollDraftUseCase(gh<_i666.CarbonCalculateRepository>()));
+    gh.factory<_i630.SubmitPollAnswersUseCase>(() =>
+        _i630.SubmitPollAnswersUseCase(gh<_i666.CarbonCalculateRepository>()));
     gh.factory<_i121.RegisterCubit>(() => _i121.RegisterCubit(
           gh<_i558.RegisterUseCase>(),
           gh<_i564.AuthBloc>(),

@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_selector.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart';
-import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivites_event.dart';
+import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:karbon/widgets/app_header_title.dart';
@@ -35,14 +35,22 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
         children: [
           SafeArea(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 HeaderSection(),
                 SizedBox(height: AppThemeSpacing.s20.h),
-                Expanded(child: TodaySection()),
-                SizedBox(height: AppThemeSpacing.s20.h),
-                Expanded(child: HistorySection()),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const TodaySection(),
+                        SizedBox(height: AppThemeSpacing.s24.h),
+                        const HistorySection(),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

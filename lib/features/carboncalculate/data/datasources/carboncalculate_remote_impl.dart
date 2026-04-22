@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_local.dart';
 import 'package:karbon/features/carboncalculate/data/dtos/active_pollset_dto.dart';
 import 'package:karbon/features/carboncalculate/data/dtos/poll_result_dto.dart';
@@ -10,10 +9,11 @@ import 'package:karbon/features/carboncalculate/data/dtos/poll_submit_dto.dart';
 import 'package:karbon/features/carboncalculate/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote.dart';
+import 'package:karbon/core/networks/response_ext.dart';
 
 /// Canlı API. DI’da [CarbonCalculateRemote] için [CarbonCalculateRemoteMock]
 /// yerine bu sınıfı `@LazySingleton(as: CarbonCalculateRemote)` ile kaydedin.
-@Injectable()
+@LazySingleton(as: CarbonCalculateRemote)
 class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
   CarbonCalculateRemoteImpl(this._dio, this._local);
 
@@ -23,7 +23,7 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
   @override
   Future<ActivePollSetEntity> getActivePoll() async {
     final res = await _dio.get<dynamic>('/api/v1/polls/active');
-    final data = unwrapDataMap(res.data);
+    final data = res.dataMap();
     await _local.saveActivePollJson(jsonEncode(data));
     return PollMapper.toActivePollEntity(ActivePollSetDto.fromJson(data));
   }
@@ -40,7 +40,7 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
         answers: answers,
       ).toJson(),
     );
-    final data = unwrapDataMap(res.data);
+    final data = res.dataMap();
     return PollMapper.toScoreEntity(PollSubmissionResultDto.fromJson(data));
   }
 
@@ -56,7 +56,7 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
         answers: answers,
       ).toJson(),
     );
-    final data = unwrapDataMap(res.data);
+    final data = res.dataMap();
     return PollMapper.toScoreEntity(PollSubmissionResultDto.fromJson(data));
   }
 
@@ -73,7 +73,7 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
         'year': year,
       },
     );
-    final data = unwrapDataMap(res.data);
+    final data = res.dataMap();
     return PollMapper.toResultEntity(PollResultDto.fromJson(data));
   }
 }

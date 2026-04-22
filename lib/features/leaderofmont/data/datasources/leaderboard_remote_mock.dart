@@ -4,8 +4,8 @@ import 'package:karbon/features/leaderofmont/data/dtos/leaderboard_data_dto.dart
 import 'package:karbon/features/leaderofmont/data/mapper/leaderboard_mapper.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
-/// Geliştirme: ana sayfa [LeaderCardRow] + liderlik ekranı için örnek veri.
-/// Canlı API için [LeaderboardRemoteImpl] ile `@LazySingleton(as: LeaderboardRemote)` değiştirin.
+/// Geliştirme: örnek liderlik verisi.
+/// Canlı API için [LeaderboardRemoteImpl] `@LazySingleton(as: LeaderboardRemote)` ile kayıtlıdır.
 @LazySingleton(as: LeaderboardRemote)
 class LeaderboardRemoteMock implements LeaderboardRemote {
   @override
@@ -16,7 +16,6 @@ class LeaderboardRemoteMock implements LeaderboardRemote {
     await Future<void>.delayed(const Duration(milliseconds: 100));
     return LeaderboardMapper.toLeaderboardDataEntity(
         LeaderboardDataDto.fromJson(_sampleData));
-
   }
 
   static final Map<String, dynamic> _sampleData = <String, dynamic>{

@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/errors/exception_unwrapper.dart';
 import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 import 'package:karbon/features/calendar/domain/repositories/calendar_repository.dart';
+import 'package:karbon/core/errors/app_exception.dart';
+import 'package:karbon/core/errors/exception_handler.dart';
 
 @LazySingleton(as: CalendarRepository)
 class CalendarRepositoryImpl implements CalendarRepository {
@@ -12,7 +13,7 @@ class CalendarRepositoryImpl implements CalendarRepository {
   final CalendarRemote _remote;
 
   @override
-  Future<Either<Exception, DailyCalendarEntity>> getCalendar({
+  Future<Either<AppException, DailyCalendarEntity>> getCalendar({
     required int year,
     int? month,
     int? period,
@@ -25,13 +26,13 @@ class CalendarRepositoryImpl implements CalendarRepository {
           period: period,
         ),
       );
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 
   @override
-  Future<Either<Exception, DailyMonthlyActivitiesEntity>> getMonthlyActivities({
+  Future<Either<AppException, DailyMonthlyActivitiesEntity>> getMonthlyActivities({
     required int year,
     required int month,
     required int period,
@@ -44,19 +45,19 @@ class CalendarRepositoryImpl implements CalendarRepository {
           period: period,
         ),
       );
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 
   @override
-  Future<Either<Exception, DailyDayDetailEntity>> getDetails({
+  Future<Either<AppException, DailyDayDetailEntity>> getDetails({
     required String date,
   }) async {
     try {
       return Right(await _remote.getDetails(date: date));
-    } on Exception catch (e) {
-      return Left(unwrapDioException(e));
+    } catch (e) {
+      return guardLeft(e);
     }
   }
 }

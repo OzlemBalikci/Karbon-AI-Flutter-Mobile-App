@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/errors/exceptions.dart';
-import 'package:karbon/core/networks/api_envelope.dart';
 import 'package:karbon/features/leaderofmont/data/datasources/leaderboard_remote.dart';
 import 'package:karbon/features/leaderofmont/data/dtos/leaderboard_data_dto.dart';
 import 'package:karbon/features/leaderofmont/data/mapper/leaderboard_mapper.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
+import 'package:karbon/core/networks/response_ext.dart';
 
 /// Canlı HTTP — GET `/api/v1/user-results/leaderboard`.
 /// Mock için [LeaderboardRemoteMock] kayıtlıyken bu sınıf `@Injectable()` kalır.
@@ -15,28 +14,19 @@ class LeaderboardRemoteImpl implements LeaderboardRemote {
 
   final Dio _dio;
 
-  static const _path = '/api/v1/user-results/leaderboard';
-
   @override
   Future<LeaderboardDataEntity> getLeaderboard({
     required int month,
     required int year,
   }) async {
     final res = await _dio.get<dynamic>(
-      _path,
+      '/api/v1/user-results/leaderboard',
       queryParameters: <String, dynamic>{
         'month': month,
         'year': year,
       },
     );
-    final raw = res.data;
-    if (raw is! Map<String, dynamic>) {
-      throw BadRequestException(
-        'Beklenmeyen yanıt formatı: Map bekleniyor.',
-        statusCode: 400,
-      );
-    }
-    final map = unwrapDataMap(raw);
+    final map = res.dataMap();
     return LeaderboardMapper.toLeaderboardDataEntity(
         LeaderboardDataDto.fromJson(map));
   }

@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/domain/usecases/forgotpassword_usecase.dart';
 import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_state.dart';
 
@@ -25,9 +24,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     await result.fold<Future<void>>(
       (exception) async => emit(state.copyWith(
         status: ForgotPasswordPageStatus.failure,
-        error: exception is AppException
-            ? exception.message
-            : exception.toString(),
+        error: exception.message,
       )),
       (_) async => emit(
         state.copyWith(status: ForgotPasswordPageStatus.success),

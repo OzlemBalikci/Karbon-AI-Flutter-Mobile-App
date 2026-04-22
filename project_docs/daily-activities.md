@@ -4,35 +4,37 @@ Açıklama
 Base URL: `https://<host>/api/v1/daily-activities`  
 Auth: Tüm endpoint'ler `Bearer <access_token>` gerektirir.
 
+Tüm başarılı cevaplar aşağıdaki zarfı kullanır: `isSuccessful`, `statusCode`, `errors`, `data`.
+
 ---
 
 ## İş Kuralları
 
-- Admin günde maksimum **50 soru** oluşturabilir
-- Sorular kırılımlı yapıda olabilir — bir seçenek bir sonraki soruyu tetikler
-- Kullanıcı bir soruyu cevapladıktan sonra o soru "Bugünün Soruları"ndan kalkar
-- `previous-answers` sadece **en son cevaplanmış günü** döner
-- Takvimde tüm geçmiş görülebilir
+- Admin günde maksimum **50 soru** oluşturabilir.
+- Sorular **kırılımlı (ağaç)** yapıda olabilir: bir seçeneğin altında hem `nextQuestionId` hem de gömülü **`nextQuestion`** nesnesi dönebilir; gömülü nesne o seçenekten sonraki sorunun tamamını (kendi seçenekleri ve onların altındaki `nextQuestion` ile) içerir. Şema **özyinelemeli**dir.
+- Kullanıcı bir kök soruyu tamamladıktan sonra o soru "Bugünün Soruları" listesinden kalkar.
+- `GET .../previous-answers` yanıtında `data` genelde **en son cevaplanmış günün** kayıtlarını içeren tek gruptur (örneklerde tek `date` grubu).
+- Takvim ekranı ayrı endpoint ile tüm geçmişi gösterebilir.
 
 ---
 
-## Flutter Akışı
+## Flutter istemci notu
+
+`GET .../questions` dönüşünde kök `data[]` yalnızca **bugün cevaplanmamış kök soruları** listeler; her kök sorunun `options[]` elemanları içinde gömülü `nextQuestion` ağacı bulunabilir. İstemci veri katmanında (`adaptDailyQuestionDtoForClient` + `flattenDailyQuestionRootsToEntities`) bu ağaç **soru `id` sine göre tekilleştirilip** düz bir `List<DailyQuestionEntity>` yapılır; ekran ve bloc `nextQuestionId` ile bu listeden sonraki soruyu bulur.
 
 ```
 Ekran açılır
     ↓
-GET /daily-activities/questions       → Bugünün cevaplanmamış soruları
-GET /daily-activities/previous-answers → En son cevaplanmış günün cevapları
+GET .../daily-activities?status=pending
+GET .../questions          → Kök sorular + seçenek altı gömülü nextQuestion ağacı (istemci düzler)
+GET .../previous-answers   → Son günün cevapları
     ↓
-Kullanıcı soruya tıklar
+Kullanıcı soruya tıklar, kırılımı tamamlar, "Puanı Al" ile POST .../answers
     ↓
-POST /daily-activities/answers
+isFlowCompleted == false  → data.nextQuestion ile devam (aynı iç içe şema mümkün)
+isFlowCompleted == true   → data.nextQuestion == null, toplam skor → tebrik popup
     ↓
-data.isFlowCompleted == false → data.nextQuestion'ı göster
-data.isFlowCompleted == true  → "Puanı Al" ekranı, data.totalCarbonScore göster
-    ↓
-GET /daily-activities/questions       → Cevaplanmış soru artık gelmez
-GET /daily-activities/previous-answers → Yeni cevap görünür
+Liste yenileme: GET questions + GET previous-answers (ve takvim ihtiyacına göre)
 ```
 
 ---
@@ -41,15 +43,18 @@ GET /daily-activities/previous-answers → Yeni cevap görünür
 
 ### `GET /daily-activities/questions`
 
-Bugün aktif olan ve henüz cevaplanmamış **root soruları** döner.
+Bugün aktif ve henüz tamamlanmamış **kök** soruları döner. Her kök sorunun seçenekleri, sonraki adımı tanımlamak için:
 
-**İş Kuralları:**
-- Sadece `StartDate <= şimdi <= EndDate` olan sorular gelir
-- Sadece hiçbir option'ın `NextQuestionId`'si olmayan sorular (root) gelir
-- Kullanıcının bugün cevapladığı sorular listeden çıkar
-- `remainingSeconds` → gece 00:00'a kalan süre (saniye)
+- `nextQuestionId` (opsiyonel, `null` ise akış bu dalda biter), ve/veya
+- **`nextQuestion`** (opsiyonel): sonraki sorunun tam gövdesi; bu nesnenin `options[]` öğeleri yine aynı alanları taşıyabilir (sınırsız derinlik).
 
-**Response `200 OK`**
+**İş kuralları (özet):**
+
+- Tarih aralığı ve kullanıcıya göre filtre sunucuda yapılır.
+- `remainingSeconds`: o gün için geri sayım (saniye).
+
+**Örnek `200 OK` — gömülü `nextQuestion` (özet; gerçek yanıt daha derin olabilir)**
+
 ```json
 {
   "isSuccessful": true,
@@ -57,51 +62,75 @@ Bugün aktif olan ve henüz cevaplanmamış **root soruları** döner.
   "errors": null,
   "data": [
     {
-      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "id": "019daea9-51e0-7d8a-b708-87cf32c80312",
       "text": "Bu sabah işe hangi ulaşım aracıyla gideceksiniz?",
       "displayOrder": 1,
       "options": [
         {
-          "id": "opt-aaa",
+          "id": "019daea9-51e0-76ad-a1c6-2c127b7fa0dd",
           "text": "Toplu Ulaşım",
-          "carbonValue": 25.0,
-          "nextQuestionId": "4fa85f64-5717-4562-b3fc-2c963f66afa6"
+          "carbonValue": 5,
+          "nextQuestionId": "019daea9-51a8-7a26-870d-5ba28b54a4bf",
+          "nextQuestion": {
+            "id": "019daea9-51a8-7a26-870d-5ba28b54a4bf",
+            "text": "Kullandığınız ulaşım aracını seçiniz.",
+            "displayOrder": 2,
+            "options": [
+              {
+                "id": "019daea9-51a8-7036-8b88-27edfb710ffb",
+                "text": "Otobüs",
+                "carbonValue": 8,
+                "nextQuestionId": "019daea9-4cbf-7840-9a81-e69009c951ca",
+                "nextQuestion": {
+                  "id": "019daea9-4cbf-7840-9a81-e69009c951ca",
+                  "text": "Sefer Sayısı",
+                  "displayOrder": 3,
+                  "options": [
+                    {
+                      "id": "019daea9-4cc2-70ba-95ef-f29972896726",
+                      "text": "1 Sefer",
+                      "carbonValue": 5,
+                      "nextQuestionId": null,
+                      "nextQuestion": null
+                    }
+                  ],
+                  "remainingSeconds": 62774
+                }
+              }
+            ],
+            "remainingSeconds": 62774
+          }
         },
         {
-          "id": "opt-bbb",
-          "text": "Özel Araç",
-          "carbonValue": -10.0,
-          "nextQuestionId": null
+          "id": "019daea9-51e0-7bf4-8fd2-3cb0cb916c8e",
+          "text": "Yürüyüş / Bisiklet",
+          "carbonValue": 0,
+          "nextQuestionId": null,
+          "nextQuestion": null
         }
       ],
-      "remainingSeconds": 57600
+      "remainingSeconds": 62774
     }
   ]
 }
 ```
 
-**Tüm sorular cevaplanmışsa `200 OK` — boş liste**
-```json
-{
-  "isSuccessful": true,
-  "statusCode": 200,
-  "errors": null,
-  "data": []
-}
-```
+**Boş liste:** `data: []` — bugün cevaplanacak kök soru kalmadı.
 
-**Alan Açıklamaları**
+**Alan özeti — `DailyQuestion` / seçenek**
 
 | Alan | Tip | Açıklama |
-|---|---|---|
-| `id` | `Guid` | Soru ID'si |
-| `text` | `string` | Soru metni |
-| `displayOrder` | `int` | Gösterim sırası |
-| `options[].id` | `Guid` | Seçenek ID'si |
-| `options[].text` | `string` | Seçenek metni |
-| `options[].carbonValue` | `double` | Karbon değeri |
-| `options[].nextQuestionId` | `Guid?` | Sonraki soru ID'si — null ise flow biter |
-| `remainingSeconds` | `long` | Gece 00:00'a kalan süre (saniye) |
+|------|-----|----------|
+| `id` | string (uuid) | Soru kimliği |
+| `text` | string | Soru metni |
+| `displayOrder` | int | Sıra |
+| `options` | array | Seçenekler |
+| `options[].id` | string | Seçenek kimliği |
+| `options[].text` | string | Seçenek metni |
+| `options[].carbonValue` | number | Karbon / puan katkısı |
+| `options[].nextQuestionId` | string \| null | Sonraki soru id (yoksa dal biter) |
+| `options[].nextQuestion` | object \| null | Gömülü sonraki soru (recursive) |
+| `remainingSeconds` | int | Gün sonuna kalan saniye |
 
 ---
 
@@ -109,33 +138,26 @@ Bugün aktif olan ve henüz cevaplanmamış **root soruları** döner.
 
 ### `POST /daily-activities/answers`
 
-Kullanıcının seçtiği option'ı kaydeder. Response'da sonraki soru veya flow tamamlandı bilgisi döner.
+**Request body**
 
-**İş Kuralları:**
-- `nextQuestion != null` → kırılım devam ediyor, bir sonraki soruyu göster
-- `nextQuestion == null` + `isFlowCompleted == true` → tüm akış tamamlandı
-- `totalCarbonScore` → kullanıcının bugünkü toplam karbon skoru
-
-**Request Body**
 ```json
 {
-  "questionId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  "selectedOptionId": "opt-aaa",
-  "userId": "user-guid-buraya"
+  "questionId": "019daea9-51e0-7d8a-b708-87cf32c80312",
+  "selectedOptionId": "019daea9-51e0-76ad-a1c6-2c127b7fa0dd",
+  "userId": "<kullanıcı-guid>"
 }
 ```
 
-**Alan Açıklamaları — Request**
+| Alan | Zorunlu | Açıklama |
+|------|---------|----------|
+| `questionId` | Evet | Cevaplanan soru |
+| `selectedOptionId` | Evet | Seçilen seçenek |
+| `userId` | Evet | Oturum kullanıcısı |
 
-| Alan | Tip | Zorunlu | Açıklama |
-|---|---|---|---|
-| `questionId` | `Guid` | Evet | Cevaplanan sorunun ID'si |
-| `selectedOptionId` | `Guid` | Evet | Seçilen option'ın ID'si |
-| `userId` | `Guid` | Evet | Kullanıcı ID'si |
+**Response — akış devam (`isFlowCompleted: false`)**
 
----
+`data.nextQuestion` bir sonraki soruyu taşır; seçenekler yine `nextQuestionId` / `nextQuestion` ile iç içe olabilir (GET ile aynı şema).
 
-**Response `200 OK` — Akış devam ediyor**
 ```json
 {
   "isSuccessful": true,
@@ -143,32 +165,42 @@ Kullanıcının seçtiği option'ı kaydeder. Response'da sonraki soru veya flow
   "errors": null,
   "data": {
     "nextQuestion": {
-      "id": "4fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "id": "019daea9-51a8-7a26-870d-5ba28b54a4bf",
       "text": "Kullandığınız ulaşım aracını seçiniz.",
       "displayOrder": 2,
       "options": [
         {
-          "id": "opt-ccc",
+          "id": "019daea9-51a8-7036-8b88-27edfb710ffb",
           "text": "Otobüs",
-          "carbonValue": 0.3,
-          "nextQuestionId": "5fa85f64-5717-4562-b3fc-2c963f66afa6"
-        },
-        {
-          "id": "opt-ddd",
-          "text": "Metro",
-          "carbonValue": 0.1,
-          "nextQuestionId": "5fa85f64-5717-4562-b3fc-2c963f66afa6"
+          "carbonValue": 8,
+          "nextQuestionId": "019daea9-4cbf-7840-9a81-e69009c951ca",
+          "nextQuestion": {
+            "id": "019daea9-4cbf-7840-9a81-e69009c951ca",
+            "text": "Sefer Sayısı",
+            "displayOrder": 3,
+            "options": [
+              {
+                "id": "019daea9-4cc2-70ba-95ef-f29972896726",
+                "text": "1 Sefer",
+                "carbonValue": 5,
+                "nextQuestionId": null,
+                "nextQuestion": null
+              }
+            ],
+            "remainingSeconds": 62589
+          }
         }
       ],
-      "remainingSeconds": 57580
+      "remainingSeconds": 62589
     },
-    "totalCarbonScore": 25.0,
+    "totalCarbonScore": 5,
     "isFlowCompleted": false
   }
 }
 ```
 
-**Response `200 OK` — Akış tamamlandı**
+**Response — akış bitti (`isFlowCompleted: true`)**
+
 ```json
 {
   "isSuccessful": true,
@@ -176,23 +208,17 @@ Kullanıcının seçtiği option'ı kaydeder. Response'da sonraki soru veya flow
   "errors": null,
   "data": {
     "nextQuestion": null,
-    "totalCarbonScore": 42.0,
+    "totalCarbonScore": 33,
     "isFlowCompleted": true
   }
 }
 ```
 
-**Alan Açıklamaları — Response**
-
-| Alan | Tip | Açıklama |
-|---|---|---|
-| `nextQuestion` | `object?` | Sonraki soru — null ise akış bitti |
-| `nextQuestion.id` | `Guid` | Sonraki sorunun ID'si |
-| `nextQuestion.text` | `string` | Sonraki sorunun metni |
-| `nextQuestion.options` | `array` | Sonraki sorunun seçenekleri |
-| `nextQuestion.remainingSeconds` | `long` | Gece 00:00'a kalan süre |
-| `totalCarbonScore` | `double` | Kullanıcının bugünkü toplam karbon skoru |
-| `isFlowCompleted` | `bool` | true → "Puanı Al" ekranını göster |
+| Alan | Açıklama |
+|------|----------|
+| `nextQuestion` | Devam edecek soru; `null` ve `isFlowCompleted: true` ise akış bitti |
+| `totalCarbonScore` | Bugüne ait güncel toplam karbon skoru |
+| `isFlowCompleted` | `true` ise ödül / özet ekranı |
 
 ---
 
@@ -200,14 +226,10 @@ Kullanıcının seçtiği option'ı kaydeder. Response'da sonraki soru veya flow
 
 ### `GET /daily-activities/previous-answers`
 
-En son cevaplanmış günün cevaplarını döner.
+En son cevaplanmış güne ait kayıtlar (çoğunlukla tek gün grubu).
 
-**İş Kuralları:**
-- Sadece **en son cevaplanmış 1 günün** cevapları döner
-- `UserActivityLogs` tablosundan `ActivityDate`'e göre gruplandırılır
-- Hiç cevap yoksa `404` döner
+**Örnek `200 OK`**
 
-**Response `200 OK`**
 ```json
 {
   "isSuccessful": true,
@@ -215,19 +237,25 @@ En son cevaplanmış günün cevaplarını döner.
   "errors": null,
   "data": [
     {
-      "date": "2026-04-15T00:00:00Z",
+      "date": "2026-04-21T00:00:00Z",
       "answers": [
         {
-          "questionText": "Bu sabah işe hangi ulaşım aracıyla gideceksiniz?",
-          "answerText": "Toplu Ulaşım",
-          "score": 25.0,
-          "date": "2026-04-15T08:30:00Z"
+          "questionText": "Sefer Sayısı",
+          "answerText": "4+ Sefer",
+          "score": 20,
+          "date": "2026-04-21T06:39:50.385265Z"
         },
         {
           "questionText": "Kullandığınız ulaşım aracını seçiniz.",
           "answerText": "Otobüs",
-          "score": 10.0,
-          "date": "2026-04-15T08:31:00Z"
+          "score": 8,
+          "date": "2026-04-21T06:38:48.22605Z"
+        },
+        {
+          "questionText": "Bu sabah işe hangi ulaşım aracıyla gideceksiniz?",
+          "answerText": "Toplu Ulaşım",
+          "score": 5,
+          "date": "2026-04-21T06:36:49.18482Z"
         }
       ]
     }
@@ -235,25 +263,15 @@ En son cevaplanmış günün cevaplarını döner.
 }
 ```
 
-**Response `404 Not Found` — Hiç cevap yok**
-```json
-{
-  "isSuccessful": false,
-  "statusCode": 404,
-  "errors": [{ "code": "PreviousAnswersNotFound" }],
-  "data": null
-}
-```
+**`404`** — hiç cevap yok (`PreviousAnswersNotFound` vb.); istemci boş liste kabul edebilir.
 
-**Alan Açıklamaları**
-
-| Alan | Tip | Açıklama |
-|---|---|---|
-| `date` | `DateTime` | Grubun tarihi (gün başı) |
-| `answers[].questionText` | `string` | Sorunun metni |
-| `answers[].answerText` | `string` | Seçilen option'ın metni |
-| `answers[].score` | `double` | O cevap için karbon skoru |
-| `answers[].date` | `DateTime` | Cevabın verildiği saat |
+| Alan | Açıklama |
+|------|----------|
+| `date` | Grup günü (UTC gün başı) |
+| `answers[].questionText` | Soru metni |
+| `answers[].answerText` | Seçilen seçenek metni |
+| `answers[].score` | O satırın skoru |
+| `answers[].date` | Cevap zaman damgası |
 
 ---
 
@@ -261,13 +279,6 @@ En son cevaplanmış günün cevaplarını döner.
 
 ### `GET /daily-activities?status=pending`
 
-Kullanıcının bugün henüz cevaplamadığı soru sayısını döner.
-
-**İş Kuralları:**
-- Uygulama açılışında badge göstermek için çağrılır
-- `hasPending == false` → bugün tüm sorular cevaplanmış
-
-**Response `200 OK`**
 ```json
 {
   "isSuccessful": true,
@@ -280,9 +291,7 @@ Kullanıcının bugün henüz cevaplamadığı soru sayısını döner.
 }
 ```
 
-**Alan Açıklamaları**
-
-| Alan | Tip | Açıklama |
-|---|---|---|
-| `hasPending` | `bool` | Cevaplanmamış soru var mı? |
-| `pendingCount` | `int` | Cevaplanmamış soru sayısı |
+| Alan | Açıklama |
+|------|----------|
+| `hasPending` | Bekleyen günlük soru var mı |
+| `pendingCount` | Bekleyen soru sayısı |

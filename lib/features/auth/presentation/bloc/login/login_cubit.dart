@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/domain/usecases/login_usecase.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_event.dart';
@@ -31,7 +30,7 @@ class LoginCubit extends Cubit<LoginState> {
     await result.fold<Future<void>>(
       (failure) async => emit(state.copyWith(
         status: LoginPageStatus.failure,
-        error: failure is AppException ? failure.message : failure.toString(),
+        error: failure.message,
       )),
       (user) async {
         _authBloc.add(AuthEvent.loggedIn(user: user));

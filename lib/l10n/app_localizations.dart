@@ -484,17 +484,17 @@ abstract class AppLocalizations {
   /// **'Önceki Cevaplarınız'**
   String get daily_activities_history_section_header_text;
 
-  /// No description provided for @daily_activities_success_points_title.
-  ///
-  /// In tr, this message translates to:
-  /// **'Tebrikler {points} Puan Kazandınız.'**
-  String daily_activities_success_points_title(String points);
-
-  /// No description provided for @daily_activities_success_points_body.
+  /// No description provided for @daily_activities_success_total_carbon_body.
   ///
   /// In tr, this message translates to:
   /// **'En kısa sürede size geri dönüş yaparak sorularınızı yanıtlamaktan mutluluk duyacağız.'**
-  String get daily_activities_success_points_body;
+  String get daily_activities_success_total_carbon_body;
+
+  /// No description provided for @daily_activities_success_total_carbon_label.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tebrikler {score} Puan Kazandınız.'**
+  String daily_activities_success_total_carbon_label(String score);
 
   /// No description provided for @daily_activities_success_back_button.
   ///

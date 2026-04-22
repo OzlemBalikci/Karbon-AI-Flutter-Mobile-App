@@ -7,7 +7,7 @@ class BottomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
-      child: DailyActivitiesSubmitButtonSelector(
+      child: DailyActivitiesBranchSelector(
         builder: (ui) => Builder(
           builder: (context) {
             final colors = context.colors;
@@ -19,10 +19,10 @@ class BottomButton extends StatelessWidget {
                       )
                   : null,
               backgroundColor:
-                  ui.hasSelection ? colors.primary : colors.buttonDisabled,
+                  ui.canSubmit ? colors.primary : colors.buttonDisabled,
               foregroundColor: context.colors.textOnPrimary,
               borderColor:
-                  ui.hasSelection ? colors.primary : colors.buttonDisabled,
+                  ui.canSubmit ? colors.primary : colors.buttonDisabled,
             );
           },
         ),

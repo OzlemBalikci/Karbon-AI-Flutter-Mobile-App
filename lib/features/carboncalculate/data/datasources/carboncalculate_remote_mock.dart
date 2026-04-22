@@ -3,9 +3,9 @@ import 'package:karbon/features/carboncalculate/data/mocks/active_poll_set_mock.
 import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote.dart';
 
-/// Geliştirme: [ActivePollSetMock] ile 13 soruluk anket döner.
-/// Canlı API için `CarbonCalculateRemoteImpl` kullanın ve DI `build_runner` ile güncelleyin.
-@LazySingleton(as: CarbonCalculateRemote)
+/// Geliştirme: [ActivePollSetMock] ile örnek anket döner.
+/// Canlı API için [CarbonCalculateRemoteImpl] `@LazySingleton(as: CarbonCalculateRemote)` ile kayıtlıdır.
+@Injectable()
 class CarbonCalculateRemoteMock implements CarbonCalculateRemote {
   @override
   Future<ActivePollSetEntity> getActivePoll() async {

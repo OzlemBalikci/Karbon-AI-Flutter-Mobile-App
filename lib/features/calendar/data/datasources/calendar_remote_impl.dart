@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/core/networks/api_config.dart';
-import 'package:karbon/core/networks/api_envelope.dart';
+import 'package:karbon/core/networks/response_ext.dart';
 import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart';
 import 'package:karbon/features/calendar/data/dtos/daily_calendar_dto.dart';
 import 'package:karbon/features/calendar/data/dtos/daily_day_detail_dto.dart';
@@ -25,24 +25,12 @@ class CalendarRemoteImpl implements CalendarRemote {
       await Future<void>.delayed(const Duration(milliseconds: 150));
       return _mockDetailForRequestedDate(date);
     }
-    try {
-      final res = await _dio.get<dynamic>(
-        _v1,
-        queryParameters: <String, dynamic>{'date': date},
-      );
-      final data = unwrapDataMap(res.data);
-      return CalendarMapper.toDayDetailEntity(DailyDayDetailDto.fromJson(data));
-    } on DioException catch (e) {
-      /// [calendar.md] §5 — o gün aktivite yoksa `404 ActivityNotFound`.
-      if (e.response?.statusCode == 404) {
-        return DailyDayDetailEntity(
-          date: _isoDateFromQuery(date),
-          totalScore: 0,
-          activities: const [],
-        );
-      }
-      rethrow;
-    }
+    final res = await _dio.get<dynamic>(
+      _v1,
+      queryParameters: <String, dynamic>{'date': date},
+    );
+    final data = res.dataMap();
+    return CalendarMapper.toDayDetailEntity(DailyDayDetailDto.fromJson(data));
   }
 
   @override
@@ -63,7 +51,7 @@ class CalendarRemoteImpl implements CalendarRemote {
         if (period != null) 'period': period,
       },
     );
-    final data = unwrapDataMap(res.data);
+    final data = res.dataMap();
     return CalendarMapper.toCalendarEntity(
         DailyCalendarResponseDto.fromJson(data));
   }
@@ -87,7 +75,7 @@ class CalendarRemoteImpl implements CalendarRemote {
           'period': period,
         },
       );
-      final data = unwrapDataMap(res.data);
+      final data = res.dataMap();
       return CalendarMapper.toMonthlyActivitiesEntity(
           DailyMonthlyActivitiesDto.fromJson(data));
     } on DioException catch (e) {

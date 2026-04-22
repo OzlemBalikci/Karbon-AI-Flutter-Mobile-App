@@ -62,8 +62,8 @@ class CalendarFirstOpenPage extends StatelessWidget {
                       );
                 },
                 onPreviousMonth: () {
-                  final target =
-                      DateTime(state.focusedDay.year, state.focusedDay.month - 1, 1);
+                  final target = DateTime(
+                      state.focusedDay.year, state.focusedDay.month - 1, 1);
                   if (target.isBefore(DateTime(2018, 1, 1))) return;
                   context.read<CalendarBloc>().add(
                         CalendarEvent.gridReloadRequested(
@@ -73,8 +73,8 @@ class CalendarFirstOpenPage extends StatelessWidget {
                       );
                 },
                 onNextMonth: () {
-                  final target =
-                      DateTime(state.focusedDay.year, state.focusedDay.month + 1, 1);
+                  final target = DateTime(
+                      state.focusedDay.year, state.focusedDay.month + 1, 1);
                   if (target.isAfter(DateTime(2040, 12, 1))) return;
                   context.read<CalendarBloc>().add(
                         CalendarEvent.gridReloadRequested(

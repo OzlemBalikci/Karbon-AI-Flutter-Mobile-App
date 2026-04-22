@@ -25,7 +25,8 @@ class ProfileMapper {
         donationDate: dto.donationDate,
       );
 
-  static DonationHistoryEntity toDonationHistoryEntity(DonationHistoryDto dto) =>
+  static DonationHistoryEntity toDonationHistoryEntity(
+          DonationHistoryDto dto) =>
       DonationHistoryEntity(
         totalDonatedTreeCount: dto.totalDonatedTreeCount,
         donations: dto.donations.map(toDonationItemEntity).toList(),

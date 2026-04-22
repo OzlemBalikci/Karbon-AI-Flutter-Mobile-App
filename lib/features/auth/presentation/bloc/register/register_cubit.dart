@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/core/errors/exceptions.dart';
 import 'package:karbon/features/auth/data/datasources/auth_launch_local.dart';
 import 'package:karbon/features/auth/domain/usecases/register_usecase.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
@@ -48,7 +47,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     await result.fold<Future<void>>(
       (failure) async => emit(state.copyWith(
         status: RegisterPageStatus.failure,
-        error: failure is AppException ? failure.message : failure.toString(),
+        error: failure.message,
       )),
       (user) async {
         await _authLaunchLocal.setCustomFirstOpenCompleted();

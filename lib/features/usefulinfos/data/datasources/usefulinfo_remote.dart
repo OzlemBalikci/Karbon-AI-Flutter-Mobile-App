@@ -1,6 +1,6 @@
-import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
+import 'package:karbon/features/usefulinfos/data/dtos/usefulinfo_dto.dart';
 
 abstract class UsefulinfoRemote {
   /// GET `/api/v1/useful-information` — Aktif faydalı bilgileri döner.
-  Future<List<UsefulInfoEntity>> getUsefulInfos();
+  Future<List<UsefulInfoDto>> getUsefulInfos();
 }
