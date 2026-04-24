@@ -16,7 +16,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     required String newPassword,
     required String confirmNewPassword,
   }) async {
-    if (state.status == ResetPasswordPageStatus.loading) return;
+    if (state.isLoading) return;
     emit(state.copyWith(
       status: ResetPasswordPageStatus.loading,
       error: null,
@@ -35,13 +35,13 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
         error: exception.message,
       )),
       (_) async => emit(
-        state.copyWith(status: ResetPasswordPageStatus.success),
+        state.copyWith(status: ResetPasswordPageStatus.success, error: null),
       ),
     );
   }
 
   void resetError() {
-    if (state.status == ResetPasswordPageStatus.failure) {
+    if (state.hasError) {
       emit(
           state.copyWith(status: ResetPasswordPageStatus.initial, error: null));
     }

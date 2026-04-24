@@ -11,7 +11,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   final ForgotPasswordUseCase _forgotPasswordUseCase;
 
   Future<void> sendCode({required String phoneNumber}) async {
-    if (state.status == ForgotPasswordPageStatus.loading) return;
+    if (state.isLoading) return;
     emit(state.copyWith(
       status: ForgotPasswordPageStatus.loading,
       error: null,
@@ -27,13 +27,13 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
         error: exception.message,
       )),
       (_) async => emit(
-        state.copyWith(status: ForgotPasswordPageStatus.success),
+        state.copyWith(status: ForgotPasswordPageStatus.success, error: null),
       ),
     );
   }
 
   void resetError() {
-    if (state.status == ForgotPasswordPageStatus.failure) {
+    if (state.hasError) {
       emit(state.copyWith(
           status: ForgotPasswordPageStatus.initial, error: null));
     }

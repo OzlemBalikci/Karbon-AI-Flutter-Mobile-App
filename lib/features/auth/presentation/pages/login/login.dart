@@ -49,14 +49,16 @@ class _LoginPageState extends State<LoginPage> {
     return BlocProvider(
         create: (context) => getIt<LoginCubit>(),
         child: BlocListener<LoginCubit, LoginState>(
+          listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
             if (state.status == LoginPageStatus.success) {
               context.router.replaceAll([const HomeShellRoute()]);
             }
             if (state.hasError) {
-              showDialog(
-                context: context,
-                builder: (context) => ErrorPopupWidget(error: state.error!),
+              showAppErrorDialog(
+                context,
+                message: state.error!,
+                onDismissed: () => context.read<LoginCubit>().resetError(),
               );
             }
           },

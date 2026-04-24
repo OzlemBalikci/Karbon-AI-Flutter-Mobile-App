@@ -76,8 +76,7 @@ class RegisterFormWidget extends StatelessWidget {
                 onSubmitted: (_) =>
                     formController.confirmPasswordFocus.requestFocus(),
               ),
-              SizedBox(height: AppThemeSpacing.s10.h),
-              const PasswordValidationText(),
+              PasswordValidationText(focusNode: formController.passwordFocus),
               SizedBox(height: AppThemeSpacing.s20.h),
               TextFieldWidget(
                 obscureText: false,

@@ -29,7 +29,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     required String confirmPassword,
     required bool isKvkkApproved,
   }) async {
-    if (state.status == RegisterPageStatus.loading) return;
+    if (state.isLoading) return;
     emit(state.copyWith(status: RegisterPageStatus.loading, error: null));
 
     final result = await _registerUseCase(
@@ -58,7 +58,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   void resetError() {
-    if (state.status == RegisterPageStatus.failure) {
+    if (state.hasError) {
       emit(state.copyWith(status: RegisterPageStatus.initial, error: null));
     }
   }

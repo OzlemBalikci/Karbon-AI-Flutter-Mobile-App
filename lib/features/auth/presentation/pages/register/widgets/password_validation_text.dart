@@ -1,7 +1,9 @@
 part of '../register.dart';
 
-class PasswordValidationText extends StatelessWidget {
-  const PasswordValidationText({super.key});
+class PasswordValidationText extends StatefulWidget {
+  const PasswordValidationText({super.key, required this.focusNode});
+
+  final FocusNode focusNode;
 
   static const _rules = <String>[
     'Şifre en az 8 karakter olmalıdır.',
@@ -12,7 +14,39 @@ class PasswordValidationText extends StatelessWidget {
   ];
 
   @override
+  State<PasswordValidationText> createState() => _PasswordValidationTextState();
+}
+
+class _PasswordValidationTextState extends State<PasswordValidationText> {
+  @override
+  void initState() {
+    super.initState();
+    widget.focusNode.addListener(_onFocusChange);
+  }
+
+  @override
+  void didUpdateWidget(covariant PasswordValidationText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.focusNode != widget.focusNode) {
+      oldWidget.focusNode.removeListener(_onFocusChange);
+      widget.focusNode.addListener(_onFocusChange);
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.focusNode.removeListener(_onFocusChange);
+    super.dispose();
+  }
+
+  void _onFocusChange() => setState(() {});
+
+  @override
   Widget build(BuildContext context) {
+    if (!widget.focusNode.hasFocus) {
+      return const SizedBox.shrink();
+    }
+
     final style = context.typographiesSp.bodyExtraSmall
         .copyWith(color: context.colors.textOnPrimary);
     return Column(
@@ -20,7 +54,8 @@ class PasswordValidationText extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (final rule in _rules)
+        SizedBox(height: AppThemeSpacing.s10.h),
+        for (final rule in PasswordValidationText._rules)
           Text(
             '• $rule',
             style: style,

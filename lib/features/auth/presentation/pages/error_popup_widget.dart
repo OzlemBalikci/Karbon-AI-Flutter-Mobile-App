@@ -38,3 +38,22 @@ class ErrorPopupWidget extends StatelessWidget {
     );
   }
 }
+
+/// Root navigator + bir frame sonra; kapanınca [onDismissed] (ör. [resetError]).
+void showAppErrorDialog(
+  BuildContext context, {
+  required String message,
+  VoidCallback? onDismissed,
+}) {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (!context.mounted) return;
+    showDialog<void>(
+      context: context,
+      useRootNavigator: true,
+      barrierDismissible: true,
+      builder: (dialogContext) => ErrorPopupWidget(error: message),
+    ).then((_) {
+      if (context.mounted) onDismissed?.call();
+    });
+  });
+}

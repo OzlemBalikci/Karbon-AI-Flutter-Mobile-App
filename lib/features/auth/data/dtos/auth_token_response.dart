@@ -1,6 +1,7 @@
-/// POST `/api/v1/users/login` ve token refresh — `unwrapDataMap` sonrası `data` gövdesi.
-class LoginResponseModel {
-  const LoginResponseModel({
+/// Token çifti: login, kayıt sonrası giriş ve token refresh cevabının `data` gövdesi
+/// ([response_ext.dataMap] sonrası map).
+class AuthTokenResponse {
+  const AuthTokenResponse({
     required this.accessToken,
     required this.refreshToken,
     required this.tokenType,
@@ -12,8 +13,8 @@ class LoginResponseModel {
   final String tokenType;
   final int expiresIn;
 
-  factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    return LoginResponseModel(
+  factory AuthTokenResponse.fromJson(Map<String, dynamic> json) {
+    return AuthTokenResponse(
       accessToken: json['accessToken'] as String? ?? '',
       refreshToken: json['refreshToken'] as String? ?? '',
       tokenType: json['tokenType'] as String? ?? 'Bearer',

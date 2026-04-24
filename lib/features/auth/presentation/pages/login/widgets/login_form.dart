@@ -50,9 +50,9 @@ class LoginFormWidget extends StatelessWidget {
               AppButton(
                 text: context.text.login_button_title_bizizmir,
                 onPressed: () {
-                  FocusManager.instance.primaryFocus?.unfocus();
+                  // FocusManager.instance.primaryFocus?.unfocus();
                   // context.read<LoginCubit>().login(
-                  //       emailOrIdentityNumber: c.emailOrTc.text.trim(),
+                  //       emailOrIdentityNumber: c.emailOrTc.text,
                   //       password: c.password.text,
                   //     );
                   context.router.replaceAll([const HomeRoute()]);

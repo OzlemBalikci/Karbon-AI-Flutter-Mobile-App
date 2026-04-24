@@ -57,10 +57,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             );
           }
           if (state.hasError) {
-            showDialog<void>(
-              context: context,
-              builder: (dialogContext) =>
-                  ErrorPopupWidget(error: state.error!),
+            showAppErrorDialog(
+              context,
+              message: state.error!,
+              onDismissed: () =>
+                  context.read<ForgotPasswordCubit>().resetError(),
             );
           }
         },

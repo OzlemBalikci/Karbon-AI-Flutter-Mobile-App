@@ -7,7 +7,10 @@ import 'package:karbon/features/auth/presentation/bloc/login/login_state.dart';
 
 @injectable
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this._loginUseCase, this._authBloc) : super(LoginState.initial());
+  LoginCubit(
+    this._loginUseCase,
+    this._authBloc,
+  ) : super(LoginState.initial());
 
   final LoginUseCase _loginUseCase;
   final AuthBloc _authBloc;
@@ -19,7 +22,7 @@ class LoginCubit extends Cubit<LoginState> {
     required String emailOrIdentityNumber,
     required String password,
   }) async {
-    if (state.status == LoginPageStatus.loading) return;
+    if (state.isLoading) return;
     emit(state.copyWith(status: LoginPageStatus.loading, error: null));
 
     final result = await _loginUseCase(
@@ -40,7 +43,7 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void resetError() {
-    if (state.status == LoginPageStatus.failure) {
+    if (state.hasError) {
       emit(state.copyWith(status: LoginPageStatus.initial, error: null));
     }
   }

@@ -112,7 +112,9 @@ class AuthRepositoryImpl implements AuthRepository {
     required String phoneNumber,
   }) async {
     try {
-      await _remote.forgotPassword(phoneNumber: phoneNumber);
+      await _remote.forgotPassword(
+        AuthMapper.forgotPasswordRequest(phoneNumber),
+      );
       return const Right(unit);
     } catch (e) {
       return guardLeft(e);
@@ -128,10 +130,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }) async {
     try {
       await _remote.resetPassword(
-        phoneNumber: phoneNumber,
-        resetCode: resetCode,
-        newPassword: newPassword,
-        confirmNewPassword: confirmNewPassword,
+        AuthMapper.resetPasswordRequest(
+          phoneNumber: phoneNumber,
+          resetCode: resetCode,
+          newPassword: newPassword,
+          confirmNewPassword: confirmNewPassword,
+        ),
       );
       return const Right(unit);
     } catch (e) {

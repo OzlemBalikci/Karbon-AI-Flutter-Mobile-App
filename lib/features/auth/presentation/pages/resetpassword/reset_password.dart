@@ -58,13 +58,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         listenWhen: (p, c) => p.status != c.status,
         listener: (context, state) {
           if (state.status == ResetPasswordPageStatus.success) {
-            context.router.push(const LoginRoute());
+            context.router.replaceAll([const LoginRoute()]);
           }
           if (state.hasError) {
-            showDialog<void>(
-              context: context,
-              builder: (dialogContext) =>
-                  ErrorPopupWidget(error: state.error!),
+            showAppErrorDialog(
+              context,
+              message: state.error!,
+              onDismissed: () =>
+                  context.read<ResetPasswordCubit>().resetError(),
             );
           }
         },

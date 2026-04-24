@@ -1,3 +1,4 @@
+//Backend tarafından gelen errors verisini Flutter tarafında Model'e dönüştürür.
 class ApiError {
   const ApiError({
     required this.code,

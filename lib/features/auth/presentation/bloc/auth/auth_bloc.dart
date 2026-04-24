@@ -112,9 +112,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       return AuthState.authFailure(
         reason: failure.message,
         failureType: _resolveFailureType(failure),
-        code: failure.statusCode != 0
-            ? failure.statusCode.toString()
-            : null,
+        code: failure.statusCode != 0 ? failure.statusCode.toString() : null,
       );
     }
     return AuthState.authFailure(
@@ -127,9 +125,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       switch (e.type) {
         AppExceptionType.network => AuthFailureType.network,
         AppExceptionType.unauthorized => AuthFailureType.sessionExpired,
-        AppExceptionType.validation => AuthFailureType.invalidToken,
-        AppExceptionType.business => AuthFailureType.invalidToken,
+        AppExceptionType.badRequest => AuthFailureType.invalidToken,
         AppExceptionType.forbidden => AuthFailureType.unknown,
+        AppExceptionType.notFound => AuthFailureType.unknown,
+        AppExceptionType.conflict => AuthFailureType.unknown,
+        AppExceptionType.rateLimited => AuthFailureType.unknown,
         AppExceptionType.server => AuthFailureType.unknown,
         AppExceptionType.unexpected => AuthFailureType.unknown,
       };

@@ -37,8 +37,9 @@ abstract class RegisterModule {
     final client = Dio(
       BaseOptions(
         baseUrl: ApiConfig.baseUrl,
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
+        connectTimeout: ApiConfig.connectTimeout,
+        sendTimeout: ApiConfig.sendTimeout,
+        receiveTimeout: ApiConfig.receiveTimeout,
       ),
     );
     client.interceptors.add(CookieManager(cookieJar));

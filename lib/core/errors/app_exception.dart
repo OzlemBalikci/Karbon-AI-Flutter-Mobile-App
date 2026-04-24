@@ -1,3 +1,6 @@
+//Bu kod, uygulamadaki tüm hataları tek bir standart yapıda toplamak ve yönetmek
+// için yazılmış bir **custom exception (özel hata sınıfı)**dır.
+
 import 'package:karbon/core/errors/api_error.dart';
 
 class AppException implements Exception {
@@ -31,7 +34,7 @@ class AppException implements Exception {
   factory AppException.business(String message) => AppException._(
         message: message,
         statusCode: 0,
-        type: AppExceptionType.business,
+        type: AppExceptionType.badRequest,
       );
 
   factory AppException.unexpected([String? detail]) => AppException._(
@@ -45,6 +48,8 @@ class AppException implements Exception {
   final AppExceptionType type;
   final List<ApiError> errors;
 
+//errors listesinde isShow == true olan tüm ApiError kayıtlarını süzüp,
+//her birinin message alanını alarak yeni bir List<String> üretir.
   List<String> get visibleMessages =>
       errors.where((e) => e.isShow).map((e) => e.message).toList();
 
@@ -53,19 +58,24 @@ class AppException implements Exception {
   // ── Private helpers ───────────────────────────────────────────────────────
 
   static AppExceptionType _typeFromStatus(int code) => switch (code) {
+        400 => AppExceptionType.badRequest,
         401 => AppExceptionType.unauthorized,
         403 => AppExceptionType.forbidden,
-        422 => AppExceptionType.validation,
-        400 => AppExceptionType.business,
+        404 => AppExceptionType.notFound,
+        409 => AppExceptionType.conflict,
+        429 => AppExceptionType.rateLimited,
         >= 500 => AppExceptionType.server,
         _ => AppExceptionType.unexpected,
       };
 
   static String _defaultMessage(int code) => switch (code) {
+        400 => 'Geçersiz istek veya validasyon hatası.',
         401 => 'Oturum süreniz doldu. Lütfen tekrar giriş yapın.',
         403 => 'Bu işlem için yetkiniz bulunmuyor.',
-        422 => 'Girilen bilgileri kontrol edin.',
-        400 => 'İşlem gerçekleştirilemedi.',
+        404 => 'Aranan kayıt bulunamadı.',
+        409 =>
+          'Bu işlem mevcut durumla uyumsuz (ör. zaten kayıtlı veya tamamlanmış).',
+        429 => 'İstek limiti aşıldı. Lütfen bir süre sonra tekrar deneyin.',
         >= 500 => 'Sunucu hatası. Lütfen daha sonra tekrar deneyin.',
         _ => 'Bir hata oluştu.',
       };
@@ -77,8 +87,10 @@ class AppException implements Exception {
 enum AppExceptionType {
   unauthorized,
   forbidden,
-  validation,
-  business,
+  badRequest,
+  notFound,
+  conflict,
+  rateLimited,
   server,
   network,
 

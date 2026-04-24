@@ -54,9 +54,10 @@ class _RegisterPageState extends State<RegisterPage> {
             context.router.replace(const HomeShellRoute());
           }
           if (state.hasError) {
-            showDialog<void>(
-              context: context,
-              builder: (dialogContext) => ErrorPopupWidget(error: state.error!),
+            showAppErrorDialog(
+              context,
+              message: state.error!,
+              onDismissed: () => context.read<RegisterCubit>().resetError(),
             );
           }
         },

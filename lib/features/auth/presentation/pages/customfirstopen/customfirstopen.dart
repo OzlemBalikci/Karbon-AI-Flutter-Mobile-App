@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
-import 'package:karbon/features/auth/presentation/bloc/auth/auth_event.dart';
 import 'package:karbon/router/navigation.dart';
-import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/app_button.dart';
@@ -27,10 +25,6 @@ class CustomFirstOpenPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) =>
-              getIt.get<AuthBloc>()..add(const AuthEvent.appStarted()),
-        ),
-        BlocProvider(
           create: (context) => getIt<CustomFirstOpenCubit>(),
         ),
       ],
@@ -38,10 +32,11 @@ class CustomFirstOpenPage extends StatelessWidget {
         listenWhen: (p, c) => p.status != c.status,
         listener: (context, state) {
           if (state.hasError) {
-            showDialog<void>(
-              context: context,
-              builder: (dialogContext) =>
-                  ErrorPopupWidget(error: state.error!),
+            showAppErrorDialog(
+              context,
+              message: state.error!,
+              onDismissed: () =>
+                  context.read<CustomFirstOpenCubit>().resetError(),
             );
           }
         },

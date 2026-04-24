@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/features/auth/data/datasources/auth_remote.dart';
 import 'package:karbon/features/auth/data/dtos/forgotpassword_dto.dart';
 import 'package:karbon/features/auth/data/dtos/login_dto.dart';
-import 'package:karbon/features/auth/data/dtos/login_response_dto.dart';
+import 'package:karbon/features/auth/data/dtos/auth_token_response.dart';
 import 'package:karbon/features/auth/data/dtos/register_dto.dart';
 import 'package:karbon/features/auth/data/dtos/register_response_dto.dart';
 import 'package:karbon/features/auth/data/dtos/resetpassword_dto.dart';
@@ -16,18 +16,18 @@ class AuthRemoteImpl implements AuthRemote {
   final Dio _dio;
 
   @override
-  Future<LoginResponseModel> login(LoginRequestModel request) async {
+  Future<AuthTokenResponse> login(LoginRequestModel request) async {
     final res = await _dio.post<dynamic>(
       '/api/v1/users/login',
       data: request.toJson(),
     );
-    return LoginResponseModel.fromJson(res.dataMap());
+    return AuthTokenResponse.fromJson(res.dataMap());
   }
 
   @override
   Future<RegisterResponseModel> register(RegisterRequestModel request) async {
     final res = await _dio.post<dynamic>(
-      'api/v1/users/register',
+      '/api/v1/users/register',
       data: request.toJson(),
     );
     return RegisterResponseModel.fromData(res.data);
@@ -42,8 +42,7 @@ class AuthRemoteImpl implements AuthRemote {
   }
 
   @override
-  Future<void> forgotPassword({required String phoneNumber}) async {
-    final request = ForgotPasswordRequestModel(phoneNumber: phoneNumber);
+  Future<void> forgotPassword(ForgotPasswordRequestModel request) async {
     await _dio.post<dynamic>(
       '/api/v1/users/password/forgot',
       data: request.toJson(),
@@ -51,18 +50,7 @@ class AuthRemoteImpl implements AuthRemote {
   }
 
   @override
-  Future<void> resetPassword({
-    required String phoneNumber,
-    required String resetCode,
-    required String newPassword,
-    required String confirmNewPassword,
-  }) async {
-    final request = ResetPasswordRequestModel(
-      phoneNumber: phoneNumber,
-      resetCode: resetCode,
-      newPassword: newPassword,
-      confirmNewPassword: confirmNewPassword,
-    );
+  Future<void> resetPassword(ResetPasswordRequestModel request) async {
     await _dio.post<dynamic>(
       '/api/v1/users/password/reset',
       data: request.toJson(),

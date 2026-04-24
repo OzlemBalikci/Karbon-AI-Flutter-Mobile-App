@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:karbon/core/networks/response_ext.dart';
 import 'package:karbon/features/auth/data/datasources/auth_local.dart';
-import 'package:karbon/features/auth/data/dtos/login_response_dto.dart';
+import 'package:karbon/features/auth/data/dtos/auth_token_response.dart';
 
 class TokenRefreshInterceptor extends QueuedInterceptor {
   TokenRefreshInterceptor(
@@ -86,7 +86,7 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
         ),
       );
 
-      final tokens = LoginResponseModel.fromJson(refreshRes.dataMap());
+      final tokens = AuthTokenResponse.fromJson(refreshRes.dataMap());
       await _authLocal.saveToken(tokens.accessToken);
 
       // Orijinal isteği yeni token ile yeniden gönder.

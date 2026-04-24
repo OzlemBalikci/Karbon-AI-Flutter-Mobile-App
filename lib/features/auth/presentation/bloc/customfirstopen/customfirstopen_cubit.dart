@@ -16,11 +16,22 @@ class CustomFirstOpenCubit extends Cubit<CustomFirstOpenState> {
     try {
       await _authLaunchLocal.setCustomFirstOpenCompleted();
       emit(state.copyWith(status: CustomFirstOpenStatus.success));
-    } on Exception catch (e) {
+    } catch (e) {
       emit(state.copyWith(
         status: CustomFirstOpenStatus.failure,
         error: e.toString(),
       ));
+    }
+  }
+
+  void resetError() {
+    if (state.hasError) {
+      emit(
+        state.copyWith(
+          status: CustomFirstOpenStatus.initial,
+          error: null,
+        ),
+      );
     }
   }
 }

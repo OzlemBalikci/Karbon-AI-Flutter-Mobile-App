@@ -17,11 +17,15 @@
 /// flutter run --dart-define=API_BASE_URL=https://api.example.com
 /// ```
 ///
-/// ⚠️ `defaultValue` boş bırakıldı — tanımsız ortamda [DioClient] hata verir,
-/// böylece eksik yapılandırma sessizce geçmez.
+/// Tanımsızda Android emülatör örneği kullanılır; üretimde `--dart-define=API_BASE_URL=...` verin.
 abstract final class ApiConfig {
-  static const String baseUrl = String.fromEnvironment('htts://10.0.2.2:63313');
+  static const String baseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: '',
+  );
 
-  static const Duration connectTimeout = Duration(seconds: 10);
-  static const Duration receiveTimeout = Duration(seconds: 15);
+  /// İlk istek / yavaş backend (ör. login) için [receiveTimeout] bağlantıdan uzun tutulur.
+  static const Duration connectTimeout = Duration(seconds: 60);
+  static const Duration sendTimeout = Duration(seconds: 60);
+  static const Duration receiveTimeout = Duration(seconds: 60);
 }

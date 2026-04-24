@@ -8,10 +8,22 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/core/utils/appblocobserver.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:karbon/firebase_options.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   await initializeDateFormatting();
   await configureDependencies();
 

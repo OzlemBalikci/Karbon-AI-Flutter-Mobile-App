@@ -1,3 +1,7 @@
+//Bu dosya, Dio’daki Response tipine iki uzantı (extension) metot ekler.
+// Amaç: response.data türünü tekrar tekrar elle kontrol etmek yerine,
+//liste veya map beklediğinizde hızlı ve net doğrulama + dönüşüm sağlamak.
+
 import 'package:dio/dio.dart';
 
 extension ResponseDataX on Response {

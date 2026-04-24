@@ -15,6 +15,10 @@ class DailyPendingEntity extends Equatable {
 }
 
 /// GET `/api/v1/daily-activities/questions` — soru seçeneği.
+///
+/// API aynı bilgiyi bazen `options[].nextQuestion` gömülü nesnesiyle de verir; kullanıcı
+/// akışında sonraki adım [nextQuestionId] ile ve tüm soruların tekilleştirilmiş listesiyle
+/// temsil edilir (DTO ağacı veri katmanında düzleştirilir).
 class DailyQuestionOptionEntity extends Equatable {
   const DailyQuestionOptionEntity({
     required this.id,
