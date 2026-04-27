@@ -9,13 +9,7 @@ class PostAnswerUsecase {
   final DailyActivitiesRepository _repository;
 
   Future<Either<Exception, DailyAnswerResultEntity>> call({
-    required String questionId,
-    required String selectedOptionId,
-    required String userId,
+    required List<DailySelectedAnswerEntity> answers,
   }) =>
-      _repository.postAnswer(
-        questionId: questionId,
-        selectedOptionId: selectedOptionId,
-        userId: userId,
-      );
+      _repository.postAnswers(answers);
 }

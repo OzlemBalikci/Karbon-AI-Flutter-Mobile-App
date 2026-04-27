@@ -1,4 +1,3 @@
-import 'package:karbon/features/dailyactivites/data/daily_question_dto_adapt.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_request_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_pending_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
@@ -35,17 +34,22 @@ class DailyActivityMapper {
         options: dto.options.map(toOptionEntity).toList(),
       );
 
+  static DailySubmittedAnswerLineEntity toSubmittedAnswerLineEntity(
+    DailySubmittedAnswerLineDto dto,
+  ) =>
+      DailySubmittedAnswerLineEntity(
+        questionText: dto.questionText,
+        selectedOptionText: dto.selectedOptionText,
+        carbonValue: dto.carbonValue,
+      );
+
   static DailyAnswerResultEntity toAnswerResultEntity(
     DailyAnswerResultDto dto,
   ) =>
       DailyAnswerResultEntity(
-        nextQuestion: dto.nextQuestion != null
-            ? toQuestionEntity(
-                adaptDailyQuestionDtoForClient(dto.nextQuestion!),
-              )
-            : null,
         totalCarbonScore: dto.totalCarbonScore,
         isFlowCompleted: dto.isFlowCompleted,
+        answers: dto.answers.map(toSubmittedAnswerLineEntity).toList(),
       );
 
   static DailyPreviousAnswerItemEntity toPreviousAnswerItemEntity(
@@ -66,12 +70,11 @@ class DailyActivityMapper {
         answers: dto.answers.map(toPreviousAnswerItemEntity).toList(),
       );
 
-  static DailyAnswerRequestDto toAnswerRequestDto(
+  static DailyAnswerItemRequestDto toAnswerItemRequestDto(
     DailySelectedAnswerEntity entity,
   ) =>
-      DailyAnswerRequestDto(
+      DailyAnswerItemRequestDto(
         questionId: entity.questionId,
         selectedOptionId: entity.selectedOptionId,
-        userId: entity.userId,
       );
 }

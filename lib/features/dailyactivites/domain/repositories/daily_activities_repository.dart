@@ -4,12 +4,10 @@ import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_
 abstract class DailyActivitiesRepository {
   Future<Either<Exception, List<DailyQuestionEntity>>> getTodayQuestions();
 
-  /// POST `/api/v1/daily-activities/answers` — istek gövdesi `questionId`, `selectedOptionId`, `userId`.
-  Future<Either<Exception, DailyAnswerResultEntity>> postAnswer({
-    required String questionId,
-    required String selectedOptionId,
-    required String userId,
-  });
+  /// POST `/api/v1/daily-activities/answers` — `{ "answers": [...] }`, yanıt `{ "data": { ... } }`.
+  Future<Either<Exception, DailyAnswerResultEntity>> postAnswers(
+    List<DailySelectedAnswerEntity> answers,
+  );
 
   Future<Either<Exception, DailyPendingEntity>> getPendingStatus();
 

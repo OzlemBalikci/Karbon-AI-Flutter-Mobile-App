@@ -457,7 +457,7 @@ abstract class AppLocalizations {
   /// No description provided for @leaderofmonth_bottom_footer_text.
   ///
   /// In tr, this message translates to:
-  /// **'Kazananları tebrik eder, sıralamaya giren her arkadaşımızın çabası için teşekkür ederiz. Unutmayın bu sırada yer alacak olan yarın sizsiniz!'**
+  /// **'Kazananları tebrik eder, sıralamaya giren her arkadaşımızın çabası için teşekkür ederiz. <br/>Unutmayın bu sırada yer alacak olan yarın sizsiniz!'**
   String get leaderofmonth_bottom_footer_text;
 
   /// No description provided for @daily_activities_today_section_header_text.

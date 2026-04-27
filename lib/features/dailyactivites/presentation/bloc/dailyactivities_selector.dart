@@ -23,7 +23,8 @@ DailyActivitiesBranchUi selectBranchUi(DailyActivitiesState s) {
     steps: steps,
     activeSelectedOptionId: lastOption?.id,
     canSubmit: lastOption != null &&
-        s.postAnswerStatus != DailyActivitiesPostAnswerStatus.submitting,
+        s.postAnswerStatus != DailyActivitiesPostAnswerStatus.submitting &&
+        s.postAnswerStatus != DailyActivitiesPostAnswerStatus.success,
   );
 }
 

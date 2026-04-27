@@ -23,19 +23,11 @@ class DailyActivitiesRepositoryImpl implements DailyActivitiesRepository {
   }
 
   @override
-  Future<Either<AppException, DailyAnswerResultEntity>> postAnswer({
-    required String questionId,
-    required String selectedOptionId,
-    required String userId,
-  }) async {
+  Future<Either<AppException, DailyAnswerResultEntity>> postAnswers(
+    List<DailySelectedAnswerEntity> answers,
+  ) async {
     try {
-      return Right(
-        await _remote.postAnswer(
-          questionId: questionId,
-          selectedOptionId: selectedOptionId,
-          userId: userId,
-        ),
-      );
+      return Right(await _remote.postAnswers(answers));
     } catch (e) {
       return guardLeft(e);
     }

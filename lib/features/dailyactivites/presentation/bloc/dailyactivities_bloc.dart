@@ -188,6 +188,12 @@ class DailyActivitiesBloc
     DailyActivitiesPostAnswerRequested event,
     Emitter<DailyActivitiesState> emit,
   ) async {
+    if (state.postAnswerStatus ==
+            DailyActivitiesPostAnswerStatus.submitting ||
+        state.postAnswerStatus == DailyActivitiesPostAnswerStatus.success) {
+      return;
+    }
+
     final path = state.branchPath;
     if (path.isEmpty || !path.last.isAnswered) {
       emit(
@@ -203,12 +209,19 @@ class DailyActivitiesBloc
 
     final answeredSteps = path.where((s) => s.isAnswered).toList();
 
-    final sessionResult = await _checkSessionUseCase();
-    final userId = sessionResult.fold<String?>(
-      (_) => null,
-      (u) => u?.id,
+    emit(
+      state.copyWith(
+        postAnswerStatus: DailyActivitiesPostAnswerStatus.submitting,
+        postAnswerError: null,
+      ),
     );
-    if (userId == null || userId.isEmpty) {
+
+    final sessionResult = await _checkSessionUseCase();
+    final hasSession = sessionResult.fold<bool>(
+      (_) => false,
+      (u) => u != null,
+    );
+    if (!hasSession) {
       emit(
         state.copyWith(
           postAnswerStatus: DailyActivitiesPostAnswerStatus.error,
@@ -218,39 +231,31 @@ class DailyActivitiesBloc
       return;
     }
 
-    emit(
-      state.copyWith(
-        postAnswerStatus: DailyActivitiesPostAnswerStatus.submitting,
-        postAnswerError: null,
-      ),
+    final payload = answeredSteps
+        .map(
+          (s) => DailySelectedAnswerEntity(
+            questionId: s.question.id,
+            selectedOptionId: s.selectedOption!.id,
+          ),
+        )
+        .toList();
+
+    final result = await _postAnswerUsecase(answers: payload);
+    final answer = result.fold<DailyAnswerResultEntity?>(
+      (e) {
+        emit(
+          state.copyWith(
+            postAnswerStatus: DailyActivitiesPostAnswerStatus.error,
+            postAnswerError: e.toString(),
+          ),
+        );
+        return null;
+      },
+      (a) => a,
     );
+    if (answer == null) return;
 
-    DailyAnswerResultEntity? lastAnswer;
-    for (final step in answeredSteps) {
-      final result = await _postAnswerUsecase(
-        questionId: step.question.id,
-        selectedOptionId: step.selectedOption!.id,
-        userId: userId,
-      );
-      final answer = result.fold<DailyAnswerResultEntity?>(
-        (e) {
-          emit(
-            state.copyWith(
-              postAnswerStatus: DailyActivitiesPostAnswerStatus.error,
-              postAnswerError: e.toString(),
-            ),
-          );
-          return null;
-        },
-        (a) => a,
-      );
-      if (answer == null) return;
-      lastAnswer = answer;
-    }
-
-    final answer = lastAnswer!;
-    final showPointsDialog =
-        answer.isFlowCompleted && answer.nextQuestion == null;
+    final showPointsDialog = answer.isFlowCompleted;
 
     emit(
       state.copyWith(

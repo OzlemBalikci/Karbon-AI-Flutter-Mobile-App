@@ -166,64 +166,56 @@ abstract final class DailyActivitiesRemoteMocks {
   static Map<String, DailyQuestionEntity> get _questionsById =>
       {for (final q in _todayQuestions) q.id: q};
 
-  /// Üç kademeli ulaşım akışı — gerçek API’deki gibi kümülatif totalCarbonScore.
-  static DailyAnswerResultEntity postAnswer({
-    required String questionId,
-    required String selectedOptionId,
-  }) {
+  /// Toplu POST — API örneğiyle uyumlu satır listesi ve toplam skor.
+  static DailyAnswerResultEntity postAnswers(
+    List<DailySelectedAnswerEntity> answers,
+  ) {
     final byId = _questionsById;
-    final question = byId[questionId];
-    if (question == null) {
-      return const DailyAnswerResultEntity(
-        totalCarbonScore: 0,
-        isFlowCompleted: true,
-        nextQuestion: null,
-      );
-    }
-    DailyQuestionOptionEntity? selected;
-    for (final o in question.options) {
-      if (o.id == selectedOptionId) {
-        selected = o;
-        break;
+    final lines = <DailySubmittedAnswerLineEntity>[];
+    var total = 0.0;
+    for (final a in answers) {
+      final question = byId[a.questionId];
+      if (question == null) continue;
+      DailyQuestionOptionEntity? selected;
+      for (final o in question.options) {
+        if (o.id == a.selectedOptionId) {
+          selected = o;
+          break;
+        }
       }
-    }
-    if (selected == null) {
-      return const DailyAnswerResultEntity(
-        totalCarbonScore: 0,
-        isFlowCompleted: true,
-        nextQuestion: null,
+      if (selected == null) continue;
+      total += selected.carbonValue;
+      lines.add(
+        DailySubmittedAnswerLineEntity(
+          questionText: question.text,
+          selectedOptionText: selected.text,
+          carbonValue: selected.carbonValue,
+        ),
       );
     }
 
-    final nextId = selected.nextQuestionId;
-    final next = (nextId != null && nextId.isNotEmpty) ? byId[nextId] : null;
-
-    if (questionId == _mockRootTransportId) {
-      return DailyAnswerResultEntity(
-        totalCarbonScore: next == null ? selected.carbonValue : 5,
-        isFlowCompleted: next == null,
-        nextQuestion: next,
-      );
-    }
-    if (questionId == _mockQuestionAracId) {
-      return DailyAnswerResultEntity(
-        totalCarbonScore: 13,
-        isFlowCompleted: false,
-        nextQuestion: byId[_mockQuestionSeferId],
-      );
-    }
-    if (questionId == _mockQuestionSeferId) {
-      return DailyAnswerResultEntity(
-        totalCarbonScore: 33,
-        isFlowCompleted: true,
-        nextQuestion: null,
-      );
+    var flowDone = answers.isEmpty;
+    if (answers.isNotEmpty) {
+      final last = answers.last;
+      final q = byId[last.questionId];
+      DailyQuestionOptionEntity? selected;
+      if (q != null) {
+        for (final o in q.options) {
+          if (o.id == last.selectedOptionId) {
+            selected = o;
+            break;
+          }
+        }
+      }
+      final nextId = selected?.nextQuestionId;
+      flowDone =
+          selected != null && (nextId == null || nextId.isEmpty);
     }
 
     return DailyAnswerResultEntity(
-      totalCarbonScore: selected.carbonValue,
-      isFlowCompleted: next == null,
-      nextQuestion: next,
+      totalCarbonScore: total,
+      isFlowCompleted: flowDone,
+      answers: lines,
     );
   }
 }

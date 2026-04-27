@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/core/networks/api_config.dart';
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart';
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote_mocks.dart';
+import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_request_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_pending_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_previous_answer_dto.dart';
@@ -73,28 +74,25 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
   }
 
   @override
-  Future<DailyAnswerResultEntity> postAnswer({
-    required String questionId,
-    required String selectedOptionId,
-    required String userId,
-  }) async {
+  Future<DailyAnswerResultEntity> postAnswers(
+    List<DailySelectedAnswerEntity> answers,
+  ) async {
     if (_useMocks) {
       await Future<void>.delayed(const Duration(milliseconds: 200));
-      return DailyActivitiesRemoteMocks.postAnswer(
-        questionId: questionId,
-        selectedOptionId: selectedOptionId,
-      );
+      return DailyActivitiesRemoteMocks.postAnswers(answers);
     }
+    final batch = DailyAnswersBatchRequestDto(
+      answers: answers.map(DailyActivityMapper.toAnswerItemRequestDto).toList(),
+    );
     final res = await _dio.post<dynamic>(
       '/api/v1/daily-activities/answers',
-      data: <String, dynamic>{
-        'questionId': questionId,
-        'selectedOptionId': selectedOptionId,
-        'userId': userId,
-      },
+      data: batch.toJson(),
     );
-    final data = res.dataMap();
+    final root = res.dataMap();
+    final inner = root['data'];
+    final payload = inner is Map<String, dynamic> ? inner : root;
     return DailyActivityMapper.toAnswerResultEntity(
-        DailyAnswerResultDto.fromJson(data));
+      DailyAnswerResultDto.fromJson(payload),
+    );
   }
 }

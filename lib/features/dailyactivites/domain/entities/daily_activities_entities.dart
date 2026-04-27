@@ -15,10 +15,6 @@ class DailyPendingEntity extends Equatable {
 }
 
 /// GET `/api/v1/daily-activities/questions` — soru seçeneği.
-///
-/// API aynı bilgiyi bazen `options[].nextQuestion` gömülü nesnesiyle de verir; kullanıcı
-/// akışında sonraki adım [nextQuestionId] ile ve tüm soruların tekilleştirilmiş listesiyle
-/// temsil edilir (DTO ağacı veri katmanında düzleştirilir).
 class DailyQuestionOptionEntity extends Equatable {
   const DailyQuestionOptionEntity({
     required this.id,
@@ -57,36 +53,51 @@ class DailyQuestionEntity extends Equatable {
       [id, text, displayOrder, options, remainingSeconds];
 }
 
-/// POST `/api/v1/daily-activities/answers` — gönderilen istek gövdesi (`questionId`, `selectedOptionId`, `userId`).
+/// POST `/api/v1/daily-activities/answers` — `answers[]` içindeki tek satır.
 class DailySelectedAnswerEntity extends Equatable {
   const DailySelectedAnswerEntity({
     required this.questionId,
     required this.selectedOptionId,
-    required this.userId,
   });
 
   final String questionId;
   final String selectedOptionId;
-  final String userId;
 
   @override
-  List<Object?> get props => [questionId, selectedOptionId, userId];
+  List<Object?> get props => [questionId, selectedOptionId];
 }
 
-/// POST `/api/v1/daily-activities/answers` — cevap sonucu (akış / skor).
+/// POST yanıtındaki `answers[]` elemanı.
+class DailySubmittedAnswerLineEntity extends Equatable {
+  const DailySubmittedAnswerLineEntity({
+    required this.questionText,
+    required this.selectedOptionText,
+    required this.carbonValue,
+  });
+
+  final String questionText;
+  final String selectedOptionText;
+  final double carbonValue;
+
+  @override
+  List<Object?> get props =>
+      [questionText, selectedOptionText, carbonValue];
+}
+
+/// POST `/api/v1/daily-activities/answers` — `data` içi özet.
 class DailyAnswerResultEntity extends Equatable {
   const DailyAnswerResultEntity({
-    this.nextQuestion,
     required this.totalCarbonScore,
     required this.isFlowCompleted,
+    required this.answers,
   });
 
   final double totalCarbonScore;
   final bool isFlowCompleted;
-  final DailyQuestionEntity? nextQuestion;
+  final List<DailySubmittedAnswerLineEntity> answers;
 
   @override
-  List<Object?> get props => [totalCarbonScore, isFlowCompleted, nextQuestion];
+  List<Object?> get props => [totalCarbonScore, isFlowCompleted, answers];
 }
 
 /// GET `/api/v1/daily-activities/previous-answers` — önceki cevaplar (son cevaplanan gün).

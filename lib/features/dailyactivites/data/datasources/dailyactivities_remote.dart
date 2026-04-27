@@ -3,11 +3,9 @@ import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_
 abstract class DailyActivitiesRemote {
   Future<List<DailyQuestionEntity>> getTodayQuestions();
 
-  Future<DailyAnswerResultEntity> postAnswer({
-    required String questionId,
-    required String selectedOptionId,
-    required String userId,
-  });
+  Future<DailyAnswerResultEntity> postAnswers(
+    List<DailySelectedAnswerEntity> answers,
+  );
 
   Future<DailyPendingEntity> getPendingStatus();
 

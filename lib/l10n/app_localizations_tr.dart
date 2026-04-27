@@ -205,7 +205,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get leaderofmonth_bottom_footer_text =>
-      'Kazananları tebrik eder, sıralamaya giren her arkadaşımızın çabası için teşekkür ederiz. Unutmayın bu sırada yer alacak olan yarın sizsiniz!';
+      'Kazananları tebrik eder, sıralamaya giren her arkadaşımızın çabası için teşekkür ederiz. <br/>Unutmayın bu sırada yer alacak olan yarın sizsiniz!';
 
   @override
   String get daily_activities_today_section_header_text =>
