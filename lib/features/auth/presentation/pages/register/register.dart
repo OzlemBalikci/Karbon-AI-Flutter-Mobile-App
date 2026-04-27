@@ -18,6 +18,7 @@ import 'package:karbon/features/auth/presentation/bloc/register/register_cubit.d
 import 'package:karbon/features/auth/presentation/bloc/register/register_state.dart';
 import 'package:karbon/features/auth/presentation/controllers/register_form_controller.dart';
 import 'package:karbon/features/auth/presentation/pages/error_popup_widget.dart';
+import 'package:karbon/widgets/back_icon_button.dart';
 
 part 'widgets/register_form.dart';
 part 'widgets/register_info.dart';
@@ -66,27 +67,42 @@ class _RegisterPageState extends State<RegisterPage> {
           backgroundColor: context.colors.primary,
           body: SafeArea(
             bottom: false,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: ConstrainedBox(
-                    constraints:
-                        BoxConstraints(minHeight: constraints.maxHeight),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RegisterFeatureSection(
-                          formController: _formController,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Positioned.fill(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              RegisterFeatureSection(
+                                formController: _formController,
+                              ),
+                              RegisterBottomSection(
+                                formController: _formController,
+                              ),
+                            ],
+                          ),
                         ),
-                        RegisterBottomSection(
-                          formController: _formController,
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+                Positioned(
+                  top: 0,
+                  left: AppThemeSpacing.s25.w,
+                  child: BackIconButton(
+                    color: context.colors.textOnPrimary,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

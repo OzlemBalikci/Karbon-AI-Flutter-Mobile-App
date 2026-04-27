@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:device_preview/device_preview.dart';
 import 'package:karbon/app.dart';
 import 'package:karbon/di/di.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,13 +33,10 @@ void main() async {
   final appRouter = AppRouter();
 
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => GlobalBlocProviders(
-        child: ScreenUtilInit(
-          designSize: const Size(375, 812),
-          builder: (context, child) => KarbonApp(router: appRouter),
-        ),
+    GlobalBlocProviders(
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        builder: (context, child) => KarbonApp(router: appRouter),
       ),
     ),
   );

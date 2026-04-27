@@ -44,8 +44,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final keyboardInset = MediaQuery.viewInsetsOf(context).bottom;
-    final keyboardOpen = keyboardInset > 0;
     return BlocProvider(
         create: (context) => getIt<LoginCubit>(),
         child: BlocListener<LoginCubit, LoginState>(
@@ -63,47 +61,30 @@ class _LoginPageState extends State<LoginPage> {
             }
           },
           child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomInset: true,
             backgroundColor: context.colors.primary,
-            body: Stack(
-              children: [
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Image.asset(
-                      Assets.images.loginMask.path,
-                      width: double.infinity,
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
-                ),
-                SafeArea(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return SingleChildScrollView(
-                        physics: keyboardOpen
-                            ? const ClampingScrollPhysics()
-                            : const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.only(bottom: keyboardInset),
-                        child: ConstrainedBox(
-                          constraints:
-                              BoxConstraints(minHeight: constraints.maxHeight),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              LoginFeatureSection(
-                                formController: _formController,
-                              ),
-                              LoginBottomRegisterSection(),
-                            ],
+            body: SafeArea(
+              bottom: false,
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints(minHeight: constraints.maxHeight),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          LoginFeatureSection(
+                            formController: _formController,
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+                          const LoginBottomRegisterSection(),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ));
