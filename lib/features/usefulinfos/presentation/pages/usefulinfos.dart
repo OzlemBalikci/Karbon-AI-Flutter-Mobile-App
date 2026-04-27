@@ -44,16 +44,30 @@ class _UsefulinfoPageState extends State<UsefulinfoPage> {
       body: Stack(
         children: [
           SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  UsefulInfoFeatureSection(),
-                  SizedBox(height: AppThemeSpacing.s20.h),
-                  UsefulInfoBottomSection(),
-                ],
-              ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        UsefulInfoFeatureSection(),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: AppThemeSpacing.s25.w),
+                          child: PageInfoText(text: context.text.lorem_ipsum),
+                        ),
+                        UsefulInfoBottomSection(),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Positioned(

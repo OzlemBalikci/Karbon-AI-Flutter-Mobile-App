@@ -13,7 +13,6 @@ class UsefulInfoFeatureSection extends StatelessWidget {
         children: [
           AppHeaderTitle(title: context.text.useful_infos_header_text),
           AppHero(),
-          PageInfoText(text: context.text.lorem_ipsum),
         ],
       ),
     );
