@@ -52,6 +52,10 @@ class RegisterBottomSection extends StatelessWidget {
                 borderColor: Colors.white70,
               ),
             ),
+            SizedBox(
+              height:
+                  AppThemeSpacing.s24.h + MediaQuery.paddingOf(context).bottom,
+            ),
           ],
         ),
       ],

@@ -116,7 +116,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               Positioned(
                 top: MediaQuery.of(context).padding.top,
                 left: 25.w,
-                child: const BackIconButton(),
+                child: BackIconButton(color: context.colors.textOnPrimary),
               ),
             ],
           ),

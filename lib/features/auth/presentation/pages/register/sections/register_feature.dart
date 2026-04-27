@@ -14,6 +14,7 @@ class RegisterFeatureSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
+        SizedBox(height: AppThemeSpacing.s20.h),
         SizedBox(width: 208.w, height: 80.h, child: AppLogoWidget()),
         SizedBox(height: AppThemeSpacing.s25.h),
         RegisterInfoWidget(),
