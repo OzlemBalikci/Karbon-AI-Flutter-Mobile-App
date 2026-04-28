@@ -208,12 +208,14 @@ class AppLocalizationsTr extends AppLocalizations {
       'Kazananları tebrik eder, sıralamaya giren her arkadaşımızın çabası için teşekkür ederiz.\nUnutmayın bu sırada yer alacak olan yarın sizsiniz!';
 
   @override
-  String get daily_activities_today_section_header_text =>
-      'Günlük Aktivitelerim';
+  String get daily_activities_header_text => 'Günlük Aktivitelerim';
 
   @override
   String get daily_activities_info_text =>
       'Günlük aktivitelerden elde ettiğiniz skorlar “Puanlar” tabında gösterilir. Oradan bugün için aldığınız toplam puanı takip edebilirsiniz.';
+
+  @override
+  String get daily_activities_today_section_header_text => 'Bugünün Soruları';
 
   @override
   String get daily_activities_empty_hint => 'Bugün için soru bulunmuyor.';

@@ -3,11 +3,8 @@ import 'package:karbon/core/errors/app_exception.dart';
 import 'package:karbon/features/auth/domain/entities/app_user.dart';
 
 abstract class AuthRepository {
-  /// Yerelde geçerli access token var mı (depo kontrolü).
   Future<bool> get checkSession;
 
-  /// **Önkoşul:** [checkSession] true olmalı. GET `/users/me/profile` ile kullanıcıyü yükler;
-  /// 401 durumunda [TokenRefreshInterceptor] devreye girer. Oturum kontrolü için [CheckSessionUseCase] kullanın.
   Future<Either<AppException, AppUser>> loadCurrentUser();
 
   Future<Either<AppException, AppUser>> login({

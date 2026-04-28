@@ -23,7 +23,7 @@ class SplashLoading extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppThemeSpacing.r5.r),
             backgroundColor: context.colors.primary.withValues(alpha: 0.2),
             valueColor: AlwaysStoppedAnimation<Color>(context.colors.primary),
-            minHeight: 10.h,
+            minHeight: 10,
           ),
         ),
       ),

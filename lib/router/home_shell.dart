@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/widgets/bottom_navigation_bar.dart' as app_nav;
 import 'package:auto_route/auto_route.dart';
 import 'package:karbon/router/navigation.dart';
@@ -36,10 +37,13 @@ class HomeShellPage extends StatelessWidget {
         return Scaffold(
           body: child,
           bottomNavigationBar: showBottomNav
-              ? SafeArea(
-                  child: app_nav.AppBottomNavigationBar(
-                    selectedIndex: tabsRouter.activeIndex,
-                    onTap: tabsRouter.setActiveIndex,
+              ? Padding(
+                  padding: const EdgeInsets.only(bottom: AppThemeSpacing.s12),
+                  child: SafeArea(
+                    child: app_nav.AppBottomNavigationBar(
+                      selectedIndex: tabsRouter.activeIndex,
+                      onTap: tabsRouter.setActiveIndex,
+                    ),
                   ),
                 )
               : null,

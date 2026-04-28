@@ -208,8 +208,7 @@ abstract final class DailyActivitiesRemoteMocks {
         }
       }
       final nextId = selected?.nextQuestionId;
-      flowDone =
-          selected != null && (nextId == null || nextId.isEmpty);
+      flowDone = selected != null && (nextId == null || nextId.isEmpty);
     }
 
     return DailyAnswerResultEntity(

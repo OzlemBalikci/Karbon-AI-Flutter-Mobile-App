@@ -17,31 +17,43 @@ class TodaySection extends StatelessWidget {
             variant: QuestionCardToday(questionId: ''),
           ),
           SizedBox(height: AppThemeSpacing.s20.h),
-          DailyActivitiesQuestionsSelector(
-            builder: (questions) => Builder(
-              builder: (context) {
-                if (questions.isEmpty) {
-                  return Text(
-                    context.text.daily_activities_empty_hint,
-                    style: context.typographiesSp.bodySmall
-                        .withColor(context.colors.textBlack),
-                  );
-                }
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemCount: questions.length,
-                  itemBuilder: (context, index) => Padding(
-                    padding: EdgeInsets.only(bottom: AppThemeSpacing.s20.h),
-                    child: QuestionCard(
-                      variant:
-                          QuestionCardToday(questionId: questions[index].id),
+          DailyActivitiesTodayQuestionsSelector(
+            builder: (context, data) {
+              final status = data.screenStatus;
+              final questions = data.questions;
+              if (status == DailyActivitiesScreenStatus.loading ||
+                  status == DailyActivitiesScreenStatus.initial) {
+                return Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: AppThemeSpacing.s32.h),
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: context.colors.primary,
                     ),
                   ),
                 );
-              },
-            ),
+              }
+              if (questions.isEmpty) {
+                return Text(
+                  context.text.daily_activities_empty_hint,
+                  style: context.typographiesSp.bodySmall
+                      .withColor(context.colors.textBlack),
+                );
+              }
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: questions.length,
+                itemBuilder: (context, index) => Padding(
+                  padding: EdgeInsets.only(bottom: AppThemeSpacing.s20.h),
+                  child: QuestionCard(
+                    variant:
+                        QuestionCardToday(questionId: questions[index].id),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

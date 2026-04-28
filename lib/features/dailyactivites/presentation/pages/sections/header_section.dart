@@ -10,13 +10,13 @@ class HeaderSection extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          AppHeaderTitle(
-              title: context.text.daily_activities_today_section_header_text),
+          AppHeaderTitle(title: context.text.daily_activities_header_text),
           SizedBox(height: AppThemeSpacing.s20.h),
           Infocard(
               text: context.text.daily_activities_info_text,
               style: context.typographiesSp.bodyExtraSmall.copyWith(
                 color: context.colors.textOnQuestion,
+                fontStyle: FontStyle.italic,
               ),
               bgcolor: context.colors.textOnQuestion),
         ],

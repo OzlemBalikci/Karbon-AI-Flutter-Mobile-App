@@ -16,6 +16,36 @@ typedef DailyActivitiesBranchUi = ({
   bool canSubmit,
 });
 
+typedef DailyActivitiesTodayQuestionsUi = ({
+  DailyActivitiesScreenStatus screenStatus,
+  List<DailyQuestionEntity> questions,
+});
+
+DailyActivitiesTodayQuestionsUi selectTodaySectionQuestions(
+  DailyActivitiesState s,
+) {
+  return (
+    screenStatus: s.screenStatus,
+    questions: rootQuestions(s.questions),
+  );
+}
+
+class DailyActivitiesTodayQuestionsSelector extends BlocSelector<
+    DailyActivitiesBloc,
+    DailyActivitiesState,
+    DailyActivitiesTodayQuestionsUi> {
+  DailyActivitiesTodayQuestionsSelector({
+    super.key,
+    required Widget Function(
+      BuildContext context,
+      DailyActivitiesTodayQuestionsUi data,
+    ) builder,
+  }) : super(
+          selector: selectTodaySectionQuestions,
+          builder: builder,
+        );
+}
+
 DailyActivitiesBranchUi selectBranchUi(DailyActivitiesState s) {
   final steps = s.branchPath;
   final lastOption = steps.isEmpty ? null : steps.last.selectedOption;

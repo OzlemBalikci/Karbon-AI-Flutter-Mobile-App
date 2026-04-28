@@ -62,7 +62,7 @@ class _TodayCard extends StatelessWidget {
               text: text,
               trailing: Icon(
                 Icons.arrow_forward_ios,
-                size: AppThemeSpacing.s12.w,
+                size: AppThemeSpacing.s16.h,
               ),
             ),
           ),

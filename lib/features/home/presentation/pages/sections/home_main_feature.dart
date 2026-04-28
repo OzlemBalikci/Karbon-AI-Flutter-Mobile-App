@@ -13,9 +13,9 @@ class HomeMainFeatureSection extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             StatsCardRow(),
-            SizedBox(height: AppThemeSpacing.s30.h),
+            SizedBox(height: AppThemeSpacing.s40.h),
             LeaderSectionHeader(),
-            SizedBox(height: AppThemeSpacing.s15.h),
+            SizedBox(height: AppThemeSpacing.s30.h),
             HomeTopLeadersSelector(
               builder: (leaders) {
                 return LeaderCardRow(
@@ -25,9 +25,8 @@ class HomeMainFeatureSection extends StatelessWidget {
                 );
               },
             ),
-            SizedBox(height: AppThemeSpacing.s25.h),
+            SizedBox(height: AppThemeSpacing.s30.h),
             HomeMainBottomButton(),
-            SizedBox(height: AppThemeSpacing.s25.h),
           ],
         ),
       ),

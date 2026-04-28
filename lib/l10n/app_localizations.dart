@@ -460,17 +460,23 @@ abstract class AppLocalizations {
   /// **'Kazananları tebrik eder, sıralamaya giren her arkadaşımızın çabası için teşekkür ederiz.\nUnutmayın bu sırada yer alacak olan yarın sizsiniz!'**
   String get leaderofmonth_bottom_footer_text;
 
-  /// No description provided for @daily_activities_today_section_header_text.
+  /// No description provided for @daily_activities_header_text.
   ///
   /// In tr, this message translates to:
   /// **'Günlük Aktivitelerim'**
-  String get daily_activities_today_section_header_text;
+  String get daily_activities_header_text;
 
   /// No description provided for @daily_activities_info_text.
   ///
   /// In tr, this message translates to:
   /// **'Günlük aktivitelerden elde ettiğiniz skorlar “Puanlar” tabında gösterilir. Oradan bugün için aldığınız toplam puanı takip edebilirsiniz.'**
   String get daily_activities_info_text;
+
+  /// No description provided for @daily_activities_today_section_header_text.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bugünün Soruları'**
+  String get daily_activities_today_section_header_text;
 
   /// No description provided for @daily_activities_empty_hint.
   ///
