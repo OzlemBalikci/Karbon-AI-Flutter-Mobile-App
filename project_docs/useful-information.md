@@ -32,7 +32,7 @@ Flutter mevcut veriyi kullanarak detay ekranını açar (ayrı API çağrısı y
 ### Response `200`
 ```json
 {
-  "isSuccess": true,
+  "isSuccessful": true,
   "data": [
     {
       "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",

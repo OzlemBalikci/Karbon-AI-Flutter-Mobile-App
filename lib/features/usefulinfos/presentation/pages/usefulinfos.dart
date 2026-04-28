@@ -54,7 +54,6 @@ class _UsefulinfoPageState extends State<UsefulinfoPage> {
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         UsefulInfoFeatureSection(),
                         Padding(

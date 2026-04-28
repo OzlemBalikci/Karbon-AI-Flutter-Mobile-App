@@ -42,10 +42,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   void _onTabChanged(TabChanged event, Emitter<ProfileState> emit) {
+    final previousTab = state.selectedTab;
     emit(state.copyWith(selectedTab: event.index));
-    if (event.index == 2 &&
-        state.donationHistoryStatus != AsyncStatus.loading) {
-      add(const ProfileEvent.fetchDonationHistory());
+    final enteredDonationsFromElsewhere = event.index == 2 && previousTab != 2;
+    if (enteredDonationsFromElsewhere) {
+      final status = state.donationHistoryStatus;
+      if (status == AsyncStatus.initial || status == AsyncStatus.failure) {
+        add(const ProfileEvent.fetchDonationHistory());
+      }
     }
   }
 
@@ -76,10 +80,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         donateStatus: AsyncStatus.failure,
         donateError: failure.toString(),
       )),
-      (donateResult) => emit(state.copyWith(
-        donateStatus: AsyncStatus.success,
-        donateResult: donateResult,
-      )),
+      (donateResult) {
+        emit(state.copyWith(
+          donateStatus: AsyncStatus.success,
+          donateResult: donateResult,
+        ));
+        add(const ProfileEvent.fetchDonationHistory());
+      },
     );
   }
 
