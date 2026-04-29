@@ -1,6 +1,4 @@
-class AppThemeSpacing {
-  const AppThemeSpacing();
-
+abstract final class AppThemeSpacing {
   // All spacings
   static const s0 = 0.0;
   static const s2 = 2.0;

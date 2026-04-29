@@ -12,4 +12,6 @@ sealed class ProfileEvent with _$ProfileEvent {
   const factory ProfileEvent.donateTrees(int treeCount) = DonateTrees;
 
   const factory ProfileEvent.donateReset() = DonateReset;
+
+  const factory ProfileEvent.clearDonateError() = ClearDonateError;
 }

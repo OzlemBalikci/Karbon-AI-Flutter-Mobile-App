@@ -118,5 +118,5 @@ class AppRouter extends RootStackRouter {
       ];
 
   @override
-  RouteType get defaultRouteType => const RouteType.material();
+  RouteType get defaultRouteType => const RouteType.cupertino();
 }

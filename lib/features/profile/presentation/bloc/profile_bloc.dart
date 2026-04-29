@@ -18,6 +18,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<FetchDonationHistory>(_onFetchDonationHistory);
     on<DonateTrees>(_onDonateTrees);
     on<DonateReset>(_onDonateReset);
+    on<ClearDonateError>(_onClearDonateError);
   }
 
   final GetProfileUseCase _getProfile;
@@ -90,10 +91,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     );
   }
 
+  void _onClearDonateError(ClearDonateError event, Emitter<ProfileState> emit) {
+    emit(state.copyWith(
+      donateStatus: AsyncStatus.initial,
+      donateError: null,
+    ));
+  }
+
   void _onDonateReset(DonateReset event, Emitter<ProfileState> emit) {
     emit(state.copyWith(
       donateStatus: AsyncStatus.initial,
       donateResult: null,
+      donateError: null,
     ));
     add(const ProfileEvent.fetchProfile());
   }

@@ -123,19 +123,19 @@ flutter:
   fonts:
     - family: Izmir
       fonts:
-        - asset: assets/fonts/izmir/Izmir-Regular.eot
+        - asset: assets/fonts/Izmir/Izmir-Regular.ttf
           weight: 400
 
-        - asset: assets/fonts/izmir/Izmir-Medium.eot
+        - asset: assets/fonts/Izmir/Izmir-Medium.ttf
           weight: 500
 
-        - asset: assets/fonts/izmir/Izmir-Extrabold.eot
+        - asset: assets/fonts/Izmir/Izmir-Extrabold.ttf
           weight: 800
 
-        - asset: assets/fonts/izmir/Izmir-Semibold.eot  
+        - asset: assets/fonts/Izmir/Izmir-Semibold.ttf  
           weight: 600
 
-        - asset: assets/fonts/izmir/Izmir-Bold.eot
+        - asset: assets/fonts/Izmir/Izmir-Bold.ttf
           weight: 700
 
 flutter_gen:

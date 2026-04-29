@@ -36,6 +36,7 @@ class PointScoreOrTreeDonationInfoCard extends StatelessWidget {
                 title,
                 style: context.typographiesSp.bodyExtraLarge.copyWith(
                   color: color,
+                  fontWeight: FontWeight.w700,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -45,6 +46,7 @@ class PointScoreOrTreeDonationInfoCard extends StatelessWidget {
               value,
               style: context.typographiesSp.headingLarge.copyWith(
                 color: color,
+                fontWeight: FontWeight.w800,
               ),
               textAlign: TextAlign.center,
             ),

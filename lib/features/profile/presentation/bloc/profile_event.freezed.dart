@@ -55,6 +55,7 @@ extension ProfileEventPatterns on ProfileEvent {
     TResult Function(FetchDonationHistory value)? fetchDonationHistory,
     TResult Function(DonateTrees value)? donateTrees,
     TResult Function(DonateReset value)? donateReset,
+    TResult Function(ClearDonateError value)? clearDonateError,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -69,6 +70,8 @@ extension ProfileEventPatterns on ProfileEvent {
         return donateTrees(_that);
       case DonateReset() when donateReset != null:
         return donateReset(_that);
+      case ClearDonateError() when clearDonateError != null:
+        return clearDonateError(_that);
       case _:
         return orElse();
     }
@@ -94,6 +97,7 @@ extension ProfileEventPatterns on ProfileEvent {
     required TResult Function(FetchDonationHistory value) fetchDonationHistory,
     required TResult Function(DonateTrees value) donateTrees,
     required TResult Function(DonateReset value) donateReset,
+    required TResult Function(ClearDonateError value) clearDonateError,
   }) {
     final _that = this;
     switch (_that) {
@@ -107,6 +111,8 @@ extension ProfileEventPatterns on ProfileEvent {
         return donateTrees(_that);
       case DonateReset():
         return donateReset(_that);
+      case ClearDonateError():
+        return clearDonateError(_that);
     }
   }
 
@@ -129,6 +135,7 @@ extension ProfileEventPatterns on ProfileEvent {
     TResult? Function(FetchDonationHistory value)? fetchDonationHistory,
     TResult? Function(DonateTrees value)? donateTrees,
     TResult? Function(DonateReset value)? donateReset,
+    TResult? Function(ClearDonateError value)? clearDonateError,
   }) {
     final _that = this;
     switch (_that) {
@@ -142,6 +149,8 @@ extension ProfileEventPatterns on ProfileEvent {
         return donateTrees(_that);
       case DonateReset() when donateReset != null:
         return donateReset(_that);
+      case ClearDonateError() when clearDonateError != null:
+        return clearDonateError(_that);
       case _:
         return null;
     }
@@ -166,6 +175,7 @@ extension ProfileEventPatterns on ProfileEvent {
     TResult Function()? fetchDonationHistory,
     TResult Function(int treeCount)? donateTrees,
     TResult Function()? donateReset,
+    TResult Function()? clearDonateError,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -180,6 +190,8 @@ extension ProfileEventPatterns on ProfileEvent {
         return donateTrees(_that.treeCount);
       case DonateReset() when donateReset != null:
         return donateReset();
+      case ClearDonateError() when clearDonateError != null:
+        return clearDonateError();
       case _:
         return orElse();
     }
@@ -205,6 +217,7 @@ extension ProfileEventPatterns on ProfileEvent {
     required TResult Function() fetchDonationHistory,
     required TResult Function(int treeCount) donateTrees,
     required TResult Function() donateReset,
+    required TResult Function() clearDonateError,
   }) {
     final _that = this;
     switch (_that) {
@@ -218,6 +231,8 @@ extension ProfileEventPatterns on ProfileEvent {
         return donateTrees(_that.treeCount);
       case DonateReset():
         return donateReset();
+      case ClearDonateError():
+        return clearDonateError();
     }
   }
 
@@ -240,6 +255,7 @@ extension ProfileEventPatterns on ProfileEvent {
     TResult? Function()? fetchDonationHistory,
     TResult? Function(int treeCount)? donateTrees,
     TResult? Function()? donateReset,
+    TResult? Function()? clearDonateError,
   }) {
     final _that = this;
     switch (_that) {
@@ -253,6 +269,8 @@ extension ProfileEventPatterns on ProfileEvent {
         return donateTrees(_that.treeCount);
       case DonateReset() when donateReset != null:
         return donateReset();
+      case ClearDonateError() when clearDonateError != null:
+        return clearDonateError();
       case _:
         return null;
     }
@@ -443,6 +461,26 @@ class DonateReset implements ProfileEvent {
   @override
   String toString() {
     return 'ProfileEvent.donateReset()';
+  }
+}
+
+/// @nodoc
+
+class ClearDonateError implements ProfileEvent {
+  const ClearDonateError();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is ClearDonateError);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'ProfileEvent.clearDonateError()';
   }
 }
 

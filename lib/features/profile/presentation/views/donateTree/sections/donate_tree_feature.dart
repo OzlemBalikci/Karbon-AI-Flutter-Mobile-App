@@ -37,8 +37,12 @@ class ProfileStarFeatureSection extends StatelessWidget {
           });
         } else if (state.donateStatus == AsyncStatus.failure &&
             state.donateError != null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.donateError!)),
+          showAppErrorDialog(
+            context,
+            message: state.donateError!,
+            onDismissed: () => context.read<ProfileBloc>().add(
+                  const ProfileEvent.clearDonateError(),
+                ),
           );
         }
       },
