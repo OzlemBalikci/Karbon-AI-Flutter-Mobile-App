@@ -24,7 +24,7 @@ class DonationHistoryListView extends StatelessWidget {
           padding: EdgeInsets.only(
             bottom: isLast ? 0 : AppThemeSpacing.s12.h,
           ),
-          child: _DonatedTreeCardItem(item: donations[index]),
+          child: DonatedTreeCardItem(item: donations[index]),
         );
       },
     );

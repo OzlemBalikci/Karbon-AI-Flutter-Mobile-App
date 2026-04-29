@@ -18,8 +18,6 @@ class LeaderofmonthBloc extends Bloc<LeaderofmonthEvent, LeaderofmonthState> {
     LeaderofmonthFetchRequested event,
     Emitter<LeaderofmonthState> emit,
   ) async {
-    if (state.status == LeaderofmonthStatus.success) return;
-
     emit(state.copyWith(status: LeaderofmonthStatus.loading, error: null));
     await _fetchLeaderboard(emit);
   }
@@ -33,33 +31,23 @@ class LeaderofmonthBloc extends Bloc<LeaderofmonthEvent, LeaderofmonthState> {
   }
 
   Future<void> _fetchLeaderboard(Emitter<LeaderofmonthState> emit) async {
-    try {
-      final result = await _getLeaderboardData();
-      result.fold(
-        (exception) => emit(
-          state.copyWith(
-            status: LeaderofmonthStatus.failure,
-            error: exception.toString(),
-          ),
-        ),
-        (data) => emit(
-          state.copyWith(
-            status: LeaderofmonthStatus.success,
-            podium: data.podium,
-            leaders: data.leaders,
-            currentUserRank: data.currentUserRank,
-            error: null,
-          ),
-        ),
-      );
-    } catch (error, stackTrace) {
-      addError(error, stackTrace);
-      emit(
+    final result = await _getLeaderboardData();
+    result.fold(
+      (failure) => emit(
         state.copyWith(
           status: LeaderofmonthStatus.failure,
-          error: error.toString(),
+          error: failure.toString(),
         ),
-      );
-    }
+      ),
+      (data) => emit(
+        state.copyWith(
+          status: LeaderofmonthStatus.success,
+          podium: data.podium,
+          leaders: data.leaders,
+          currentUserRank: data.currentUserRank,
+          error: null,
+        ),
+      ),
+    );
   }
 }

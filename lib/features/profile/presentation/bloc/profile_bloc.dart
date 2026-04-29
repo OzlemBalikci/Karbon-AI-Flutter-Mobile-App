@@ -38,6 +38,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       (profile) => emit(state.copyWith(
         profileStatus: AsyncStatus.success,
         profile: profile,
+        profileError: null,
       )),
     );
   }

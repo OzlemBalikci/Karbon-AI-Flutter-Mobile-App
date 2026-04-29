@@ -1,7 +1,7 @@
 part of '../../../profile.dart';
 
-class _DonatedTreeCardItem extends StatelessWidget {
-  const _DonatedTreeCardItem({super.key, required this.item});
+class DonatedTreeCardItem extends StatelessWidget {
+  const DonatedTreeCardItem({super.key, required this.item});
 
   final DonationItemEntity item;
 

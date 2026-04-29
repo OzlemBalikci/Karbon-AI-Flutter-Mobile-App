@@ -23,6 +23,17 @@ class LeaderofmonthStatusSelector
         );
 }
 
+/// Hata metni (popup veya inline için).
+class LeaderofmonthErrorSelector extends LeaderofmonthSelector<String?> {
+  LeaderofmonthErrorSelector({
+    super.key,
+    required Widget Function(String error) builder,
+  }) : super(
+          selector: (state) => state.error,
+          builder: (error) => builder(error ?? 'Bir hata oluştu'),
+        );
+}
+
 /// Lider listesini LeaderofmonthBloc'tan seçer.
 /// Home ve Leaderofmonth sayfaları tarafından kullanılır.
 class LeaderRankSelector
