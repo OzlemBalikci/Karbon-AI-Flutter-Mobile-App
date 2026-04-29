@@ -34,11 +34,7 @@ class LeaderofmonthBloc extends Bloc<LeaderofmonthEvent, LeaderofmonthState> {
 
   Future<void> _fetchLeaderboard(Emitter<LeaderofmonthState> emit) async {
     try {
-      final now = DateTime.now();
-      final result = await _getLeaderboardData(
-        month: now.month,
-        year: now.year,
-      );
+      final result = await _getLeaderboardData();
       result.fold(
         (exception) => emit(
           state.copyWith(

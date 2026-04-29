@@ -13,7 +13,7 @@
 ```
 Ana sayfada "Diğer Liderleri Gör" tıklanır
     ↓
-GET /api/v1/user-results/leaderboard?month=12&year=2023
+GET /api/v1/user-results/leaderboard (body veya query parametresi yok)
     ↓
 Podium (ilk 3) → Büyük kartlar (#1 altın, #2 gümüş, #3 bronz)
 Leaders (4+)   → Liste görünümü
@@ -27,11 +27,7 @@ CurrentUserRank → Alt banner "X Ağaç ile Y. sıradasınız"
 **GET** `/api/v1/user-results/leaderboard`  
 🔒 Auth gerekli
 
-### Query Parameters
-| Parametre | Tip | Zorunlu | Açıklama |
-|-----------|-----|---------|----------|
-| month | int | ✅ | Ay (1-12) |
-| year | int | ✅ | Yıl |
+İstemci `month` / `year` veya body göndermez; hangi ayın liderliğinin döneceği backend tarafından belirlenir.
 
 ### Response `200`
 ```json

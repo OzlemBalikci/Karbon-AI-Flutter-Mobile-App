@@ -9,10 +9,7 @@ import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.
 @LazySingleton(as: LeaderboardRemote)
 class LeaderboardRemoteMock implements LeaderboardRemote {
   @override
-  Future<LeaderboardDataEntity> getLeaderboard({
-    required int month,
-    required int year,
-  }) async {
+  Future<LeaderboardDataEntity> getLeaderboard() async {
     await Future<void>.delayed(const Duration(milliseconds: 100));
     return LeaderboardMapper.toLeaderboardDataEntity(
         LeaderboardDataDto.fromJson(_sampleData));

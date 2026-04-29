@@ -13,12 +13,9 @@ class LeaderboardRepositoryImpl implements LeaderboardRepository {
   final LeaderboardRemote _remote;
 
   @override
-  Future<Either<AppException, LeaderboardDataEntity>> getLeaderboard({
-    required int month,
-    required int year,
-  }) async {
+  Future<Either<AppException, LeaderboardDataEntity>> getLeaderboard() async {
     try {
-      final data = await _remote.getLeaderboard(month: month, year: year);
+      final data = await _remote.getLeaderboard();
       return Right(data);
     } catch (e) {
       return guardLeft(e);

@@ -15,16 +15,9 @@ class LeaderboardRemoteImpl implements LeaderboardRemote {
   final Dio _dio;
 
   @override
-  Future<LeaderboardDataEntity> getLeaderboard({
-    required int month,
-    required int year,
-  }) async {
+  Future<LeaderboardDataEntity> getLeaderboard() async {
     final res = await _dio.get<dynamic>(
       '/api/v1/user-results/leaderboard',
-      queryParameters: <String, dynamic>{
-        'month': month,
-        'year': year,
-      },
     );
     final map = res.dataMap();
     return LeaderboardMapper.toLeaderboardDataEntity(
