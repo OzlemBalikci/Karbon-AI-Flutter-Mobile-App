@@ -7,7 +7,7 @@ class DaydetailHeaderSection extends StatelessWidget {
     required this.dayScore,
   });
 
-  /// [DailyReportCard] ile aynı: `DateFormat.yMMMMd('tr')`
+  /// [DailyReportCard] ile aynı: [formatFullDate]
   final String dayLabel;
   final String dayScore;
 

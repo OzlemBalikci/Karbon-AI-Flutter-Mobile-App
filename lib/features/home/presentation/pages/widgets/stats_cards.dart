@@ -107,7 +107,7 @@ class StatsCards extends StatelessWidget {
               child: Center(
                 child: Text(
                   remainingTreeCount != null
-                      ? '${NumberFormat.decimalPattern('tr_TR').format(remainingTreeCount!)} ağaç kaldı'
+                      ? '${formatTurkishDecimal(remainingTreeCount!)} ağaç kaldı'
                       : context.text.home_stats_succeed_text,
                   style: context.typographiesSp.bodyExtraSmall.copyWith(
                     fontWeight: FontWeight.w600,

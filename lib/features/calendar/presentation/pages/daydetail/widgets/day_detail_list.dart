@@ -28,7 +28,7 @@ class DayDetailHistorySection extends StatelessWidget {
               children: [
                 if (parsed != null)
                   Text(
-                    DateFormat.yMMMMd('tr').format(parsed.toLocal()),
+                    formatFullDate(parsed.toLocal()),
                     style: context.typographiesSp.bodySmall
                         .withColor(context.colors.primary)
                         .copyWith(fontStyle: FontStyle.italic),

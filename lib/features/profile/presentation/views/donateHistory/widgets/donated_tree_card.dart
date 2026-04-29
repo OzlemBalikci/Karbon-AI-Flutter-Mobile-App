@@ -7,7 +7,7 @@ class _DonatedTreeCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateStr = DateFormat.yMMMMd('tr').format(item.donationDate.toLocal());
+    final dateStr = formatFullDate(item.donationDate.toLocal());
 
     return Container(
       width: double.infinity,

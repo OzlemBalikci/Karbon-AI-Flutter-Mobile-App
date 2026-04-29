@@ -3,12 +3,11 @@ part of '../home.dart';
 class StatsCardRow extends StatelessWidget {
   const StatsCardRow({super.key});
 
-  static String _fmtCount(int? n, NumberFormat nf) =>
-      n != null ? nf.format(n) : '—';
+  static String _fmtCount(int? n) =>
+      n != null ? formatTurkishDecimal(n) : '—';
 
   @override
   Widget build(BuildContext context) {
-    final nf = NumberFormat.decimalPattern('tr_TR');
     return BlocBuilder<HomeBloc, HomeState>(
       buildWhen: (prev, curr) =>
           prev.globalTarget != curr.globalTarget ||
@@ -22,7 +21,7 @@ class StatsCardRow extends StatelessWidget {
             Expanded(
               child: StatsCards(
                 title: context.text.home_page_stats_card_1_title,
-                value: _fmtCount(g?.targetTreeCount, nf),
+                value: _fmtCount(g?.targetTreeCount),
                 image: Assets.images.homeStatsCard1,
                 borderColor: context.colors.primary,
                 hasShadow: false,
@@ -35,7 +34,7 @@ class StatsCardRow extends StatelessWidget {
             Expanded(
               child: StatsCards(
                 title: context.text.home_page_stats_card_2_title,
-                value: _fmtCount(m?.targetTreeCount, nf),
+                value: _fmtCount(m?.targetTreeCount),
                 image: Assets.images.homeStatsCard2,
                 borderColor: Colors.transparent,
                 hasShadow: true,

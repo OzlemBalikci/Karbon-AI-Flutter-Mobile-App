@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
+import 'package:karbon/core/utils/formatters.dart';
 
 /// [project_docs/calendar.md] ile uyumlu domain modelleri.
 
@@ -50,8 +50,7 @@ class DailyCalendarItemEntity extends Equatable {
   final double score;
   final bool hasDetails;
 
-  String get formattedDate =>
-      DateFormat.yMMMMd('tr').format(DateTime.parse(date));
+  String get formattedDate => formatFullDate(DateTime.parse(date));
 
   @override
   List<Object?> get props => [date, score, hasDetails];

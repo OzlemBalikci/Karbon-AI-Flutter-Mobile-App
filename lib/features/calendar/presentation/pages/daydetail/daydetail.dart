@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:karbon/router/navigation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/utils/formatters.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/di/di.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
@@ -64,7 +64,7 @@ class _DayDetailPageState extends State<DayDetailPage> {
     final d = DateTime.tryParse(widget.date) ??
         DateTime.tryParse('${widget.date}T00:00:00') ??
         DateTime.now();
-    return DateFormat.yMMMMd('tr').format(d);
+    return formatFullDate(d);
   }
 
   String get _dayScoreLabel {

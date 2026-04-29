@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
+import 'package:karbon/core/utils/formatters.dart';
 import 'package:karbon/di/di.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 import 'package:karbon/features/calendar/domain/usecases/get_monthly_activities_usecase.dart';
@@ -85,8 +85,8 @@ class _SeeAllSectionState extends State<SeeAllSection> {
   @override
   Widget build(BuildContext context) {
     final monthRef = DateTime(widget.year, widget.month);
-    final monthTitle = DateFormat('MMMM yyyy', 'tr').format(monthRef);
-    final monthShort = DateFormat.MMMM('tr').format(monthRef);
+    final monthTitle = formatMonthYear(monthRef);
+    final monthShort = formatMonthName(monthRef);
 
     final headerTitle = '$monthTitle Sonuçları';
 

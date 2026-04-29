@@ -38,7 +38,7 @@ class HistorySection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          DateFormat.yMMMMd('tr').format(groupDate),
+                          formatFullDate(groupDate),
                           style: context.typographiesSp.bodySmall
                               .withColor(context.colors.primary)
                               .copyWith(fontStyle: FontStyle.italic),

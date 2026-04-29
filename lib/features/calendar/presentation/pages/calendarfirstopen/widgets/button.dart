@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
+import 'package:karbon/core/utils/formatters.dart';
 
 class CalendarButtonShell extends StatelessWidget {
   const CalendarButtonShell({super.key, required this.child});
@@ -48,14 +48,12 @@ class MonthChangeButtonRow extends StatelessWidget {
   final VoidCallback onPreviousMonth;
   final VoidCallback onNextMonth;
 
-  static final _monthYearFormat = DateFormat('MMMM yyyy', 'tr');
-
   @override
   Widget build(BuildContext context) {
     final prevMonth = DateTime(focusedDay.year, focusedDay.month - 1, 1);
     final nextMonth = DateTime(focusedDay.year, focusedDay.month + 1, 1);
-    final prevLabel = _monthYearFormat.format(prevMonth);
-    final nextLabel = _monthYearFormat.format(nextMonth);
+    final prevLabel = formatMonthYear(prevMonth);
+    final nextLabel = formatMonthYear(nextMonth);
 
     return Row(
       children: [

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/core/utils/formatters.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/router/navigation.dart';
@@ -22,8 +22,8 @@ class DailyReportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dayLabel = DateFormat.yMMMMd('tr').format(date);
-    final weekdayLabel = DateFormat.EEEE('tr').format(date);
+    final dayLabel = formatFullDate(date);
+    final weekdayLabel = formatWeekday(date);
 
     return GestureDetector(
       onTap: () =>

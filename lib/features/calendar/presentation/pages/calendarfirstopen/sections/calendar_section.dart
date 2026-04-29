@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/core/utils/formatters.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
 
@@ -35,8 +35,8 @@ class CalendarSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final monthTitle = DateFormat('MMMM yyyy', 'tr').format(focusedDay);
-    final selectedDayTitle = DateFormat.yMMMMd('tr').format(selectedDay);
+    final monthTitle = formatMonthYear(focusedDay);
+    final selectedDayTitle = formatFullDate(selectedDay);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

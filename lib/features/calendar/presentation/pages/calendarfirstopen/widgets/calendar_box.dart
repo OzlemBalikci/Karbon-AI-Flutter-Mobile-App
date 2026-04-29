@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/core/utils/formatters.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
 import 'package:karbon/router/navigation.dart';
@@ -77,7 +77,7 @@ class CalendarBox extends StatelessWidget {
               Row(children: [
                 Expanded(
                   child: Text(
-                    DateFormat('MMMM yyyy', 'tr').format(focusedDay),
+                    formatMonthYear(focusedDay),
                     style: context.typographiesSp.bodyMedium
                         .withColor(context.colors.text),
                   ),

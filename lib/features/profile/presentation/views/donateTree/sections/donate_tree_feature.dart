@@ -27,7 +27,7 @@ class ProfileStarFeatureSection extends StatelessWidget {
             context,
             child: DonateSuccessPopup(
               title: context.text.donate_succes_popup_title(
-                NumberFormat.decimalPattern('tr_TR').format(count),
+                formatTurkishDecimal(count),
               ),
               text: context.text.donate_succes_popup_text,
             ),

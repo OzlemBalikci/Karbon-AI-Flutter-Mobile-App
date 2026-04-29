@@ -7,8 +7,7 @@ class UserInfoDetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final birthStr =
-        DateFormat('dd.MM.yyyy', 'tr').format(profile.birthDate.toLocal());
+    final birthStr = formatBirthDate(profile.birthDate);
     return Column(
       children: [
         _InfoDetailItem(

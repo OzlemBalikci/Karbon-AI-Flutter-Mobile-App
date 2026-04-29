@@ -8,7 +8,7 @@ class ProfileStarSuccessBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pointsValue =
-        '${NumberFormat.decimalPattern('tr_TR').format(profile.totalPoints)} ${context.text.points}';
+        '${formatTurkishDecimal(profile.totalPoints)} ${context.text.points}';
 
     final html = profile.availableTreeCount > 0
         ? context.text.profile_star_text(

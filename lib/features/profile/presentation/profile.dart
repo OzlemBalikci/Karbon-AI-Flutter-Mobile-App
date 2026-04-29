@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_selector.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_state.dart';
 import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
-import 'package:intl/intl.dart';
+import 'package:karbon/core/utils/formatters.dart';
 import 'package:karbon/features/profile/presentation/bloc/profile_event.dart';
 import 'package:karbon/features/auth/presentation/pages/error_popup_widget.dart';
 import 'package:karbon/widgets/app_header_title.dart';
