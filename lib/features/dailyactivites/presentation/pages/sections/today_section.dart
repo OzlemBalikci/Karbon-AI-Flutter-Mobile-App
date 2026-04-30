@@ -17,22 +17,8 @@ class TodaySection extends StatelessWidget {
             variant: QuestionCardToday(questionId: ''),
           ),
           SizedBox(height: AppThemeSpacing.s20.h),
-          DailyActivitiesTodayQuestionsSelector(
-            builder: (context, data) {
-              final status = data.screenStatus;
-              final questions = data.questions;
-              if (status == DailyActivitiesScreenStatus.loading ||
-                  status == DailyActivitiesScreenStatus.initial) {
-                return Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: AppThemeSpacing.s32.h),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      color: context.colors.primary,
-                    ),
-                  ),
-                );
-              }
+          DailyActivitiesQuestionsSelector(
+            builder: (questions) {
               if (questions.isEmpty) {
                 return Text(
                   context.text.daily_activities_empty_hint,

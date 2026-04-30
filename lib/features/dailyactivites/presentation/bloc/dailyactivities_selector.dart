@@ -16,32 +16,19 @@ typedef DailyActivitiesBranchUi = ({
   bool canSubmit,
 });
 
-typedef DailyActivitiesTodayQuestionsUi = ({
-  DailyActivitiesScreenStatus screenStatus,
-  List<DailyQuestionEntity> questions,
-});
-
-DailyActivitiesTodayQuestionsUi selectTodaySectionQuestions(
-  DailyActivitiesState s,
-) {
-  return (
-    screenStatus: s.screenStatus,
-    questions: rootQuestions(s.questions),
-  );
-}
-
-class DailyActivitiesTodayQuestionsSelector extends BlocSelector<
+/// Ekran ilk yükleme / liste fetch durumu (tüm sayfa UI’ında kullanılır).
+class DailyActivitiesScreenStatusSelector extends BlocSelector<
     DailyActivitiesBloc,
     DailyActivitiesState,
-    DailyActivitiesTodayQuestionsUi> {
-  DailyActivitiesTodayQuestionsSelector({
+    DailyActivitiesScreenStatus> {
+  DailyActivitiesScreenStatusSelector({
     super.key,
     required Widget Function(
       BuildContext context,
-      DailyActivitiesTodayQuestionsUi data,
+      DailyActivitiesScreenStatus status,
     ) builder,
   }) : super(
-          selector: selectTodaySectionQuestions,
+          selector: (state) => state.screenStatus,
           builder: builder,
         );
 }

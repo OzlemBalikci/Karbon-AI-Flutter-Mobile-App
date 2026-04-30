@@ -32,9 +32,19 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          SafeArea(
+      body: DailyActivitiesScreenStatusSelector(
+        builder: (context, screenStatus) {
+          if (screenStatus == DailyActivitiesScreenStatus.loading ||
+              screenStatus == DailyActivitiesScreenStatus.initial) {
+            return SafeArea(
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: context.colors.primary,
+                ),
+              ),
+            );
+          }
+          return SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -54,8 +64,8 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
                 ),
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
