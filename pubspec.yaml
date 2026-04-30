@@ -42,7 +42,8 @@ dependencies:
   firebase_core: ^4.7.0
   firebase_analytics: ^12.3.0
   firebase_crashlytics: ^5.2.0
-  
+  firebase_messaging: ^16.2.0
+  http: ^1.2.0
 
   # Navigation
   auto_route: ^10.3.0

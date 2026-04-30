@@ -58,8 +58,11 @@ class AuthMapper {
         isKvkkApproved: isKvkkApproved,
       );
 
-  static ForgotPasswordDto forgotPasswordRequest(String phoneNumber) =>
-      ForgotPasswordDto(phoneNumber: phoneNumber);
+  static ForgotPasswordDto forgotPasswordRequest({
+    required String phoneNumber,
+    String? deviceToken,
+  }) =>
+      ForgotPasswordDto(phoneNumber: phoneNumber, deviceToken: deviceToken);
 
   static ResetPasswordDto resetPasswordRequest({
     required String phoneNumber,

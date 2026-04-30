@@ -10,6 +10,7 @@ import 'package:karbon/core/utils/appblocobserver.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:karbon/firebase_options.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:karbon/services/notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,7 @@ void main() async {
   };
   await initializeDateFormatting();
   await configureDependencies();
+  await NotificationService.instance.init();
 
   if (kDebugMode) {
     Bloc.observer = AppBlocObserver();

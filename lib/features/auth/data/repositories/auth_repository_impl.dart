@@ -110,10 +110,14 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<AppException, Unit>> forgotPassword({
     required String phoneNumber,
+    String? deviceToken,
   }) async {
     try {
       await _remote.forgotPassword(
-        AuthMapper.forgotPasswordRequest(phoneNumber),
+        AuthMapper.forgotPasswordRequest(
+          phoneNumber: phoneNumber,
+          deviceToken: deviceToken,
+        ),
       );
       return const Right(unit);
     } catch (e) {

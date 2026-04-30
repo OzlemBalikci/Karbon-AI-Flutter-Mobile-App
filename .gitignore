@@ -43,3 +43,22 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase client config (private şimdilik; public’a geçerken repoda görünmesin)
+# Yerelde tut: Android Studio Firebase assistant veya konsoldan google-services.json
+# Flutter: `dart pub global activate flutterfire_cli` → `flutterfire configure`
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
+/macos/Runner/GoogleService-Info.plist
+/lib/firebase_options.dart
+
+# Yerel sırlar
+.env
+.env.*
+!.env.example
+**/key.properties
+*.jks
+*.keystore
+
+# Firebase Admin (service account) — asla commit etme
+**/*-firebase-adminsdk-*.json

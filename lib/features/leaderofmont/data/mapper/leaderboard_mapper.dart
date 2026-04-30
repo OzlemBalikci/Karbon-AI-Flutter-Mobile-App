@@ -14,14 +14,16 @@ class LeaderboardMapper {
         isCurrentUser: dto.isCurrentUser,
       );
 
-  static CurrentUserRankEntity toCurrentUserRankEntity(CurrentUserRankDto dto) =>
+  static CurrentUserRankEntity toCurrentUserRankEntity(
+          CurrentUserRankDto dto) =>
       CurrentUserRankEntity(
         rank: dto.rank,
         treeCount: dto.treeCount,
         message: dto.message,
       );
 
-  static LeaderboardDataEntity toLeaderboardDataEntity(LeaderboardDataDto dto) =>
+  static LeaderboardDataEntity toLeaderboardDataEntity(
+          LeaderboardDataDto dto) =>
       LeaderboardDataEntity(
         podium: dto.podium.map(toLeaderEntity).toList(),
         leaders: dto.leaders.map(toLeaderEntity).toList(),

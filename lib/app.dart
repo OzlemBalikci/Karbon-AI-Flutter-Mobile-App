@@ -9,7 +9,7 @@ import 'package:karbon/l10n/app_localizations.dart';
 class KarbonApp extends StatelessWidget {
   //final AppRouter _router = AppRouter();
   final AppRouter router;
-  KarbonApp({super.key, required this.router});
+  const KarbonApp({required this.router, super.key});
 
   @override
   Widget build(BuildContext context) {

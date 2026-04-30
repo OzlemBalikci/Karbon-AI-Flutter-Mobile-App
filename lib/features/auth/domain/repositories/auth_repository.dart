@@ -27,6 +27,7 @@ abstract class AuthRepository {
   /// SMS kodu gönderir. Başarıysa Unit döner.
   Future<Either<AppException, Unit>> forgotPassword({
     required String phoneNumber,
+    String? deviceToken,
   });
 
   /// SMS koduyla yeni şifre belirler. Başarıysa Unit döner.

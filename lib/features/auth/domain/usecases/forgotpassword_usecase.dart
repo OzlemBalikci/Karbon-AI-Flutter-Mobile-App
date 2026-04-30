@@ -10,6 +10,10 @@ class ForgotPasswordUseCase {
 
   Future<Either<AppException, void>> call({
     required String phoneNumber,
+    String? deviceToken,
   }) =>
-      _repository.forgotPassword(phoneNumber: phoneNumber);
+      _repository.forgotPassword(
+        phoneNumber: phoneNumber,
+        deviceToken: deviceToken,
+      );
 }

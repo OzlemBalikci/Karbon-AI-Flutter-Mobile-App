@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/auth/domain/usecases/forgotpassword_usecase.dart';
 import 'package:karbon/features/auth/presentation/bloc/forgotpassword/forgotpassword_state.dart';
+import 'package:karbon/services/notification_service.dart';
 
 @injectable
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
@@ -17,8 +18,11 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
       error: null,
     ));
 
+    final deviceToken = await NotificationService.instance.getToken();
+
     final result = await _forgotPasswordUseCase(
       phoneNumber: phoneNumber,
+      deviceToken: deviceToken,
     );
 
     await result.fold<Future<void>>(
