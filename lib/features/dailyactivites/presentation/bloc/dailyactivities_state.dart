@@ -4,16 +4,14 @@ import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_
 
 part 'dailyactivities_state.freezed.dart';
 
-/// Liste / ilk yükleme
-enum DailyActivitiesScreenStatus {
+enum DailyActivitiesStatus {
   initial,
   loading,
   success,
   failure,
 }
 
-/// Cevap gönderme (Puanı Al)
-enum DailyActivitiesPostAnswerStatus {
+enum DailyActivitiesPostStatus {
   idle,
   submitting,
   success,
@@ -22,22 +20,34 @@ enum DailyActivitiesPostAnswerStatus {
 
 @freezed
 abstract class DailyActivitiesState with _$DailyActivitiesState {
+  const DailyActivitiesState._();
+
   const factory DailyActivitiesState({
-    @Default(DailyActivitiesScreenStatus.initial)
-    DailyActivitiesScreenStatus screenStatus,
+    // ---- Liste ekranı ----
+    @Default(DailyActivitiesStatus.initial) DailyActivitiesStatus status,
+    @Default([]) List<DailyQuestionEntity> allQuestions,
     @Default([]) List<DailyQuestionEntity> questions,
-    String? screenError,
     DailyPendingEntity? pending,
     @Default([]) List<DailyCalendarItemEntity> historyItems,
-    double? totalScore,
-    @Default([]) List<BranchStep> branchPath,
-    @Default(DailyActivitiesPostAnswerStatus.idle)
-    DailyActivitiesPostAnswerStatus postAnswerStatus,
-    String? postAnswerError,
-    DailyAnswerResultEntity? lastPostAnswerResult,
-    @Default(false) bool showSuccessDialog,
     @Default([]) List<DailyPreviousAnswersByDateEntity> previousAnswers,
+    String? screenError,
+    DailyQuestionEntity? selectedQuestion,
+    @Default([]) List<DailyQuestionEntity> visibleSteps,
+    @Default({}) Map<String, DailyQuestionOptionEntity> selectedOptions,
+    @Default(DailyActivitiesPostStatus.idle)
+    DailyActivitiesPostStatus postStatus,
+    DailyAnswerResultEntity? lastResult,
+    @Default(false) bool showSuccessDialog,
+    String? postError,
   }) = _DailyActivitiesState;
 
   factory DailyActivitiesState.initial() => const DailyActivitiesState();
+
+  bool get canSubmit {
+    if (visibleSteps.isEmpty) return false;
+    final lastStep = visibleSteps.last;
+    final selected = selectedOptions[lastStep.id];
+    if (selected == null) return false;
+    return selected.nextQuestionId == null || selected.nextQuestionId!.isEmpty;
+  }
 }

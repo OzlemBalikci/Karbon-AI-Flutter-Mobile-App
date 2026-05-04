@@ -3,8 +3,7 @@ part of '../home.dart';
 class StatsCardRow extends StatelessWidget {
   const StatsCardRow({super.key});
 
-  static String _fmtCount(int? n) =>
-      n != null ? formatTurkishDecimal(n) : '—';
+  static String _fmtCount(int? n) => n != null ? formatTurkishDecimal(n) : '—';
 
   @override
   Widget build(BuildContext context) {

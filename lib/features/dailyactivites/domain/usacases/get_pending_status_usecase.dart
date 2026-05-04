@@ -4,8 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
 @injectable
-class GetPendingStatusUsecase {
-  GetPendingStatusUsecase(this._repository);
+class GetPendingStatusUseCase {
+  GetPendingStatusUseCase(this._repository);
   final DailyActivitiesRepository _repository;
 
   Future<Either<Exception, DailyPendingEntity>> call() =>

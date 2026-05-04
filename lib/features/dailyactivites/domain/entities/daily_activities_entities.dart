@@ -21,15 +21,18 @@ class DailyQuestionOptionEntity extends Equatable {
     required this.text,
     required this.carbonValue,
     this.nextQuestionId,
+    this.nextQuestion,
   });
 
   final String id;
   final String text;
   final double carbonValue;
   final String? nextQuestionId;
+  final DailyQuestionEntity? nextQuestion;
 
   @override
-  List<Object?> get props => [id, text, carbonValue, nextQuestionId];
+  List<Object?> get props =>
+      [id, text, carbonValue, nextQuestionId, nextQuestion];
 }
 
 /// GET `/api/v1/daily-activities/questions` — günlük soru.
@@ -80,8 +83,7 @@ class DailySubmittedAnswerLineEntity extends Equatable {
   final double carbonValue;
 
   @override
-  List<Object?> get props =>
-      [questionText, selectedOptionText, carbonValue];
+  List<Object?> get props => [questionText, selectedOptionText, carbonValue];
 }
 
 /// POST `/api/v1/daily-activities/answers` — `data` içi özet.
@@ -130,29 +132,4 @@ class DailyPreviousAnswersByDateEntity extends Equatable {
 
   @override
   List<Object?> get props => [date, answers];
-}
-
-/// Kırılımlı akış (presentation).
-class BranchStep {
-  const BranchStep({
-    required this.question,
-    this.selectedOption,
-  });
-
-  final DailyQuestionEntity question;
-  final DailyQuestionOptionEntity? selectedOption;
-
-  bool get isAnswered => selectedOption != null;
-
-  BranchStep copyWithOption(DailyQuestionOptionEntity option) =>
-      BranchStep(question: question, selectedOption: option);
-
-  @override
-  bool operator ==(Object other) =>
-      other is BranchStep &&
-      other.question.id == question.id &&
-      other.selectedOption?.id == selectedOption?.id;
-
-  @override
-  int get hashCode => Object.hash(question.id, selectedOption?.id);
 }

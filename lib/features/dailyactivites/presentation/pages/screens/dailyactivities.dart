@@ -34,8 +34,8 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
     return Scaffold(
       body: DailyActivitiesScreenStatusSelector(
         builder: (context, screenStatus) {
-          if (screenStatus == DailyActivitiesScreenStatus.loading ||
-              screenStatus == DailyActivitiesScreenStatus.initial) {
+          if (screenStatus == DailyActivitiesStatus.loading ||
+              screenStatus == DailyActivitiesStatus.initial) {
             return SafeArea(
               child: Center(
                 child: CircularProgressIndicator(
@@ -47,6 +47,7 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
           return SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 HeaderSection(),
                 SizedBox(height: AppThemeSpacing.s20.h),

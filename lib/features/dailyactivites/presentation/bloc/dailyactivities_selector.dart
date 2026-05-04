@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:karbon/features/dailyactivites/domain/daily_root_questions.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_bloc.dart';
 import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
@@ -11,39 +10,14 @@ typedef DailyActivitiesQuestionRowData = (
 );
 
 typedef DailyActivitiesBranchUi = ({
-  List<BranchStep> steps,
-  String? activeSelectedOptionId,
+  List<DailyQuestionEntity> steps,
+  Map<String, DailyQuestionOptionEntity> selectedOptions,
   bool canSubmit,
 });
 
-/// Ekran ilk yükleme / liste fetch durumu (tüm sayfa UI’ında kullanılır).
-class DailyActivitiesScreenStatusSelector extends BlocSelector<
-    DailyActivitiesBloc,
-    DailyActivitiesState,
-    DailyActivitiesScreenStatus> {
-  DailyActivitiesScreenStatusSelector({
-    super.key,
-    required Widget Function(
-      BuildContext context,
-      DailyActivitiesScreenStatus status,
-    ) builder,
-  }) : super(
-          selector: (state) => state.screenStatus,
-          builder: builder,
-        );
-}
-
-DailyActivitiesBranchUi selectBranchUi(DailyActivitiesState s) {
-  final steps = s.branchPath;
-  final lastOption = steps.isEmpty ? null : steps.last.selectedOption;
-  return (
-    steps: steps,
-    activeSelectedOptionId: lastOption?.id,
-    canSubmit: lastOption != null &&
-        s.postAnswerStatus != DailyActivitiesPostAnswerStatus.submitting &&
-        s.postAnswerStatus != DailyActivitiesPostAnswerStatus.success,
-  );
-}
+// ---------------------------------------------------------------------------
+// Ortak selector base
+// ---------------------------------------------------------------------------
 
 class DailyActivitiesSelector<T>
     extends BlocSelector<DailyActivitiesBloc, DailyActivitiesState, T> {
@@ -54,23 +28,43 @@ class DailyActivitiesSelector<T>
   }) : super(builder: (context, value) => builder(value));
 }
 
-/// `questionId` null → listedeki ilk soru; dolu → id ile eşleşen soru.
-class DailyActivitiesQuestionRowSelector
-    extends DailyActivitiesSelector<DailyActivitiesQuestionRowData?> {
-  DailyActivitiesQuestionRowSelector({
+// ---------------------------------------------------------------------------
+// Screen status
+// ---------------------------------------------------------------------------
+
+class DailyActivitiesScreenStatusSelector extends BlocSelector<
+    DailyActivitiesBloc, DailyActivitiesState, DailyActivitiesStatus> {
+  DailyActivitiesScreenStatusSelector({
     super.key,
-    String? questionId,
-    required Widget Function(DailyActivitiesQuestionRowData data) builder,
+    required Widget Function(
+      BuildContext context,
+      DailyActivitiesStatus status,
+    ) builder,
   }) : super(
-          selector: (state) => selectQuestionRow(state, questionId),
-          builder: (data) {
-            if (data == null) {
-              return const SizedBox.shrink();
-            }
-            return builder(data);
-          },
+          selector: (state) => state.status,
+          builder: builder,
         );
 }
+
+// ---------------------------------------------------------------------------
+// Kök soru listesi
+// ---------------------------------------------------------------------------
+
+class DailyActivitiesQuestionsSelector
+    extends DailyActivitiesSelector<List<DailyQuestionEntity>> {
+  DailyActivitiesQuestionsSelector({
+    super.key,
+    required Widget Function(List<DailyQuestionEntity> questions) builder,
+  }) : super(
+          // questions zaten Bloc'ta rootQuestions olarak filtrelendi
+          selector: (state) => state.questions,
+          builder: builder,
+        );
+}
+
+// ---------------------------------------------------------------------------
+// Tek soru satırı (kart için)
+// ---------------------------------------------------------------------------
 
 DailyActivitiesQuestionRowData? selectQuestionRow(
   DailyActivitiesState state,
@@ -94,15 +88,33 @@ DailyActivitiesQuestionRowData? selectQuestionRow(
   return (q.text, q);
 }
 
-class DailyActivitiesQuestionsSelector
-    extends DailyActivitiesSelector<List<DailyQuestionEntity>> {
-  DailyActivitiesQuestionsSelector({
+class DailyActivitiesQuestionRowSelector
+    extends DailyActivitiesSelector<DailyActivitiesQuestionRowData?> {
+  DailyActivitiesQuestionRowSelector({
     super.key,
-    required Widget Function(List<DailyQuestionEntity> questions) builder,
+    String? questionId,
+    required Widget Function(DailyActivitiesQuestionRowData data) builder,
   }) : super(
-          selector: (state) => rootQuestions(state.questions),
-          builder: builder,
+          selector: (state) => selectQuestionRow(state, questionId),
+          builder: (data) {
+            if (data == null) return const SizedBox.shrink();
+            return builder(data);
+          },
         );
+}
+
+// ---------------------------------------------------------------------------
+// Branch (detay ekranı dropdown zinciri)
+// ---------------------------------------------------------------------------
+
+DailyActivitiesBranchUi selectBranchUi(DailyActivitiesState state) {
+  return (
+    steps: state.visibleSteps,
+    selectedOptions: state.selectedOptions,
+    canSubmit: state.canSubmit &&
+        state.postStatus != DailyActivitiesPostStatus.submitting &&
+        state.postStatus != DailyActivitiesPostStatus.success,
+  );
 }
 
 class DailyActivitiesBranchSelector
@@ -115,6 +127,10 @@ class DailyActivitiesBranchSelector
           builder: builder,
         );
 }
+
+// ---------------------------------------------------------------------------
+// Önceki cevaplar
+// ---------------------------------------------------------------------------
 
 class DailyActivitiesPreviousAnswersSelector
     extends DailyActivitiesSelector<List<DailyPreviousAnswersByDateEntity>> {

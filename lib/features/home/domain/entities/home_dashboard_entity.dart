@@ -64,6 +64,10 @@ class HomeDashboardEntity extends Equatable {
   final List<LeaderboardLeaderEntity>? topLeaders;
 
   @override
-  List<Object?> get props =>
-      [hasCompletedPoll, globalTarget, monthlyTarget, topLeaders];
+  List<Object?> get props => [
+        hasCompletedPoll,
+        globalTarget,
+        monthlyTarget,
+        topLeaders,
+      ];
 }

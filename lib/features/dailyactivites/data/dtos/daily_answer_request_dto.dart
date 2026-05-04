@@ -1,5 +1,6 @@
-class DailyAnswerItemRequestDto {
-  const DailyAnswerItemRequestDto({
+// dto/daily_selected_answer_dto.dart
+class DailySelectedAnswerDto {
+  const DailySelectedAnswerDto({
     required this.questionId,
     required this.selectedOptionId,
   });
@@ -7,19 +8,9 @@ class DailyAnswerItemRequestDto {
   final String questionId;
   final String selectedOptionId;
 
-  Map<String, dynamic> toJson() => {
-        'questionId': questionId,
-        'selectedOptionId': selectedOptionId,
-      };
-}
-
-/// POST `/api/v1/daily-activities/answers` — `{ "answers": [ ... ] }`.
-class DailyAnswersBatchRequestDto {
-  const DailyAnswersBatchRequestDto({required this.answers});
-
-  final List<DailyAnswerItemRequestDto> answers;
-
-  Map<String, dynamic> toJson() => {
-        'answers': answers.map((e) => e.toJson()).toList(),
-      };
+  factory DailySelectedAnswerDto.fromJson(Map<String, dynamic> json) =>
+      DailySelectedAnswerDto(
+        questionId: json['questionId'] as String,
+        selectedOptionId: json['selectedOptionId'] as String,
+      );
 }

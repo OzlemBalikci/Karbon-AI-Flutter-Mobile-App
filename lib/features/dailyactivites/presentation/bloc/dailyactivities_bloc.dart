@@ -1,26 +1,21 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:karbon/features/calendar/domain/usecases/get_calendar_usecase.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
-import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_event.dart';
-import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/get_today_questions_usacase.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/get_pending_status_usecase.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/get_previous_answers_usecase.dart';
 import 'package:karbon/features/dailyactivites/domain/usacases/post_answer_usecase.dart';
-import 'package:karbon/features/auth/domain/usecases/checksession_usecase.dart';
+import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_event.dart';
+import 'package:karbon/features/dailyactivites/presentation/bloc/dailyactivities_state.dart';
 
 @injectable
 class DailyActivitiesBloc
     extends Bloc<DailyActivitiesEvent, DailyActivitiesState> {
   DailyActivitiesBloc(
-    this._getTodayQuestionsUsecase,
-    this._getPendingStatusUsecase,
-    this._getCalendarUsecase,
-    this._postAnswerUsecase,
-    this._checkSessionUseCase,
-    this._getPreviousAnswersUsecase,
+    this._getTodayQuestions,
+    this._getPendingStatus,
+    this._getPreviousAnswers,
+    this._postAnswers,
   ) : super(DailyActivitiesState.initial()) {
     on<DailyActivitiesLoadRequested>(_onLoadRequested);
     on<DailyActivitiesQuestionSelected>(_onQuestionSelected);
@@ -31,270 +26,204 @@ class DailyActivitiesBloc
     on<DailyActivitiesDetailClosed>(_onDetailClosed);
   }
 
-  final GetTodayQuestionsUsecase _getTodayQuestionsUsecase;
-  final GetPendingStatusUsecase _getPendingStatusUsecase;
-  final GetCalendarUsecase _getCalendarUsecase;
-  final PostAnswerUsecase _postAnswerUsecase;
-  final CheckSessionUseCase _checkSessionUseCase;
-  final GetPreviousAnswersUsecase _getPreviousAnswersUsecase;
-
-  void _emitLoadFailure(
-    Emitter<DailyActivitiesState> emit,
-    Object error,
-  ) {
-    emit(
-      state.copyWith(
-        screenStatus: DailyActivitiesScreenStatus.failure,
-        screenError: error.toString(),
-      ),
-    );
-  }
-
-  Future<T?> _unwrapOrFail<T>(
-    Either<Exception, T> result,
-    Emitter<DailyActivitiesState> emit,
-  ) async {
-    return result.fold(
-      (e) {
-        _emitLoadFailure(emit, e);
-        return null;
-      },
-      (v) => v,
-    );
-  }
+  final GetTodayQuestionsUseCase _getTodayQuestions;
+  final GetPendingStatusUseCase _getPendingStatus;
+  final GetPreviousAnswersUseCase _getPreviousAnswers;
+  final PostAnswersUseCase _postAnswers;
 
   Future<void> _onLoadRequested(
     DailyActivitiesLoadRequested event,
     Emitter<DailyActivitiesState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        screenStatus: DailyActivitiesScreenStatus.loading,
-        screenError: null,
-      ),
-    );
+    emit(state.copyWith(
+      status: DailyActivitiesStatus.loading,
+      screenError: null,
+    ));
 
-    final pending = await _unwrapOrFail(
-      await _getPendingStatusUsecase(),
-      emit,
-    );
-    if (pending == null) return;
+    final questionsResult = await _getTodayQuestions();
+    if (emit.isDone) return;
 
-    final questions = await _unwrapOrFail(
-      await _getTodayQuestionsUsecase(),
-      emit,
+    final questions = questionsResult.fold<List<DailyQuestionEntity>?>(
+      (e) {
+        emit(state.copyWith(
+          status: DailyActivitiesStatus.failure,
+          screenError: e.toString(),
+        ));
+        return null;
+      },
+      (data) => data,
     );
-    if (questions == null) return;
+    if (questions == null || emit.isDone) return;
 
-    final now = DateTime.now();
-    final calendar = await _unwrapOrFail(
-      await _getCalendarUsecase(year: now.year, month: now.month),
-      emit,
-    );
-    if (calendar == null) return;
+    final pendingResult = await _getPendingStatus();
+    if (emit.isDone) return;
 
-    final prevAnswers = (await _getPreviousAnswersUsecase()).fold(
-      (_) => <DailyPreviousAnswersByDateEntity>[],
-      (a) => a,
+    final pending = pendingResult.fold<DailyPendingEntity?>(
+      (e) {
+        emit(state.copyWith(
+          status: DailyActivitiesStatus.failure,
+          screenError: e.toString(),
+        ));
+        return null;
+      },
+      (data) => data,
     );
+    if (pending == null || emit.isDone) return;
 
-    emit(
-      state.copyWith(
-        screenStatus: DailyActivitiesScreenStatus.success,
-        questions: questions,
-        pending: pending,
-        historyItems: calendar.items,
-        totalScore: calendar.totalScore,
-        previousAnswers: prevAnswers,
-      ),
+    final previousAnswersResult = await _getPreviousAnswers();
+    if (emit.isDone) return;
+
+    final previousAnswers =
+        previousAnswersResult.fold<List<DailyPreviousAnswersByDateEntity>?>(
+      (e) {
+        emit(state.copyWith(
+          status: DailyActivitiesStatus.failure,
+          screenError: e.toString(),
+        ));
+        return null;
+      },
+      (data) => data,
     );
+    if (previousAnswers == null || emit.isDone) return;
+
+    final referencedIds = questions
+        .expand((q) => q.options)
+        .map((o) => o.nextQuestionId)
+        .whereType<String>()
+        .toSet();
+
+    final rootQuestions = questions
+        .where((q) => !referencedIds.contains(q.id))
+        .toList()
+      ..sort((a, b) => a.displayOrder.compareTo(b.displayOrder));
+
+    emit(state.copyWith(
+      status: DailyActivitiesStatus.success,
+      allQuestions: questions,
+      questions: rootQuestions,
+      pending: pending,
+      previousAnswers: previousAnswers,
+      screenError: null,
+    ));
   }
 
   void _onQuestionSelected(
     DailyActivitiesQuestionSelected event,
     Emitter<DailyActivitiesState> emit,
   ) {
-    emit(
-      state.copyWith(
-        branchPath: [BranchStep(question: event.question)],
-        postAnswerStatus: DailyActivitiesPostAnswerStatus.idle,
-        postAnswerError: null,
-        lastPostAnswerResult: null,
-        showSuccessDialog: false,
-      ),
-    );
-  }
-
-  DailyQuestionEntity? _questionById(String id) {
-    for (final q in state.questions) {
-      if (q.id == id) return q;
-    }
-    return null;
+    emit(state.copyWith(
+      selectedQuestion: event.question,
+      visibleSteps: [event.question],
+      selectedOptions: {},
+    ));
   }
 
   void _onOptionSelected(
     DailyActivitiesOptionSelected event,
     Emitter<DailyActivitiesState> emit,
   ) {
-    final path = [...state.branchPath];
-    if (path.isEmpty) return;
+    final option = event.option;
+    final currentStep = state.visibleSteps.last;
 
-    final last = path.last;
-    DailyQuestionOptionEntity? option;
-    for (final o in last.question.options) {
-      if (o.id == event.optionId) {
-        option = o;
-        break;
-      }
-    }
-    if (option == null) return;
+    final updatedOptions = Map<String, DailyQuestionOptionEntity>.from(
+      state.selectedOptions,
+    )..[currentStep.id] = option;
 
-    path[path.length - 1] = last.copyWithOption(option);
+    List<DailyQuestionEntity> updatedSteps = [...state.visibleSteps];
 
-    final nextId = option.nextQuestionId;
-    if (nextId != null && nextId.isNotEmpty) {
-      final nextQuestion = _questionById(nextId);
-      if (nextQuestion != null && !path.any((s) => s.question.id == nextId)) {
-        path.add(BranchStep(question: nextQuestion));
-      }
+    if (option.nextQuestionId != null && option.nextQuestionId!.isNotEmpty) {
+      final next = state.allQuestions.firstWhere(
+        (q) => q.id == option.nextQuestionId,
+      );
+      updatedSteps = [...updatedSteps, next];
     }
 
-    emit(state.copyWith(branchPath: path, postAnswerError: null));
+    emit(state.copyWith(
+      visibleSteps: updatedSteps,
+      selectedOptions: updatedOptions,
+    ));
   }
 
+  // ---------------------------------------------------------- branchStepReopened
   void _onBranchStepReopened(
     DailyActivitiesBranchStepReopened event,
     Emitter<DailyActivitiesState> emit,
   ) {
-    if (state.postAnswerStatus == DailyActivitiesPostAnswerStatus.submitting) {
-      return;
-    }
-    final path = state.branchPath;
-    if (path.isEmpty) return;
-    final i = event.stepIndex;
-    if (i < 0 || i >= path.length || !path[i].isAnswered) return;
+    final trimmedSteps = state.visibleSteps.sublist(0, event.stepIndex + 1);
 
-    final head = path.take(i).toList();
-    emit(
-      state.copyWith(
-        branchPath: [...head, BranchStep(question: path[i].question)],
-        postAnswerError: null,
-        postAnswerStatus: DailyActivitiesPostAnswerStatus.idle,
-      ),
-    );
+    final validIds = trimmedSteps.map((q) => q.id).toSet();
+    final trimmedOptions = Map<String, DailyQuestionOptionEntity>.from(
+      state.selectedOptions,
+    )..removeWhere((id, _) => !validIds.contains(id));
+
+    emit(state.copyWith(
+      visibleSteps: trimmedSteps,
+      selectedOptions: trimmedOptions,
+    ));
   }
 
+  // ------------------------------------------------------- postAnswerRequested
   Future<void> _onPostAnswerRequested(
     DailyActivitiesPostAnswerRequested event,
     Emitter<DailyActivitiesState> emit,
   ) async {
-    if (state.postAnswerStatus ==
-            DailyActivitiesPostAnswerStatus.submitting ||
-        state.postAnswerStatus == DailyActivitiesPostAnswerStatus.success) {
-      return;
-    }
+    if (!state.canSubmit) return;
 
-    final path = state.branchPath;
-    if (path.isEmpty || !path.last.isAnswered) {
-      emit(
-        state.copyWith(
-          postAnswerStatus: DailyActivitiesPostAnswerStatus.error,
-          postAnswerError: path.isEmpty
-              ? 'Lütfen bir seçim yapınız.'
-              : 'Lütfen tüm soruları cevaplayınız.',
-        ),
-      );
-      return;
-    }
+    emit(state.copyWith(
+      postStatus: DailyActivitiesPostStatus.submitting,
+      postError: null,
+    ));
 
-    final answeredSteps = path.where((s) => s.isAnswered).toList();
-
-    emit(
-      state.copyWith(
-        postAnswerStatus: DailyActivitiesPostAnswerStatus.submitting,
-        postAnswerError: null,
-      ),
-    );
-
-    final sessionResult = await _checkSessionUseCase();
-    final hasSession = sessionResult.fold<bool>(
-      (_) => false,
-      (u) => u != null,
-    );
-    if (!hasSession) {
-      emit(
-        state.copyWith(
-          postAnswerStatus: DailyActivitiesPostAnswerStatus.error,
-          postAnswerError: 'Oturum bulunamadı.',
-        ),
-      );
-      return;
-    }
-
-    final payload = answeredSteps
-        .map(
-          (s) => DailySelectedAnswerEntity(
-            questionId: s.question.id,
-            selectedOptionId: s.selectedOption!.id,
-          ),
-        )
+    final answers = state.selectedOptions.entries
+        .map((e) => DailySelectedAnswerEntity(
+              questionId: e.key,
+              selectedOptionId: e.value.id,
+            ))
         .toList();
 
-    final result = await _postAnswerUsecase(answers: payload);
-    final answer = result.fold<DailyAnswerResultEntity?>(
-      (e) {
-        emit(
-          state.copyWith(
-            postAnswerStatus: DailyActivitiesPostAnswerStatus.error,
-            postAnswerError: e.toString(),
-          ),
-        );
-        return null;
-      },
-      (a) => a,
-    );
-    if (answer == null) return;
+    final result = await _postAnswers(answers: answers);
 
-    final showPointsDialog = answer.isFlowCompleted;
-
-    emit(
-      state.copyWith(
-        postAnswerStatus: DailyActivitiesPostAnswerStatus.success,
-        showSuccessDialog: showPointsDialog,
-        lastPostAnswerResult: answer,
-      ),
+    result.fold(
+      (e) => emit(state.copyWith(
+        postStatus: DailyActivitiesPostStatus.error,
+        postError: e.toString(),
+      )),
+      (data) => emit(state.copyWith(
+        postStatus: DailyActivitiesPostStatus.success,
+        lastResult: data,
+        showSuccessDialog: true,
+        postError: null,
+      )),
     );
   }
 
+  // ------------------------------------------------------- successDismissed
   Future<void> _onSuccessDismissed(
     DailyActivitiesSuccessDismissed event,
     Emitter<DailyActivitiesState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        branchPath: [],
-        postAnswerStatus: DailyActivitiesPostAnswerStatus.idle,
-        lastPostAnswerResult: null,
-        showSuccessDialog: false,
-        postAnswerError: null,
-      ),
-    );
+    emit(state.copyWith(showSuccessDialog: false));
     add(const DailyActivitiesEvent.loadRequested());
+    _resetDetail(emit);
   }
 
+  // ---------------------------------------------------------- detailClosed
   void _onDetailClosed(
     DailyActivitiesDetailClosed event,
     Emitter<DailyActivitiesState> emit,
   ) {
-    if (state.postAnswerStatus == DailyActivitiesPostAnswerStatus.submitting) {
-      return;
-    }
-    emit(
-      state.copyWith(
-        branchPath: [],
-        postAnswerStatus: DailyActivitiesPostAnswerStatus.idle,
-        postAnswerError: null,
-      ),
-    );
+    _resetDetail(emit);
+  }
+
+  // --------------------------------------------------------- detail reset
+  void _resetDetail(Emitter<DailyActivitiesState> emit) {
+    emit(state.copyWith(
+      selectedQuestion: null,
+      visibleSteps: [],
+      selectedOptions: {},
+      postStatus: DailyActivitiesPostStatus.idle,
+      postError: null,
+      showSuccessDialog: false,
+    ));
   }
 }

@@ -285,14 +285,14 @@ extension GetItInjectableX on _i174.GetIt {
         _i449.DailyActivitiesRepositoryImpl(gh<_i614.DailyActivitiesRemote>()));
     gh.factory<_i591.HomeBloc>(
         () => _i591.HomeBloc(gh<_i702.GetHomeUseCase>()));
-    gh.factory<_i448.GetPendingStatusUsecase>(() =>
-        _i448.GetPendingStatusUsecase(gh<_i320.DailyActivitiesRepository>()));
-    gh.factory<_i495.GetPreviousAnswersUsecase>(() =>
-        _i495.GetPreviousAnswersUsecase(gh<_i320.DailyActivitiesRepository>()));
-    gh.factory<_i671.GetTodayQuestionsUsecase>(() =>
-        _i671.GetTodayQuestionsUsecase(gh<_i320.DailyActivitiesRepository>()));
-    gh.factory<_i902.PostAnswerUsecase>(
-        () => _i902.PostAnswerUsecase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i448.GetPendingStatusUseCase>(() =>
+        _i448.GetPendingStatusUseCase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i495.GetPreviousAnswersUseCase>(() =>
+        _i495.GetPreviousAnswersUseCase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i671.GetTodayQuestionsUseCase>(() =>
+        _i671.GetTodayQuestionsUseCase(gh<_i320.DailyActivitiesRepository>()));
+    gh.factory<_i902.PostAnswersUseCase>(
+        () => _i902.PostAnswersUseCase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i24.GetCalendarUsecase>(
         () => _i24.GetCalendarUsecase(gh<_i623.CalendarRepository>()));
     gh.factory<_i996.GetDetailsUsecase>(
@@ -322,14 +322,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i558.RegisterUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i1018.ResetPasswordUseCase>(
         () => _i1018.ResetPasswordUseCase(gh<_i252.AuthRepository>()));
-    gh.factory<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
-          gh<_i671.GetTodayQuestionsUsecase>(),
-          gh<_i448.GetPendingStatusUsecase>(),
-          gh<_i24.GetCalendarUsecase>(),
-          gh<_i902.PostAnswerUsecase>(),
-          gh<_i793.CheckSessionUseCase>(),
-          gh<_i495.GetPreviousAnswersUsecase>(),
-        ));
     gh.factory<_i208.ForgotPasswordCubit>(
         () => _i208.ForgotPasswordCubit(gh<_i210.ForgotPasswordUseCase>()));
     gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(
@@ -350,6 +342,12 @@ extension GetItInjectableX on _i174.GetIt {
         _i715.SavePollDraftUseCase(gh<_i666.CarbonCalculateRepository>()));
     gh.factory<_i630.SubmitPollAnswersUseCase>(() =>
         _i630.SubmitPollAnswersUseCase(gh<_i666.CarbonCalculateRepository>()));
+    gh.factory<_i391.DailyActivitiesBloc>(() => _i391.DailyActivitiesBloc(
+          gh<_i671.GetTodayQuestionsUseCase>(),
+          gh<_i448.GetPendingStatusUseCase>(),
+          gh<_i495.GetPreviousAnswersUseCase>(),
+          gh<_i902.PostAnswersUseCase>(),
+        ));
     gh.factory<_i121.RegisterCubit>(() => _i121.RegisterCubit(
           gh<_i558.RegisterUseCase>(),
           gh<_i564.AuthBloc>(),

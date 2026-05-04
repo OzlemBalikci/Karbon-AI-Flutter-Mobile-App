@@ -193,7 +193,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loadRequested,
     TResult Function(DailyQuestionEntity question)? questionSelected,
-    TResult Function(String optionId)? optionSelected,
+    TResult Function(DailyQuestionOptionEntity option)? optionSelected,
     TResult Function(int stepIndex)? branchStepReopened,
     TResult Function()? postAnswerRequested,
     TResult Function()? successDismissed,
@@ -207,7 +207,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
       case DailyActivitiesQuestionSelected() when questionSelected != null:
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected() when optionSelected != null:
-        return optionSelected(_that.optionId);
+        return optionSelected(_that.option);
       case DailyActivitiesBranchStepReopened() when branchStepReopened != null:
         return branchStepReopened(_that.stepIndex);
       case DailyActivitiesPostAnswerRequested()
@@ -239,7 +239,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() loadRequested,
     required TResult Function(DailyQuestionEntity question) questionSelected,
-    required TResult Function(String optionId) optionSelected,
+    required TResult Function(DailyQuestionOptionEntity option) optionSelected,
     required TResult Function(int stepIndex) branchStepReopened,
     required TResult Function() postAnswerRequested,
     required TResult Function() successDismissed,
@@ -252,7 +252,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
       case DailyActivitiesQuestionSelected():
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected():
-        return optionSelected(_that.optionId);
+        return optionSelected(_that.option);
       case DailyActivitiesBranchStepReopened():
         return branchStepReopened(_that.stepIndex);
       case DailyActivitiesPostAnswerRequested():
@@ -280,7 +280,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loadRequested,
     TResult? Function(DailyQuestionEntity question)? questionSelected,
-    TResult? Function(String optionId)? optionSelected,
+    TResult? Function(DailyQuestionOptionEntity option)? optionSelected,
     TResult? Function(int stepIndex)? branchStepReopened,
     TResult? Function()? postAnswerRequested,
     TResult? Function()? successDismissed,
@@ -293,7 +293,7 @@ extension DailyActivitiesEventPatterns on DailyActivitiesEvent {
       case DailyActivitiesQuestionSelected() when questionSelected != null:
         return questionSelected(_that.question);
       case DailyActivitiesOptionSelected() when optionSelected != null:
-        return optionSelected(_that.optionId);
+        return optionSelected(_that.option);
       case DailyActivitiesBranchStepReopened() when branchStepReopened != null:
         return branchStepReopened(_that.stepIndex);
       case DailyActivitiesPostAnswerRequested()
@@ -400,9 +400,9 @@ class _$DailyActivitiesQuestionSelectedCopyWithImpl<$Res>
 /// @nodoc
 
 class DailyActivitiesOptionSelected implements DailyActivitiesEvent {
-  const DailyActivitiesOptionSelected(this.optionId);
+  const DailyActivitiesOptionSelected(this.option);
 
-  final String optionId;
+  final DailyQuestionOptionEntity option;
 
   /// Create a copy of DailyActivitiesEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -417,16 +417,15 @@ class DailyActivitiesOptionSelected implements DailyActivitiesEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is DailyActivitiesOptionSelected &&
-            (identical(other.optionId, optionId) ||
-                other.optionId == optionId));
+            (identical(other.option, option) || other.option == option));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, optionId);
+  int get hashCode => Object.hash(runtimeType, option);
 
   @override
   String toString() {
-    return 'DailyActivitiesEvent.optionSelected(optionId: $optionId)';
+    return 'DailyActivitiesEvent.optionSelected(option: $option)';
   }
 }
 
@@ -438,7 +437,7 @@ abstract mixin class $DailyActivitiesOptionSelectedCopyWith<$Res>
           $Res Function(DailyActivitiesOptionSelected) _then) =
       _$DailyActivitiesOptionSelectedCopyWithImpl;
   @useResult
-  $Res call({String optionId});
+  $Res call({DailyQuestionOptionEntity option});
 }
 
 /// @nodoc
@@ -453,13 +452,13 @@ class _$DailyActivitiesOptionSelectedCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? optionId = null,
+    Object? option = null,
   }) {
     return _then(DailyActivitiesOptionSelected(
-      null == optionId
-          ? _self.optionId
-          : optionId // ignore: cast_nullable_to_non_nullable
-              as String,
+      null == option
+          ? _self.option
+          : option // ignore: cast_nullable_to_non_nullable
+              as DailyQuestionOptionEntity,
     ));
   }
 }

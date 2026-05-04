@@ -14,18 +14,25 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$DailyActivitiesState {
-  DailyActivitiesScreenStatus get screenStatus;
+// ---- Liste ekranı ----
+  DailyActivitiesStatus get status;
+  List<DailyQuestionEntity> get allQuestions;
   List<DailyQuestionEntity> get questions;
-  String? get screenError;
   DailyPendingEntity? get pending;
   List<DailyCalendarItemEntity> get historyItems;
-  double? get totalScore;
-  List<BranchStep> get branchPath;
-  DailyActivitiesPostAnswerStatus get postAnswerStatus;
-  String? get postAnswerError;
-  DailyAnswerResultEntity? get lastPostAnswerResult;
-  bool get showSuccessDialog;
   List<DailyPreviousAnswersByDateEntity> get previousAnswers;
+  String? get screenError; // ---- Detay ekranı ----
+// Karttan seçilen kök soru
+  DailyQuestionEntity?
+      get selectedQuestion; // Ekranda sırayla görünen adımlar (root + nextQuestion'lar)
+  List<DailyQuestionEntity>
+      get visibleSteps; // Her adım için seçilen option: questionId → option
+  Map<String, DailyQuestionOptionEntity>
+      get selectedOptions; // ---- Cevap gönderme ----
+  DailyActivitiesPostStatus get postStatus;
+  DailyAnswerResultEntity? get lastResult;
+  bool get showSuccessDialog;
+  String? get postError;
 
   /// Create a copy of DailyActivitiesState
   /// with the given fields replaced by the non-null parameter values.
@@ -40,49 +47,54 @@ mixin _$DailyActivitiesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is DailyActivitiesState &&
-            (identical(other.screenStatus, screenStatus) ||
-                other.screenStatus == screenStatus) &&
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality()
+                .equals(other.allQuestions, allQuestions) &&
             const DeepCollectionEquality().equals(other.questions, questions) &&
-            (identical(other.screenError, screenError) ||
-                other.screenError == screenError) &&
             (identical(other.pending, pending) || other.pending == pending) &&
             const DeepCollectionEquality()
                 .equals(other.historyItems, historyItems) &&
-            (identical(other.totalScore, totalScore) ||
-                other.totalScore == totalScore) &&
             const DeepCollectionEquality()
-                .equals(other.branchPath, branchPath) &&
-            (identical(other.postAnswerStatus, postAnswerStatus) ||
-                other.postAnswerStatus == postAnswerStatus) &&
-            (identical(other.postAnswerError, postAnswerError) ||
-                other.postAnswerError == postAnswerError) &&
-            (identical(other.lastPostAnswerResult, lastPostAnswerResult) ||
-                other.lastPostAnswerResult == lastPostAnswerResult) &&
+                .equals(other.previousAnswers, previousAnswers) &&
+            (identical(other.screenError, screenError) ||
+                other.screenError == screenError) &&
+            (identical(other.selectedQuestion, selectedQuestion) ||
+                other.selectedQuestion == selectedQuestion) &&
+            const DeepCollectionEquality()
+                .equals(other.visibleSteps, visibleSteps) &&
+            const DeepCollectionEquality()
+                .equals(other.selectedOptions, selectedOptions) &&
+            (identical(other.postStatus, postStatus) ||
+                other.postStatus == postStatus) &&
+            (identical(other.lastResult, lastResult) ||
+                other.lastResult == lastResult) &&
             (identical(other.showSuccessDialog, showSuccessDialog) ||
                 other.showSuccessDialog == showSuccessDialog) &&
-            const DeepCollectionEquality()
-                .equals(other.previousAnswers, previousAnswers));
+            (identical(other.postError, postError) ||
+                other.postError == postError));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      screenStatus,
+      status,
+      const DeepCollectionEquality().hash(allQuestions),
       const DeepCollectionEquality().hash(questions),
-      screenError,
       pending,
       const DeepCollectionEquality().hash(historyItems),
-      totalScore,
-      const DeepCollectionEquality().hash(branchPath),
-      postAnswerStatus,
-      postAnswerError,
-      lastPostAnswerResult,
+      const DeepCollectionEquality().hash(previousAnswers),
+      screenError,
+      selectedQuestion,
+      const DeepCollectionEquality().hash(visibleSteps),
+      const DeepCollectionEquality().hash(selectedOptions),
+      postStatus,
+      lastResult,
       showSuccessDialog,
-      const DeepCollectionEquality().hash(previousAnswers));
+      postError);
 
   @override
   String toString() {
-    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, showSuccessDialog: $showSuccessDialog, previousAnswers: $previousAnswers)';
+    return 'DailyActivitiesState(status: $status, allQuestions: $allQuestions, questions: $questions, pending: $pending, historyItems: $historyItems, previousAnswers: $previousAnswers, screenError: $screenError, selectedQuestion: $selectedQuestion, visibleSteps: $visibleSteps, selectedOptions: $selectedOptions, postStatus: $postStatus, lastResult: $lastResult, showSuccessDialog: $showSuccessDialog, postError: $postError)';
   }
 }
 
@@ -93,18 +105,20 @@ abstract mixin class $DailyActivitiesStateCopyWith<$Res> {
       _$DailyActivitiesStateCopyWithImpl;
   @useResult
   $Res call(
-      {DailyActivitiesScreenStatus screenStatus,
+      {DailyActivitiesStatus status,
+      List<DailyQuestionEntity> allQuestions,
       List<DailyQuestionEntity> questions,
-      String? screenError,
       DailyPendingEntity? pending,
       List<DailyCalendarItemEntity> historyItems,
-      double? totalScore,
-      List<BranchStep> branchPath,
-      DailyActivitiesPostAnswerStatus postAnswerStatus,
-      String? postAnswerError,
-      DailyAnswerResultEntity? lastPostAnswerResult,
+      List<DailyPreviousAnswersByDateEntity> previousAnswers,
+      String? screenError,
+      DailyQuestionEntity? selectedQuestion,
+      List<DailyQuestionEntity> visibleSteps,
+      Map<String, DailyQuestionOptionEntity> selectedOptions,
+      DailyActivitiesPostStatus postStatus,
+      DailyAnswerResultEntity? lastResult,
       bool showSuccessDialog,
-      List<DailyPreviousAnswersByDateEntity> previousAnswers});
+      String? postError});
 }
 
 /// @nodoc
@@ -120,32 +134,34 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? screenStatus = null,
+    Object? status = null,
+    Object? allQuestions = null,
     Object? questions = null,
-    Object? screenError = freezed,
     Object? pending = freezed,
     Object? historyItems = null,
-    Object? totalScore = freezed,
-    Object? branchPath = null,
-    Object? postAnswerStatus = null,
-    Object? postAnswerError = freezed,
-    Object? lastPostAnswerResult = freezed,
-    Object? showSuccessDialog = null,
     Object? previousAnswers = null,
+    Object? screenError = freezed,
+    Object? selectedQuestion = freezed,
+    Object? visibleSteps = null,
+    Object? selectedOptions = null,
+    Object? postStatus = null,
+    Object? lastResult = freezed,
+    Object? showSuccessDialog = null,
+    Object? postError = freezed,
   }) {
     return _then(_self.copyWith(
-      screenStatus: null == screenStatus
-          ? _self.screenStatus
-          : screenStatus // ignore: cast_nullable_to_non_nullable
-              as DailyActivitiesScreenStatus,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as DailyActivitiesStatus,
+      allQuestions: null == allQuestions
+          ? _self.allQuestions
+          : allQuestions // ignore: cast_nullable_to_non_nullable
+              as List<DailyQuestionEntity>,
       questions: null == questions
           ? _self.questions
           : questions // ignore: cast_nullable_to_non_nullable
               as List<DailyQuestionEntity>,
-      screenError: freezed == screenError
-          ? _self.screenError
-          : screenError // ignore: cast_nullable_to_non_nullable
-              as String?,
       pending: freezed == pending
           ? _self.pending
           : pending // ignore: cast_nullable_to_non_nullable
@@ -154,34 +170,42 @@ class _$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self.historyItems
           : historyItems // ignore: cast_nullable_to_non_nullable
               as List<DailyCalendarItemEntity>,
-      totalScore: freezed == totalScore
-          ? _self.totalScore
-          : totalScore // ignore: cast_nullable_to_non_nullable
-              as double?,
-      branchPath: null == branchPath
-          ? _self.branchPath
-          : branchPath // ignore: cast_nullable_to_non_nullable
-              as List<BranchStep>,
-      postAnswerStatus: null == postAnswerStatus
-          ? _self.postAnswerStatus
-          : postAnswerStatus // ignore: cast_nullable_to_non_nullable
-              as DailyActivitiesPostAnswerStatus,
-      postAnswerError: freezed == postAnswerError
-          ? _self.postAnswerError
-          : postAnswerError // ignore: cast_nullable_to_non_nullable
+      previousAnswers: null == previousAnswers
+          ? _self.previousAnswers
+          : previousAnswers // ignore: cast_nullable_to_non_nullable
+              as List<DailyPreviousAnswersByDateEntity>,
+      screenError: freezed == screenError
+          ? _self.screenError
+          : screenError // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastPostAnswerResult: freezed == lastPostAnswerResult
-          ? _self.lastPostAnswerResult
-          : lastPostAnswerResult // ignore: cast_nullable_to_non_nullable
+      selectedQuestion: freezed == selectedQuestion
+          ? _self.selectedQuestion
+          : selectedQuestion // ignore: cast_nullable_to_non_nullable
+              as DailyQuestionEntity?,
+      visibleSteps: null == visibleSteps
+          ? _self.visibleSteps
+          : visibleSteps // ignore: cast_nullable_to_non_nullable
+              as List<DailyQuestionEntity>,
+      selectedOptions: null == selectedOptions
+          ? _self.selectedOptions
+          : selectedOptions // ignore: cast_nullable_to_non_nullable
+              as Map<String, DailyQuestionOptionEntity>,
+      postStatus: null == postStatus
+          ? _self.postStatus
+          : postStatus // ignore: cast_nullable_to_non_nullable
+              as DailyActivitiesPostStatus,
+      lastResult: freezed == lastResult
+          ? _self.lastResult
+          : lastResult // ignore: cast_nullable_to_non_nullable
               as DailyAnswerResultEntity?,
       showSuccessDialog: null == showSuccessDialog
           ? _self.showSuccessDialog
           : showSuccessDialog // ignore: cast_nullable_to_non_nullable
               as bool,
-      previousAnswers: null == previousAnswers
-          ? _self.previousAnswers
-          : previousAnswers // ignore: cast_nullable_to_non_nullable
-              as List<DailyPreviousAnswersByDateEntity>,
+      postError: freezed == postError
+          ? _self.postError
+          : postError // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -280,18 +304,20 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            DailyActivitiesScreenStatus screenStatus,
+            DailyActivitiesStatus status,
+            List<DailyQuestionEntity> allQuestions,
             List<DailyQuestionEntity> questions,
-            String? screenError,
             DailyPendingEntity? pending,
             List<DailyCalendarItemEntity> historyItems,
-            double? totalScore,
-            List<BranchStep> branchPath,
-            DailyActivitiesPostAnswerStatus postAnswerStatus,
-            String? postAnswerError,
-            DailyAnswerResultEntity? lastPostAnswerResult,
+            List<DailyPreviousAnswersByDateEntity> previousAnswers,
+            String? screenError,
+            DailyQuestionEntity? selectedQuestion,
+            List<DailyQuestionEntity> visibleSteps,
+            Map<String, DailyQuestionOptionEntity> selectedOptions,
+            DailyActivitiesPostStatus postStatus,
+            DailyAnswerResultEntity? lastResult,
             bool showSuccessDialog,
-            List<DailyPreviousAnswersByDateEntity> previousAnswers)?
+            String? postError)?
         $default, {
     required TResult orElse(),
   }) {
@@ -299,18 +325,20 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
     switch (_that) {
       case _DailyActivitiesState() when $default != null:
         return $default(
-            _that.screenStatus,
+            _that.status,
+            _that.allQuestions,
             _that.questions,
-            _that.screenError,
             _that.pending,
             _that.historyItems,
-            _that.totalScore,
-            _that.branchPath,
-            _that.postAnswerStatus,
-            _that.postAnswerError,
-            _that.lastPostAnswerResult,
+            _that.previousAnswers,
+            _that.screenError,
+            _that.selectedQuestion,
+            _that.visibleSteps,
+            _that.selectedOptions,
+            _that.postStatus,
+            _that.lastResult,
             _that.showSuccessDialog,
-            _that.previousAnswers);
+            _that.postError);
       case _:
         return orElse();
     }
@@ -332,36 +360,40 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            DailyActivitiesScreenStatus screenStatus,
+            DailyActivitiesStatus status,
+            List<DailyQuestionEntity> allQuestions,
             List<DailyQuestionEntity> questions,
-            String? screenError,
             DailyPendingEntity? pending,
             List<DailyCalendarItemEntity> historyItems,
-            double? totalScore,
-            List<BranchStep> branchPath,
-            DailyActivitiesPostAnswerStatus postAnswerStatus,
-            String? postAnswerError,
-            DailyAnswerResultEntity? lastPostAnswerResult,
+            List<DailyPreviousAnswersByDateEntity> previousAnswers,
+            String? screenError,
+            DailyQuestionEntity? selectedQuestion,
+            List<DailyQuestionEntity> visibleSteps,
+            Map<String, DailyQuestionOptionEntity> selectedOptions,
+            DailyActivitiesPostStatus postStatus,
+            DailyAnswerResultEntity? lastResult,
             bool showSuccessDialog,
-            List<DailyPreviousAnswersByDateEntity> previousAnswers)
+            String? postError)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _DailyActivitiesState():
         return $default(
-            _that.screenStatus,
+            _that.status,
+            _that.allQuestions,
             _that.questions,
-            _that.screenError,
             _that.pending,
             _that.historyItems,
-            _that.totalScore,
-            _that.branchPath,
-            _that.postAnswerStatus,
-            _that.postAnswerError,
-            _that.lastPostAnswerResult,
+            _that.previousAnswers,
+            _that.screenError,
+            _that.selectedQuestion,
+            _that.visibleSteps,
+            _that.selectedOptions,
+            _that.postStatus,
+            _that.lastResult,
             _that.showSuccessDialog,
-            _that.previousAnswers);
+            _that.postError);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -382,36 +414,40 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            DailyActivitiesScreenStatus screenStatus,
+            DailyActivitiesStatus status,
+            List<DailyQuestionEntity> allQuestions,
             List<DailyQuestionEntity> questions,
-            String? screenError,
             DailyPendingEntity? pending,
             List<DailyCalendarItemEntity> historyItems,
-            double? totalScore,
-            List<BranchStep> branchPath,
-            DailyActivitiesPostAnswerStatus postAnswerStatus,
-            String? postAnswerError,
-            DailyAnswerResultEntity? lastPostAnswerResult,
+            List<DailyPreviousAnswersByDateEntity> previousAnswers,
+            String? screenError,
+            DailyQuestionEntity? selectedQuestion,
+            List<DailyQuestionEntity> visibleSteps,
+            Map<String, DailyQuestionOptionEntity> selectedOptions,
+            DailyActivitiesPostStatus postStatus,
+            DailyAnswerResultEntity? lastResult,
             bool showSuccessDialog,
-            List<DailyPreviousAnswersByDateEntity> previousAnswers)?
+            String? postError)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _DailyActivitiesState() when $default != null:
         return $default(
-            _that.screenStatus,
+            _that.status,
+            _that.allQuestions,
             _that.questions,
-            _that.screenError,
             _that.pending,
             _that.historyItems,
-            _that.totalScore,
-            _that.branchPath,
-            _that.postAnswerStatus,
-            _that.postAnswerError,
-            _that.lastPostAnswerResult,
+            _that.previousAnswers,
+            _that.screenError,
+            _that.selectedQuestion,
+            _that.visibleSteps,
+            _that.selectedOptions,
+            _that.postStatus,
+            _that.lastResult,
             _that.showSuccessDialog,
-            _that.previousAnswers);
+            _that.postError);
       case _:
         return null;
     }
@@ -420,28 +456,43 @@ extension DailyActivitiesStatePatterns on DailyActivitiesState {
 
 /// @nodoc
 
-class _DailyActivitiesState implements DailyActivitiesState {
+class _DailyActivitiesState extends DailyActivitiesState {
   const _DailyActivitiesState(
-      {this.screenStatus = DailyActivitiesScreenStatus.initial,
+      {this.status = DailyActivitiesStatus.initial,
+      final List<DailyQuestionEntity> allQuestions = const [],
       final List<DailyQuestionEntity> questions = const [],
-      this.screenError,
       this.pending,
       final List<DailyCalendarItemEntity> historyItems = const [],
-      this.totalScore,
-      final List<BranchStep> branchPath = const [],
-      this.postAnswerStatus = DailyActivitiesPostAnswerStatus.idle,
-      this.postAnswerError,
-      this.lastPostAnswerResult,
+      final List<DailyPreviousAnswersByDateEntity> previousAnswers = const [],
+      this.screenError,
+      this.selectedQuestion,
+      final List<DailyQuestionEntity> visibleSteps = const [],
+      final Map<String, DailyQuestionOptionEntity> selectedOptions = const {},
+      this.postStatus = DailyActivitiesPostStatus.idle,
+      this.lastResult,
       this.showSuccessDialog = false,
-      final List<DailyPreviousAnswersByDateEntity> previousAnswers = const []})
-      : _questions = questions,
+      this.postError})
+      : _allQuestions = allQuestions,
+        _questions = questions,
         _historyItems = historyItems,
-        _branchPath = branchPath,
-        _previousAnswers = previousAnswers;
+        _previousAnswers = previousAnswers,
+        _visibleSteps = visibleSteps,
+        _selectedOptions = selectedOptions,
+        super._();
 
+// ---- Liste ekranı ----
   @override
   @JsonKey()
-  final DailyActivitiesScreenStatus screenStatus;
+  final DailyActivitiesStatus status;
+  final List<DailyQuestionEntity> _allQuestions;
+  @override
+  @JsonKey()
+  List<DailyQuestionEntity> get allQuestions {
+    if (_allQuestions is EqualUnmodifiableListView) return _allQuestions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_allQuestions);
+  }
+
   final List<DailyQuestionEntity> _questions;
   @override
   @JsonKey()
@@ -451,8 +502,6 @@ class _DailyActivitiesState implements DailyActivitiesState {
     return EqualUnmodifiableListView(_questions);
   }
 
-  @override
-  final String? screenError;
   @override
   final DailyPendingEntity? pending;
   final List<DailyCalendarItemEntity> _historyItems;
@@ -464,27 +513,6 @@ class _DailyActivitiesState implements DailyActivitiesState {
     return EqualUnmodifiableListView(_historyItems);
   }
 
-  @override
-  final double? totalScore;
-  final List<BranchStep> _branchPath;
-  @override
-  @JsonKey()
-  List<BranchStep> get branchPath {
-    if (_branchPath is EqualUnmodifiableListView) return _branchPath;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_branchPath);
-  }
-
-  @override
-  @JsonKey()
-  final DailyActivitiesPostAnswerStatus postAnswerStatus;
-  @override
-  final String? postAnswerError;
-  @override
-  final DailyAnswerResultEntity? lastPostAnswerResult;
-  @override
-  @JsonKey()
-  final bool showSuccessDialog;
   final List<DailyPreviousAnswersByDateEntity> _previousAnswers;
   @override
   @JsonKey()
@@ -493,6 +521,46 @@ class _DailyActivitiesState implements DailyActivitiesState {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_previousAnswers);
   }
+
+  @override
+  final String? screenError;
+// ---- Detay ekranı ----
+// Karttan seçilen kök soru
+  @override
+  final DailyQuestionEntity? selectedQuestion;
+// Ekranda sırayla görünen adımlar (root + nextQuestion'lar)
+  final List<DailyQuestionEntity> _visibleSteps;
+// Ekranda sırayla görünen adımlar (root + nextQuestion'lar)
+  @override
+  @JsonKey()
+  List<DailyQuestionEntity> get visibleSteps {
+    if (_visibleSteps is EqualUnmodifiableListView) return _visibleSteps;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_visibleSteps);
+  }
+
+// Her adım için seçilen option: questionId → option
+  final Map<String, DailyQuestionOptionEntity> _selectedOptions;
+// Her adım için seçilen option: questionId → option
+  @override
+  @JsonKey()
+  Map<String, DailyQuestionOptionEntity> get selectedOptions {
+    if (_selectedOptions is EqualUnmodifiableMapView) return _selectedOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_selectedOptions);
+  }
+
+// ---- Cevap gönderme ----
+  @override
+  @JsonKey()
+  final DailyActivitiesPostStatus postStatus;
+  @override
+  final DailyAnswerResultEntity? lastResult;
+  @override
+  @JsonKey()
+  final bool showSuccessDialog;
+  @override
+  final String? postError;
 
   /// Create a copy of DailyActivitiesState
   /// with the given fields replaced by the non-null parameter values.
@@ -508,50 +576,55 @@ class _DailyActivitiesState implements DailyActivitiesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _DailyActivitiesState &&
-            (identical(other.screenStatus, screenStatus) ||
-                other.screenStatus == screenStatus) &&
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality()
+                .equals(other._allQuestions, _allQuestions) &&
             const DeepCollectionEquality()
                 .equals(other._questions, _questions) &&
-            (identical(other.screenError, screenError) ||
-                other.screenError == screenError) &&
             (identical(other.pending, pending) || other.pending == pending) &&
             const DeepCollectionEquality()
                 .equals(other._historyItems, _historyItems) &&
-            (identical(other.totalScore, totalScore) ||
-                other.totalScore == totalScore) &&
             const DeepCollectionEquality()
-                .equals(other._branchPath, _branchPath) &&
-            (identical(other.postAnswerStatus, postAnswerStatus) ||
-                other.postAnswerStatus == postAnswerStatus) &&
-            (identical(other.postAnswerError, postAnswerError) ||
-                other.postAnswerError == postAnswerError) &&
-            (identical(other.lastPostAnswerResult, lastPostAnswerResult) ||
-                other.lastPostAnswerResult == lastPostAnswerResult) &&
+                .equals(other._previousAnswers, _previousAnswers) &&
+            (identical(other.screenError, screenError) ||
+                other.screenError == screenError) &&
+            (identical(other.selectedQuestion, selectedQuestion) ||
+                other.selectedQuestion == selectedQuestion) &&
+            const DeepCollectionEquality()
+                .equals(other._visibleSteps, _visibleSteps) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedOptions, _selectedOptions) &&
+            (identical(other.postStatus, postStatus) ||
+                other.postStatus == postStatus) &&
+            (identical(other.lastResult, lastResult) ||
+                other.lastResult == lastResult) &&
             (identical(other.showSuccessDialog, showSuccessDialog) ||
                 other.showSuccessDialog == showSuccessDialog) &&
-            const DeepCollectionEquality()
-                .equals(other._previousAnswers, _previousAnswers));
+            (identical(other.postError, postError) ||
+                other.postError == postError));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      screenStatus,
+      status,
+      const DeepCollectionEquality().hash(_allQuestions),
       const DeepCollectionEquality().hash(_questions),
-      screenError,
       pending,
       const DeepCollectionEquality().hash(_historyItems),
-      totalScore,
-      const DeepCollectionEquality().hash(_branchPath),
-      postAnswerStatus,
-      postAnswerError,
-      lastPostAnswerResult,
+      const DeepCollectionEquality().hash(_previousAnswers),
+      screenError,
+      selectedQuestion,
+      const DeepCollectionEquality().hash(_visibleSteps),
+      const DeepCollectionEquality().hash(_selectedOptions),
+      postStatus,
+      lastResult,
       showSuccessDialog,
-      const DeepCollectionEquality().hash(_previousAnswers));
+      postError);
 
   @override
   String toString() {
-    return 'DailyActivitiesState(screenStatus: $screenStatus, questions: $questions, screenError: $screenError, pending: $pending, historyItems: $historyItems, totalScore: $totalScore, branchPath: $branchPath, postAnswerStatus: $postAnswerStatus, postAnswerError: $postAnswerError, lastPostAnswerResult: $lastPostAnswerResult, showSuccessDialog: $showSuccessDialog, previousAnswers: $previousAnswers)';
+    return 'DailyActivitiesState(status: $status, allQuestions: $allQuestions, questions: $questions, pending: $pending, historyItems: $historyItems, previousAnswers: $previousAnswers, screenError: $screenError, selectedQuestion: $selectedQuestion, visibleSteps: $visibleSteps, selectedOptions: $selectedOptions, postStatus: $postStatus, lastResult: $lastResult, showSuccessDialog: $showSuccessDialog, postError: $postError)';
   }
 }
 
@@ -564,18 +637,20 @@ abstract mixin class _$DailyActivitiesStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {DailyActivitiesScreenStatus screenStatus,
+      {DailyActivitiesStatus status,
+      List<DailyQuestionEntity> allQuestions,
       List<DailyQuestionEntity> questions,
-      String? screenError,
       DailyPendingEntity? pending,
       List<DailyCalendarItemEntity> historyItems,
-      double? totalScore,
-      List<BranchStep> branchPath,
-      DailyActivitiesPostAnswerStatus postAnswerStatus,
-      String? postAnswerError,
-      DailyAnswerResultEntity? lastPostAnswerResult,
+      List<DailyPreviousAnswersByDateEntity> previousAnswers,
+      String? screenError,
+      DailyQuestionEntity? selectedQuestion,
+      List<DailyQuestionEntity> visibleSteps,
+      Map<String, DailyQuestionOptionEntity> selectedOptions,
+      DailyActivitiesPostStatus postStatus,
+      DailyAnswerResultEntity? lastResult,
       bool showSuccessDialog,
-      List<DailyPreviousAnswersByDateEntity> previousAnswers});
+      String? postError});
 }
 
 /// @nodoc
@@ -591,32 +666,34 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? screenStatus = null,
+    Object? status = null,
+    Object? allQuestions = null,
     Object? questions = null,
-    Object? screenError = freezed,
     Object? pending = freezed,
     Object? historyItems = null,
-    Object? totalScore = freezed,
-    Object? branchPath = null,
-    Object? postAnswerStatus = null,
-    Object? postAnswerError = freezed,
-    Object? lastPostAnswerResult = freezed,
-    Object? showSuccessDialog = null,
     Object? previousAnswers = null,
+    Object? screenError = freezed,
+    Object? selectedQuestion = freezed,
+    Object? visibleSteps = null,
+    Object? selectedOptions = null,
+    Object? postStatus = null,
+    Object? lastResult = freezed,
+    Object? showSuccessDialog = null,
+    Object? postError = freezed,
   }) {
     return _then(_DailyActivitiesState(
-      screenStatus: null == screenStatus
-          ? _self.screenStatus
-          : screenStatus // ignore: cast_nullable_to_non_nullable
-              as DailyActivitiesScreenStatus,
+      status: null == status
+          ? _self.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as DailyActivitiesStatus,
+      allQuestions: null == allQuestions
+          ? _self._allQuestions
+          : allQuestions // ignore: cast_nullable_to_non_nullable
+              as List<DailyQuestionEntity>,
       questions: null == questions
           ? _self._questions
           : questions // ignore: cast_nullable_to_non_nullable
               as List<DailyQuestionEntity>,
-      screenError: freezed == screenError
-          ? _self.screenError
-          : screenError // ignore: cast_nullable_to_non_nullable
-              as String?,
       pending: freezed == pending
           ? _self.pending
           : pending // ignore: cast_nullable_to_non_nullable
@@ -625,34 +702,42 @@ class __$DailyActivitiesStateCopyWithImpl<$Res>
           ? _self._historyItems
           : historyItems // ignore: cast_nullable_to_non_nullable
               as List<DailyCalendarItemEntity>,
-      totalScore: freezed == totalScore
-          ? _self.totalScore
-          : totalScore // ignore: cast_nullable_to_non_nullable
-              as double?,
-      branchPath: null == branchPath
-          ? _self._branchPath
-          : branchPath // ignore: cast_nullable_to_non_nullable
-              as List<BranchStep>,
-      postAnswerStatus: null == postAnswerStatus
-          ? _self.postAnswerStatus
-          : postAnswerStatus // ignore: cast_nullable_to_non_nullable
-              as DailyActivitiesPostAnswerStatus,
-      postAnswerError: freezed == postAnswerError
-          ? _self.postAnswerError
-          : postAnswerError // ignore: cast_nullable_to_non_nullable
+      previousAnswers: null == previousAnswers
+          ? _self._previousAnswers
+          : previousAnswers // ignore: cast_nullable_to_non_nullable
+              as List<DailyPreviousAnswersByDateEntity>,
+      screenError: freezed == screenError
+          ? _self.screenError
+          : screenError // ignore: cast_nullable_to_non_nullable
               as String?,
-      lastPostAnswerResult: freezed == lastPostAnswerResult
-          ? _self.lastPostAnswerResult
-          : lastPostAnswerResult // ignore: cast_nullable_to_non_nullable
+      selectedQuestion: freezed == selectedQuestion
+          ? _self.selectedQuestion
+          : selectedQuestion // ignore: cast_nullable_to_non_nullable
+              as DailyQuestionEntity?,
+      visibleSteps: null == visibleSteps
+          ? _self._visibleSteps
+          : visibleSteps // ignore: cast_nullable_to_non_nullable
+              as List<DailyQuestionEntity>,
+      selectedOptions: null == selectedOptions
+          ? _self._selectedOptions
+          : selectedOptions // ignore: cast_nullable_to_non_nullable
+              as Map<String, DailyQuestionOptionEntity>,
+      postStatus: null == postStatus
+          ? _self.postStatus
+          : postStatus // ignore: cast_nullable_to_non_nullable
+              as DailyActivitiesPostStatus,
+      lastResult: freezed == lastResult
+          ? _self.lastResult
+          : lastResult // ignore: cast_nullable_to_non_nullable
               as DailyAnswerResultEntity?,
       showSuccessDialog: null == showSuccessDialog
           ? _self.showSuccessDialog
           : showSuccessDialog // ignore: cast_nullable_to_non_nullable
               as bool,
-      previousAnswers: null == previousAnswers
-          ? _self._previousAnswers
-          : previousAnswers // ignore: cast_nullable_to_non_nullable
-              as List<DailyPreviousAnswersByDateEntity>,
+      postError: freezed == postError
+          ? _self.postError
+          : postError // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }

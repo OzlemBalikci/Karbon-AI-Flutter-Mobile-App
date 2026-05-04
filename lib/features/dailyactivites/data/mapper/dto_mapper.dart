@@ -1,80 +1,74 @@
-import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_request_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_pending_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_previous_answer_dto.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
-/// DTO ↔ Entity alan eşlemesi.
-class DailyActivityMapper {
-  DailyActivityMapper._();
+/// mapper/daily_activities_mapper.dart
 
-  static DailyPendingEntity toPendingEntity(DailyPendingDto dto) =>
-      DailyPendingEntity(
-        hasPending: dto.hasPending,
-        pendingCount: dto.pendingCount,
+extension DailyPendingMapper on DailyPendingDto {
+  DailyPendingEntity toEntity() => DailyPendingEntity(
+        hasPending: hasPending,
+        pendingCount: pendingCount,
       );
+}
 
-  static DailyQuestionOptionEntity toOptionEntity(
-    DailyQuestionOptionDto dto,
-  ) =>
-      DailyQuestionOptionEntity(
-        id: dto.id,
-        text: dto.text,
-        carbonValue: dto.carbonValue,
-        nextQuestionId: dto.nextQuestionId,
+extension DailyQuestionOptionMapper on DailyQuestionOptionDto {
+  DailyQuestionOptionEntity toEntity() => DailyQuestionOptionEntity(
+        id: id,
+        text: text,
+        carbonValue: carbonValue,
+        nextQuestionId: nextQuestionId,
+        nextQuestion: null,
       );
+}
 
-  static DailyQuestionEntity toQuestionEntity(DailyQuestionDto dto) =>
-      DailyQuestionEntity(
-        id: dto.id,
-        text: dto.text,
-        displayOrder: dto.displayOrder,
-        remainingSeconds: dto.remainingSeconds,
-        options: dto.options.map(toOptionEntity).toList(),
+extension DailyQuestionMapper on DailyQuestionDto {
+  DailyQuestionEntity toEntity() => DailyQuestionEntity(
+        id: id,
+        text: text,
+        displayOrder: displayOrder,
+        remainingSeconds: remainingSeconds,
+        options: options.map((o) => o.toEntity()).toList(),
       );
+}
 
-  static DailySubmittedAnswerLineEntity toSubmittedAnswerLineEntity(
-    DailySubmittedAnswerLineDto dto,
-  ) =>
-      DailySubmittedAnswerLineEntity(
-        questionText: dto.questionText,
-        selectedOptionText: dto.selectedOptionText,
-        carbonValue: dto.carbonValue,
+extension DailySelectedAnswerMapper on DailySelectedAnswerEntity {
+  Map<String, dynamic> toJson() => {
+        'questionId': questionId,
+        'selectedOptionId': selectedOptionId,
+      };
+}
+
+extension DailySubmittedAnswerLineMapper on DailySubmittedAnswerLineDto {
+  DailySubmittedAnswerLineEntity toEntity() => DailySubmittedAnswerLineEntity(
+        questionText: questionText,
+        selectedOptionText: selectedOptionText,
+        carbonValue: carbonValue,
       );
+}
 
-  static DailyAnswerResultEntity toAnswerResultEntity(
-    DailyAnswerResultDto dto,
-  ) =>
-      DailyAnswerResultEntity(
-        totalCarbonScore: dto.totalCarbonScore,
-        isFlowCompleted: dto.isFlowCompleted,
-        answers: dto.answers.map(toSubmittedAnswerLineEntity).toList(),
+extension DailyAnswerResultMapper on DailyAnswerResultDto {
+  DailyAnswerResultEntity toEntity() => DailyAnswerResultEntity(
+        totalCarbonScore: totalCarbonScore,
+        isFlowCompleted: isFlowCompleted,
+        answers: answers.map((a) => a.toEntity()).toList(),
       );
+}
 
-  static DailyPreviousAnswerItemEntity toPreviousAnswerItemEntity(
-    DailyPreviousAnswerItemDto dto,
-  ) =>
-      DailyPreviousAnswerItemEntity(
-        questionText: dto.questionText,
-        answerText: dto.answerText,
-        score: dto.score,
-        date: dto.date,
+extension DailyPreviousAnswerItemMapper on DailyPreviousAnswerItemDto {
+  DailyPreviousAnswerItemEntity toEntity() => DailyPreviousAnswerItemEntity(
+        questionText: questionText,
+        answerText: answerText,
+        score: score,
+        date: date,
       );
+}
 
-  static DailyPreviousAnswersByDateEntity toPreviousAnswersByDateEntity(
-    DailyPreviousAnswersByDateDto dto,
-  ) =>
+extension DailyPreviousAnswersByDateMapper on DailyPreviousAnswersByDateDto {
+  DailyPreviousAnswersByDateEntity toEntity() =>
       DailyPreviousAnswersByDateEntity(
-        date: dto.date,
-        answers: dto.answers.map(toPreviousAnswerItemEntity).toList(),
-      );
-
-  static DailyAnswerItemRequestDto toAnswerItemRequestDto(
-    DailySelectedAnswerEntity entity,
-  ) =>
-      DailyAnswerItemRequestDto(
-        questionId: entity.questionId,
-        selectedOptionId: entity.selectedOptionId,
+        date: date,
+        answers: answers.map((a) => a.toEntity()).toList(),
       );
 }

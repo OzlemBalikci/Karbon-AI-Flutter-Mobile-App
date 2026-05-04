@@ -4,8 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:karbon/features/dailyactivites/domain/repositories/daily_activities_repository.dart';
 
 @injectable
-class PostAnswerUsecase {
-  PostAnswerUsecase(this._repository);
+class PostAnswersUseCase {
+  PostAnswersUseCase(this._repository);
   final DailyActivitiesRepository _repository;
 
   Future<Either<Exception, DailyAnswerResultEntity>> call({

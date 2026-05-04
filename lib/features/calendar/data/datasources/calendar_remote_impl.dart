@@ -107,7 +107,7 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: 5.5,
       activities: [
         DailyDayActivityEntity(
-          questionText: 'Atık ayrıştırma',
+          questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Evde ayrıştırma',
           score: 5.5,
           activityDate: '2026-04-03T10:00:00.000Z',
@@ -119,14 +119,15 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: -13.0,
       activities: [
         DailyDayActivityEntity(
-          questionText: 'Ulaşım tercihi',
+          questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Özel araç (yoğun trafik)',
           score: -8.0,
           activityDate: '2026-04-05T08:15:00.000Z',
         ),
         DailyDayActivityEntity(
           questionText: 'Beslenme',
-          selectedOptionText: 'Kırmızı et',
+          selectedOptionText:
+              'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           score: -5.0,
           activityDate: '2026-04-05T12:30:00.000Z',
         ),
@@ -137,13 +138,13 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: 22.0,
       activities: [
         DailyDayActivityEntity(
-          questionText: 'Enerji',
+          questionText: 'Evde çöplerinizi ayrıştırıyor musunuz?',
           selectedOptionText: 'Yeşil tarife',
           score: 10.0,
           activityDate: '2026-04-08T09:00:00.000Z',
         ),
         DailyDayActivityEntity(
-          questionText: 'Ulaşım',
+          questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Bisiklet',
           score: 12.0,
           activityDate: '2026-04-08T18:00:00.000Z',
@@ -155,13 +156,13 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: -4.25,
       activities: [
         DailyDayActivityEntity(
-          questionText: 'Isınma',
+          questionText: 'Evde çöplerinizi ayrıştırıyor musunuz?',
           selectedOptionText: 'Yüksek sıcaklık',
           score: -2.0,
           activityDate: '2026-04-12T07:30:00.000Z',
         ),
         DailyDayActivityEntity(
-          questionText: 'Alışveriş',
+          questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Tek kullanımlık ambalaj',
           score: -2.25,
           activityDate: '2026-04-12T19:00:00.000Z',
@@ -173,13 +174,13 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: 18.5,
       activities: [
         DailyDayActivityEntity(
-          questionText: 'Enerji kullanımı',
+          questionText: 'Evde çöplerinizi ayrıştırıyor musunuz?',
           selectedOptionText: 'Gün içi tasarruf',
           score: 10.5,
           activityDate: '2026-04-14T09:00:00.000Z',
         ),
         DailyDayActivityEntity(
-          questionText: 'Ulaşım',
+          questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Toplu taşıma',
           score: 8.0,
           activityDate: '2026-04-14T17:45:00.000Z',

@@ -1,5 +1,3 @@
-import 'package:karbon/features/dailyactivites/data/daily_question_roots_flatten.dart';
-import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
 /// `ApiConfig.baseUrl` boşken [DailyActivitiesRemoteImpl] tarafından kullanılan sabit veriler.
@@ -36,129 +34,104 @@ abstract final class DailyActivitiesRemoteMocks {
   static const String _mockQuestionAracId = 'mock-q2-arac';
   static const String _mockQuestionSeferId = 'mock-q3-sefer';
 
-  /// API’deki gibi kök altında `nextQuestion` gömülü JSON — mock GET yolu gerçek DTO + düzleştirme kullanır.
-  static final Map<String, dynamic> _mockNestedTransportRootJson =
-      <String, dynamic>{
-    'id': _mockRootTransportId,
-    'text': 'Bu sabah işe hangi ulaşım aracıyla gideceksiniz?',
-    'displayOrder': 1,
-    'remainingSeconds': 62774,
-    'options': <dynamic>[
-      <String, dynamic>{
-        'id': 'mock-o-toplu',
-        'text': 'Toplu Ulaşım',
-        'carbonValue': 5,
-        'nextQuestionId': _mockQuestionAracId,
-        'nextQuestion': <String, dynamic>{
-          'id': _mockQuestionAracId,
-          'text': 'Kullandığınız ulaşım aracını seçiniz.',
-          'displayOrder': 2,
-          'remainingSeconds': 62700,
-          'options': <dynamic>[
-            <String, dynamic>{
-              'id': 'mock-o-otobus',
-              'text': 'Otobüs',
-              'carbonValue': 8,
-              'nextQuestionId': _mockQuestionSeferId,
-              'nextQuestion': <String, dynamic>{
-                'id': _mockQuestionSeferId,
-                'text': 'Sefer Sayısı',
-                'displayOrder': 3,
-                'remainingSeconds': 62600,
-                'options': <dynamic>[
-                  <String, dynamic>{
-                    'id': 'mock-sefer-1',
-                    'text': '1 Sefer',
-                    'carbonValue': 5,
-                    'nextQuestionId': null,
-                    'nextQuestion': null,
-                  },
-                  <String, dynamic>{
-                    'id': 'mock-sefer-2',
-                    'text': '2 Sefer',
-                    'carbonValue': 10,
-                    'nextQuestionId': null,
-                    'nextQuestion': null,
-                  },
-                  <String, dynamic>{
-                    'id': 'mock-sefer-3',
-                    'text': '3 Sefer',
-                    'carbonValue': 15,
-                    'nextQuestionId': null,
-                    'nextQuestion': null,
-                  },
-                  <String, dynamic>{
-                    'id': 'mock-sefer-4p',
-                    'text': '4+ Sefer',
-                    'carbonValue': 20,
-                    'nextQuestionId': null,
-                    'nextQuestion': null,
-                  },
-                ],
-              },
-            },
-            <String, dynamic>{
-              'id': 'mock-o-metro',
-              'text': 'Metro',
-              'carbonValue': 6,
-              'nextQuestionId': _mockQuestionSeferId,
-              'nextQuestion': null,
-            },
-            <String, dynamic>{
-              'id': 'mock-o-minibus',
-              'text': 'Minibüs',
-              'carbonValue': 9,
-              'nextQuestionId': _mockQuestionSeferId,
-              'nextQuestion': null,
-            },
-          ],
-        },
-      },
-      <String, dynamic>{
-        'id': 'mock-o-yuruyus',
-        'text': 'Yürüyüş / Bisiklet',
-        'carbonValue': 0,
-        'nextQuestionId': null,
-        'nextQuestion': null,
-      },
-      <String, dynamic>{
-        'id': 'mock-o-araba',
-        'text': 'Araba',
-        'carbonValue': 25,
-        'nextQuestionId': null,
-        'nextQuestion': null,
-      },
-    ],
-  };
-
-  static final Map<String, dynamic> _mockCoffeeRootJson = <String, dynamic>{
-    'id': 'mock-kahve-root',
-    'text': 'Günlük kahve tüketiminiz ne kadar?',
-    'displayOrder': 4,
-    'remainingSeconds': 50000,
-    'options': <dynamic>[
-      <String, dynamic>{
-        'id': 'mock-kahve-0',
-        'text': '0',
-        'carbonValue': 0,
-        'nextQuestionId': null,
-        'nextQuestion': null,
-      },
-      <String, dynamic>{
-        'id': 'mock-kahve-12',
-        'text': '1–2',
-        'carbonValue': 3,
-        'nextQuestionId': null,
-        'nextQuestion': null,
-      },
-    ],
-  };
-
-  static final List<DailyQuestionEntity> _todayQuestions =
-      flattenDailyQuestionRootsToEntities([
-    DailyQuestionDto.fromJson(_mockNestedTransportRootJson),
-    DailyQuestionDto.fromJson(_mockCoffeeRootJson),
-  ]);
+  static final List<DailyQuestionEntity> _todayQuestions = <DailyQuestionEntity>[
+    DailyQuestionEntity(
+      id: _mockRootTransportId,
+      text: 'Bu sabah işe hangi ulaşım aracıyla gideceksiniz?',
+      displayOrder: 1,
+      remainingSeconds: 62774,
+      options: const <DailyQuestionOptionEntity>[
+        DailyQuestionOptionEntity(
+          id: 'mock-o-toplu',
+          text: 'Toplu Ulaşım',
+          carbonValue: 5,
+          nextQuestionId: _mockQuestionAracId,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'mock-o-yuruyus',
+          text: 'Yürüyüş / Bisiklet',
+          carbonValue: 0,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'mock-o-araba',
+          text: 'Araba',
+          carbonValue: 25,
+        ),
+      ],
+    ),
+    DailyQuestionEntity(
+      id: _mockQuestionAracId,
+      text: 'Kullandığınız ulaşım aracını seçiniz.',
+      displayOrder: 2,
+      remainingSeconds: 62700,
+      options: const <DailyQuestionOptionEntity>[
+        DailyQuestionOptionEntity(
+          id: 'mock-o-otobus',
+          text: 'Otobüs',
+          carbonValue: 8,
+          nextQuestionId: _mockQuestionSeferId,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'mock-o-metro',
+          text: 'Metro',
+          carbonValue: 6,
+          nextQuestionId: _mockQuestionSeferId,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'mock-o-minibus',
+          text: 'Minibüs',
+          carbonValue: 9,
+          nextQuestionId: _mockQuestionSeferId,
+        ),
+      ],
+    ),
+    DailyQuestionEntity(
+      id: _mockQuestionSeferId,
+      text: 'Sefer Sayısı',
+      displayOrder: 3,
+      remainingSeconds: 62600,
+      options: const <DailyQuestionOptionEntity>[
+        DailyQuestionOptionEntity(
+          id: 'mock-sefer-1',
+          text: '1 Sefer',
+          carbonValue: 5,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'mock-sefer-2',
+          text: '2 Sefer',
+          carbonValue: 10,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'mock-sefer-3',
+          text: '3 Sefer',
+          carbonValue: 15,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'mock-sefer-4p',
+          text: '4+ Sefer',
+          carbonValue: 20,
+        ),
+      ],
+    ),
+    DailyQuestionEntity(
+      id: 'mock-kahve-root',
+      text: 'Gunluk kahve tuketiminiz ne kadar?',
+      displayOrder: 4,
+      remainingSeconds: 50000,
+      options: const <DailyQuestionOptionEntity>[
+        DailyQuestionOptionEntity(
+          id: 'mock-kahve-0',
+          text: '0',
+          carbonValue: 0,
+        ),
+        DailyQuestionOptionEntity(
+          id: 'mock-kahve-12',
+          text: '1-2',
+          carbonValue: 3,
+        ),
+      ],
+    ),
+  ];
 
   static List<DailyQuestionEntity> get todayQuestions =>
       _todayQuestions.map((q) => q).toList();
@@ -166,13 +139,13 @@ abstract final class DailyActivitiesRemoteMocks {
   static Map<String, DailyQuestionEntity> get _questionsById =>
       {for (final q in _todayQuestions) q.id: q};
 
-  /// Toplu POST — API örneğiyle uyumlu satır listesi ve toplam skor.
   static DailyAnswerResultEntity postAnswers(
     List<DailySelectedAnswerEntity> answers,
   ) {
     final byId = _questionsById;
     final lines = <DailySubmittedAnswerLineEntity>[];
     var total = 0.0;
+
     for (final a in answers) {
       final question = byId[a.questionId];
       if (question == null) continue;
@@ -184,6 +157,7 @@ abstract final class DailyActivitiesRemoteMocks {
         }
       }
       if (selected == null) continue;
+
       total += selected.carbonValue;
       lines.add(
         DailySubmittedAnswerLineEntity(

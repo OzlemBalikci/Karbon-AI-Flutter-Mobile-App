@@ -9,13 +9,12 @@ class DailySubmittedAnswerLineDto {
   final String selectedOptionText;
   final double carbonValue;
 
-  factory DailySubmittedAnswerLineDto.fromJson(Map<String, dynamic> json) {
-    return DailySubmittedAnswerLineDto(
-      questionText: json['questionText'] as String? ?? '',
-      selectedOptionText: json['selectedOptionText'] as String? ?? '',
-      carbonValue: (json['carbonValue'] as num?)?.toDouble() ?? 0.0,
-    );
-  }
+  factory DailySubmittedAnswerLineDto.fromJson(Map<String, dynamic> json) =>
+      DailySubmittedAnswerLineDto(
+        questionText: json['questionText'] as String,
+        selectedOptionText: json['selectedOptionText'] as String,
+        carbonValue: (json['carbonValue'] as num).toDouble(),
+      );
 }
 
 /// `data` içindeki gövde: `totalCarbonScore`, `isFlowCompleted`, `answers[]`.
@@ -30,19 +29,13 @@ class DailyAnswerResultDto {
   final bool isFlowCompleted;
   final List<DailySubmittedAnswerLineDto> answers;
 
-  factory DailyAnswerResultDto.fromJson(Map<String, dynamic> json) {
-    final raw = json['answers'];
-    final lines = raw is List
-        ? raw
-            .whereType<Map<String, dynamic>>()
-            .map(DailySubmittedAnswerLineDto.fromJson)
-            .toList()
-        : <DailySubmittedAnswerLineDto>[];
-    return DailyAnswerResultDto(
-      totalCarbonScore:
-          (json['totalCarbonScore'] as num?)?.toDouble() ?? 0.0,
-      isFlowCompleted: json['isFlowCompleted'] as bool? ?? false,
-      answers: lines,
-    );
-  }
+  factory DailyAnswerResultDto.fromJson(Map<String, dynamic> json) =>
+      DailyAnswerResultDto(
+        totalCarbonScore: (json['totalCarbonScore'] as num).toDouble(),
+        isFlowCompleted: json['isFlowCompleted'] as bool,
+        answers: (json['answers'] as List<dynamic>)
+            .map((a) =>
+                DailySubmittedAnswerLineDto.fromJson(a as Map<String, dynamic>))
+            .toList(),
+      );
 }

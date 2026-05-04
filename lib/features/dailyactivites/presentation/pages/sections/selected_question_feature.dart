@@ -21,17 +21,22 @@ class QuestionFeature extends StatelessWidget {
               final isLast = index == ui.steps.length - 1;
 
               if (!isLast) {
-                return _AnsweredStep(stepIndex: index, step: step);
+                return _AnsweredStep(
+                  stepIndex: index,
+                  question: step,
+                  selectedOption: ui.selectedOptions[step.id],
+                );
               }
 
               // Aktif adım → etkileşimli dropdown
               return DropdownItem(
-                question: step.question,
-                selectedOptionId: ui.activeSelectedOptionId,
+                question: step,
+                selectedOptionId: ui.selectedOptions[step.id]?.id,
                 onChanged: (id) {
                   if (id != null) {
+                    final option = step.options.firstWhere((o) => o.id == id);
                     context.read<DailyActivitiesBloc>().add(
-                          DailyActivitiesEvent.optionSelected(id),
+                          DailyActivitiesEvent.optionSelected(option),
                         );
                   }
                 },
@@ -45,19 +50,25 @@ class QuestionFeature extends StatelessWidget {
 }
 
 class _AnsweredStep extends StatelessWidget {
-  const _AnsweredStep({required this.stepIndex, required this.step});
+  const _AnsweredStep({
+    required this.stepIndex,
+    required this.question,
+    required this.selectedOption,
+  });
 
   final int stepIndex;
-  final BranchStep step;
+  final DailyQuestionEntity question;
+  final DailyQuestionOptionEntity? selectedOption;
 
   @override
   Widget build(BuildContext context) {
-    final option = step.selectedOption!;
+    final option = selectedOption;
+    if (option == null) return const SizedBox.shrink();
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          step.question.text,
+          question.text,
           style: context.typographiesSp.bodySmall.copyWith(
               color: context.colors.textOnQuestion.withValues(alpha: 0.6)),
         ),
@@ -99,8 +110,7 @@ class _AnsweredStep extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppThemeSpacing.r10.r),
         onTap: () {
           final bloc = context.read<DailyActivitiesBloc>();
-          if (bloc.state.postAnswerStatus ==
-              DailyActivitiesPostAnswerStatus.submitting) {
+          if (bloc.state.postStatus == DailyActivitiesPostStatus.submitting) {
             return;
           }
           bloc.add(DailyActivitiesEvent.branchStepReopened(stepIndex));

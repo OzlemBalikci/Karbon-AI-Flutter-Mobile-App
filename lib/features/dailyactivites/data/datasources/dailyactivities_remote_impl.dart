@@ -1,17 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/core/networks/api_config.dart';
+import 'package:karbon/core/networks/response_ext.dart';
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote.dart';
 import 'package:karbon/features/dailyactivites/data/datasources/dailyactivities_remote_mocks.dart';
-import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_request_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_pending_dto.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_previous_answer_dto.dart';
-import 'package:karbon/features/dailyactivites/data/daily_question_roots_flatten.dart';
 import 'package:karbon/features/dailyactivites/data/dtos/daily_question_dto.dart';
 import 'package:karbon/features/dailyactivites/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
-import 'package:karbon/core/networks/response_ext.dart';
 
 @LazySingleton(as: DailyActivitiesRemote)
 class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
@@ -19,7 +17,14 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
 
   final Dio _dio;
 
+  // BaseUrl boşsa mock verileri kullan
   bool get _useMocks => ApiConfig.baseUrl.isEmpty;
+
+  List<DailyQuestionEntity> _flattenDailyQuestionRootsToEntities(
+    List<DailyQuestionDto> roots,
+  ) {
+    return roots.map((q) => q.toEntity()).toList();
+  }
 
   @override
   Future<List<DailyQuestionEntity>> getTodayQuestions() async {
@@ -30,7 +35,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
     final res = await _dio.get<dynamic>('/api/v1/daily-activities/questions');
     final raw = res.dataList();
     final roots = raw.map(DailyQuestionDto.fromJson).toList();
-    return flattenDailyQuestionRootsToEntities(roots);
+    return _flattenDailyQuestionRootsToEntities(roots);
   }
 
   @override
@@ -44,7 +49,8 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       queryParameters: <String, dynamic>{'status': 'pending'},
     );
     final data = res.dataMap();
-    return DailyActivityMapper.toPendingEntity(DailyPendingDto.fromJson(data));
+    return DailyPendingDto.fromJson(data)
+        .toEntity(); // Extension kullanıldı[cite: 9]
   }
 
   @override
@@ -58,14 +64,9 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
           await _dio.get<dynamic>('/api/v1/daily-activities/previous-answers');
       final raw = res.dataList();
       return raw
-          .map(
-            (e) => DailyActivityMapper.toPreviousAnswersByDateEntity(
-              DailyPreviousAnswersByDateDto.fromJson(e),
-            ),
-          )
+          .map((e) => DailyPreviousAnswersByDateDto.fromJson(e).toEntity())
           .toList();
     } on DioException catch (e) {
-      /// [daily-activities.md]: hiç cevap yoksa `404 PreviousAnswersNotFound`.
       if (e.response?.statusCode == 404) {
         return <DailyPreviousAnswersByDateEntity>[];
       }
@@ -81,18 +82,23 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       await Future<void>.delayed(const Duration(milliseconds: 200));
       return DailyActivitiesRemoteMocks.postAnswers(answers);
     }
-    final batch = DailyAnswersBatchRequestDto(
-      answers: answers.map(DailyActivityMapper.toAnswerItemRequestDto).toList(),
-    );
+
+    final payload = {
+      'answers': answers
+          .map((a) => {
+                'questionId': a.questionId,
+                'selectedOptionId': a.selectedOptionId,
+              })
+          .toList(),
+    };
+
     final res = await _dio.post<dynamic>(
       '/api/v1/daily-activities/answers',
-      data: batch.toJson(),
+      data: payload,
     );
+
     final root = res.dataMap();
-    final inner = root['data'];
-    final payload = inner is Map<String, dynamic> ? inner : root;
-    return DailyActivityMapper.toAnswerResultEntity(
-      DailyAnswerResultDto.fromJson(payload),
-    );
+    final data = root['data'] is Map<String, dynamic> ? root['data'] : root;
+    return DailyAnswerResultDto.fromJson(data).toEntity();
   }
 }

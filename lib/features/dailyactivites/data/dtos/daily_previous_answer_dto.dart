@@ -11,14 +11,13 @@ class DailyPreviousAnswerItemDto {
   final double score;
   final String date;
 
-  factory DailyPreviousAnswerItemDto.fromJson(Map<String, dynamic> json) {
-    return DailyPreviousAnswerItemDto(
-      questionText: json['questionText'] as String? ?? '',
-      answerText: json['answerText'] as String? ?? '',
-      score: (json['score'] as num?)?.toDouble() ?? 0.0,
-      date: json['date'] as String? ?? '',
-    );
-  }
+  factory DailyPreviousAnswerItemDto.fromJson(Map<String, dynamic> json) =>
+      DailyPreviousAnswerItemDto(
+        questionText: json['questionText'] as String,
+        answerText: json['answerText'] as String,
+        score: (json['score'] as num).toDouble(),
+        date: json['date'] as String,
+      );
 }
 
 class DailyPreviousAnswersByDateDto {

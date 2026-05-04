@@ -37,7 +37,7 @@ class _SelectedQuestionPageState extends State<SelectedQuestionPage> {
         listenWhen: (prev, curr) =>
             !prev.showSuccessDialog && curr.showSuccessDialog,
         listener: (context, state) {
-          final result = state.lastPostAnswerResult;
+          final result = state.lastResult;
           if (result == null || !result.isFlowCompleted) {
             return;
           }

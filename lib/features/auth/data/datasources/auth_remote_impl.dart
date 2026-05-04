@@ -30,7 +30,7 @@ class AuthRemoteImpl implements AuthRemote {
       '/api/v1/users/register',
       data: request.toJson(),
     );
-    return RegisterResponseModel.fromData(res.data);
+    return RegisterResponseModel.fromJson(res.dataMap());
   }
 
   @override
