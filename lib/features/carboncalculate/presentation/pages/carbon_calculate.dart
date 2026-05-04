@@ -68,7 +68,7 @@ class _CarbonCalculatePageState extends State<CarbonCalculatePage> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).padding.top,
+            top: MediaQuery.of(context).padding.top + AppThemeSpacing.s6.h,
             left: AppThemeSpacing.s25.w,
             child: BackIconButton(),
           ),

@@ -27,12 +27,9 @@ class LeaderofmonthHeaderSection extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: 0,
+          top: MediaQuery.of(context).padding.top + AppThemeSpacing.s6.h,
           left: AppThemeSpacing.s25.w,
-          child: Padding(
-            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: BackIconButton(),
-          ),
+          child: BackIconButton(),
         ),
       ],
     );

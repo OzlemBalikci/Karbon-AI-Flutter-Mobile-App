@@ -44,7 +44,6 @@ class CalendarSelectedQuestionDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  SizedBox(height: AppThemeSpacing.s10.h),
                   AppHeaderTitle(
                     title: context.text.selected_question_header_text,
                   ),
@@ -73,7 +72,7 @@ class CalendarSelectedQuestionDetailPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: MediaQuery.paddingOf(context).top,
+            top: MediaQuery.of(context).padding.top + AppThemeSpacing.s6.h,
             left: AppThemeSpacing.s25.w,
             child: const BackIconButton(),
           ),

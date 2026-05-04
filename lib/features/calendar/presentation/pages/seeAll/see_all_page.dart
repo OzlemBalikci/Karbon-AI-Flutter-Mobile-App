@@ -33,7 +33,7 @@ class SeeAllPage extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: MediaQuery.paddingOf(context).top,
+            top: MediaQuery.of(context).padding.top + AppThemeSpacing.s6.h,
             left: AppThemeSpacing.s25.w,
             child: const BackIconButton(),
           ),
