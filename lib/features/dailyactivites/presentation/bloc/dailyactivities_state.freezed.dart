@@ -21,14 +21,10 @@ mixin _$DailyActivitiesState {
   DailyPendingEntity? get pending;
   List<DailyCalendarItemEntity> get historyItems;
   List<DailyPreviousAnswersByDateEntity> get previousAnswers;
-  String? get screenError; // ---- Detay ekranı ----
-// Karttan seçilen kök soru
-  DailyQuestionEntity?
-      get selectedQuestion; // Ekranda sırayla görünen adımlar (root + nextQuestion'lar)
-  List<DailyQuestionEntity>
-      get visibleSteps; // Her adım için seçilen option: questionId → option
-  Map<String, DailyQuestionOptionEntity>
-      get selectedOptions; // ---- Cevap gönderme ----
+  String? get screenError;
+  DailyQuestionEntity? get selectedQuestion;
+  List<DailyQuestionEntity> get visibleSteps;
+  Map<String, DailyQuestionOptionEntity> get selectedOptions;
   DailyActivitiesPostStatus get postStatus;
   DailyAnswerResultEntity? get lastResult;
   bool get showSuccessDialog;
@@ -524,13 +520,9 @@ class _DailyActivitiesState extends DailyActivitiesState {
 
   @override
   final String? screenError;
-// ---- Detay ekranı ----
-// Karttan seçilen kök soru
   @override
   final DailyQuestionEntity? selectedQuestion;
-// Ekranda sırayla görünen adımlar (root + nextQuestion'lar)
   final List<DailyQuestionEntity> _visibleSteps;
-// Ekranda sırayla görünen adımlar (root + nextQuestion'lar)
   @override
   @JsonKey()
   List<DailyQuestionEntity> get visibleSteps {
@@ -539,9 +531,7 @@ class _DailyActivitiesState extends DailyActivitiesState {
     return EqualUnmodifiableListView(_visibleSteps);
   }
 
-// Her adım için seçilen option: questionId → option
   final Map<String, DailyQuestionOptionEntity> _selectedOptions;
-// Her adım için seçilen option: questionId → option
   @override
   @JsonKey()
   Map<String, DailyQuestionOptionEntity> get selectedOptions {
@@ -550,7 +540,6 @@ class _DailyActivitiesState extends DailyActivitiesState {
     return EqualUnmodifiableMapView(_selectedOptions);
   }
 
-// ---- Cevap gönderme ----
   @override
   @JsonKey()
   final DailyActivitiesPostStatus postStatus;

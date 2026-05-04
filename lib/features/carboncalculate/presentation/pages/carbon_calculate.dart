@@ -62,14 +62,17 @@ class _CarbonCalculatePageState extends State<CarbonCalculatePage> {
             child: Column(
               children: [
                 Expanded(child: CarbonCalculateFeatureSection()),
-                SizedBox(height: AppThemeSpacing.s30.h),
-                CarbonCalculateBottomSection(),
+                SizedBox(height: AppThemeSpacing.s20.h),
+                Padding(
+                  padding: EdgeInsets.only(bottom: AppThemeSpacing.s10.h),
+                  child: CarbonCalculateBottomSection(),
+                ),
               ],
             ),
           ),
           Positioned(
             top: MediaQuery.of(context).padding.top + AppThemeSpacing.s6.h,
-            left: AppThemeSpacing.s25.w,
+            left: AppThemeSpacing.s16.w,
             child: BackIconButton(),
           ),
         ],

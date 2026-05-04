@@ -5,7 +5,7 @@ import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.
 /// Geliştirme için [HomeRemoteMock] bu varlığı döner.
 abstract final class HomeDashboardMock {
   static const HomeDashboardEntity dashboard = HomeDashboardEntity(
-    hasCompletedPoll: true,
+    hasCompletedPoll: false,
     globalTarget: GlobalTargetEntity(
       targetTreeCount: 670000,
       donatedTreeCount: 550000,

@@ -27,6 +27,7 @@ class CarbonCalculateQuestion extends StatelessWidget {
             questionText,
             style: context.typographiesSp.bodyMediumSmall
                 .copyWith(color: context.colors.carbonQuestion),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: AppThemeSpacing.s30.h),
           ...options.map((opt) {

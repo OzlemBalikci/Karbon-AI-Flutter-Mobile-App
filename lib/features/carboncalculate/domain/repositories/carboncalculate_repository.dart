@@ -14,10 +14,4 @@ abstract class CarbonCalculateRepository {
     required String pollSetId,
     required List<PollAnswerItemEntity> answers,
   });
-
-  Future<Either<AppException, PollResultEntity>> getPollResults({
-    required String pollSetId,
-    required int month,
-    required int year,
-  });
 }

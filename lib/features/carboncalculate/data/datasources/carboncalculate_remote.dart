@@ -10,9 +10,4 @@ abstract class CarbonCalculateRemote {
     required String pollSetId,
     required List<PollAnswerItemEntity> answers,
   });
-  Future<PollResultEntity> getPollResults({
-    required String pollSetId,
-    required int month,
-    required int year,
-  });
 }

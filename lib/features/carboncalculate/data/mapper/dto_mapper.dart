@@ -1,7 +1,6 @@
 import 'package:karbon/features/carboncalculate/data/dtos/active_pollset_dto.dart';
 import 'package:karbon/features/carboncalculate/data/dtos/poll_option_dto.dart';
 import 'package:karbon/features/carboncalculate/data/dtos/poll_question_dto.dart';
-import 'package:karbon/features/carboncalculate/data/dtos/poll_result_dto.dart';
 import 'package:karbon/features/carboncalculate/data/dtos/poll_submit_dto.dart';
 import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 
@@ -40,22 +39,6 @@ class PollMapper {
       PollSubmissionResultEntity(
         totalCarbonScore: dto.totalCarbonScore,
         calculatedTrees: dto.calculatedTrees,
-      );
-
-  static PollResultAnswerEntity toResultAnswerEntity(
-    PollResultAnswerItemDto dto,
-  ) =>
-      PollResultAnswerEntity(
-        questionText: dto.questionText,
-        selectedOptionText: dto.selectedOptionText,
-        carbonValue: dto.carbonValue,
-      );
-
-  static PollResultEntity toResultEntity(PollResultDto dto) => PollResultEntity(
-        userName: dto.userName,
-        totalScore: dto.totalScore,
-        treeCount: dto.treeCount,
-        answers: dto.answers.map(toResultAnswerEntity).toList(),
       );
 
   // ─── Entity → DTO (backend'e gönderim) ────────────────────────────────────

@@ -86,36 +86,3 @@ class PollSubmissionResultEntity extends Equatable {
   List<Object?> get props => [totalCarbonScore, calculatedTrees];
 }
 
-/// GET `/api/v1/polls/{pollSetId}/results` — domain; JSON için [PollResultEntity].
-class PollResultEntity extends Equatable {
-  const PollResultEntity({
-    required this.userName,
-    required this.totalScore,
-    required this.treeCount,
-    required this.answers,
-  });
-
-  final String userName;
-  final double totalScore;
-  final int treeCount;
-  final List<PollResultAnswerEntity> answers;
-
-  @override
-  List<Object?> get props => [userName, totalScore, treeCount];
-}
-
-/// GET `/api/v1/polls/{pollSetId}/results` — domain; JSON için [PollResultAnswerEntity].
-class PollResultAnswerEntity extends Equatable {
-  const PollResultAnswerEntity({
-    required this.questionText,
-    required this.selectedOptionText,
-    required this.carbonValue,
-  });
-
-  final String questionText;
-  final String selectedOptionText;
-  final double carbonValue;
-
-  @override
-  List<Object?> get props => [questionText, selectedOptionText, carbonValue];
-}

@@ -68,21 +68,4 @@ class CarbonCalculateRepositoryImpl implements CarbonCalculateRepository {
     }
   }
 
-  @override
-  Future<Either<AppException, PollResultEntity>> getPollResults({
-    required String pollSetId,
-    required int month,
-    required int year,
-  }) async {
-    try {
-      final r = await _remote.getPollResults(
-        pollSetId: pollSetId,
-        month: month,
-        year: year,
-      );
-      return Right(r);
-    } catch (e) {
-      return guardLeft(e);
-    }
-  }
 }

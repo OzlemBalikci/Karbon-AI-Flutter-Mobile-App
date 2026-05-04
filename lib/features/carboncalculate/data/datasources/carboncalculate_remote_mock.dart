@@ -4,8 +4,8 @@ import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entit
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote.dart';
 
 /// Geliştirme: [ActivePollSetMock] ile örnek anket döner.
-/// Canlı API için [CarbonCalculateRemoteImpl] `@LazySingleton(as: CarbonCalculateRemote)` ile kayıtlıdır.
-@Injectable()
+/// Canlı API için [CarbonCalculateRemoteImpl] kullanılacaksa bu kayıt değiştirilebilir.
+@LazySingleton(as: CarbonCalculateRemote)
 class CarbonCalculateRemoteMock implements CarbonCalculateRemote {
   @override
   Future<ActivePollSetEntity> getActivePoll() async {
@@ -34,21 +34,6 @@ class CarbonCalculateRemoteMock implements CarbonCalculateRemote {
     return PollSubmissionResultEntity(
       totalCarbonScore: _mockTotalScore(answers),
       calculatedTrees: _mockTrees(answers),
-    );
-  }
-
-  @override
-  Future<PollResultEntity> getPollResults({
-    required String pollSetId,
-    required int month,
-    required int year,
-  }) async {
-    await Future<void>.delayed(const Duration(milliseconds: 80));
-    return PollResultEntity(
-      userName: 'Demo Kullanıcı',
-      totalScore: 120.0,
-      treeCount: 15,
-      answers: const [],
     );
   }
 
