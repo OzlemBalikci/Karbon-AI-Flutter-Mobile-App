@@ -10,9 +10,14 @@ import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/se
 import 'package:karbon/router/navigation.dart';
 
 @RoutePage()
-class CalendarFirstOpenPage extends StatelessWidget {
+class CalendarFirstOpenPage extends StatefulWidget {
   const CalendarFirstOpenPage({super.key});
 
+  @override
+  State<CalendarFirstOpenPage> createState() => _CalendarFirstOpenPageState();
+}
+
+class _CalendarFirstOpenPageState extends State<CalendarFirstOpenPage> {
   void _openSeeAll(BuildContext context, CalendarState state) {
     final period = state.selectedDay.day <= 15 ? 1 : 2;
     context.router.push(SeeAllRoute(
@@ -20,6 +25,15 @@ class CalendarFirstOpenPage extends StatelessWidget {
       month: state.focusedDay.month,
       period: period,
     ));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<CalendarBloc>().add(CalendarEvent.gridReloadRequested(
+          focusedDay: DateTime.now(),
+          selectedDay: DateTime.now(),
+        ));
   }
 
   @override

@@ -333,6 +333,68 @@ class CalendarRemoteImpl implements CalendarRemote {
 
   static ActivityQuestionDetailEntity _mockQuestionDetailForRequestedId(
       String id) {
+    const detailsById = <String, ActivityQuestionDetailEntity>{
+      'question-commute': ActivityQuestionDetailEntity(
+        id: '019d761b-5c59-74c1-a7ec-09138dcfc8fd',
+        text: 'Bu sabah işe hangi ulaşım aracıyla gideceksiniz?',
+        displayOrder: 1,
+        startDate: '0001-01-01T00:00:00Z',
+        endDate: '0001-01-01T00:00:00Z',
+        scheduledTime: '00:00:00',
+        options: [
+          ActivityQuestionOptionEntity(
+            id: '019d761b-5c5c-7290-ab61-8fbb4b8f2518',
+            text: '300 adım',
+            carbonValue: 1,
+            nextQuestionId: null,
+          ),
+          ActivityQuestionOptionEntity(
+            id: '019d761b-5c5c-7290-ab61-8fbb4b8f2519',
+            text: 'Toplu taşıma',
+            carbonValue: 8,
+            nextQuestionId: null,
+          ),
+          ActivityQuestionOptionEntity(
+            id: '019d761b-5c5c-7290-ab61-8fbb4b8f2520',
+            text: 'Özel araç',
+            carbonValue: -8,
+            nextQuestionId: null,
+          ),
+        ],
+      ),
+      'question-recycle': ActivityQuestionDetailEntity(
+        id: '019d761b-5c59-74c1-a7ec-09138dcfc8aa',
+        text: 'Evde çöplerinizi ayrıştırıyor musunuz?',
+        displayOrder: 2,
+        startDate: '0001-01-01T00:00:00Z',
+        endDate: '0001-01-01T00:00:00Z',
+        scheduledTime: '00:00:00',
+        options: [
+          ActivityQuestionOptionEntity(
+            id: '019d761b-5c5c-7290-ab61-8fbb4b8f25aa',
+            text: 'Evet, düzenli yapıyorum',
+            carbonValue: 10.5,
+            nextQuestionId: null,
+          ),
+          ActivityQuestionOptionEntity(
+            id: '019d761b-5c5c-7290-ab61-8fbb4b8f25ab',
+            text: 'Bazen',
+            carbonValue: 2,
+            nextQuestionId: null,
+          ),
+          ActivityQuestionOptionEntity(
+            id: '019d761b-5c5c-7290-ab61-8fbb4b8f25ac',
+            text: 'Hayır',
+            carbonValue: -2,
+            nextQuestionId: null,
+          ),
+        ],
+      ),
+    };
+
+    final byDictionary = detailsById[id];
+    if (byDictionary != null) return byDictionary;
+
     for (final day in _mockDayDetails) {
       for (final activity in day.activities) {
         if (activity.activityQuestionId == id) {
@@ -343,7 +405,14 @@ class CalendarRemoteImpl implements CalendarRemote {
             startDate: '0001-01-01T00:00:00Z',
             endDate: '0001-01-01T00:00:00Z',
             scheduledTime: '00:00:00',
-            options: const <ActivityQuestionOptionEntity>[],
+            options: const <ActivityQuestionOptionEntity>[
+              ActivityQuestionOptionEntity(
+                id: '019d761b-5c5c-7290-ab61-8fbb4b8f25ff',
+                text: 'Varsayılan seçenek',
+                carbonValue: 0,
+                nextQuestionId: null,
+              ),
+            ],
           );
         }
       }

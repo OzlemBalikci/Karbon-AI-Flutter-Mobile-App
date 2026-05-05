@@ -32,6 +32,7 @@ class CalendarSelectedQuestionDetailRoute
     extends PageRouteInfo<CalendarSelectedQuestionDetailRouteArgs> {
   CalendarSelectedQuestionDetailRoute({
     Key? key,
+    required String questionId,
     required String questionText,
     required String answerText,
     required double score,
@@ -40,6 +41,7 @@ class CalendarSelectedQuestionDetailRoute
           CalendarSelectedQuestionDetailRoute.name,
           args: CalendarSelectedQuestionDetailRouteArgs(
             key: key,
+            questionId: questionId,
             questionText: questionText,
             answerText: answerText,
             score: score,
@@ -55,6 +57,7 @@ class CalendarSelectedQuestionDetailRoute
       final args = data.argsAs<CalendarSelectedQuestionDetailRouteArgs>();
       return CalendarSelectedQuestionDetailPage(
         key: args.key,
+        questionId: args.questionId,
         questionText: args.questionText,
         answerText: args.answerText,
         score: args.score,
@@ -66,12 +69,15 @@ class CalendarSelectedQuestionDetailRoute
 class CalendarSelectedQuestionDetailRouteArgs {
   const CalendarSelectedQuestionDetailRouteArgs({
     this.key,
+    required this.questionId,
     required this.questionText,
     required this.answerText,
     required this.score,
   });
 
   final Key? key;
+
+  final String questionId;
 
   final String questionText;
 
@@ -81,7 +87,7 @@ class CalendarSelectedQuestionDetailRouteArgs {
 
   @override
   String toString() {
-    return 'CalendarSelectedQuestionDetailRouteArgs{key: $key, questionText: $questionText, answerText: $answerText, score: $score}';
+    return 'CalendarSelectedQuestionDetailRouteArgs{key: $key, questionId: $questionId, questionText: $questionText, answerText: $answerText, score: $score}';
   }
 
   @override
@@ -89,6 +95,7 @@ class CalendarSelectedQuestionDetailRouteArgs {
     if (identical(this, other)) return true;
     if (other is! CalendarSelectedQuestionDetailRouteArgs) return false;
     return key == other.key &&
+        questionId == other.questionId &&
         questionText == other.questionText &&
         answerText == other.answerText &&
         score == other.score;
@@ -97,6 +104,7 @@ class CalendarSelectedQuestionDetailRouteArgs {
   @override
   int get hashCode =>
       key.hashCode ^
+      questionId.hashCode ^
       questionText.hashCode ^
       answerText.hashCode ^
       score.hashCode;

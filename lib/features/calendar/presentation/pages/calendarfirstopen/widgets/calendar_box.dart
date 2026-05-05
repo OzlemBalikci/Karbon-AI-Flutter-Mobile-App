@@ -45,7 +45,6 @@ class CalendarBox extends StatelessWidget {
     return AspectRatio(
       aspectRatio: aspectRatio,
       child: Stack(fit: StackFit.expand, children: [
-        // Arka plan
         ColoredBox(
           color: context.colors.primary,
           child: Image.asset(
@@ -54,8 +53,6 @@ class CalendarBox extends StatelessWidget {
             alignment: Alignment.topCenter,
           ),
         ),
-
-        // İçerik
         Padding(
           padding: EdgeInsets.fromLTRB(
             AppThemeSpacing.s25.w,
@@ -66,7 +63,6 @@ class CalendarBox extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Başlık
               Text(
                 context.text.calendar_page_title,
                 textAlign: TextAlign.center,
@@ -100,8 +96,6 @@ class CalendarBox extends StatelessWidget {
                 ),
               ]),
               SizedBox(height: AppThemeSpacing.s16.h),
-
-              // Takvim
               Expanded(
                 child: TableCalendar<void>(
                   locale: 'tr_TR',

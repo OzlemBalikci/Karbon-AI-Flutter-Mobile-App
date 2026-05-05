@@ -35,6 +35,7 @@ class DayDetailHistorySection extends StatelessWidget {
                   ),
                 SizedBox(height: AppThemeSpacing.s10.h),
                 _DayDetailHistoryCard(
+                  questionId: a.activityQuestionId,
                   questionText: a.questionText,
                   answerText: a.selectedOptionText,
                   score: a.score,
@@ -47,15 +48,15 @@ class DayDetailHistorySection extends StatelessWidget {
     );
   }
 }
-
-/// `QuestionCard` + `_CardShell` (history) ile hizalı kart.
 class _DayDetailHistoryCard extends StatelessWidget {
   const _DayDetailHistoryCard({
+    required this.questionId,
     required this.questionText,
     required this.answerText,
     required this.score,
   });
 
+  final String? questionId;
   final String questionText;
   final String answerText;
   final double score;
@@ -65,6 +66,7 @@ class _DayDetailHistoryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.router.push(CalendarSelectedQuestionDetailRoute(
+          questionId: questionId ?? '',
           questionText: questionText,
           answerText: answerText,
           score: score,

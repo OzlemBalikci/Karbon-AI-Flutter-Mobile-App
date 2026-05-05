@@ -69,6 +69,8 @@ import 'package:karbon/features/calendar/data/repositories/calendar_repository_i
     as _i800;
 import 'package:karbon/features/calendar/domain/repositories/calendar_repository.dart'
     as _i623;
+import 'package:karbon/features/calendar/domain/usecases/get_activity_question_detail_usecase.dart'
+    as _i910;
 import 'package:karbon/features/calendar/domain/usecases/get_calendar_usecase.dart'
     as _i24;
 import 'package:karbon/features/calendar/domain/usecases/get_details_usecase.dart'
@@ -305,6 +307,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i996.GetDetailsUsecase(gh<_i623.CalendarRepository>()));
     gh.factory<_i753.GetMonthlyActivitiesUsecase>(() =>
         _i753.GetMonthlyActivitiesUsecase(gh<_i623.CalendarRepository>()));
+    gh.factory<_i910.GetActivityQuestionDetailUsecase>(() =>
+        _i910.GetActivityQuestionDetailUsecase(gh<_i623.CalendarRepository>()));
     gh.factory<_i682.CalendarBloc>(() => _i682.CalendarBloc(
           gh<_i24.GetCalendarUsecase>(),
           gh<_i753.GetMonthlyActivitiesUsecase>(),
