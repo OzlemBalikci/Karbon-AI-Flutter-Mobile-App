@@ -110,7 +110,7 @@ class CalendarRemoteImpl implements CalendarRemote {
     return CalendarMapper.toActivityQuestionDetailEntity(dto);
   }
 
-  static String _isoDateFromQuery(String date) {
+  static String isoDateFromQuery(String date) {
     if (date.length >= 10) {
       return '${date.substring(0, 10)}T00:00:00.000Z';
     }

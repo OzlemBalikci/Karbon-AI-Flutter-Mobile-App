@@ -44,7 +44,7 @@ class StatsCards extends StatelessWidget {
     )!;
   }
 
-  Color _resolveTextColor() {
+  Color resolveTextColor() {
     final double progress = (progressPercent ?? 0).clamp(0.0, 100.0) / 100.0;
     // %50'nin üzerinde arka plan koyulaşınca yazıyı beyaza çek
     return progress > 0.5 ? Colors.white : const Color(0xFF2E7D5A);
