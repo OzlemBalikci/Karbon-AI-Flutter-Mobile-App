@@ -21,7 +21,7 @@ import 'package:karbon/router/profile_tab_shell.dart';
 import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/calendar_first_open_page.dart';
 import 'package:karbon/features/calendar/presentation/pages/daydetail/daydetail.dart';
 import 'package:karbon/features/calendar/presentation/pages/seeAll/see_all_page.dart';
-import 'package:karbon/features/calendar/presentation/pages/selected_question_detail/calendar_selected_question_detail_page.dart';
+import 'package:karbon/features/calendar/presentation/pages/selectedquestiondetail/selectedquestiondetail.dart';
 
 part 'navigation.gr.dart';
 
