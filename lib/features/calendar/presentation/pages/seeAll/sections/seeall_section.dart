@@ -86,8 +86,6 @@ class _SeeAllSectionState extends State<SeeAllSection> {
   Widget build(BuildContext context) {
     final monthRef = DateTime(widget.year, widget.month);
     final monthTitle = formatMonthYear(monthRef);
-    final monthShort = formatMonthName(monthRef);
-
     final headerTitle = '$monthTitle Sonuçları';
 
     final monthly = _data;
@@ -100,7 +98,13 @@ class _SeeAllSectionState extends State<SeeAllSection> {
                 : '—';
 
     final rows = _data?.dailyScores ?? const <DailyMonthlyDayScoreEntity>[];
-    final sorted = [...rows]..sort((a, b) {
+    final filteredRows = rows.where((row) {
+      final d = DateTime.tryParse(row.date);
+      if (d == null) return false;
+      final rowPeriod = d.day <= 15 ? 1 : 2;
+      return rowPeriod == _period;
+    });
+    final sorted = [...filteredRows]..sort((a, b) {
         final da = DateTime.tryParse(a.date);
         final db = DateTime.tryParse(b.date);
         if (da == null || db == null) return 0;
@@ -125,7 +129,7 @@ class _SeeAllSectionState extends State<SeeAllSection> {
           ),
           SizedBox(height: AppThemeSpacing.s20.h),
           DayButton(
-            monthLabel: monthShort,
+            monthReference: monthRef,
             period: _period,
             onPeriodSelected: _onPeriodSelected,
           ),

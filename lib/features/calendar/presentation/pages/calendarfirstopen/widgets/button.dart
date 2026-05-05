@@ -131,17 +131,27 @@ class MonthChangeButtonRow extends StatelessWidget {
 class DayButton extends StatelessWidget {
   const DayButton({
     super.key,
-    required this.monthLabel,
+    required this.monthReference,
     required this.period,
     required this.onPeriodSelected,
   });
 
-  final String monthLabel;
+  final DateTime monthReference;
   final int period;
   final ValueChanged<int> onPeriodSelected;
 
   @override
   Widget build(BuildContext context) {
+    final monthLabel = formatMonthName(monthReference);
+    final daysInMonth = DateTime(
+      monthReference.year,
+      monthReference.month + 1,
+      0,
+    ).day;
+    final firstRangeLabel = '1–${daysInMonth < 15 ? daysInMonth : 15} $monthLabel';
+    final secondRangeStart = daysInMonth < 16 ? daysInMonth : 16;
+    final secondRangeLabel = '$secondRangeStart–$daysInMonth $monthLabel';
+
     return Row(
       children: [
         Expanded(
@@ -154,9 +164,11 @@ class DayButton extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: AppThemeSpacing.s8.w),
                   child: Text(
-                    '1–15 $monthLabel',
+                    firstRangeLabel,
                     textAlign: TextAlign.center,
-                    style: context.typographiesSp.bodySmall
+                    style: (period == 1
+                            ? context.typographiesSp.bodyMediumSmall
+                            : context.typographiesSp.bodySmall)
                         .withColor(context.colors.textOnSecondary),
                   ),
                 ),
@@ -175,9 +187,11 @@ class DayButton extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: AppThemeSpacing.s8.w),
                   child: Text(
-                    '16–31 $monthLabel',
+                    secondRangeLabel,
                     textAlign: TextAlign.center,
-                    style: context.typographiesSp.bodySmall
+                    style: (period == 2
+                            ? context.typographiesSp.bodyMediumSmall
+                            : context.typographiesSp.bodySmall)
                         .withColor(context.colors.textOnSecondary),
                   ),
                 ),
