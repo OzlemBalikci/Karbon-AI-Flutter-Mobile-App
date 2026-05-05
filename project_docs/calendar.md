@@ -194,3 +194,80 @@ Seçilen dönemdeki günlük karbon skorlarını döner.
 | `dailyScores[].totalScore` | `double` | O günün toplam skoru |
 
 ---
+
+## 8. Aktivite Soru Detayı
+
+### `GET /activity-questions/{id}`
+
+Seçilen aktivite sorusunun detayını ve seçenek kırılımlarını döner.
+
+**İş Kuralları:**
+- `id` değeri, gün detayı endpointindeki `activities[].activityQuestionId` alanından alınır
+- Soruya bağlı seçenekler `options[]` içinde döner
+- Soru bulunamazsa `404` döner
+
+**Path Parameters**
+
+| Parametre | Tip | Zorunlu | Açıklama |
+|---|---|---|---|
+| `id` | `Guid/string` | Evet | Aktivite soru kimliği (`activityQuestionId`) |
+
+**Örnek:** `GET /activity-questions/019d761b-5c59-74c1-a7ec-09138dcfc8fd`
+
+**Response `200 OK`**
+```json
+{
+  "data": {
+    "id": "019d761b-5c59-74c1-a7ec-09138dcfc8fd",
+    "text": "Günlük adım sayınız ne kadar?",
+    "displayOrder": 1,
+    "startDate": "0001-01-01T00:00:00Z",
+    "endDate": "0001-01-01T00:00:00Z",
+    "scheduledTime": "00:00:00",
+    "options": [
+      {
+        "id": "019d761b-5c5c-7290-ab61-8fbb4b8f2518",
+        "text": "300 adım",
+        "carbonValue": 1,
+        "nextQuestionId": null,
+        "nextQuestion": null
+      }
+    ]
+  },
+  "isSuccessful": true,
+  "statusCode": 200,
+  "errors": []
+}
+```
+
+**Response `404 Not Found`**
+```json
+{
+  "isSuccessful": false,
+  "statusCode": 404,
+  "errors": [{ "code": "ActivityQuestionNotFound" }],
+  "data": null
+}
+```
+
+**Alan Açıklamaları**
+
+| Alan | Tip | Açıklama |
+|---|---|---|
+| `id` | `string` | Aktivite soru kimliği |
+| `text` | `string` | Soru metni |
+| `displayOrder` | `int` | Soru sırası |
+| `startDate` | `DateTime` | Soru geçerlilik başlangıcı |
+| `endDate` | `DateTime` | Soru geçerlilik bitişi |
+| `scheduledTime` | `string` | Planlanan saat (`HH:mm:ss`) |
+| `options[].id` | `string` | Seçenek kimliği |
+| `options[].text` | `string` | Seçenek metni |
+| `options[].carbonValue` | `double` | Seçeneğin karbon puanı |
+| `options[].nextQuestionId` | `string?` | Varsa zincirdeki sonraki soru |
+| `options[].nextQuestion` | `object?` | Backend destekliyorsa inline sonraki soru detayı |
+
+**Flutter akışı:**
+- Kullanıcı gün detayı ekranında bir soru kartı seçer
+- Karttaki `activityQuestionId` route ile detay sayfasına taşınır
+- Detay sayfası açılışta `GET /activity-questions/{id}` çağırır
+- Dönen `options[]` listesi soru altında gösterilir
