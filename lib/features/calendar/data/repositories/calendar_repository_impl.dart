@@ -60,4 +60,16 @@ class CalendarRepositoryImpl implements CalendarRepository {
       return guardLeft(e);
     }
   }
+
+  @override
+  Future<Either<AppException, ActivityQuestionDetailEntity>>
+      getActivityQuestionDetail({
+    required String id,
+  }) async {
+    try {
+      return Right(await _remote.getActivityQuestionDetail(id: id));
+    } catch (e) {
+      return guardLeft(e);
+    }
+  }
 }

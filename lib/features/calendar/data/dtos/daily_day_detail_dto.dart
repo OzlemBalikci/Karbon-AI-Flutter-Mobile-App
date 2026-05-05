@@ -1,11 +1,13 @@
 class DailyDayActivityDto {
   const DailyDayActivityDto({
+    this.activityQuestionId,
     required this.questionText,
     required this.selectedOptionText,
     required this.score,
     required this.activityDate,
   });
 
+  final String? activityQuestionId;
   final String questionText;
   final String selectedOptionText;
   final double score;
@@ -14,6 +16,7 @@ class DailyDayActivityDto {
   factory DailyDayActivityDto.fromJson(Map<String, dynamic> json) {
     final rawScore = json['score'] ?? json['carbonValue'];
     return DailyDayActivityDto(
+      activityQuestionId: json['activityQuestionId'] as String?,
       questionText: json['questionText'] as String? ?? '',
       selectedOptionText: json['selectedOptionText'] as String? ??
           json['answerText'] as String? ??

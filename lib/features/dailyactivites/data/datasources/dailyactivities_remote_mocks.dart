@@ -34,7 +34,8 @@ abstract final class DailyActivitiesRemoteMocks {
   static const String _mockQuestionAracId = 'mock-q2-arac';
   static const String _mockQuestionSeferId = 'mock-q3-sefer';
 
-  static final List<DailyQuestionEntity> _todayQuestions = <DailyQuestionEntity>[
+  static final List<DailyQuestionEntity> _todayQuestions =
+      <DailyQuestionEntity>[
     DailyQuestionEntity(
       id: _mockRootTransportId,
       text: 'Bu sabah işe hangi ulaşım aracıyla gideceksiniz?',

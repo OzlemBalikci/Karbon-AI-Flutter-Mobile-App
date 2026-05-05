@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/core/networks/api_config.dart';
 import 'package:karbon/core/networks/response_ext.dart';
 import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart';
+import 'package:karbon/features/calendar/data/dtos/activity_question_detail_dto.dart';
 import 'package:karbon/features/calendar/data/dtos/daily_calendar_dto.dart';
 import 'package:karbon/features/calendar/data/dtos/daily_day_detail_dto.dart';
 import 'package:karbon/features/calendar/data/dtos/daily_monthly_day_score_dto.dart';
@@ -16,6 +17,7 @@ class CalendarRemoteImpl implements CalendarRemote {
   final Dio _dio;
 
   static const _v1 = '/api/v1/daily-activities';
+  static const _activityQuestionsV1 = '/api/v1/activity-questions';
 
   bool get _useMocks => ApiConfig.baseUrl.isEmpty;
 
@@ -91,6 +93,23 @@ class CalendarRemoteImpl implements CalendarRemote {
     }
   }
 
+  @override
+  Future<ActivityQuestionDetailEntity> getActivityQuestionDetail({
+    required String id,
+  }) async {
+    if (_useMocks) {
+      await Future<void>.delayed(const Duration(milliseconds: 120));
+      return _mockQuestionDetailForRequestedId(id);
+    }
+    final res = await _dio.get<dynamic>('$_activityQuestionsV1/$id');
+    final root = res.dataMap();
+    final data = root['data'] is Map<String, dynamic>
+        ? root['data'] as Map<String, dynamic>
+        : root;
+    final dto = ActivityQuestionDetailDto.fromJson(data);
+    return CalendarMapper.toActivityQuestionDetailEntity(dto);
+  }
+
   static String _isoDateFromQuery(String date) {
     if (date.length >= 10) {
       return '${date.substring(0, 10)}T00:00:00.000Z';
@@ -107,6 +126,7 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: 5.5,
       activities: [
         DailyDayActivityEntity(
+          activityQuestionId: 'question-commute',
           questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Evde ayrıştırma',
           score: 5.5,
@@ -119,12 +139,14 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: -13.0,
       activities: [
         DailyDayActivityEntity(
+          activityQuestionId: 'question-commute',
           questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Özel araç (yoğun trafik)',
           score: -8.0,
           activityDate: '2026-04-05T08:15:00.000Z',
         ),
         DailyDayActivityEntity(
+          activityQuestionId: 'question-nutrition',
           questionText: 'Beslenme',
           selectedOptionText:
               'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
@@ -138,12 +160,14 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: 22.0,
       activities: [
         DailyDayActivityEntity(
+          activityQuestionId: 'question-recycle',
           questionText: 'Evde çöplerinizi ayrıştırıyor musunuz?',
           selectedOptionText: 'Yeşil tarife',
           score: 10.0,
           activityDate: '2026-04-08T09:00:00.000Z',
         ),
         DailyDayActivityEntity(
+          activityQuestionId: 'question-commute',
           questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Bisiklet',
           score: 12.0,
@@ -156,12 +180,14 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: -4.25,
       activities: [
         DailyDayActivityEntity(
+          activityQuestionId: 'question-recycle',
           questionText: 'Evde çöplerinizi ayrıştırıyor musunuz?',
           selectedOptionText: 'Yüksek sıcaklık',
           score: -2.0,
           activityDate: '2026-04-12T07:30:00.000Z',
         ),
         DailyDayActivityEntity(
+          activityQuestionId: 'question-commute',
           questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Tek kullanımlık ambalaj',
           score: -2.25,
@@ -174,12 +200,14 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: 18.5,
       activities: [
         DailyDayActivityEntity(
+          activityQuestionId: 'question-recycle',
           questionText: 'Evde çöplerinizi ayrıştırıyor musunuz?',
           selectedOptionText: 'Gün içi tasarruf',
           score: 10.5,
           activityDate: '2026-04-14T09:00:00.000Z',
         ),
         DailyDayActivityEntity(
+          activityQuestionId: 'question-commute',
           questionText: 'Bu sabah işe  hangi ulaşım aracıyla gideceksiniz?',
           selectedOptionText: 'Toplu taşıma',
           score: 8.0,
@@ -192,12 +220,14 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: 9.0,
       activities: [
         DailyDayActivityEntity(
+          activityQuestionId: 'question-water',
           questionText: 'Su',
           selectedOptionText: 'Düşük tüketim',
           score: 4.0,
           activityDate: '2026-04-18T08:00:00.000Z',
         ),
         DailyDayActivityEntity(
+          activityQuestionId: 'question-nutrition',
           questionText: 'Beslenme',
           selectedOptionText: 'Bitkisel ağırlıklı',
           score: 5.0,
@@ -210,12 +240,14 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: -6.5,
       activities: [
         DailyDayActivityEntity(
+          activityQuestionId: 'question-flight',
           questionText: 'Uçuş',
           selectedOptionText: 'Kısa mesafe uçuş',
           score: -3.0,
           activityDate: '2026-04-22T06:00:00.000Z',
         ),
         DailyDayActivityEntity(
+          activityQuestionId: 'question-consumption',
           questionText: 'Tüketim',
           selectedOptionText: 'Hızlı moda',
           score: -3.5,
@@ -228,12 +260,14 @@ class CalendarRemoteImpl implements CalendarRemote {
       totalScore: 14.0,
       activities: [
         DailyDayActivityEntity(
+          activityQuestionId: 'question-local-production',
           questionText: 'Yerel üretim',
           selectedOptionText: 'Pazar alışverişi',
           score: 7.0,
           activityDate: '2026-04-28T11:00:00.000Z',
         ),
         DailyDayActivityEntity(
+          activityQuestionId: 'question-waste',
           questionText: 'Atık',
           selectedOptionText: 'Kompost',
           score: 7.0,
@@ -294,6 +328,34 @@ class CalendarRemoteImpl implements CalendarRemote {
       date: '${key}T00:00:00.000Z',
       totalScore: 0,
       activities: const [],
+    );
+  }
+
+  static ActivityQuestionDetailEntity _mockQuestionDetailForRequestedId(
+      String id) {
+    for (final day in _mockDayDetails) {
+      for (final activity in day.activities) {
+        if (activity.activityQuestionId == id) {
+          return ActivityQuestionDetailEntity(
+            id: id,
+            text: activity.questionText,
+            displayOrder: 1,
+            startDate: '0001-01-01T00:00:00Z',
+            endDate: '0001-01-01T00:00:00Z',
+            scheduledTime: '00:00:00',
+            options: const <ActivityQuestionOptionEntity>[],
+          );
+        }
+      }
+    }
+    return ActivityQuestionDetailEntity(
+      id: id,
+      text: '',
+      displayOrder: 0,
+      startDate: '0001-01-01T00:00:00Z',
+      endDate: '0001-01-01T00:00:00Z',
+      scheduledTime: '00:00:00',
+      options: const <ActivityQuestionOptionEntity>[],
     );
   }
 }

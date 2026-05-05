@@ -6,20 +6,27 @@ import 'package:karbon/core/utils/formatters.dart';
 /// GET `/api/v1/daily-activities?date=` — gün içi aktivite satırı.
 class DailyDayActivityEntity extends Equatable {
   const DailyDayActivityEntity({
+    this.activityQuestionId,
     required this.questionText,
     required this.selectedOptionText,
     required this.score,
     required this.activityDate,
   });
 
+  final String? activityQuestionId;
   final String questionText;
   final String selectedOptionText;
   final double score;
   final String activityDate;
 
   @override
-  List<Object?> get props =>
-      [questionText, selectedOptionText, score, activityDate];
+  List<Object?> get props => [
+        activityQuestionId,
+        questionText,
+        selectedOptionText,
+        score,
+        activityDate
+      ];
 }
 
 /// GET `/api/v1/daily-activities?date=` — seçilen günün detayı.
@@ -98,4 +105,54 @@ class DailyMonthlyActivitiesEntity extends Equatable {
 
   @override
   List<Object?> get props => [totalMonthlyScore, totalPeriodScore, dailyScores];
+}
+
+/// GET `/api/v1/activity-questions/{id}` — seçenek satırı.
+class ActivityQuestionOptionEntity extends Equatable {
+  const ActivityQuestionOptionEntity({
+    required this.id,
+    required this.text,
+    required this.carbonValue,
+    this.nextQuestionId,
+  });
+
+  final String id;
+  final String text;
+  final double carbonValue;
+  final String? nextQuestionId;
+
+  @override
+  List<Object?> get props => [id, text, carbonValue, nextQuestionId];
+}
+
+/// GET `/api/v1/activity-questions/{id}` — soru detayı.
+class ActivityQuestionDetailEntity extends Equatable {
+  const ActivityQuestionDetailEntity({
+    required this.id,
+    required this.text,
+    required this.displayOrder,
+    required this.startDate,
+    required this.endDate,
+    required this.scheduledTime,
+    required this.options,
+  });
+
+  final String id;
+  final String text;
+  final int displayOrder;
+  final String startDate;
+  final String endDate;
+  final String scheduledTime;
+  final List<ActivityQuestionOptionEntity> options;
+
+  @override
+  List<Object?> get props => [
+        id,
+        text,
+        displayOrder,
+        startDate,
+        endDate,
+        scheduledTime,
+        options,
+      ];
 }

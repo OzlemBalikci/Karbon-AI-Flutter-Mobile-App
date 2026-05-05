@@ -1,3 +1,4 @@
+import 'package:karbon/features/calendar/data/dtos/activity_question_detail_dto.dart';
 import 'package:karbon/features/calendar/data/dtos/daily_calendar_dto.dart';
 import 'package:karbon/features/calendar/data/dtos/daily_day_detail_dto.dart';
 import 'package:karbon/features/calendar/data/dtos/daily_monthly_day_score_dto.dart';
@@ -8,6 +9,7 @@ class CalendarMapper {
 
   static DailyDayActivityEntity toDayActivityEntity(DailyDayActivityDto dto) =>
       DailyDayActivityEntity(
+        activityQuestionId: dto.activityQuestionId,
         questionText: dto.questionText,
         selectedOptionText: dto.selectedOptionText,
         score: dto.score,
@@ -51,5 +53,28 @@ class CalendarMapper {
         totalMonthlyScore: dto.totalMonthlyScore,
         totalPeriodScore: dto.totalPeriodScore,
         dailyScores: dto.dailyScores.map(toMonthlyDayScoreEntity).toList(),
+      );
+
+  static ActivityQuestionOptionEntity toActivityQuestionOptionEntity(
+    ActivityQuestionOptionDto dto,
+  ) =>
+      ActivityQuestionOptionEntity(
+        id: dto.id,
+        text: dto.text,
+        carbonValue: dto.carbonValue,
+        nextQuestionId: dto.nextQuestionId,
+      );
+
+  static ActivityQuestionDetailEntity toActivityQuestionDetailEntity(
+    ActivityQuestionDetailDto dto,
+  ) =>
+      ActivityQuestionDetailEntity(
+        id: dto.id,
+        text: dto.text,
+        displayOrder: dto.displayOrder,
+        startDate: dto.startDate,
+        endDate: dto.endDate,
+        scheduledTime: dto.scheduledTime,
+        options: dto.options.map(toActivityQuestionOptionEntity).toList(),
       );
 }
