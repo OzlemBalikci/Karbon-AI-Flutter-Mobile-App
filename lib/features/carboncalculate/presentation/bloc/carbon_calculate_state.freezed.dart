@@ -16,17 +16,9 @@ T _$identity<T>(T value) => value;
 mixin _$CarbonCalculateState {
   CarbonCalculateStatus get status;
   int get currentStep;
-
-  /// Aktif anket ID'si — taslak ve gönderim için gerekli.
   String? get pollSetId;
-
-  /// Anket açıklama metni (bilgi adımında gösterilir).
   String get pollDescription;
-
-  /// Anket soruları; yüklenince dolar.
   List<PollQuestionEntity> get questions;
-
-  /// Seçilen cevaplar: `questionId → optionId`
   Map<String, String> get answers;
   String? get error;
   bool get goToHomeRequested;
@@ -399,20 +391,12 @@ class _CarbonCalculateState extends CarbonCalculateState {
   @override
   @JsonKey()
   final int currentStep;
-
-  /// Aktif anket ID'si — taslak ve gönderim için gerekli.
   @override
   final String? pollSetId;
-
-  /// Anket açıklama metni (bilgi adımında gösterilir).
   @override
   @JsonKey()
   final String pollDescription;
-
-  /// Anket soruları; yüklenince dolar.
   final List<PollQuestionEntity> _questions;
-
-  /// Anket soruları; yüklenince dolar.
   @override
   @JsonKey()
   List<PollQuestionEntity> get questions {
@@ -421,10 +405,7 @@ class _CarbonCalculateState extends CarbonCalculateState {
     return EqualUnmodifiableListView(_questions);
   }
 
-  /// Seçilen cevaplar: `questionId → optionId`
   final Map<String, String> _answers;
-
-  /// Seçilen cevaplar: `questionId → optionId`
   @override
   @JsonKey()
   Map<String, String> get answers {

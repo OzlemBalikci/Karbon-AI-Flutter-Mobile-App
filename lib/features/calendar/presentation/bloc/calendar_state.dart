@@ -18,18 +18,18 @@ abstract class CalendarState with _$CalendarState {
     @Default(CalendarAsyncStatus.initial)
     CalendarAsyncStatus dayDetailAsyncStatus,
     @Default(CalendarAsyncStatus.initial)
-    CalendarAsyncStatus monthlyAsyncStatus,
+    CalendarAsyncStatus monthDetailAsyncStatus,
     @Default(CalendarAsyncStatus.initial)
     CalendarAsyncStatus selectedQuestionAsyncStatus,
     DailyCalendarEntity? calendar,
-    DailyMonthlyActivitiesEntity? monthly,
+    DailyMonthlyActivitiesEntity? monthDetail,
     DailyDayDetailEntity? dayDetail,
     ActivityQuestionOptionEntity? selectedQuestion,
     required DateTime focusedDay,
     required DateTime selectedDay,
     String? calendarFirstOpenError,
     String? dayDetailError,
-    String? monthlyError,
+    String? monthDetailError,
     String? selectedQuestionError,
   }) = _CalendarState;
 

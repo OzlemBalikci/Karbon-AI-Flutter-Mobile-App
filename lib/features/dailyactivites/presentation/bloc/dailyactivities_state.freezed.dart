@@ -14,7 +14,6 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$DailyActivitiesState {
-// ---- Liste ekranı ----
   DailyActivitiesStatus get status;
   List<DailyQuestionEntity> get allQuestions;
   List<DailyQuestionEntity> get questions;
@@ -476,7 +475,6 @@ class _DailyActivitiesState extends DailyActivitiesState {
         _selectedOptions = selectedOptions,
         super._();
 
-// ---- Liste ekranı ----
   @override
   @JsonKey()
   final DailyActivitiesStatus status;

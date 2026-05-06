@@ -309,11 +309,6 @@ extension GetItInjectableX on _i174.GetIt {
         _i753.GetMonthlyActivitiesUsecase(gh<_i623.CalendarRepository>()));
     gh.factory<_i910.GetActivityQuestionDetailUsecase>(() =>
         _i910.GetActivityQuestionDetailUsecase(gh<_i623.CalendarRepository>()));
-    gh.factory<_i682.CalendarBloc>(() => _i682.CalendarBloc(
-          gh<_i24.GetCalendarUsecase>(),
-          gh<_i753.GetMonthlyActivitiesUsecase>(),
-          gh<_i996.GetDetailsUsecase>(),
-        ));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i382.ClearLocalSessionUseCase>(
@@ -330,6 +325,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i558.RegisterUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i1018.ResetPasswordUseCase>(
         () => _i1018.ResetPasswordUseCase(gh<_i252.AuthRepository>()));
+    gh.factory<_i682.CalendarBloc>(() => _i682.CalendarBloc(
+          gh<_i24.GetCalendarUsecase>(),
+          gh<_i753.GetMonthlyActivitiesUsecase>(),
+          gh<_i996.GetDetailsUsecase>(),
+          gh<_i910.GetActivityQuestionDetailUsecase>(),
+        ));
     gh.factory<_i208.ForgotPasswordCubit>(
         () => _i208.ForgotPasswordCubit(gh<_i210.ForgotPasswordUseCase>()));
     gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(

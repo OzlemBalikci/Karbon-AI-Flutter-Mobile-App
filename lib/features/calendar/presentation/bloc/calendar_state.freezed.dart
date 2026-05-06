@@ -16,17 +16,17 @@ T _$identity<T>(T value) => value;
 mixin _$CalendarState {
   CalendarAsyncStatus get calendarFirstOpenAsyncStatus;
   CalendarAsyncStatus get dayDetailAsyncStatus;
-  CalendarAsyncStatus get monthlyAsyncStatus;
+  CalendarAsyncStatus get monthDetailAsyncStatus;
   CalendarAsyncStatus get selectedQuestionAsyncStatus;
   DailyCalendarEntity? get calendar;
-  DailyMonthlyActivitiesEntity? get monthly;
+  DailyMonthlyActivitiesEntity? get monthDetail;
   DailyDayDetailEntity? get dayDetail;
   ActivityQuestionOptionEntity? get selectedQuestion;
   DateTime get focusedDay;
   DateTime get selectedDay;
   String? get calendarFirstOpenError;
   String? get dayDetailError;
-  String? get monthlyError;
+  String? get monthDetailError;
   String? get selectedQuestionError;
 
   /// Create a copy of CalendarState
@@ -48,15 +48,16 @@ mixin _$CalendarState {
                     calendarFirstOpenAsyncStatus) &&
             (identical(other.dayDetailAsyncStatus, dayDetailAsyncStatus) ||
                 other.dayDetailAsyncStatus == dayDetailAsyncStatus) &&
-            (identical(other.monthlyAsyncStatus, monthlyAsyncStatus) ||
-                other.monthlyAsyncStatus == monthlyAsyncStatus) &&
+            (identical(other.monthDetailAsyncStatus, monthDetailAsyncStatus) ||
+                other.monthDetailAsyncStatus == monthDetailAsyncStatus) &&
             (identical(other.selectedQuestionAsyncStatus,
                     selectedQuestionAsyncStatus) ||
                 other.selectedQuestionAsyncStatus ==
                     selectedQuestionAsyncStatus) &&
             (identical(other.calendar, calendar) ||
                 other.calendar == calendar) &&
-            (identical(other.monthly, monthly) || other.monthly == monthly) &&
+            (identical(other.monthDetail, monthDetail) ||
+                other.monthDetail == monthDetail) &&
             (identical(other.dayDetail, dayDetail) ||
                 other.dayDetail == dayDetail) &&
             (identical(other.selectedQuestion, selectedQuestion) ||
@@ -69,8 +70,8 @@ mixin _$CalendarState {
                 other.calendarFirstOpenError == calendarFirstOpenError) &&
             (identical(other.dayDetailError, dayDetailError) ||
                 other.dayDetailError == dayDetailError) &&
-            (identical(other.monthlyError, monthlyError) ||
-                other.monthlyError == monthlyError) &&
+            (identical(other.monthDetailError, monthDetailError) ||
+                other.monthDetailError == monthDetailError) &&
             (identical(other.selectedQuestionError, selectedQuestionError) ||
                 other.selectedQuestionError == selectedQuestionError));
   }
@@ -80,22 +81,22 @@ mixin _$CalendarState {
       runtimeType,
       calendarFirstOpenAsyncStatus,
       dayDetailAsyncStatus,
-      monthlyAsyncStatus,
+      monthDetailAsyncStatus,
       selectedQuestionAsyncStatus,
       calendar,
-      monthly,
+      monthDetail,
       dayDetail,
       selectedQuestion,
       focusedDay,
       selectedDay,
       calendarFirstOpenError,
       dayDetailError,
-      monthlyError,
+      monthDetailError,
       selectedQuestionError);
 
   @override
   String toString() {
-    return 'CalendarState(calendarFirstOpenAsyncStatus: $calendarFirstOpenAsyncStatus, dayDetailAsyncStatus: $dayDetailAsyncStatus, monthlyAsyncStatus: $monthlyAsyncStatus, selectedQuestionAsyncStatus: $selectedQuestionAsyncStatus, calendar: $calendar, monthly: $monthly, dayDetail: $dayDetail, selectedQuestion: $selectedQuestion, focusedDay: $focusedDay, selectedDay: $selectedDay, calendarFirstOpenError: $calendarFirstOpenError, dayDetailError: $dayDetailError, monthlyError: $monthlyError, selectedQuestionError: $selectedQuestionError)';
+    return 'CalendarState(calendarFirstOpenAsyncStatus: $calendarFirstOpenAsyncStatus, dayDetailAsyncStatus: $dayDetailAsyncStatus, monthDetailAsyncStatus: $monthDetailAsyncStatus, selectedQuestionAsyncStatus: $selectedQuestionAsyncStatus, calendar: $calendar, monthDetail: $monthDetail, dayDetail: $dayDetail, selectedQuestion: $selectedQuestion, focusedDay: $focusedDay, selectedDay: $selectedDay, calendarFirstOpenError: $calendarFirstOpenError, dayDetailError: $dayDetailError, monthDetailError: $monthDetailError, selectedQuestionError: $selectedQuestionError)';
   }
 }
 
@@ -108,17 +109,17 @@ abstract mixin class $CalendarStateCopyWith<$Res> {
   $Res call(
       {CalendarAsyncStatus calendarFirstOpenAsyncStatus,
       CalendarAsyncStatus dayDetailAsyncStatus,
-      CalendarAsyncStatus monthlyAsyncStatus,
+      CalendarAsyncStatus monthDetailAsyncStatus,
       CalendarAsyncStatus selectedQuestionAsyncStatus,
       DailyCalendarEntity? calendar,
-      DailyMonthlyActivitiesEntity? monthly,
+      DailyMonthlyActivitiesEntity? monthDetail,
       DailyDayDetailEntity? dayDetail,
       ActivityQuestionOptionEntity? selectedQuestion,
       DateTime focusedDay,
       DateTime selectedDay,
       String? calendarFirstOpenError,
       String? dayDetailError,
-      String? monthlyError,
+      String? monthDetailError,
       String? selectedQuestionError});
 }
 
@@ -137,17 +138,17 @@ class _$CalendarStateCopyWithImpl<$Res>
   $Res call({
     Object? calendarFirstOpenAsyncStatus = null,
     Object? dayDetailAsyncStatus = null,
-    Object? monthlyAsyncStatus = null,
+    Object? monthDetailAsyncStatus = null,
     Object? selectedQuestionAsyncStatus = null,
     Object? calendar = freezed,
-    Object? monthly = freezed,
+    Object? monthDetail = freezed,
     Object? dayDetail = freezed,
     Object? selectedQuestion = freezed,
     Object? focusedDay = null,
     Object? selectedDay = null,
     Object? calendarFirstOpenError = freezed,
     Object? dayDetailError = freezed,
-    Object? monthlyError = freezed,
+    Object? monthDetailError = freezed,
     Object? selectedQuestionError = freezed,
   }) {
     return _then(_self.copyWith(
@@ -159,9 +160,9 @@ class _$CalendarStateCopyWithImpl<$Res>
           ? _self.dayDetailAsyncStatus
           : dayDetailAsyncStatus // ignore: cast_nullable_to_non_nullable
               as CalendarAsyncStatus,
-      monthlyAsyncStatus: null == monthlyAsyncStatus
-          ? _self.monthlyAsyncStatus
-          : monthlyAsyncStatus // ignore: cast_nullable_to_non_nullable
+      monthDetailAsyncStatus: null == monthDetailAsyncStatus
+          ? _self.monthDetailAsyncStatus
+          : monthDetailAsyncStatus // ignore: cast_nullable_to_non_nullable
               as CalendarAsyncStatus,
       selectedQuestionAsyncStatus: null == selectedQuestionAsyncStatus
           ? _self.selectedQuestionAsyncStatus
@@ -171,9 +172,9 @@ class _$CalendarStateCopyWithImpl<$Res>
           ? _self.calendar
           : calendar // ignore: cast_nullable_to_non_nullable
               as DailyCalendarEntity?,
-      monthly: freezed == monthly
-          ? _self.monthly
-          : monthly // ignore: cast_nullable_to_non_nullable
+      monthDetail: freezed == monthDetail
+          ? _self.monthDetail
+          : monthDetail // ignore: cast_nullable_to_non_nullable
               as DailyMonthlyActivitiesEntity?,
       dayDetail: freezed == dayDetail
           ? _self.dayDetail
@@ -199,9 +200,9 @@ class _$CalendarStateCopyWithImpl<$Res>
           ? _self.dayDetailError
           : dayDetailError // ignore: cast_nullable_to_non_nullable
               as String?,
-      monthlyError: freezed == monthlyError
-          ? _self.monthlyError
-          : monthlyError // ignore: cast_nullable_to_non_nullable
+      monthDetailError: freezed == monthDetailError
+          ? _self.monthDetailError
+          : monthDetailError // ignore: cast_nullable_to_non_nullable
               as String?,
       selectedQuestionError: freezed == selectedQuestionError
           ? _self.selectedQuestionError
@@ -307,17 +308,17 @@ extension CalendarStatePatterns on CalendarState {
     TResult Function(
             CalendarAsyncStatus calendarFirstOpenAsyncStatus,
             CalendarAsyncStatus dayDetailAsyncStatus,
-            CalendarAsyncStatus monthlyAsyncStatus,
+            CalendarAsyncStatus monthDetailAsyncStatus,
             CalendarAsyncStatus selectedQuestionAsyncStatus,
             DailyCalendarEntity? calendar,
-            DailyMonthlyActivitiesEntity? monthly,
+            DailyMonthlyActivitiesEntity? monthDetail,
             DailyDayDetailEntity? dayDetail,
             ActivityQuestionOptionEntity? selectedQuestion,
             DateTime focusedDay,
             DateTime selectedDay,
             String? calendarFirstOpenError,
             String? dayDetailError,
-            String? monthlyError,
+            String? monthDetailError,
             String? selectedQuestionError)?
         $default, {
     required TResult orElse(),
@@ -328,17 +329,17 @@ extension CalendarStatePatterns on CalendarState {
         return $default(
             _that.calendarFirstOpenAsyncStatus,
             _that.dayDetailAsyncStatus,
-            _that.monthlyAsyncStatus,
+            _that.monthDetailAsyncStatus,
             _that.selectedQuestionAsyncStatus,
             _that.calendar,
-            _that.monthly,
+            _that.monthDetail,
             _that.dayDetail,
             _that.selectedQuestion,
             _that.focusedDay,
             _that.selectedDay,
             _that.calendarFirstOpenError,
             _that.dayDetailError,
-            _that.monthlyError,
+            _that.monthDetailError,
             _that.selectedQuestionError);
       case _:
         return orElse();
@@ -363,17 +364,17 @@ extension CalendarStatePatterns on CalendarState {
     TResult Function(
             CalendarAsyncStatus calendarFirstOpenAsyncStatus,
             CalendarAsyncStatus dayDetailAsyncStatus,
-            CalendarAsyncStatus monthlyAsyncStatus,
+            CalendarAsyncStatus monthDetailAsyncStatus,
             CalendarAsyncStatus selectedQuestionAsyncStatus,
             DailyCalendarEntity? calendar,
-            DailyMonthlyActivitiesEntity? monthly,
+            DailyMonthlyActivitiesEntity? monthDetail,
             DailyDayDetailEntity? dayDetail,
             ActivityQuestionOptionEntity? selectedQuestion,
             DateTime focusedDay,
             DateTime selectedDay,
             String? calendarFirstOpenError,
             String? dayDetailError,
-            String? monthlyError,
+            String? monthDetailError,
             String? selectedQuestionError)
         $default,
   ) {
@@ -383,17 +384,17 @@ extension CalendarStatePatterns on CalendarState {
         return $default(
             _that.calendarFirstOpenAsyncStatus,
             _that.dayDetailAsyncStatus,
-            _that.monthlyAsyncStatus,
+            _that.monthDetailAsyncStatus,
             _that.selectedQuestionAsyncStatus,
             _that.calendar,
-            _that.monthly,
+            _that.monthDetail,
             _that.dayDetail,
             _that.selectedQuestion,
             _that.focusedDay,
             _that.selectedDay,
             _that.calendarFirstOpenError,
             _that.dayDetailError,
-            _that.monthlyError,
+            _that.monthDetailError,
             _that.selectedQuestionError);
       case _:
         throw StateError('Unexpected subclass');
@@ -417,17 +418,17 @@ extension CalendarStatePatterns on CalendarState {
     TResult? Function(
             CalendarAsyncStatus calendarFirstOpenAsyncStatus,
             CalendarAsyncStatus dayDetailAsyncStatus,
-            CalendarAsyncStatus monthlyAsyncStatus,
+            CalendarAsyncStatus monthDetailAsyncStatus,
             CalendarAsyncStatus selectedQuestionAsyncStatus,
             DailyCalendarEntity? calendar,
-            DailyMonthlyActivitiesEntity? monthly,
+            DailyMonthlyActivitiesEntity? monthDetail,
             DailyDayDetailEntity? dayDetail,
             ActivityQuestionOptionEntity? selectedQuestion,
             DateTime focusedDay,
             DateTime selectedDay,
             String? calendarFirstOpenError,
             String? dayDetailError,
-            String? monthlyError,
+            String? monthDetailError,
             String? selectedQuestionError)?
         $default,
   ) {
@@ -437,17 +438,17 @@ extension CalendarStatePatterns on CalendarState {
         return $default(
             _that.calendarFirstOpenAsyncStatus,
             _that.dayDetailAsyncStatus,
-            _that.monthlyAsyncStatus,
+            _that.monthDetailAsyncStatus,
             _that.selectedQuestionAsyncStatus,
             _that.calendar,
-            _that.monthly,
+            _that.monthDetail,
             _that.dayDetail,
             _that.selectedQuestion,
             _that.focusedDay,
             _that.selectedDay,
             _that.calendarFirstOpenError,
             _that.dayDetailError,
-            _that.monthlyError,
+            _that.monthDetailError,
             _that.selectedQuestionError);
       case _:
         return null;
@@ -461,17 +462,17 @@ class _CalendarState implements CalendarState {
   const _CalendarState(
       {this.calendarFirstOpenAsyncStatus = CalendarAsyncStatus.initial,
       this.dayDetailAsyncStatus = CalendarAsyncStatus.initial,
-      this.monthlyAsyncStatus = CalendarAsyncStatus.initial,
+      this.monthDetailAsyncStatus = CalendarAsyncStatus.initial,
       this.selectedQuestionAsyncStatus = CalendarAsyncStatus.initial,
       this.calendar,
-      this.monthly,
+      this.monthDetail,
       this.dayDetail,
       this.selectedQuestion,
       required this.focusedDay,
       required this.selectedDay,
       this.calendarFirstOpenError,
       this.dayDetailError,
-      this.monthlyError,
+      this.monthDetailError,
       this.selectedQuestionError});
 
   @override
@@ -482,14 +483,14 @@ class _CalendarState implements CalendarState {
   final CalendarAsyncStatus dayDetailAsyncStatus;
   @override
   @JsonKey()
-  final CalendarAsyncStatus monthlyAsyncStatus;
+  final CalendarAsyncStatus monthDetailAsyncStatus;
   @override
   @JsonKey()
   final CalendarAsyncStatus selectedQuestionAsyncStatus;
   @override
   final DailyCalendarEntity? calendar;
   @override
-  final DailyMonthlyActivitiesEntity? monthly;
+  final DailyMonthlyActivitiesEntity? monthDetail;
   @override
   final DailyDayDetailEntity? dayDetail;
   @override
@@ -503,7 +504,7 @@ class _CalendarState implements CalendarState {
   @override
   final String? dayDetailError;
   @override
-  final String? monthlyError;
+  final String? monthDetailError;
   @override
   final String? selectedQuestionError;
 
@@ -526,15 +527,16 @@ class _CalendarState implements CalendarState {
                     calendarFirstOpenAsyncStatus) &&
             (identical(other.dayDetailAsyncStatus, dayDetailAsyncStatus) ||
                 other.dayDetailAsyncStatus == dayDetailAsyncStatus) &&
-            (identical(other.monthlyAsyncStatus, monthlyAsyncStatus) ||
-                other.monthlyAsyncStatus == monthlyAsyncStatus) &&
+            (identical(other.monthDetailAsyncStatus, monthDetailAsyncStatus) ||
+                other.monthDetailAsyncStatus == monthDetailAsyncStatus) &&
             (identical(other.selectedQuestionAsyncStatus,
                     selectedQuestionAsyncStatus) ||
                 other.selectedQuestionAsyncStatus ==
                     selectedQuestionAsyncStatus) &&
             (identical(other.calendar, calendar) ||
                 other.calendar == calendar) &&
-            (identical(other.monthly, monthly) || other.monthly == monthly) &&
+            (identical(other.monthDetail, monthDetail) ||
+                other.monthDetail == monthDetail) &&
             (identical(other.dayDetail, dayDetail) ||
                 other.dayDetail == dayDetail) &&
             (identical(other.selectedQuestion, selectedQuestion) ||
@@ -547,8 +549,8 @@ class _CalendarState implements CalendarState {
                 other.calendarFirstOpenError == calendarFirstOpenError) &&
             (identical(other.dayDetailError, dayDetailError) ||
                 other.dayDetailError == dayDetailError) &&
-            (identical(other.monthlyError, monthlyError) ||
-                other.monthlyError == monthlyError) &&
+            (identical(other.monthDetailError, monthDetailError) ||
+                other.monthDetailError == monthDetailError) &&
             (identical(other.selectedQuestionError, selectedQuestionError) ||
                 other.selectedQuestionError == selectedQuestionError));
   }
@@ -558,22 +560,22 @@ class _CalendarState implements CalendarState {
       runtimeType,
       calendarFirstOpenAsyncStatus,
       dayDetailAsyncStatus,
-      monthlyAsyncStatus,
+      monthDetailAsyncStatus,
       selectedQuestionAsyncStatus,
       calendar,
-      monthly,
+      monthDetail,
       dayDetail,
       selectedQuestion,
       focusedDay,
       selectedDay,
       calendarFirstOpenError,
       dayDetailError,
-      monthlyError,
+      monthDetailError,
       selectedQuestionError);
 
   @override
   String toString() {
-    return 'CalendarState(calendarFirstOpenAsyncStatus: $calendarFirstOpenAsyncStatus, dayDetailAsyncStatus: $dayDetailAsyncStatus, monthlyAsyncStatus: $monthlyAsyncStatus, selectedQuestionAsyncStatus: $selectedQuestionAsyncStatus, calendar: $calendar, monthly: $monthly, dayDetail: $dayDetail, selectedQuestion: $selectedQuestion, focusedDay: $focusedDay, selectedDay: $selectedDay, calendarFirstOpenError: $calendarFirstOpenError, dayDetailError: $dayDetailError, monthlyError: $monthlyError, selectedQuestionError: $selectedQuestionError)';
+    return 'CalendarState(calendarFirstOpenAsyncStatus: $calendarFirstOpenAsyncStatus, dayDetailAsyncStatus: $dayDetailAsyncStatus, monthDetailAsyncStatus: $monthDetailAsyncStatus, selectedQuestionAsyncStatus: $selectedQuestionAsyncStatus, calendar: $calendar, monthDetail: $monthDetail, dayDetail: $dayDetail, selectedQuestion: $selectedQuestion, focusedDay: $focusedDay, selectedDay: $selectedDay, calendarFirstOpenError: $calendarFirstOpenError, dayDetailError: $dayDetailError, monthDetailError: $monthDetailError, selectedQuestionError: $selectedQuestionError)';
   }
 }
 
@@ -588,17 +590,17 @@ abstract mixin class _$CalendarStateCopyWith<$Res>
   $Res call(
       {CalendarAsyncStatus calendarFirstOpenAsyncStatus,
       CalendarAsyncStatus dayDetailAsyncStatus,
-      CalendarAsyncStatus monthlyAsyncStatus,
+      CalendarAsyncStatus monthDetailAsyncStatus,
       CalendarAsyncStatus selectedQuestionAsyncStatus,
       DailyCalendarEntity? calendar,
-      DailyMonthlyActivitiesEntity? monthly,
+      DailyMonthlyActivitiesEntity? monthDetail,
       DailyDayDetailEntity? dayDetail,
       ActivityQuestionOptionEntity? selectedQuestion,
       DateTime focusedDay,
       DateTime selectedDay,
       String? calendarFirstOpenError,
       String? dayDetailError,
-      String? monthlyError,
+      String? monthDetailError,
       String? selectedQuestionError});
 }
 
@@ -617,17 +619,17 @@ class __$CalendarStateCopyWithImpl<$Res>
   $Res call({
     Object? calendarFirstOpenAsyncStatus = null,
     Object? dayDetailAsyncStatus = null,
-    Object? monthlyAsyncStatus = null,
+    Object? monthDetailAsyncStatus = null,
     Object? selectedQuestionAsyncStatus = null,
     Object? calendar = freezed,
-    Object? monthly = freezed,
+    Object? monthDetail = freezed,
     Object? dayDetail = freezed,
     Object? selectedQuestion = freezed,
     Object? focusedDay = null,
     Object? selectedDay = null,
     Object? calendarFirstOpenError = freezed,
     Object? dayDetailError = freezed,
-    Object? monthlyError = freezed,
+    Object? monthDetailError = freezed,
     Object? selectedQuestionError = freezed,
   }) {
     return _then(_CalendarState(
@@ -639,9 +641,9 @@ class __$CalendarStateCopyWithImpl<$Res>
           ? _self.dayDetailAsyncStatus
           : dayDetailAsyncStatus // ignore: cast_nullable_to_non_nullable
               as CalendarAsyncStatus,
-      monthlyAsyncStatus: null == monthlyAsyncStatus
-          ? _self.monthlyAsyncStatus
-          : monthlyAsyncStatus // ignore: cast_nullable_to_non_nullable
+      monthDetailAsyncStatus: null == monthDetailAsyncStatus
+          ? _self.monthDetailAsyncStatus
+          : monthDetailAsyncStatus // ignore: cast_nullable_to_non_nullable
               as CalendarAsyncStatus,
       selectedQuestionAsyncStatus: null == selectedQuestionAsyncStatus
           ? _self.selectedQuestionAsyncStatus
@@ -651,9 +653,9 @@ class __$CalendarStateCopyWithImpl<$Res>
           ? _self.calendar
           : calendar // ignore: cast_nullable_to_non_nullable
               as DailyCalendarEntity?,
-      monthly: freezed == monthly
-          ? _self.monthly
-          : monthly // ignore: cast_nullable_to_non_nullable
+      monthDetail: freezed == monthDetail
+          ? _self.monthDetail
+          : monthDetail // ignore: cast_nullable_to_non_nullable
               as DailyMonthlyActivitiesEntity?,
       dayDetail: freezed == dayDetail
           ? _self.dayDetail
@@ -679,9 +681,9 @@ class __$CalendarStateCopyWithImpl<$Res>
           ? _self.dayDetailError
           : dayDetailError // ignore: cast_nullable_to_non_nullable
               as String?,
-      monthlyError: freezed == monthlyError
-          ? _self.monthlyError
-          : monthlyError // ignore: cast_nullable_to_non_nullable
+      monthDetailError: freezed == monthDetailError
+          ? _self.monthDetailError
+          : monthDetailError // ignore: cast_nullable_to_non_nullable
               as String?,
       selectedQuestionError: freezed == selectedQuestionError
           ? _self.selectedQuestionError

@@ -15,8 +15,6 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$HomeState implements DiagnosticableTreeMixin {
   HomeStatus get status;
-
-  /// GET home `data.hasCompletedPoll`; false = anket yok / ilk ekran.
   bool get hasCompletedPoll;
   GlobalTargetEntity? get globalTarget;
   MonthlyTargetEntity? get monthlyTarget;
@@ -349,8 +347,6 @@ class _HomeState extends HomeState with DiagnosticableTreeMixin {
   @override
   @JsonKey()
   final HomeStatus status;
-
-  /// GET home `data.hasCompletedPoll`; false = anket yok / ilk ekran.
   @override
   @JsonKey()
   final bool hasCompletedPoll;

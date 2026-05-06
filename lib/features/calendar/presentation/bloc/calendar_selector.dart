@@ -50,13 +50,13 @@ CalendarAsyncSlice<DailyCalendarEntity> _calendarSlice(CalendarState s) => (
       data: s.calendar,
     );
 
-CalendarAsyncSlice<DailyMonthlyActivitiesEntity> _monthlySlice(
+CalendarAsyncSlice<DailyMonthlyActivitiesEntity> _monthDetailSlice(
   CalendarState s,
 ) =>
     (
-      status: s.monthlyAsyncStatus,
-      error: s.monthlyError,
-      data: s.monthly,
+      status: s.monthDetailAsyncStatus,
+      error: s.monthDetailError,
+      data: s.monthDetail,
     );
 
 CalendarAsyncSlice<DailyDayDetailEntity> _dayDetailSlice(CalendarState s) => (
@@ -67,18 +67,19 @@ CalendarAsyncSlice<DailyDayDetailEntity> _dayDetailSlice(CalendarState s) => (
 
 bool _isInitialGridLoading(
   CalendarAsyncSlice<DailyCalendarEntity> calendar,
-  CalendarAsyncSlice<DailyMonthlyActivitiesEntity> monthly,
+  CalendarAsyncSlice<DailyMonthlyActivitiesEntity> monthDetail,
 ) {
   final loading = calendar.status == CalendarAsyncStatus.loading ||
-      monthly.status == CalendarAsyncStatus.loading;
-  return loading && calendar.data == null && monthly.data == null;
+      monthDetail.status == CalendarAsyncStatus.loading;
+  return loading && calendar.data == null && monthDetail.data == null;
 }
 
 String _resolveMonthTotal(
-  DailyMonthlyActivitiesEntity? monthly,
+  DailyMonthlyActivitiesEntity? monthDetail,
   DailyCalendarEntity? calendar,
 ) {
-  if (monthly != null) return formatCalendarScore(monthly.totalMonthlyScore);
+  if (monthDetail != null)
+    return formatCalendarScore(monthDetail.totalMonthlyScore);
   if (calendar != null) return formatCalendarScore(calendar.totalScore);
   return '—';
 }
@@ -87,7 +88,7 @@ String _resolveSelectedDayScore({
   required DateTime selectedDay,
   required DailyDayDetailEntity? dayDetail,
   required DailyCalendarEntity? calendar,
-  required DailyMonthlyActivitiesEntity? monthly,
+  required DailyMonthlyActivitiesEntity? monthDetail,
 }) {
   if (dayDetail != null && dayDetail.activities.isNotEmpty) {
     return formatCalendarScore(dayDetail.totalScore);
@@ -97,20 +98,20 @@ String _resolveSelectedDayScore({
       calendar != null ? _scoreForDay(calendar.items, selectedDay) : null;
   if (fromCalendar != null) return formatCalendarScore(fromCalendar);
 
-  final fromMonthly = monthly != null
-      ? _monthlyDayTotalScore(monthly.dailyScores, selectedDay)
+  final fromMonthDetail = monthDetail != null
+      ? _monthlyDayTotalScore(monthDetail.dailyScores, selectedDay)
       : null;
-  if (fromMonthly != null) return formatCalendarScore(fromMonthly);
+  if (fromMonthDetail != null) return formatCalendarScore(fromMonthDetail);
 
   return '—';
 }
 
 CalendarScoreLabels selectCalendarScoreLabels(CalendarState s) {
   final calendar = _calendarSlice(s);
-  final monthly = _monthlySlice(s);
+  final monthDetail = _monthDetailSlice(s);
   final dayDetail = _dayDetailSlice(s);
 
-  final gridLoading = _isInitialGridLoading(calendar, monthly);
+  final gridLoading = _isInitialGridLoading(calendar, monthDetail);
   final detailLoading = dayDetail.status == CalendarAsyncStatus.loading;
 
   if (gridLoading) {
@@ -122,7 +123,7 @@ CalendarScoreLabels selectCalendarScoreLabels(CalendarState s) {
     );
   }
 
-  final monthTotal = _resolveMonthTotal(monthly.data, calendar.data);
+  final monthTotal = _resolveMonthTotal(monthDetail.data, calendar.data);
 
   if (detailLoading) {
     return (
@@ -137,7 +138,7 @@ CalendarScoreLabels selectCalendarScoreLabels(CalendarState s) {
     selectedDay: s.selectedDay,
     dayDetail: dayDetail.data,
     calendar: calendar.data,
-    monthly: monthly.data,
+    monthDetail: monthDetail.data,
   );
 
   return (
@@ -193,15 +194,15 @@ class CalendarOverviewAsyncSelector
         );
 }
 
-class CalendarMonthlyAsyncSelector
+class CalendarMonthDetailAsyncSelector
     extends CalendarAsyncSelector<DailyMonthlyActivitiesEntity> {
-  CalendarMonthlyAsyncSelector({
+  CalendarMonthDetailAsyncSelector({
     super.key,
     required super.builder,
   }) : super(
-          statusSelector: (s) => s.monthlyAsyncStatus,
-          errorSelector: (s) => s.monthlyError,
-          dataSelector: (s) => s.monthly,
+          statusSelector: (s) => s.monthDetailAsyncStatus,
+          errorSelector: (s) => s.monthDetailError,
+          dataSelector: (s) => s.monthDetail,
         );
 }
 

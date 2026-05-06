@@ -30,10 +30,14 @@ class _CalendarFirstOpenPageState extends State<CalendarFirstOpenPage> {
   @override
   void initState() {
     super.initState();
-    context.read<CalendarBloc>().add(CalendarEvent.gridReloadRequested(
-          focusedDay: DateTime.now(),
-          selectedDay: DateTime.now(),
-        ));
+    final now = DateTime.now();
+    context.read<CalendarBloc>().add(CalendarEvent.started(initialDay: now));
+    context.read<CalendarBloc>().add(
+          CalendarEvent.calendarFirstOpenPageOpened(
+            focusedDay: now,
+            selectedDay: now,
+          ),
+        );
   }
 
   @override
@@ -62,18 +66,16 @@ class _CalendarFirstOpenPageState extends State<CalendarFirstOpenPage> {
                 selectedDayScore: scores.selectedDayScore,
                 onDaySelected: (selected, focused) {
                   context.read<CalendarBloc>().add(
-                        CalendarEvent.daySelectionChanged(
+                        CalendarEvent.daySelected(
                           focusedDay: focused,
                           selectedDay: selected,
                         ),
                       );
                 },
                 onPageChanged: (focused) {
-                  final sel = state.selectedDay;
                   context.read<CalendarBloc>().add(
-                        CalendarEvent.gridReloadRequested(
+                        CalendarEvent.pageScrolled(
                           focusedDay: focused,
-                          selectedDay: sel,
                         ),
                       );
                 },
@@ -82,10 +84,7 @@ class _CalendarFirstOpenPageState extends State<CalendarFirstOpenPage> {
                       state.focusedDay.year, state.focusedDay.month - 1, 1);
                   if (target.isBefore(DateTime(2018, 1, 1))) return;
                   context.read<CalendarBloc>().add(
-                        CalendarEvent.gridReloadRequested(
-                          focusedDay: target,
-                          selectedDay: target,
-                        ),
+                        const CalendarEvent.previousMonthTapped(),
                       );
                 },
                 onNextMonth: () {
@@ -93,10 +92,7 @@ class _CalendarFirstOpenPageState extends State<CalendarFirstOpenPage> {
                       state.focusedDay.year, state.focusedDay.month + 1, 1);
                   if (target.isAfter(DateTime(2040, 12, 1))) return;
                   context.read<CalendarBloc>().add(
-                        CalendarEvent.gridReloadRequested(
-                          focusedDay: target,
-                          selectedDay: target,
-                        ),
+                        const CalendarEvent.nextMonthTapped(),
                       );
                 },
                 onShowAll: () => _openSeeAll(context, state),
