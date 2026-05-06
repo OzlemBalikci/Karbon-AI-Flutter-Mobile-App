@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
 import 'package:karbon/features/usefulinfos/domain/repositories/usefulinfo_repository.dart';
 
-/// Faydalı bilgileri getirir (her çağrıda uzak kaynak).
 @injectable
 class GetUsefulInfosUseCase {
   GetUsefulInfosUseCase(this._repository);

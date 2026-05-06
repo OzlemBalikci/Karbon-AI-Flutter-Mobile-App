@@ -1,4 +1,3 @@
-/// POST /api/v1/users/login request body
 class LoginRequestDto {
   const LoginRequestDto({
     required this.emailorIdentityNumber,

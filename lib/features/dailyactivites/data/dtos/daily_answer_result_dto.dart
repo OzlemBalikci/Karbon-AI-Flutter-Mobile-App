@@ -17,7 +17,6 @@ class DailySubmittedAnswerLineDto {
       );
 }
 
-/// `data` içindeki gövde: `totalCarbonScore`, `isFlowCompleted`, `answers[]`.
 class DailyAnswerResultDto {
   const DailyAnswerResultDto({
     required this.totalCarbonScore,

@@ -23,7 +23,6 @@ abstract class DailyActivitiesState with _$DailyActivitiesState {
   const DailyActivitiesState._();
 
   const factory DailyActivitiesState({
-    // ---- Liste ekranı ----
     @Default(DailyActivitiesStatus.initial) DailyActivitiesStatus status,
     @Default([]) List<DailyQuestionEntity> allQuestions,
     @Default([]) List<DailyQuestionEntity> questions,

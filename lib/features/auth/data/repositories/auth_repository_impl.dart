@@ -54,7 +54,6 @@ class AuthRepositoryImpl implements AuthRepository {
         ),
       );
       await _local.saveToken(loginResponse.accessToken);
-      // Refresh token yalnızca HttpOnly cookie (login yanıtı); yerelde saklanmaz.
       final profile = await _remote.getProfile();
       return Right(AuthMapper.toAppUser(profile));
     } catch (e) {
@@ -75,7 +74,6 @@ class AuthRepositoryImpl implements AuthRepository {
     required bool isKvkkApproved,
   }) async {
     try {
-      // 1. Kayıt ol
       await _remote.register(
         AuthMapper.registerRequest(
           email: email,
@@ -90,7 +88,6 @@ class AuthRepositoryImpl implements AuthRepository {
         ),
       );
 
-      // 2. Kayıt başarılıysa otomatik giriş yap
       final loginResponse = await _remote.login(
         AuthMapper.loginRequest(
           emailOrIdentityNumber: email,
@@ -99,7 +96,6 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       await _local.saveToken(loginResponse.accessToken);
 
-      // 3. Profili çek ve AppUser döndür
       final profile = await _remote.getProfile();
       return Right(AuthMapper.toAppUser(profile));
     } catch (e) {
@@ -151,9 +147,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> logout() async {
     try {
       await _remote.logout();
-    } catch (_) {
-      // Token zaten geçersiz olabilir; yerel temizlik yine de yapılır.
-    }
+    } catch (_) {}
     await _clearClientSession();
   }
 

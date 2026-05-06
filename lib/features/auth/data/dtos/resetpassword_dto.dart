@@ -1,4 +1,3 @@
-/// POST /api/v1/users/password/reset request body
 class ResetPasswordDto {
   const ResetPasswordDto({
     required this.phoneNumber,

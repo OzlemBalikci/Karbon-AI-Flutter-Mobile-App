@@ -105,8 +105,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  // ── Yardımcılar ──────────────────────────────────────────────────────────
-
   static AuthState _failureFromException(Object failure) {
     if (failure is AppException) {
       return AuthState.authFailure(

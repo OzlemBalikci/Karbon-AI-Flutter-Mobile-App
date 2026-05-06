@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/features/calendar/presentation/pages/monthly/sections/seeall_section.dart';
+import 'package:karbon/features/calendar/presentation/pages/seeAll/sections/seeall_section.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 
 @RoutePage()

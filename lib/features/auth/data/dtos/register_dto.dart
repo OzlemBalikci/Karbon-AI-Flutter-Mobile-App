@@ -1,4 +1,3 @@
-/// POST /api/v1/users/register request body
 class RegisterDto {
   const RegisterDto({
     required this.email,

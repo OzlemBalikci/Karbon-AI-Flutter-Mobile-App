@@ -30,7 +30,6 @@ abstract class AuthRepository {
     String? deviceToken,
   });
 
-  /// SMS koduyla yeni şifre belirler. Başarıysa Unit döner.
   Future<Either<AppException, Unit>> resetPassword({
     required String phoneNumber,
     required String resetCode,
@@ -40,10 +39,7 @@ abstract class AuthRepository {
 
   Future<void> logout();
 
-  /// Sunucu [logout] çağrısı olmadan yerel access token ve API çerezlerini siler.
-  /// Refresh başarısız olduğunda kullanılır (uzaktaki çıkış isteği anlamlı olmayabilir).
   Future<void> clearLocalSession();
 
-  /// DELETE `/api/v1/users/me` — başarıda yerel oturum da temizlenir.
   Future<Either<AppException, void>> deleteAccount();
 }

@@ -17,7 +17,6 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
 
   final Dio _dio;
 
-  // BaseUrl boşsa mock verileri kullan
   bool get _useMocks => ApiConfig.baseUrl.isEmpty;
 
   List<DailyQuestionEntity> _flattenDailyQuestionRootsToEntities(
@@ -49,8 +48,7 @@ class DailyActivitiesRemoteImpl implements DailyActivitiesRemote {
       queryParameters: <String, dynamic>{'status': 'pending'},
     );
     final data = res.dataMap();
-    return DailyPendingDto.fromJson(data)
-        .toEntity(); // Extension kullanıldı[cite: 9]
+    return DailyPendingDto.fromJson(data).toEntity();
   }
 
   @override

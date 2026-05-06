@@ -20,7 +20,6 @@ class DailyQuestionOptionDto {
       );
 }
 
-// dto/daily_question_dto.dart
 class DailyQuestionDto {
   const DailyQuestionDto({
     required this.id,

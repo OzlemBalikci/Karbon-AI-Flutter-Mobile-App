@@ -4,7 +4,6 @@ import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_
 abstract class DailyActivitiesRepository {
   Future<Either<Exception, List<DailyQuestionEntity>>> getTodayQuestions();
 
-  /// POST `/api/v1/daily-activities/answers` — `{ "answers": [...] }`, yanıt `{ "data": { ... } }`.
   Future<Either<Exception, DailyAnswerResultEntity>> postAnswers(
     List<DailySelectedAnswerEntity> answers,
   );

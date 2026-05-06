@@ -1,5 +1,3 @@
-/// GET /api/v1/users/me/profile endpoint'inden dönen kullanıcı profil modeli.
-/// Login akışında token alındıktan sonra kullanıcı bilgilerini doldurmak için kullanılır.
 class UserDto {
   const UserDto({
     required this.id,

@@ -33,7 +33,6 @@ class CarbonCalculateBloc
         error: e.message,
       )),
       (poll) {
-        // Taslak varsa (selectedOptionId dolu) kaldığı yerden devam ettir.
         final restoredAnswers = <String, String>{};
         for (final q in poll.questions) {
           if (q.selectedOptionId != null) {

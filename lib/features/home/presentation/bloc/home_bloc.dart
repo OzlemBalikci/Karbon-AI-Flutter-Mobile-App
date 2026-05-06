@@ -37,7 +37,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         )),
         (dashboard) => emit(state.copyWith(
           status: HomeStatus.success,
-          // project_docs/home.md — false iken ilk ekran (anket yok)
           hasCompletedPoll: dashboard.hasCompletedPoll,
           globalTarget: dashboard.globalTarget,
           monthlyTarget: dashboard.monthlyTarget,

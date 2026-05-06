@@ -5,7 +5,6 @@ import 'package:karbon/features/auth/data/dtos/resetpassword_dto.dart';
 import 'package:karbon/features/auth/data/dtos/user_model.dart';
 import 'package:karbon/features/auth/domain/entities/app_user.dart';
 
-/// Auth DTO ↔ domain eşlemesi; iş kuralı içermez.
 class AuthMapper {
   AuthMapper._();
 

@@ -1,4 +1,4 @@
-/// POST /api/v1/users/password/forgot request body
+
 class ForgotPasswordDto {
   const ForgotPasswordDto({
     required this.phoneNumber,
@@ -7,7 +7,6 @@ class ForgotPasswordDto {
 
   final String phoneNumber;
 
-  /// FCM token; backend şifre sıfırlama OTP’sini push ile göndermek için kullanır.
   final String? deviceToken;
 
   Map<String, dynamic> toJson() => {

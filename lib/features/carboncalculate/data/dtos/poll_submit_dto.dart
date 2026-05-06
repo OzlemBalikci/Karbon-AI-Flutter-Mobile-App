@@ -1,4 +1,3 @@
-/// POST /api/v1/polls/draft  ve  POST /api/v1/polls/answers ortak cevap satırı
 class PollAnswerRequestItemDto {
   final String questionId;
   final String optionId;
@@ -14,12 +13,10 @@ class PollAnswerRequestItemDto {
       };
 }
 
-/// POST /api/v1/polls/draft
 class SaveDraftRequestDto {
   final String pollSetId;
   final List<PollAnswerRequestItemDto> answers;
 
-  /// Dokümantasyona göre taslak kaydında isDraft: true gönderilir.
   final bool isDraft;
 
   const SaveDraftRequestDto({
@@ -48,12 +45,9 @@ class SubmitPollRequestDto {
   Map<String, dynamic> toJson() => {
         'pollSetId': pollSetId,
         'answers': answers.map((a) => a.toJson()).toList(),
-        // isDraft kasıtlı olarak dahil edilmedi
       };
 }
 
-/// POST /api/v1/polls/draft  →  data
-/// POST /api/v1/polls/answers  →  data
 class PollSubmissionResultDto {
   const PollSubmissionResultDto({
     required this.totalCarbonScore,

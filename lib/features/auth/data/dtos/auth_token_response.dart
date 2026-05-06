@@ -1,5 +1,3 @@
-/// Token çifti: login, kayıt sonrası giriş ve token refresh cevabının `data` gövdesi
-/// ([response_ext.dataMap] sonrası map).
 class AuthTokenResponse {
   const AuthTokenResponse({
     required this.accessToken,

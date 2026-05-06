@@ -4,8 +4,6 @@ import 'package:karbon/features/dailyactivites/data/dtos/daily_answer_result_dto
 import 'package:karbon/features/dailyactivites/data/dtos/daily_previous_answer_dto.dart';
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
-/// mapper/daily_activities_mapper.dart
-
 extension DailyPendingMapper on DailyPendingDto {
   DailyPendingEntity toEntity() => DailyPendingEntity(
         hasPending: hasPending,

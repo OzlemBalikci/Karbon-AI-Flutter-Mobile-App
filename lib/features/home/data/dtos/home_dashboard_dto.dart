@@ -2,7 +2,6 @@ import 'package:karbon/features/home/data/dtos/global_target_dto.dart';
 import 'package:karbon/features/home/data/dtos/home_top_leader_dto.dart';
 import 'package:karbon/features/home/data/dtos/monthly_target_dto.dart';
 
-/// GET `/api/v1/user-results/home` → `data` (`project_docs/home.md`).
 class HomeDashboardDto {
   const HomeDashboardDto({
     required this.hasCompletedPoll,

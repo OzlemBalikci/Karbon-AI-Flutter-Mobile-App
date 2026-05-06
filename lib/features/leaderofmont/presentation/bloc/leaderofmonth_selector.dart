@@ -23,7 +23,6 @@ class LeaderofmonthStatusSelector
         );
 }
 
-/// Hata metni (popup veya inline için).
 class LeaderofmonthErrorSelector extends LeaderofmonthSelector<String?> {
   LeaderofmonthErrorSelector({
     super.key,
@@ -34,8 +33,6 @@ class LeaderofmonthErrorSelector extends LeaderofmonthSelector<String?> {
         );
 }
 
-/// Lider listesini LeaderofmonthBloc'tan seçer.
-/// Home ve Leaderofmonth sayfaları tarafından kullanılır.
 class LeaderRankSelector
     extends LeaderofmonthSelector<List<LeaderboardLeaderEntity>> {
   LeaderRankSelector({
@@ -47,7 +44,6 @@ class LeaderRankSelector
         );
 }
 
-/// Kullanıcının sıralamasını LeaderofmonthBloc'tan seçer.
 class CurrentUserRankSelector
     extends LeaderofmonthSelector<CurrentUserRankEntity?> {
   CurrentUserRankSelector({

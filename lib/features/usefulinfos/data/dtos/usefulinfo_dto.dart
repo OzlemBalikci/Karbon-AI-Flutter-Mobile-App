@@ -1,6 +1,5 @@
 import 'package:karbon/features/usefulinfos/domain/entities/usefulinfo_entity.dart';
 
-/// GET `/api/v1/useful-information` — JSON deserialization için DTO.
 class UsefulInfoDto {
   const UsefulInfoDto({
     required this.id,

@@ -144,7 +144,6 @@ class DailyActivitiesBloc
     ));
   }
 
-  // ---------------------------------------------------------- branchStepReopened
   void _onBranchStepReopened(
     DailyActivitiesBranchStepReopened event,
     Emitter<DailyActivitiesState> emit,
@@ -162,7 +161,6 @@ class DailyActivitiesBloc
     ));
   }
 
-  // ------------------------------------------------------- postAnswerRequested
   Future<void> _onPostAnswerRequested(
     DailyActivitiesPostAnswerRequested event,
     Emitter<DailyActivitiesState> emit,
@@ -197,7 +195,6 @@ class DailyActivitiesBloc
     );
   }
 
-  // ------------------------------------------------------- successDismissed
   Future<void> _onSuccessDismissed(
     DailyActivitiesSuccessDismissed event,
     Emitter<DailyActivitiesState> emit,
@@ -207,7 +204,6 @@ class DailyActivitiesBloc
     _resetDetail(emit);
   }
 
-  // ---------------------------------------------------------- detailClosed
   void _onDetailClosed(
     DailyActivitiesDetailClosed event,
     Emitter<DailyActivitiesState> emit,
@@ -215,7 +211,6 @@ class DailyActivitiesBloc
     _resetDetail(emit);
   }
 
-  // --------------------------------------------------------- detail reset
   void _resetDetail(Emitter<DailyActivitiesState> emit) {
     emit(state.copyWith(
       selectedQuestion: null,

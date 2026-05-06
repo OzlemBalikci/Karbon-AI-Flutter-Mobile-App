@@ -19,17 +19,9 @@ abstract class CarbonCalculateState with _$CarbonCalculateState {
   const factory CarbonCalculateState({
     @Default(CarbonCalculateStatus.initial) CarbonCalculateStatus status,
     @Default(0) int currentStep,
-
-    /// Aktif anket ID'si — taslak ve gönderim için gerekli.
     String? pollSetId,
-
-    /// Anket açıklama metni (bilgi adımında gösterilir).
     @Default('') String pollDescription,
-
-    /// Anket soruları; yüklenince dolar.
     @Default([]) List<PollQuestionEntity> questions,
-
-    /// Seçilen cevaplar: `questionId → optionId`
     @Default({}) Map<String, String> answers,
     String? error,
     @Default(false) bool goToHomeRequested,
@@ -64,7 +56,6 @@ abstract class CarbonCalculateState with _$CarbonCalculateState {
     return answers.containsKey(questions[idx].id);
   }
 
-  /// Mevcut cevapları [PollAnswerItemEntity] listesine çevirir.
   List<PollAnswerItemEntity> get answerItems => answers.entries
       .map((e) => PollAnswerItemEntity(questionId: e.key, optionId: e.value))
       .toList();
