@@ -44,11 +44,74 @@ typedef CalendarScoreLabels = ({
   bool detailLoading,
 });
 
+CalendarAsyncSlice<DailyCalendarEntity> _calendarSlice(CalendarState s) => (
+      status: s.calendarFirstOpenAsyncStatus,
+      error: s.calendarFirstOpenError,
+      data: s.calendar,
+    );
+
+CalendarAsyncSlice<DailyMonthlyActivitiesEntity> _monthlySlice(
+  CalendarState s,
+) =>
+    (
+      status: s.monthlyAsyncStatus,
+      error: s.monthlyError,
+      data: s.monthly,
+    );
+
+CalendarAsyncSlice<DailyDayDetailEntity> _dayDetailSlice(CalendarState s) => (
+      status: s.dayDetailAsyncStatus,
+      error: s.dayDetailError,
+      data: s.dayDetail,
+    );
+
+bool _isInitialGridLoading(
+  CalendarAsyncSlice<DailyCalendarEntity> calendar,
+  CalendarAsyncSlice<DailyMonthlyActivitiesEntity> monthly,
+) {
+  final loading = calendar.status == CalendarAsyncStatus.loading ||
+      monthly.status == CalendarAsyncStatus.loading;
+  return loading && calendar.data == null && monthly.data == null;
+}
+
+String _resolveMonthTotal(
+  DailyMonthlyActivitiesEntity? monthly,
+  DailyCalendarEntity? calendar,
+) {
+  if (monthly != null) return formatCalendarScore(monthly.totalMonthlyScore);
+  if (calendar != null) return formatCalendarScore(calendar.totalScore);
+  return '—';
+}
+
+String _resolveSelectedDayScore({
+  required DateTime selectedDay,
+  required DailyDayDetailEntity? dayDetail,
+  required DailyCalendarEntity? calendar,
+  required DailyMonthlyActivitiesEntity? monthly,
+}) {
+  if (dayDetail != null && dayDetail.activities.isNotEmpty) {
+    return formatCalendarScore(dayDetail.totalScore);
+  }
+
+  final fromCalendar =
+      calendar != null ? _scoreForDay(calendar.items, selectedDay) : null;
+  if (fromCalendar != null) return formatCalendarScore(fromCalendar);
+
+  final fromMonthly = monthly != null
+      ? _monthlyDayTotalScore(monthly.dailyScores, selectedDay)
+      : null;
+  if (fromMonthly != null) return formatCalendarScore(fromMonthly);
+
+  return '—';
+}
+
 CalendarScoreLabels selectCalendarScoreLabels(CalendarState s) {
-  final gridLoading = s.gridStatus == CalendarGridStatus.loading &&
-      s.calendar == null &&
-      s.monthly == null;
-  final detailLoading = s.dayDetailStatus == CalendarDayDetailStatus.loading;
+  final calendar = _calendarSlice(s);
+  final monthly = _monthlySlice(s);
+  final dayDetail = _dayDetailSlice(s);
+
+  final gridLoading = _isInitialGridLoading(calendar, monthly);
+  final detailLoading = dayDetail.status == CalendarAsyncStatus.loading;
 
   if (gridLoading) {
     return (
@@ -59,14 +122,7 @@ CalendarScoreLabels selectCalendarScoreLabels(CalendarState s) {
     );
   }
 
-  String monthTotal = '—';
-  final mon = s.monthly;
-  final cal = s.calendar;
-  if (mon != null) {
-    monthTotal = formatCalendarScore(mon.totalMonthlyScore);
-  } else if (cal != null) {
-    monthTotal = formatCalendarScore(cal.totalScore);
-  }
+  final monthTotal = _resolveMonthTotal(monthly.data, calendar.data);
 
   if (detailLoading) {
     return (
@@ -77,24 +133,12 @@ CalendarScoreLabels selectCalendarScoreLabels(CalendarState s) {
     );
   }
 
-  String dayScore = '—';
-  final detail = s.dayDetail;
-  if (detail != null && detail.activities.isNotEmpty) {
-    dayScore = formatCalendarScore(detail.totalScore);
-  } else {
-    final fromCal =
-        cal != null ? _scoreForDay(cal.items, s.selectedDay) : null;
-    if (fromCal != null) {
-      dayScore = formatCalendarScore(fromCal);
-    } else {
-      final fromMonthly = mon != null
-          ? _monthlyDayTotalScore(mon.dailyScores, s.selectedDay)
-          : null;
-      if (fromMonthly != null) {
-        dayScore = formatCalendarScore(fromMonthly);
-      }
-    }
-  }
+  final dayScore = _resolveSelectedDayScore(
+    selectedDay: s.selectedDay,
+    dayDetail: dayDetail.data,
+    calendar: calendar.data,
+    monthly: monthly.data,
+  );
 
   return (
     monthTotal: monthTotal,
@@ -111,6 +155,66 @@ class CalendarBlocSelector<T>
     required super.selector,
     required Widget Function(T value) builder,
   }) : super(builder: (context, value) => builder(value));
+}
+
+typedef CalendarAsyncSlice<T> = ({
+  CalendarAsyncStatus status,
+  String? error,
+  T? data,
+});
+
+class CalendarAsyncSelector<T>
+    extends CalendarBlocSelector<CalendarAsyncSlice<T>> {
+  CalendarAsyncSelector({
+    super.key,
+    required CalendarAsyncStatus Function(CalendarState) statusSelector,
+    required String? Function(CalendarState) errorSelector,
+    required T? Function(CalendarState) dataSelector,
+    required Widget Function(CalendarAsyncSlice<T> slice) builder,
+  }) : super(
+          selector: (s) => (
+            status: statusSelector(s),
+            error: errorSelector(s),
+            data: dataSelector(s),
+          ),
+          builder: builder,
+        );
+}
+
+class CalendarOverviewAsyncSelector
+    extends CalendarAsyncSelector<DailyCalendarEntity> {
+  CalendarOverviewAsyncSelector({
+    super.key,
+    required super.builder,
+  }) : super(
+          statusSelector: (s) => s.calendarFirstOpenAsyncStatus,
+          errorSelector: (s) => s.calendarFirstOpenError,
+          dataSelector: (s) => s.calendar,
+        );
+}
+
+class CalendarMonthlyAsyncSelector
+    extends CalendarAsyncSelector<DailyMonthlyActivitiesEntity> {
+  CalendarMonthlyAsyncSelector({
+    super.key,
+    required super.builder,
+  }) : super(
+          statusSelector: (s) => s.monthlyAsyncStatus,
+          errorSelector: (s) => s.monthlyError,
+          dataSelector: (s) => s.monthly,
+        );
+}
+
+class CalendarDayDetailAsyncSelector
+    extends CalendarAsyncSelector<DailyDayDetailEntity> {
+  CalendarDayDetailAsyncSelector({
+    super.key,
+    required super.builder,
+  }) : super(
+          statusSelector: (s) => s.dayDetailAsyncStatus,
+          errorSelector: (s) => s.dayDetailError,
+          dataSelector: (s) => s.dayDetail,
+        );
 }
 
 class CalendarScoreLabelsSelector

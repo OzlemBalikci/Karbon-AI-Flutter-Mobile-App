@@ -11,8 +11,7 @@ class GetCalendarUsecase {
 
   Future<Either<AppException, DailyCalendarEntity>> call({
     required int year,
-    int? month,
-    int? period,
+    required int month,
   }) =>
-      _repository.getCalendar(year: year, month: month, period: period);
+      _repository.getCalendar(year: year, month: month);
 }

@@ -3,16 +3,7 @@ import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart'
 
 part 'calendar_state.freezed.dart';
 
-/// GET `/calendar` + `/monthly` birlikte yüklenir.
-enum CalendarGridStatus {
-  initial,
-  loading,
-  success,
-  failure,
-}
-
-/// GET `?date=` gün detayı.
-enum CalendarDayDetailStatus {
+enum CalendarAsyncStatus {
   initial,
   loading,
   success,
@@ -22,16 +13,24 @@ enum CalendarDayDetailStatus {
 @freezed
 abstract class CalendarState with _$CalendarState {
   const factory CalendarState({
-    @Default(CalendarGridStatus.initial) CalendarGridStatus gridStatus,
-    @Default(CalendarDayDetailStatus.initial)
-    CalendarDayDetailStatus dayDetailStatus,
+    @Default(CalendarAsyncStatus.initial)
+    CalendarAsyncStatus calendarFirstOpenAsyncStatus,
+    @Default(CalendarAsyncStatus.initial)
+    CalendarAsyncStatus dayDetailAsyncStatus,
+    @Default(CalendarAsyncStatus.initial)
+    CalendarAsyncStatus monthlyAsyncStatus,
+    @Default(CalendarAsyncStatus.initial)
+    CalendarAsyncStatus selectedQuestionAsyncStatus,
     DailyCalendarEntity? calendar,
     DailyMonthlyActivitiesEntity? monthly,
     DailyDayDetailEntity? dayDetail,
+    ActivityQuestionOptionEntity? selectedQuestion,
     required DateTime focusedDay,
     required DateTime selectedDay,
-    String? gridError,
+    String? calendarFirstOpenError,
     String? dayDetailError,
+    String? monthlyError,
+    String? selectedQuestionError,
   }) = _CalendarState;
 
   factory CalendarState.initial() {

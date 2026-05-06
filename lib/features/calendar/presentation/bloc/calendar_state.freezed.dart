@@ -14,15 +14,20 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$CalendarState {
-  CalendarGridStatus get gridStatus;
-  CalendarDayDetailStatus get dayDetailStatus;
+  CalendarAsyncStatus get calendarFirstOpenAsyncStatus;
+  CalendarAsyncStatus get dayDetailAsyncStatus;
+  CalendarAsyncStatus get monthlyAsyncStatus;
+  CalendarAsyncStatus get selectedQuestionAsyncStatus;
   DailyCalendarEntity? get calendar;
   DailyMonthlyActivitiesEntity? get monthly;
   DailyDayDetailEntity? get dayDetail;
+  ActivityQuestionOptionEntity? get selectedQuestion;
   DateTime get focusedDay;
   DateTime get selectedDay;
-  String? get gridError;
+  String? get calendarFirstOpenError;
   String? get dayDetailError;
+  String? get monthlyError;
+  String? get selectedQuestionError;
 
   /// Create a copy of CalendarState
   /// with the given fields replaced by the non-null parameter values.
@@ -37,41 +42,60 @@ mixin _$CalendarState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is CalendarState &&
-            (identical(other.gridStatus, gridStatus) ||
-                other.gridStatus == gridStatus) &&
-            (identical(other.dayDetailStatus, dayDetailStatus) ||
-                other.dayDetailStatus == dayDetailStatus) &&
+            (identical(other.calendarFirstOpenAsyncStatus,
+                    calendarFirstOpenAsyncStatus) ||
+                other.calendarFirstOpenAsyncStatus ==
+                    calendarFirstOpenAsyncStatus) &&
+            (identical(other.dayDetailAsyncStatus, dayDetailAsyncStatus) ||
+                other.dayDetailAsyncStatus == dayDetailAsyncStatus) &&
+            (identical(other.monthlyAsyncStatus, monthlyAsyncStatus) ||
+                other.monthlyAsyncStatus == monthlyAsyncStatus) &&
+            (identical(other.selectedQuestionAsyncStatus,
+                    selectedQuestionAsyncStatus) ||
+                other.selectedQuestionAsyncStatus ==
+                    selectedQuestionAsyncStatus) &&
             (identical(other.calendar, calendar) ||
                 other.calendar == calendar) &&
             (identical(other.monthly, monthly) || other.monthly == monthly) &&
             (identical(other.dayDetail, dayDetail) ||
                 other.dayDetail == dayDetail) &&
+            (identical(other.selectedQuestion, selectedQuestion) ||
+                other.selectedQuestion == selectedQuestion) &&
             (identical(other.focusedDay, focusedDay) ||
                 other.focusedDay == focusedDay) &&
             (identical(other.selectedDay, selectedDay) ||
                 other.selectedDay == selectedDay) &&
-            (identical(other.gridError, gridError) ||
-                other.gridError == gridError) &&
+            (identical(other.calendarFirstOpenError, calendarFirstOpenError) ||
+                other.calendarFirstOpenError == calendarFirstOpenError) &&
             (identical(other.dayDetailError, dayDetailError) ||
-                other.dayDetailError == dayDetailError));
+                other.dayDetailError == dayDetailError) &&
+            (identical(other.monthlyError, monthlyError) ||
+                other.monthlyError == monthlyError) &&
+            (identical(other.selectedQuestionError, selectedQuestionError) ||
+                other.selectedQuestionError == selectedQuestionError));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      gridStatus,
-      dayDetailStatus,
+      calendarFirstOpenAsyncStatus,
+      dayDetailAsyncStatus,
+      monthlyAsyncStatus,
+      selectedQuestionAsyncStatus,
       calendar,
       monthly,
       dayDetail,
+      selectedQuestion,
       focusedDay,
       selectedDay,
-      gridError,
-      dayDetailError);
+      calendarFirstOpenError,
+      dayDetailError,
+      monthlyError,
+      selectedQuestionError);
 
   @override
   String toString() {
-    return 'CalendarState(gridStatus: $gridStatus, dayDetailStatus: $dayDetailStatus, calendar: $calendar, monthly: $monthly, dayDetail: $dayDetail, focusedDay: $focusedDay, selectedDay: $selectedDay, gridError: $gridError, dayDetailError: $dayDetailError)';
+    return 'CalendarState(calendarFirstOpenAsyncStatus: $calendarFirstOpenAsyncStatus, dayDetailAsyncStatus: $dayDetailAsyncStatus, monthlyAsyncStatus: $monthlyAsyncStatus, selectedQuestionAsyncStatus: $selectedQuestionAsyncStatus, calendar: $calendar, monthly: $monthly, dayDetail: $dayDetail, selectedQuestion: $selectedQuestion, focusedDay: $focusedDay, selectedDay: $selectedDay, calendarFirstOpenError: $calendarFirstOpenError, dayDetailError: $dayDetailError, monthlyError: $monthlyError, selectedQuestionError: $selectedQuestionError)';
   }
 }
 
@@ -82,15 +106,20 @@ abstract mixin class $CalendarStateCopyWith<$Res> {
       _$CalendarStateCopyWithImpl;
   @useResult
   $Res call(
-      {CalendarGridStatus gridStatus,
-      CalendarDayDetailStatus dayDetailStatus,
+      {CalendarAsyncStatus calendarFirstOpenAsyncStatus,
+      CalendarAsyncStatus dayDetailAsyncStatus,
+      CalendarAsyncStatus monthlyAsyncStatus,
+      CalendarAsyncStatus selectedQuestionAsyncStatus,
       DailyCalendarEntity? calendar,
       DailyMonthlyActivitiesEntity? monthly,
       DailyDayDetailEntity? dayDetail,
+      ActivityQuestionOptionEntity? selectedQuestion,
       DateTime focusedDay,
       DateTime selectedDay,
-      String? gridError,
-      String? dayDetailError});
+      String? calendarFirstOpenError,
+      String? dayDetailError,
+      String? monthlyError,
+      String? selectedQuestionError});
 }
 
 /// @nodoc
@@ -106,25 +135,38 @@ class _$CalendarStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? gridStatus = null,
-    Object? dayDetailStatus = null,
+    Object? calendarFirstOpenAsyncStatus = null,
+    Object? dayDetailAsyncStatus = null,
+    Object? monthlyAsyncStatus = null,
+    Object? selectedQuestionAsyncStatus = null,
     Object? calendar = freezed,
     Object? monthly = freezed,
     Object? dayDetail = freezed,
+    Object? selectedQuestion = freezed,
     Object? focusedDay = null,
     Object? selectedDay = null,
-    Object? gridError = freezed,
+    Object? calendarFirstOpenError = freezed,
     Object? dayDetailError = freezed,
+    Object? monthlyError = freezed,
+    Object? selectedQuestionError = freezed,
   }) {
     return _then(_self.copyWith(
-      gridStatus: null == gridStatus
-          ? _self.gridStatus
-          : gridStatus // ignore: cast_nullable_to_non_nullable
-              as CalendarGridStatus,
-      dayDetailStatus: null == dayDetailStatus
-          ? _self.dayDetailStatus
-          : dayDetailStatus // ignore: cast_nullable_to_non_nullable
-              as CalendarDayDetailStatus,
+      calendarFirstOpenAsyncStatus: null == calendarFirstOpenAsyncStatus
+          ? _self.calendarFirstOpenAsyncStatus
+          : calendarFirstOpenAsyncStatus // ignore: cast_nullable_to_non_nullable
+              as CalendarAsyncStatus,
+      dayDetailAsyncStatus: null == dayDetailAsyncStatus
+          ? _self.dayDetailAsyncStatus
+          : dayDetailAsyncStatus // ignore: cast_nullable_to_non_nullable
+              as CalendarAsyncStatus,
+      monthlyAsyncStatus: null == monthlyAsyncStatus
+          ? _self.monthlyAsyncStatus
+          : monthlyAsyncStatus // ignore: cast_nullable_to_non_nullable
+              as CalendarAsyncStatus,
+      selectedQuestionAsyncStatus: null == selectedQuestionAsyncStatus
+          ? _self.selectedQuestionAsyncStatus
+          : selectedQuestionAsyncStatus // ignore: cast_nullable_to_non_nullable
+              as CalendarAsyncStatus,
       calendar: freezed == calendar
           ? _self.calendar
           : calendar // ignore: cast_nullable_to_non_nullable
@@ -137,6 +179,10 @@ class _$CalendarStateCopyWithImpl<$Res>
           ? _self.dayDetail
           : dayDetail // ignore: cast_nullable_to_non_nullable
               as DailyDayDetailEntity?,
+      selectedQuestion: freezed == selectedQuestion
+          ? _self.selectedQuestion
+          : selectedQuestion // ignore: cast_nullable_to_non_nullable
+              as ActivityQuestionOptionEntity?,
       focusedDay: null == focusedDay
           ? _self.focusedDay
           : focusedDay // ignore: cast_nullable_to_non_nullable
@@ -145,13 +191,21 @@ class _$CalendarStateCopyWithImpl<$Res>
           ? _self.selectedDay
           : selectedDay // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      gridError: freezed == gridError
-          ? _self.gridError
-          : gridError // ignore: cast_nullable_to_non_nullable
+      calendarFirstOpenError: freezed == calendarFirstOpenError
+          ? _self.calendarFirstOpenError
+          : calendarFirstOpenError // ignore: cast_nullable_to_non_nullable
               as String?,
       dayDetailError: freezed == dayDetailError
           ? _self.dayDetailError
           : dayDetailError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      monthlyError: freezed == monthlyError
+          ? _self.monthlyError
+          : monthlyError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedQuestionError: freezed == selectedQuestionError
+          ? _self.selectedQuestionError
+          : selectedQuestionError // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -251,15 +305,20 @@ extension CalendarStatePatterns on CalendarState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
     TResult Function(
-            CalendarGridStatus gridStatus,
-            CalendarDayDetailStatus dayDetailStatus,
+            CalendarAsyncStatus calendarFirstOpenAsyncStatus,
+            CalendarAsyncStatus dayDetailAsyncStatus,
+            CalendarAsyncStatus monthlyAsyncStatus,
+            CalendarAsyncStatus selectedQuestionAsyncStatus,
             DailyCalendarEntity? calendar,
             DailyMonthlyActivitiesEntity? monthly,
             DailyDayDetailEntity? dayDetail,
+            ActivityQuestionOptionEntity? selectedQuestion,
             DateTime focusedDay,
             DateTime selectedDay,
-            String? gridError,
-            String? dayDetailError)?
+            String? calendarFirstOpenError,
+            String? dayDetailError,
+            String? monthlyError,
+            String? selectedQuestionError)?
         $default, {
     required TResult orElse(),
   }) {
@@ -267,15 +326,20 @@ extension CalendarStatePatterns on CalendarState {
     switch (_that) {
       case _CalendarState() when $default != null:
         return $default(
-            _that.gridStatus,
-            _that.dayDetailStatus,
+            _that.calendarFirstOpenAsyncStatus,
+            _that.dayDetailAsyncStatus,
+            _that.monthlyAsyncStatus,
+            _that.selectedQuestionAsyncStatus,
             _that.calendar,
             _that.monthly,
             _that.dayDetail,
+            _that.selectedQuestion,
             _that.focusedDay,
             _that.selectedDay,
-            _that.gridError,
-            _that.dayDetailError);
+            _that.calendarFirstOpenError,
+            _that.dayDetailError,
+            _that.monthlyError,
+            _that.selectedQuestionError);
       case _:
         return orElse();
     }
@@ -297,30 +361,40 @@ extension CalendarStatePatterns on CalendarState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(
-            CalendarGridStatus gridStatus,
-            CalendarDayDetailStatus dayDetailStatus,
+            CalendarAsyncStatus calendarFirstOpenAsyncStatus,
+            CalendarAsyncStatus dayDetailAsyncStatus,
+            CalendarAsyncStatus monthlyAsyncStatus,
+            CalendarAsyncStatus selectedQuestionAsyncStatus,
             DailyCalendarEntity? calendar,
             DailyMonthlyActivitiesEntity? monthly,
             DailyDayDetailEntity? dayDetail,
+            ActivityQuestionOptionEntity? selectedQuestion,
             DateTime focusedDay,
             DateTime selectedDay,
-            String? gridError,
-            String? dayDetailError)
+            String? calendarFirstOpenError,
+            String? dayDetailError,
+            String? monthlyError,
+            String? selectedQuestionError)
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _CalendarState():
         return $default(
-            _that.gridStatus,
-            _that.dayDetailStatus,
+            _that.calendarFirstOpenAsyncStatus,
+            _that.dayDetailAsyncStatus,
+            _that.monthlyAsyncStatus,
+            _that.selectedQuestionAsyncStatus,
             _that.calendar,
             _that.monthly,
             _that.dayDetail,
+            _that.selectedQuestion,
             _that.focusedDay,
             _that.selectedDay,
-            _that.gridError,
-            _that.dayDetailError);
+            _that.calendarFirstOpenError,
+            _that.dayDetailError,
+            _that.monthlyError,
+            _that.selectedQuestionError);
       case _:
         throw StateError('Unexpected subclass');
     }
@@ -341,30 +415,40 @@ extension CalendarStatePatterns on CalendarState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>(
     TResult? Function(
-            CalendarGridStatus gridStatus,
-            CalendarDayDetailStatus dayDetailStatus,
+            CalendarAsyncStatus calendarFirstOpenAsyncStatus,
+            CalendarAsyncStatus dayDetailAsyncStatus,
+            CalendarAsyncStatus monthlyAsyncStatus,
+            CalendarAsyncStatus selectedQuestionAsyncStatus,
             DailyCalendarEntity? calendar,
             DailyMonthlyActivitiesEntity? monthly,
             DailyDayDetailEntity? dayDetail,
+            ActivityQuestionOptionEntity? selectedQuestion,
             DateTime focusedDay,
             DateTime selectedDay,
-            String? gridError,
-            String? dayDetailError)?
+            String? calendarFirstOpenError,
+            String? dayDetailError,
+            String? monthlyError,
+            String? selectedQuestionError)?
         $default,
   ) {
     final _that = this;
     switch (_that) {
       case _CalendarState() when $default != null:
         return $default(
-            _that.gridStatus,
-            _that.dayDetailStatus,
+            _that.calendarFirstOpenAsyncStatus,
+            _that.dayDetailAsyncStatus,
+            _that.monthlyAsyncStatus,
+            _that.selectedQuestionAsyncStatus,
             _that.calendar,
             _that.monthly,
             _that.dayDetail,
+            _that.selectedQuestion,
             _that.focusedDay,
             _that.selectedDay,
-            _that.gridError,
-            _that.dayDetailError);
+            _that.calendarFirstOpenError,
+            _that.dayDetailError,
+            _that.monthlyError,
+            _that.selectedQuestionError);
       case _:
         return null;
     }
@@ -375,22 +459,33 @@ extension CalendarStatePatterns on CalendarState {
 
 class _CalendarState implements CalendarState {
   const _CalendarState(
-      {this.gridStatus = CalendarGridStatus.initial,
-      this.dayDetailStatus = CalendarDayDetailStatus.initial,
+      {this.calendarFirstOpenAsyncStatus = CalendarAsyncStatus.initial,
+      this.dayDetailAsyncStatus = CalendarAsyncStatus.initial,
+      this.monthlyAsyncStatus = CalendarAsyncStatus.initial,
+      this.selectedQuestionAsyncStatus = CalendarAsyncStatus.initial,
       this.calendar,
       this.monthly,
       this.dayDetail,
+      this.selectedQuestion,
       required this.focusedDay,
       required this.selectedDay,
-      this.gridError,
-      this.dayDetailError});
+      this.calendarFirstOpenError,
+      this.dayDetailError,
+      this.monthlyError,
+      this.selectedQuestionError});
 
   @override
   @JsonKey()
-  final CalendarGridStatus gridStatus;
+  final CalendarAsyncStatus calendarFirstOpenAsyncStatus;
   @override
   @JsonKey()
-  final CalendarDayDetailStatus dayDetailStatus;
+  final CalendarAsyncStatus dayDetailAsyncStatus;
+  @override
+  @JsonKey()
+  final CalendarAsyncStatus monthlyAsyncStatus;
+  @override
+  @JsonKey()
+  final CalendarAsyncStatus selectedQuestionAsyncStatus;
   @override
   final DailyCalendarEntity? calendar;
   @override
@@ -398,13 +493,19 @@ class _CalendarState implements CalendarState {
   @override
   final DailyDayDetailEntity? dayDetail;
   @override
+  final ActivityQuestionOptionEntity? selectedQuestion;
+  @override
   final DateTime focusedDay;
   @override
   final DateTime selectedDay;
   @override
-  final String? gridError;
+  final String? calendarFirstOpenError;
   @override
   final String? dayDetailError;
+  @override
+  final String? monthlyError;
+  @override
+  final String? selectedQuestionError;
 
   /// Create a copy of CalendarState
   /// with the given fields replaced by the non-null parameter values.
@@ -419,41 +520,60 @@ class _CalendarState implements CalendarState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _CalendarState &&
-            (identical(other.gridStatus, gridStatus) ||
-                other.gridStatus == gridStatus) &&
-            (identical(other.dayDetailStatus, dayDetailStatus) ||
-                other.dayDetailStatus == dayDetailStatus) &&
+            (identical(other.calendarFirstOpenAsyncStatus,
+                    calendarFirstOpenAsyncStatus) ||
+                other.calendarFirstOpenAsyncStatus ==
+                    calendarFirstOpenAsyncStatus) &&
+            (identical(other.dayDetailAsyncStatus, dayDetailAsyncStatus) ||
+                other.dayDetailAsyncStatus == dayDetailAsyncStatus) &&
+            (identical(other.monthlyAsyncStatus, monthlyAsyncStatus) ||
+                other.monthlyAsyncStatus == monthlyAsyncStatus) &&
+            (identical(other.selectedQuestionAsyncStatus,
+                    selectedQuestionAsyncStatus) ||
+                other.selectedQuestionAsyncStatus ==
+                    selectedQuestionAsyncStatus) &&
             (identical(other.calendar, calendar) ||
                 other.calendar == calendar) &&
             (identical(other.monthly, monthly) || other.monthly == monthly) &&
             (identical(other.dayDetail, dayDetail) ||
                 other.dayDetail == dayDetail) &&
+            (identical(other.selectedQuestion, selectedQuestion) ||
+                other.selectedQuestion == selectedQuestion) &&
             (identical(other.focusedDay, focusedDay) ||
                 other.focusedDay == focusedDay) &&
             (identical(other.selectedDay, selectedDay) ||
                 other.selectedDay == selectedDay) &&
-            (identical(other.gridError, gridError) ||
-                other.gridError == gridError) &&
+            (identical(other.calendarFirstOpenError, calendarFirstOpenError) ||
+                other.calendarFirstOpenError == calendarFirstOpenError) &&
             (identical(other.dayDetailError, dayDetailError) ||
-                other.dayDetailError == dayDetailError));
+                other.dayDetailError == dayDetailError) &&
+            (identical(other.monthlyError, monthlyError) ||
+                other.monthlyError == monthlyError) &&
+            (identical(other.selectedQuestionError, selectedQuestionError) ||
+                other.selectedQuestionError == selectedQuestionError));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      gridStatus,
-      dayDetailStatus,
+      calendarFirstOpenAsyncStatus,
+      dayDetailAsyncStatus,
+      monthlyAsyncStatus,
+      selectedQuestionAsyncStatus,
       calendar,
       monthly,
       dayDetail,
+      selectedQuestion,
       focusedDay,
       selectedDay,
-      gridError,
-      dayDetailError);
+      calendarFirstOpenError,
+      dayDetailError,
+      monthlyError,
+      selectedQuestionError);
 
   @override
   String toString() {
-    return 'CalendarState(gridStatus: $gridStatus, dayDetailStatus: $dayDetailStatus, calendar: $calendar, monthly: $monthly, dayDetail: $dayDetail, focusedDay: $focusedDay, selectedDay: $selectedDay, gridError: $gridError, dayDetailError: $dayDetailError)';
+    return 'CalendarState(calendarFirstOpenAsyncStatus: $calendarFirstOpenAsyncStatus, dayDetailAsyncStatus: $dayDetailAsyncStatus, monthlyAsyncStatus: $monthlyAsyncStatus, selectedQuestionAsyncStatus: $selectedQuestionAsyncStatus, calendar: $calendar, monthly: $monthly, dayDetail: $dayDetail, selectedQuestion: $selectedQuestion, focusedDay: $focusedDay, selectedDay: $selectedDay, calendarFirstOpenError: $calendarFirstOpenError, dayDetailError: $dayDetailError, monthlyError: $monthlyError, selectedQuestionError: $selectedQuestionError)';
   }
 }
 
@@ -466,15 +586,20 @@ abstract mixin class _$CalendarStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {CalendarGridStatus gridStatus,
-      CalendarDayDetailStatus dayDetailStatus,
+      {CalendarAsyncStatus calendarFirstOpenAsyncStatus,
+      CalendarAsyncStatus dayDetailAsyncStatus,
+      CalendarAsyncStatus monthlyAsyncStatus,
+      CalendarAsyncStatus selectedQuestionAsyncStatus,
       DailyCalendarEntity? calendar,
       DailyMonthlyActivitiesEntity? monthly,
       DailyDayDetailEntity? dayDetail,
+      ActivityQuestionOptionEntity? selectedQuestion,
       DateTime focusedDay,
       DateTime selectedDay,
-      String? gridError,
-      String? dayDetailError});
+      String? calendarFirstOpenError,
+      String? dayDetailError,
+      String? monthlyError,
+      String? selectedQuestionError});
 }
 
 /// @nodoc
@@ -490,25 +615,38 @@ class __$CalendarStateCopyWithImpl<$Res>
   @override
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? gridStatus = null,
-    Object? dayDetailStatus = null,
+    Object? calendarFirstOpenAsyncStatus = null,
+    Object? dayDetailAsyncStatus = null,
+    Object? monthlyAsyncStatus = null,
+    Object? selectedQuestionAsyncStatus = null,
     Object? calendar = freezed,
     Object? monthly = freezed,
     Object? dayDetail = freezed,
+    Object? selectedQuestion = freezed,
     Object? focusedDay = null,
     Object? selectedDay = null,
-    Object? gridError = freezed,
+    Object? calendarFirstOpenError = freezed,
     Object? dayDetailError = freezed,
+    Object? monthlyError = freezed,
+    Object? selectedQuestionError = freezed,
   }) {
     return _then(_CalendarState(
-      gridStatus: null == gridStatus
-          ? _self.gridStatus
-          : gridStatus // ignore: cast_nullable_to_non_nullable
-              as CalendarGridStatus,
-      dayDetailStatus: null == dayDetailStatus
-          ? _self.dayDetailStatus
-          : dayDetailStatus // ignore: cast_nullable_to_non_nullable
-              as CalendarDayDetailStatus,
+      calendarFirstOpenAsyncStatus: null == calendarFirstOpenAsyncStatus
+          ? _self.calendarFirstOpenAsyncStatus
+          : calendarFirstOpenAsyncStatus // ignore: cast_nullable_to_non_nullable
+              as CalendarAsyncStatus,
+      dayDetailAsyncStatus: null == dayDetailAsyncStatus
+          ? _self.dayDetailAsyncStatus
+          : dayDetailAsyncStatus // ignore: cast_nullable_to_non_nullable
+              as CalendarAsyncStatus,
+      monthlyAsyncStatus: null == monthlyAsyncStatus
+          ? _self.monthlyAsyncStatus
+          : monthlyAsyncStatus // ignore: cast_nullable_to_non_nullable
+              as CalendarAsyncStatus,
+      selectedQuestionAsyncStatus: null == selectedQuestionAsyncStatus
+          ? _self.selectedQuestionAsyncStatus
+          : selectedQuestionAsyncStatus // ignore: cast_nullable_to_non_nullable
+              as CalendarAsyncStatus,
       calendar: freezed == calendar
           ? _self.calendar
           : calendar // ignore: cast_nullable_to_non_nullable
@@ -521,6 +659,10 @@ class __$CalendarStateCopyWithImpl<$Res>
           ? _self.dayDetail
           : dayDetail // ignore: cast_nullable_to_non_nullable
               as DailyDayDetailEntity?,
+      selectedQuestion: freezed == selectedQuestion
+          ? _self.selectedQuestion
+          : selectedQuestion // ignore: cast_nullable_to_non_nullable
+              as ActivityQuestionOptionEntity?,
       focusedDay: null == focusedDay
           ? _self.focusedDay
           : focusedDay // ignore: cast_nullable_to_non_nullable
@@ -529,13 +671,21 @@ class __$CalendarStateCopyWithImpl<$Res>
           ? _self.selectedDay
           : selectedDay // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      gridError: freezed == gridError
-          ? _self.gridError
-          : gridError // ignore: cast_nullable_to_non_nullable
+      calendarFirstOpenError: freezed == calendarFirstOpenError
+          ? _self.calendarFirstOpenError
+          : calendarFirstOpenError // ignore: cast_nullable_to_non_nullable
               as String?,
       dayDetailError: freezed == dayDetailError
           ? _self.dayDetailError
           : dayDetailError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      monthlyError: freezed == monthlyError
+          ? _self.monthlyError
+          : monthlyError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedQuestionError: freezed == selectedQuestionError
+          ? _self.selectedQuestionError
+          : selectedQuestionError // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }

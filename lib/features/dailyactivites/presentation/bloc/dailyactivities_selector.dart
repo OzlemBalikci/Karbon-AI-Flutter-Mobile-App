@@ -15,10 +15,6 @@ typedef DailyActivitiesBranchUi = ({
   bool canSubmit,
 });
 
-// ---------------------------------------------------------------------------
-// Ortak selector base
-// ---------------------------------------------------------------------------
-
 class DailyActivitiesSelector<T>
     extends BlocSelector<DailyActivitiesBloc, DailyActivitiesState, T> {
   DailyActivitiesSelector({
@@ -27,10 +23,6 @@ class DailyActivitiesSelector<T>
     required Widget Function(T value) builder,
   }) : super(builder: (context, value) => builder(value));
 }
-
-// ---------------------------------------------------------------------------
-// Screen status
-// ---------------------------------------------------------------------------
 
 class DailyActivitiesScreenStatusSelector extends BlocSelector<
     DailyActivitiesBloc, DailyActivitiesState, DailyActivitiesStatus> {
@@ -46,10 +38,6 @@ class DailyActivitiesScreenStatusSelector extends BlocSelector<
         );
 }
 
-// ---------------------------------------------------------------------------
-// Kök soru listesi
-// ---------------------------------------------------------------------------
-
 class DailyActivitiesQuestionsSelector
     extends DailyActivitiesSelector<List<DailyQuestionEntity>> {
   DailyActivitiesQuestionsSelector({
@@ -61,10 +49,6 @@ class DailyActivitiesQuestionsSelector
           builder: builder,
         );
 }
-
-// ---------------------------------------------------------------------------
-// Tek soru satırı (kart için)
-// ---------------------------------------------------------------------------
 
 DailyActivitiesQuestionRowData? selectQuestionRow(
   DailyActivitiesState state,
@@ -103,10 +87,6 @@ class DailyActivitiesQuestionRowSelector
         );
 }
 
-// ---------------------------------------------------------------------------
-// Branch (detay ekranı dropdown zinciri)
-// ---------------------------------------------------------------------------
-
 DailyActivitiesBranchUi selectBranchUi(DailyActivitiesState state) {
   return (
     steps: state.visibleSteps,
@@ -127,10 +107,6 @@ class DailyActivitiesBranchSelector
           builder: builder,
         );
 }
-
-// ---------------------------------------------------------------------------
-// Önceki cevaplar
-// ---------------------------------------------------------------------------
 
 class DailyActivitiesPreviousAnswersSelector
     extends DailyActivitiesSelector<List<DailyPreviousAnswersByDateEntity>> {

@@ -144,7 +144,6 @@ Bugün aktif ve henüz tamamlanmamış **kök** soruları döner. Her kök sorun
 {
   "questionId": "019daea9-51e0-7d8a-b708-87cf32c80312",
   "selectedOptionId": "019daea9-51e0-76ad-a1c6-2c127b7fa0dd",
-  "userId": "<kullanıcı-guid>"
 }
 ```
 
@@ -152,7 +151,6 @@ Bugün aktif ve henüz tamamlanmamış **kök** soruları döner. Her kök sorun
 |------|---------|----------|
 | `questionId` | Evet | Cevaplanan soru |
 | `selectedOptionId` | Evet | Seçilen seçenek |
-| `userId` | Evet | Oturum kullanıcısı |
 
 **Response — akış devam (`isFlowCompleted: false`)**
 
@@ -160,42 +158,32 @@ Bugün aktif ve henüz tamamlanmamış **kök** soruları döner. Her kök sorun
 
 ```json
 {
+  {
   "isSuccessful": true,
   "statusCode": 200,
   "errors": null,
   "data": {
-    "nextQuestion": {
-      "id": "019daea9-51a8-7a26-870d-5ba28b54a4bf",
-      "text": "Kullandığınız ulaşım aracını seçiniz.",
-      "displayOrder": 2,
-      "options": [
-        {
-          "id": "019daea9-51a8-7036-8b88-27edfb710ffb",
-          "text": "Otobüs",
-          "carbonValue": 8,
-          "nextQuestionId": "019daea9-4cbf-7840-9a81-e69009c951ca",
-          "nextQuestion": {
-            "id": "019daea9-4cbf-7840-9a81-e69009c951ca",
-            "text": "Sefer Sayısı",
-            "displayOrder": 3,
-            "options": [
-              {
-                "id": "019daea9-4cc2-70ba-95ef-f29972896726",
-                "text": "1 Sefer",
-                "carbonValue": 5,
-                "nextQuestionId": null,
-                "nextQuestion": null
-              }
-            ],
-            "remainingSeconds": 62589
-          }
-        }
-      ],
-      "remainingSeconds": 62589
-    },
-    "totalCarbonScore": 5,
-    "isFlowCompleted": false
+    "totalCarbonScore": 42.5,
+    "isFlowCompleted": true,
+    "answers": [
+      {
+        "questionText": "Bu sabah işe nasıl gittiniz?",
+        "selectedOptionText": "Toplu taşıma",
+        "carbonValue": 15.0
+      },
+      {
+        "questionText": "Kullandığınız ulaşım aracı?",
+        "selectedOptionText": "Metro",
+        "carbonValue": 10.0
+      },
+      {
+        "questionText": "Bugün kaç saat elektrik kullandınız?",
+        "selectedOptionText": "5 saat",
+        "carbonValue": 17.5
+      }
+    ]
   }
+}
 }
 ```
 

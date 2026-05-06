@@ -47,8 +47,10 @@ class _CalendarFirstOpenPageState extends State<CalendarFirstOpenPage> {
             prev.calendar != curr.calendar ||
             prev.monthly != curr.monthly ||
             prev.dayDetail != curr.dayDetail ||
-            prev.gridStatus != curr.gridStatus ||
-            prev.dayDetailStatus != curr.dayDetailStatus,
+            prev.calendarFirstOpenAsyncStatus !=
+                curr.calendarFirstOpenAsyncStatus ||
+            prev.monthlyAsyncStatus != curr.monthlyAsyncStatus ||
+            prev.dayDetailAsyncStatus != curr.dayDetailAsyncStatus,
         builder: (context, state) {
           final scores = selectCalendarScoreLabels(state);
           return Stack(

@@ -114,15 +114,18 @@ class ActivityQuestionOptionEntity extends Equatable {
     required this.text,
     required this.carbonValue,
     this.nextQuestionId,
+    this.nextQuestion,
   });
 
   final String id;
   final String text;
   final double carbonValue;
   final String? nextQuestionId;
+  final ActivityQuestionDetailEntity? nextQuestion;
 
   @override
-  List<Object?> get props => [id, text, carbonValue, nextQuestionId];
+  List<Object?> get props =>
+      [id, text, carbonValue, nextQuestionId, nextQuestion];
 }
 
 /// GET `/api/v1/activity-questions/{id}` — soru detayı.

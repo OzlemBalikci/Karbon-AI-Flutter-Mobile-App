@@ -25,11 +25,6 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
   static DateTime _dateOnly(DateTime d) => DateTime(d.year, d.month, d.day);
 
-  static String _dateQueryParam(DateTime d) =>
-      '${d.year.toString().padLeft(4, '0')}-'
-      '${d.month.toString().padLeft(2, '0')}-'
-      '${d.day.toString().padLeft(2, '0')}';
-
   Future<void> _onStarted(
     CalendarStarted event,
     Emitter<CalendarState> emit,
@@ -39,7 +34,8 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       state.copyWith(
         focusedDay: day,
         selectedDay: day,
-        gridError: null,
+        calendarFirstOpenError: null,
+        monthlyError: null,
         dayDetailError: null,
       ),
     );
@@ -56,7 +52,8 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       state.copyWith(
         focusedDay: focused,
         selectedDay: selected,
-        gridError: null,
+        calendarFirstOpenError: null,
+        monthlyError: null,
         dayDetailError: null,
       ),
     );
@@ -70,7 +67,6 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     final newFocused = _dateOnly(event.focusedDay);
     final newSelected = _dateOnly(event.selectedDay);
     final prevFocused = state.focusedDay;
-    final prevSelected = state.selectedDay;
 
     emit(
       state.copyWith(
@@ -81,9 +77,8 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
     final monthChanged = prevFocused.year != newFocused.year ||
         prevFocused.month != newFocused.month;
-    final halfChanged = (prevSelected.day <= 15) != (newSelected.day <= 15);
 
-    if (monthChanged || halfChanged) {
+    if (monthChanged) {
       await _loadGridAndDetail(emit, newFocused, newSelected);
     } else {
       await _loadDayDetailOnly(emit, newSelected);
@@ -97,9 +92,11 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   ) async {
     emit(
       state.copyWith(
-        gridStatus: CalendarGridStatus.loading,
-        dayDetailStatus: CalendarDayDetailStatus.loading,
-        gridError: null,
+        calendarFirstOpenAsyncStatus: CalendarAsyncStatus.loading,
+        monthlyAsyncStatus: CalendarAsyncStatus.loading,
+        dayDetailAsyncStatus: CalendarAsyncStatus.loading,
+        calendarFirstOpenError: null,
+        monthlyError: null,
         dayDetailError: null,
         dayDetail: null,
       ),
@@ -107,13 +104,11 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
     final year = focused.year;
     final month = focused.month;
-    final period = selected.day <= 15 ? 1 : 2;
 
     final calendarFuture = _getCalendar(year: year, month: month);
     final monthlyFuture = _getMonthlyActivities(
       year: year,
       month: month,
-      period: period,
     );
 
     final calendarResult = await calendarFuture;
@@ -121,23 +116,28 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
     DailyCalendarEntity? cal;
     DailyMonthlyActivitiesEntity? mon;
-    String? gridErr;
+    String? calendarErr;
+    String? monthlyErr;
 
     calendarResult.fold(
-      (e) => gridErr = e.message,
+      (e) => calendarErr = e.message,
       (c) => cal = c,
     );
     monthlyResult.fold(
-      (e) => gridErr ??= e.message,
+      (e) => monthlyErr = e.message,
       (m) => mon = m,
     );
 
     emit(
       state.copyWith(
-        gridStatus: CalendarGridStatus.success,
+        calendarFirstOpenAsyncStatus:
+            calendarErr == null ? CalendarAsyncStatus.success : CalendarAsyncStatus.failure,
+        monthlyAsyncStatus:
+            monthlyErr == null ? CalendarAsyncStatus.success : CalendarAsyncStatus.failure,
         calendar: cal,
         monthly: mon,
-        gridError: gridErr,
+        calendarFirstOpenError: calendarErr,
+        monthlyError: monthlyErr,
       ),
     );
 
@@ -150,24 +150,24 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
   ) async {
     emit(
       state.copyWith(
-        dayDetailStatus: CalendarDayDetailStatus.loading,
+        dayDetailAsyncStatus: CalendarAsyncStatus.loading,
         dayDetailError: null,
       ),
     );
 
-    final result = await _getDetails(date: _dateQueryParam(selected));
+    final result = await _getDetails(date: selected);
 
     result.fold(
       (e) => emit(
         state.copyWith(
-          dayDetailStatus: CalendarDayDetailStatus.failure,
+          dayDetailAsyncStatus: CalendarAsyncStatus.failure,
           dayDetail: null,
           dayDetailError: e.message,
         ),
       ),
       (d) => emit(
         state.copyWith(
-          dayDetailStatus: CalendarDayDetailStatus.success,
+          dayDetailAsyncStatus: CalendarAsyncStatus.success,
           dayDetail: d,
           dayDetailError: null,
         ),

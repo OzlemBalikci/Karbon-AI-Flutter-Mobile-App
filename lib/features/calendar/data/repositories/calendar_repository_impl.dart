@@ -15,15 +15,13 @@ class CalendarRepositoryImpl implements CalendarRepository {
   @override
   Future<Either<AppException, DailyCalendarEntity>> getCalendar({
     required int year,
-    int? month,
-    int? period,
+    required int month,
   }) async {
     try {
       return Right(
         await _remote.getCalendar(
           year: year,
           month: month,
-          period: period,
         ),
       );
     } catch (e) {
@@ -32,17 +30,16 @@ class CalendarRepositoryImpl implements CalendarRepository {
   }
 
   @override
-  Future<Either<AppException, DailyMonthlyActivitiesEntity>> getMonthlyActivities({
+  Future<Either<AppException, DailyMonthlyActivitiesEntity>>
+      getMonthlyActivities({
     required int year,
     required int month,
-    required int period,
   }) async {
     try {
       return Right(
         await _remote.getMonthlyActivities(
           year: year,
           month: month,
-          period: period,
         ),
       );
     } catch (e) {
@@ -52,7 +49,7 @@ class CalendarRepositoryImpl implements CalendarRepository {
 
   @override
   Future<Either<AppException, DailyDayDetailEntity>> getDetails({
-    required String date,
+    required DateTime date,
   }) async {
     try {
       return Right(await _remote.getDetails(date: date));

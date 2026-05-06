@@ -10,7 +10,7 @@ class GetDetailsUsecase {
   final CalendarRepository _repository;
 
   Future<Either<AppException, DailyDayDetailEntity>> call({
-    required String date,
+    required DateTime date,
   }) =>
       _repository.getDetails(date: date);
 }

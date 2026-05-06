@@ -17,8 +17,6 @@ abstract class HomeState with _$HomeState {
   const HomeState._();
   const factory HomeState({
     @Default(HomeStatus.initial) HomeStatus status,
-
-    /// GET home `data.hasCompletedPoll`; false = anket yok / ilk ekran.
     @Default(false) bool hasCompletedPoll,
     GlobalTargetEntity? globalTarget,
     MonthlyTargetEntity? monthlyTarget,

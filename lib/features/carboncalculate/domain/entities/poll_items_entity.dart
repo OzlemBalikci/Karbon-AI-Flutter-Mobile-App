@@ -57,7 +57,6 @@ class PollOptionEntity extends Equatable {
 }
 
 /// POST `/api/v1/polls/draft` ve `/api/v1/polls/answers` — domain cevap satırı.
-/// İstek serileştirme: `PollAnswerItemRequestDto` (`poll_submission_result_dto.dart`).
 
 class PollAnswerItemEntity extends Equatable {
   const PollAnswerItemEntity({
@@ -85,4 +84,3 @@ class PollSubmissionResultEntity extends Equatable {
   @override
   List<Object?> get props => [totalCarbonScore, calculatedTrees];
 }
-

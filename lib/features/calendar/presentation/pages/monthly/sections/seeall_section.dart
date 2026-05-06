@@ -9,7 +9,7 @@ import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart'
 import 'package:karbon/features/calendar/domain/usecases/get_monthly_activities_usecase.dart';
 import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/widgets/button.dart';
 import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/widgets/score_card.dart';
-import 'package:karbon/features/calendar/presentation/pages/seeAll/widgets/daily_report_card.dart';
+import 'package:karbon/features/calendar/presentation/pages/monthly/widgets/daily_report_card.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 
 String _formatMonthlyScore(double value) {

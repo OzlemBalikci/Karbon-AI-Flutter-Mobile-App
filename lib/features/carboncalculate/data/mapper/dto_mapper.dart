@@ -7,8 +7,6 @@ import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entit
 class PollMapper {
   PollMapper._();
 
-  // ─── DTO → Entity ──────────────────────────────────────────────────────────
-
   static PollOptionEntity toOptionEntity(PollOptionDto dto) => PollOptionEntity(
         id: dto.id,
         text: dto.text,
@@ -40,8 +38,6 @@ class PollMapper {
         totalCarbonScore: dto.totalCarbonScore,
         calculatedTrees: dto.calculatedTrees,
       );
-
-  // ─── Entity → DTO (backend'e gönderim) ────────────────────────────────────
 
   static PollAnswerRequestItemDto toAnswerRequestItem(
     PollAnswerItemEntity entity,

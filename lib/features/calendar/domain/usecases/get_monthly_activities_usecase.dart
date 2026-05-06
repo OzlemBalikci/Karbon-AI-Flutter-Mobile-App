@@ -12,11 +12,6 @@ class GetMonthlyActivitiesUsecase {
   Future<Either<AppException, DailyMonthlyActivitiesEntity>> call({
     required int year,
     required int month,
-    required int period,
   }) =>
-      _repository.getMonthlyActivities(
-        year: year,
-        month: month,
-        period: period,
-      );
+      _repository.getMonthlyActivities(year: year, month: month);
 }
