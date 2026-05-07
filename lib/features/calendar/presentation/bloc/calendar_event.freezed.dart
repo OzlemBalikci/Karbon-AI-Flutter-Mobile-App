@@ -64,6 +64,8 @@ extension CalendarEventPatterns on CalendarEvent {
     TResult Function(CalendarNextMonthTapped value)? nextMonthTapped,
     TResult Function(CalendarQuestionDetailDismissed value)?
         questionDetailDismissed,
+    TResult Function(CalendarSeeAllRequested value)? seeAllRequested,
+    TResult Function(CalendarSeeAllHandled value)? seeAllHandled,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -91,6 +93,10 @@ extension CalendarEventPatterns on CalendarEvent {
       case CalendarQuestionDetailDismissed()
           when questionDetailDismissed != null:
         return questionDetailDismissed(_that);
+      case CalendarSeeAllRequested() when seeAllRequested != null:
+        return seeAllRequested(_that);
+      case CalendarSeeAllHandled() when seeAllHandled != null:
+        return seeAllHandled(_that);
       case _:
         return orElse();
     }
@@ -127,6 +133,8 @@ extension CalendarEventPatterns on CalendarEvent {
     required TResult Function(CalendarNextMonthTapped value) nextMonthTapped,
     required TResult Function(CalendarQuestionDetailDismissed value)
         questionDetailDismissed,
+    required TResult Function(CalendarSeeAllRequested value) seeAllRequested,
+    required TResult Function(CalendarSeeAllHandled value) seeAllHandled,
   }) {
     final _that = this;
     switch (_that) {
@@ -150,6 +158,10 @@ extension CalendarEventPatterns on CalendarEvent {
         return nextMonthTapped(_that);
       case CalendarQuestionDetailDismissed():
         return questionDetailDismissed(_that);
+      case CalendarSeeAllRequested():
+        return seeAllRequested(_that);
+      case CalendarSeeAllHandled():
+        return seeAllHandled(_that);
     }
   }
 
@@ -181,6 +193,8 @@ extension CalendarEventPatterns on CalendarEvent {
     TResult? Function(CalendarNextMonthTapped value)? nextMonthTapped,
     TResult? Function(CalendarQuestionDetailDismissed value)?
         questionDetailDismissed,
+    TResult? Function(CalendarSeeAllRequested value)? seeAllRequested,
+    TResult? Function(CalendarSeeAllHandled value)? seeAllHandled,
   }) {
     final _that = this;
     switch (_that) {
@@ -207,6 +221,10 @@ extension CalendarEventPatterns on CalendarEvent {
       case CalendarQuestionDetailDismissed()
           when questionDetailDismissed != null:
         return questionDetailDismissed(_that);
+      case CalendarSeeAllRequested() when seeAllRequested != null:
+        return seeAllRequested(_that);
+      case CalendarSeeAllHandled() when seeAllHandled != null:
+        return seeAllHandled(_that);
       case _:
         return null;
     }
@@ -237,6 +255,8 @@ extension CalendarEventPatterns on CalendarEvent {
     TResult Function()? previousMonthTapped,
     TResult Function()? nextMonthTapped,
     TResult Function()? questionDetailDismissed,
+    TResult Function()? seeAllRequested,
+    TResult Function()? seeAllHandled,
     required TResult orElse(),
   }) {
     final _that = this;
@@ -264,6 +284,10 @@ extension CalendarEventPatterns on CalendarEvent {
       case CalendarQuestionDetailDismissed()
           when questionDetailDismissed != null:
         return questionDetailDismissed();
+      case CalendarSeeAllRequested() when seeAllRequested != null:
+        return seeAllRequested();
+      case CalendarSeeAllHandled() when seeAllHandled != null:
+        return seeAllHandled();
       case _:
         return orElse();
     }
@@ -296,6 +320,8 @@ extension CalendarEventPatterns on CalendarEvent {
     required TResult Function() previousMonthTapped,
     required TResult Function() nextMonthTapped,
     required TResult Function() questionDetailDismissed,
+    required TResult Function() seeAllRequested,
+    required TResult Function() seeAllHandled,
   }) {
     final _that = this;
     switch (_that) {
@@ -319,6 +345,10 @@ extension CalendarEventPatterns on CalendarEvent {
         return nextMonthTapped();
       case CalendarQuestionDetailDismissed():
         return questionDetailDismissed();
+      case CalendarSeeAllRequested():
+        return seeAllRequested();
+      case CalendarSeeAllHandled():
+        return seeAllHandled();
     }
   }
 
@@ -347,6 +377,8 @@ extension CalendarEventPatterns on CalendarEvent {
     TResult? Function()? previousMonthTapped,
     TResult? Function()? nextMonthTapped,
     TResult? Function()? questionDetailDismissed,
+    TResult? Function()? seeAllRequested,
+    TResult? Function()? seeAllHandled,
   }) {
     final _that = this;
     switch (_that) {
@@ -373,6 +405,10 @@ extension CalendarEventPatterns on CalendarEvent {
       case CalendarQuestionDetailDismissed()
           when questionDetailDismissed != null:
         return questionDetailDismissed();
+      case CalendarSeeAllRequested() when seeAllRequested != null:
+        return seeAllRequested();
+      case CalendarSeeAllHandled() when seeAllHandled != null:
+        return seeAllHandled();
       case _:
         return null;
     }
@@ -927,6 +963,46 @@ class CalendarQuestionDetailDismissed implements CalendarEvent {
   @override
   String toString() {
     return 'CalendarEvent.questionDetailDismissed()';
+  }
+}
+
+/// @nodoc
+
+class CalendarSeeAllRequested implements CalendarEvent {
+  const CalendarSeeAllRequested();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is CalendarSeeAllRequested);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'CalendarEvent.seeAllRequested()';
+  }
+}
+
+/// @nodoc
+
+class CalendarSeeAllHandled implements CalendarEvent {
+  const CalendarSeeAllHandled();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is CalendarSeeAllHandled);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'CalendarEvent.seeAllHandled()';
   }
 }
 

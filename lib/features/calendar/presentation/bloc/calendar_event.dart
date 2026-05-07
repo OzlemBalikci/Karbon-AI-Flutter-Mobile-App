@@ -52,4 +52,10 @@ sealed class CalendarEvent with _$CalendarEvent {
   /// Soru detay sayfasından çıkıldı — selectedQuestion temizlenir.
   const factory CalendarEvent.questionDetailDismissed() =
       CalendarQuestionDetailDismissed;
+
+  /// "Tümünü Göster" butonuna basıldı — BLoC navigasyon argümanlarını hesaplar.
+  const factory CalendarEvent.seeAllRequested() = CalendarSeeAllRequested;
+
+  /// UI navigasyonu tamamladı — seeAllNav temizlenir.
+  const factory CalendarEvent.seeAllHandled() = CalendarSeeAllHandled;
 }

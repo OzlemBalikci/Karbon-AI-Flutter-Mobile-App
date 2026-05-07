@@ -1,18 +1,21 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:karbon/router/navigation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:karbon/core/constants/extensions.dart';
-import 'package:karbon/core/utils/formatters.dart';
-import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/di/di.dart';
-import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
-import 'package:karbon/features/calendar/domain/usecases/get_details_usecase.dart';
-import 'package:karbon/widgets/back_icon_button.dart';
-import 'package:karbon/widgets/app_header_title.dart';
-import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/widgets/score_card.dart';
 import 'package:karbon/core/constants/assets.gen.dart';
+import 'package:karbon/router/navigation.dart';
+import 'package:karbon/core/constants/extensions.dart';
+import 'package:karbon/core/constants/spacing.dart';
+import 'package:karbon/core/utils/formatters.dart';
+import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
+import 'package:karbon/features/calendar/presentation/bloc/calendar_bloc.dart';
+import 'package:karbon/features/calendar/presentation/bloc/calendar_event.dart';
+import 'package:karbon/features/calendar/presentation/bloc/calendar_selector.dart';
+import 'package:karbon/features/calendar/presentation/bloc/calendar_state.dart';
+import 'package:karbon/widgets/app_header_title.dart';
+import 'package:karbon/widgets/back_icon_button.dart';
 import 'package:karbon/widgets/score_badge.dart';
+import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/widgets/score_card.dart';
 
 part 'sections/daydetail_header_section.dart';
 part 'sections/daydetail_list_section.dart';
@@ -32,7 +35,7 @@ class DayDetailPage extends StatefulWidget {
     required this.date,
   });
 
-  /// `yyyy-MM-dd`
+  /// `yyyy-MM-dd` veya ISO 8601 string
   final String date;
 
   @override
@@ -40,37 +43,23 @@ class DayDetailPage extends StatefulWidget {
 }
 
 class _DayDetailPageState extends State<DayDetailPage> {
-  final GetDetailsUsecase _getDetails = getIt<GetDetailsUsecase>();
-
-  DailyDayDetailEntity? _detail;
+  late final CalendarBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _load();
+    _bloc = context.read<CalendarBloc>();
+    final dateTime = DateTime.tryParse(widget.date) ??
+        DateTime.tryParse('${widget.date}T00:00:00') ??
+        DateTime.now();
+    _bloc.add(CalendarEvent.dayDetailPageOpened(selectedDay: dateTime));
   }
 
-  Future<void> _load() async {
-    final result = await _getDetails(date: widget.date);
-    if (!mounted) return;
-    result.fold(
-      (_) => setState(() => _detail = null),
-      (d) => setState(() => _detail = d),
-    );
-  }
-
-  /// [DailyReportCard] içindeki `dayLabel` ile aynı format.
   String get _dayLabel {
     final d = DateTime.tryParse(widget.date) ??
         DateTime.tryParse('${widget.date}T00:00:00') ??
         DateTime.now();
     return formatFullDate(d);
-  }
-
-  String get _dayScoreLabel {
-    final d = _detail;
-    if (d == null) return '—';
-    return _formatDayDetailScore(d.totalScore);
   }
 
   @override
@@ -80,17 +69,23 @@ class _DayDetailPageState extends State<DayDetailPage> {
       body: Stack(
         children: [
           SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  DaydetailHeaderSection(
-                    dayLabel: _dayLabel,
-                    dayScore: _dayScoreLabel,
-                  ),
-                  SizedBox(height: AppThemeSpacing.s20.h),
-                  DayDetailListSection(detail: _detail),
-                ],
+            child: CalendarDayDetailAsyncSelector(
+              builder: (slice) => SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    DaydetailHeaderSection(
+                      dayLabel: _dayLabel,
+                      dayScore: slice.data != null
+                          ? _formatDayDetailScore(slice.data!.totalScore)
+                          : slice.status == CalendarAsyncStatus.loading
+                              ? '…'
+                              : '—',
+                    ),
+                    SizedBox(height: AppThemeSpacing.s20.h),
+                    DayDetailListSection(detail: slice.data),
+                  ],
+                ),
               ),
             ),
           ),

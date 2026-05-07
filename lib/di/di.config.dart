@@ -65,6 +65,8 @@ import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart'
     as _i279;
 import 'package:karbon/features/calendar/data/datasources/calendar_remote_impl.dart'
     as _i673;
+import 'package:karbon/features/calendar/data/datasources/calendar_remote_mock.dart'
+    as _i211;
 import 'package:karbon/features/calendar/data/repositories/calendar_repository_impl.dart'
     as _i800;
 import 'package:karbon/features/calendar/domain/repositories/calendar_repository.dart'
@@ -201,6 +203,7 @@ extension GetItInjectableX on _i174.GetIt {
         () => registerModule.secureStorage);
     gh.lazySingleton<_i372.DioClient>(() => _i372.DioClient());
     gh.lazySingleton<_i614.SettingsBloc>(() => _i614.SettingsBloc());
+    gh.lazySingleton<_i279.CalendarRemote>(() => _i211.CalendarRemoteMock());
     gh.lazySingleton<_i366.CarbonCalculateLocal>(
         () => _i177.CarbonCalculateLocalImpl(gh<_i460.SharedPreferences>()));
     gh.lazySingleton<_i357.CarbonCalculateRemote>(
@@ -211,6 +214,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i964.UsefulinfoRemoteMock());
     gh.lazySingleton<_i1036.LeaderboardRemote>(
         () => _i637.LeaderboardRemoteMock());
+    gh.lazySingleton<_i623.CalendarRepository>(
+        () => _i800.CalendarRepositoryImpl(gh<_i279.CalendarRemote>()));
     gh.lazySingleton<_i25.HomeRemote>(() => _i318.HomeRemoteMock());
     gh.lazySingleton<_i560.AuthLaunchLocal>(
         () => _i709.AuthLaunchLocalImpl(gh<_i460.SharedPreferences>()));
@@ -233,12 +238,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i97.GetUsefulInfosUseCase(gh<_i71.UsefulinfoRepository>()));
     gh.factory<_i232.CustomFirstOpenCubit>(
         () => _i232.CustomFirstOpenCubit(gh<_i560.AuthLaunchLocal>()));
-    gh.lazySingleton<_i279.CalendarRemote>(
-        () => _i673.CalendarRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i434.UsefulinfoBloc>(
         () => _i434.UsefulinfoBloc(gh<_i97.GetUsefulInfosUseCase>()));
     gh.lazySingleton<_i614.DailyActivitiesRemote>(
         () => _i261.DailyActivitiesRemoteImpl(gh<_i361.Dio>()));
+    gh.factory<_i673.CalendarRemoteImpl>(
+        () => _i673.CalendarRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i701.HomeRemoteImpl>(
         () => _i701.HomeRemoteImpl(gh<_i361.Dio>()));
     gh.factory<_i679.LeaderboardRemoteImpl>(
@@ -247,10 +252,16 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i401.UsefulinfoRemoteImpl(gh<_i361.Dio>()));
     gh.lazySingleton<_i413.AuthRemote>(
         () => _i699.AuthRemoteImpl(gh<_i361.Dio>()));
+    gh.factory<_i910.GetActivityQuestionDetailUsecase>(() =>
+        _i910.GetActivityQuestionDetailUsecase(gh<_i623.CalendarRepository>()));
+    gh.factory<_i24.GetCalendarUsecase>(
+        () => _i24.GetCalendarUsecase(gh<_i623.CalendarRepository>()));
+    gh.factory<_i996.GetDetailsUsecase>(
+        () => _i996.GetDetailsUsecase(gh<_i623.CalendarRepository>()));
+    gh.factory<_i753.GetMonthlyActivitiesUsecase>(() =>
+        _i753.GetMonthlyActivitiesUsecase(gh<_i623.CalendarRepository>()));
     gh.lazySingleton<_i483.ProfileRemote>(
         () => _i103.ProfileRemoteImpl(gh<_i361.Dio>()));
-    gh.lazySingleton<_i623.CalendarRepository>(
-        () => _i800.CalendarRepositoryImpl(gh<_i279.CalendarRemote>()));
     gh.lazySingleton<_i48.ProfileRepository>(
         () => _i758.ProfileRepositoryImpl(gh<_i483.ProfileRemote>()));
     gh.factory<_i26.DonateTreesUsecase>(
@@ -274,6 +285,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i812.GetProfileUseCase>(),
           gh<_i524.GetDonationsUsecase>(),
           gh<_i26.DonateTreesUsecase>(),
+        ));
+    gh.factory<_i682.CalendarBloc>(() => _i682.CalendarBloc(
+          gh<_i24.GetCalendarUsecase>(),
+          gh<_i753.GetMonthlyActivitiesUsecase>(),
+          gh<_i996.GetDetailsUsecase>(),
+          gh<_i910.GetActivityQuestionDetailUsecase>(),
         ));
     gh.lazySingleton<_i252.AuthRepository>(() => _i300.AuthRepositoryImpl(
           gh<_i413.AuthRemote>(),
@@ -301,14 +318,6 @@ extension GetItInjectableX on _i174.GetIt {
         _i671.GetTodayQuestionsUseCase(gh<_i320.DailyActivitiesRepository>()));
     gh.factory<_i902.PostAnswersUseCase>(
         () => _i902.PostAnswersUseCase(gh<_i320.DailyActivitiesRepository>()));
-    gh.factory<_i24.GetCalendarUsecase>(
-        () => _i24.GetCalendarUsecase(gh<_i623.CalendarRepository>()));
-    gh.factory<_i996.GetDetailsUsecase>(
-        () => _i996.GetDetailsUsecase(gh<_i623.CalendarRepository>()));
-    gh.factory<_i753.GetMonthlyActivitiesUsecase>(() =>
-        _i753.GetMonthlyActivitiesUsecase(gh<_i623.CalendarRepository>()));
-    gh.factory<_i910.GetActivityQuestionDetailUsecase>(() =>
-        _i910.GetActivityQuestionDetailUsecase(gh<_i623.CalendarRepository>()));
     gh.factory<_i793.CheckSessionUseCase>(
         () => _i793.CheckSessionUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i382.ClearLocalSessionUseCase>(
@@ -325,12 +334,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i558.RegisterUseCase(gh<_i252.AuthRepository>()));
     gh.factory<_i1018.ResetPasswordUseCase>(
         () => _i1018.ResetPasswordUseCase(gh<_i252.AuthRepository>()));
-    gh.factory<_i682.CalendarBloc>(() => _i682.CalendarBloc(
-          gh<_i24.GetCalendarUsecase>(),
-          gh<_i753.GetMonthlyActivitiesUsecase>(),
-          gh<_i996.GetDetailsUsecase>(),
-          gh<_i910.GetActivityQuestionDetailUsecase>(),
-        ));
     gh.factory<_i208.ForgotPasswordCubit>(
         () => _i208.ForgotPasswordCubit(gh<_i210.ForgotPasswordUseCase>()));
     gh.lazySingleton<_i564.AuthBloc>(() => _i564.AuthBloc(

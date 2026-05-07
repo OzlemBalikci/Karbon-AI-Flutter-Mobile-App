@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/extensions.dart';
 import 'package:karbon/core/constants/spacing.dart';
-import 'package:karbon/di/di.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
-import 'package:karbon/features/calendar/domain/usecases/get_activity_question_detail_usecase.dart';
+import 'package:karbon/features/calendar/presentation/bloc/calendar_bloc.dart';
+import 'package:karbon/features/calendar/presentation/bloc/calendar_event.dart';
+import 'package:karbon/features/calendar/presentation/bloc/calendar_state.dart';
 import 'package:karbon/widgets/app_header_title.dart';
 import 'package:karbon/widgets/back_icon_button.dart';
 
@@ -35,41 +37,23 @@ class CalendarSelectedQuestionDetailPage extends StatefulWidget {
 
 class _CalendarSelectedQuestionDetailPageState
     extends State<CalendarSelectedQuestionDetailPage> {
-  final GetActivityQuestionDetailUsecase _getQuestionDetail =
-      getIt<GetActivityQuestionDetailUsecase>();
-
-  ActivityQuestionDetailEntity? _questionDetail;
-  bool _loading = true;
-  String? _error;
+  late final CalendarBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _loadQuestionDetail();
+    _bloc = context.read<CalendarBloc>();
+    if (widget.questionId.isNotEmpty) {
+      _bloc.add(CalendarEvent.questionDetailPageOpened(
+        questionId: widget.questionId,
+      ));
+    }
   }
 
-  Future<void> _loadQuestionDetail() async {
-    if (widget.questionId.isEmpty) {
-      setState(() {
-        _loading = false;
-        _error = 'Soru detayı bulunamadı.';
-      });
-      return;
-    }
-    final result = await _getQuestionDetail(id: widget.questionId);
-    if (!mounted) return;
-    result.fold(
-      (e) => setState(() {
-        _questionDetail = null;
-        _error = e.message;
-        _loading = false;
-      }),
-      (data) => setState(() {
-        _questionDetail = data;
-        _error = null;
-        _loading = false;
-      }),
-    );
+  @override
+  void dispose() {
+    _bloc.add(const CalendarEvent.questionDetailDismissed());
+    super.dispose();
   }
 
   @override
@@ -79,15 +63,36 @@ class _CalendarSelectedQuestionDetailPageState
       body: Stack(
         children: [
           SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
-              child: SelectedQuestionDetailSection(
-                questionText: widget.questionText,
-                answerText: widget.answerText,
-                questionDetail: _questionDetail,
-                loading: _loading,
-                error: _error,
-              ),
+            child: BlocBuilder<CalendarBloc, CalendarState>(
+              buildWhen: (prev, curr) =>
+                  prev.dayDetail != curr.dayDetail ||
+                  prev.selectedQuestion != curr.selectedQuestion ||
+                  prev.selectedQuestionAsyncStatus !=
+                      curr.selectedQuestionAsyncStatus,
+              builder: (context, state) {
+                final activities =
+                    state.dayDetail?.activities ?? const [];
+                final slice = (
+                  status: state.selectedQuestionAsyncStatus,
+                  error: state.selectedQuestionError,
+                  data: state.selectedQuestion,
+                );
+                return SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppThemeSpacing.s25.w),
+                  child: SelectedQuestionDetailSection(
+                    rootQuestionId: widget.questionId,
+                    questionText: widget.questionText,
+                    answerText: widget.answerText,
+                    activities: activities,
+                    questionDetail: slice.data,
+                    loading: slice.status == CalendarAsyncStatus.loading ||
+                        (slice.status == CalendarAsyncStatus.initial &&
+                            widget.questionId.isNotEmpty),
+                    error: slice.error,
+                  ),
+                );
+              },
             ),
           ),
           Positioned(

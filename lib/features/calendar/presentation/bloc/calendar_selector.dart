@@ -78,8 +78,9 @@ String _resolveMonthTotal(
   DailyMonthlyActivitiesEntity? monthDetail,
   DailyCalendarEntity? calendar,
 ) {
-  if (monthDetail != null)
+  if (monthDetail != null) {
     return formatCalendarScore(monthDetail.totalMonthlyScore);
+  }
   if (calendar != null) return formatCalendarScore(calendar.totalScore);
   return '—';
 }
@@ -215,6 +216,18 @@ class CalendarDayDetailAsyncSelector
           statusSelector: (s) => s.dayDetailAsyncStatus,
           errorSelector: (s) => s.dayDetailError,
           dataSelector: (s) => s.dayDetail,
+        );
+}
+
+class CalendarQuestionDetailAsyncSelector
+    extends CalendarAsyncSelector<ActivityQuestionDetailEntity> {
+  CalendarQuestionDetailAsyncSelector({
+    super.key,
+    required super.builder,
+  }) : super(
+          statusSelector: (s) => s.selectedQuestionAsyncStatus,
+          errorSelector: (s) => s.selectedQuestionError,
+          dataSelector: (s) => s.selectedQuestion,
         );
 }
 

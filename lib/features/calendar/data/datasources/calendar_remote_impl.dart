@@ -9,7 +9,8 @@ import 'package:karbon/features/calendar/data/dtos/daily_monthly_day_score_dto.d
 import 'package:karbon/features/calendar/data/mapper/calendar_mapper.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 
-@LazySingleton(as: CalendarRemote)
+/// Canlı API. Mock için [CalendarRemoteMock] kayıtlıyken bu sınıf `@Injectable()` kalır.
+@Injectable()
 class CalendarRemoteImpl implements CalendarRemote {
   CalendarRemoteImpl(this._dio);
 

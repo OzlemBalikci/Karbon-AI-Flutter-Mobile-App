@@ -3,6 +3,32 @@ import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart'
 
 part 'calendar_state.freezed.dart';
 
+/// BLoC tarafından hesaplanan "Tümünü Göster" navigasyon argümanları.
+class SeeAllNavArgs {
+  const SeeAllNavArgs({
+    required this.year,
+    required this.month,
+    required this.period,
+  });
+
+  final int year;
+  final int month;
+
+  /// `1` = 1–15, `2` = 16–31
+  final int period;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SeeAllNavArgs &&
+          other.year == year &&
+          other.month == month &&
+          other.period == period;
+
+  @override
+  int get hashCode => Object.hash(year, month, period);
+}
+
 enum CalendarAsyncStatus {
   initial,
   loading,
@@ -24,13 +50,14 @@ abstract class CalendarState with _$CalendarState {
     DailyCalendarEntity? calendar,
     DailyMonthlyActivitiesEntity? monthDetail,
     DailyDayDetailEntity? dayDetail,
-    ActivityQuestionOptionEntity? selectedQuestion,
+    ActivityQuestionDetailEntity? selectedQuestion,
     required DateTime focusedDay,
     required DateTime selectedDay,
     String? calendarFirstOpenError,
     String? dayDetailError,
     String? monthDetailError,
     String? selectedQuestionError,
+    SeeAllNavArgs? seeAllNav,
   }) = _CalendarState;
 
   factory CalendarState.initial() {

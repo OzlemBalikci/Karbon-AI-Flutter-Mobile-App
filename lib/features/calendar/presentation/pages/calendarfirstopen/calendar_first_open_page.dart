@@ -49,11 +49,11 @@ class _CalendarFirstOpenPageState extends State<CalendarFirstOpenPage> {
             prev.focusedDay != curr.focusedDay ||
             prev.selectedDay != curr.selectedDay ||
             prev.calendar != curr.calendar ||
-            prev.monthly != curr.monthly ||
+            prev.monthDetail != curr.monthDetail ||
             prev.dayDetail != curr.dayDetail ||
             prev.calendarFirstOpenAsyncStatus !=
                 curr.calendarFirstOpenAsyncStatus ||
-            prev.monthlyAsyncStatus != curr.monthlyAsyncStatus ||
+            prev.monthDetailAsyncStatus != curr.monthDetailAsyncStatus ||
             prev.dayDetailAsyncStatus != curr.dayDetailAsyncStatus,
         builder: (context, state) {
           final scores = selectCalendarScoreLabels(state);

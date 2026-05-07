@@ -169,7 +169,7 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       )),
       (detail) => emit(state.copyWith(
         selectedQuestionAsyncStatus: CalendarAsyncStatus.success,
-        selectedQuestion: null,
+        selectedQuestion: detail,
       )),
     );
   }

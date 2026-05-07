@@ -22,18 +22,9 @@ class DayDetailHistorySection extends StatelessWidget {
           separatorBuilder: (_, __) => SizedBox(height: 30.h),
           itemBuilder: (context, index) {
             final a = activities[index];
-            final parsed = DateTime.tryParse(a.activityDate);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (parsed != null)
-                  Text(
-                    formatFullDate(parsed.toLocal()),
-                    style: context.typographiesSp.bodySmall
-                        .withColor(context.colors.primary)
-                        .copyWith(fontStyle: FontStyle.italic),
-                  ),
-                SizedBox(height: AppThemeSpacing.s10.h),
                 _DayDetailHistoryCard(
                   questionId: a.activityQuestionId,
                   questionText: a.questionText,
@@ -48,6 +39,7 @@ class DayDetailHistorySection extends StatelessWidget {
     );
   }
 }
+
 class _DayDetailHistoryCard extends StatelessWidget {
   const _DayDetailHistoryCard({
     required this.questionId,
@@ -96,25 +88,15 @@ class _DayDetailHistoryCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      questionText,
-                      style: context.typographiesSp.bodySmall.withColor(
-                        context.colors.textOnQuestion.withValues(alpha: 0.6),
-                      ),
-                    ),
-                    if (answerText.isNotEmpty) ...[
-                      SizedBox(height: AppThemeSpacing.s6.h),
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
                       Text(
-                        answerText,
+                        questionText,
                         style: context.typographiesSp.bodySmall.withColor(
-                          context.colors.textOnQuestion.withValues(alpha: 0.85),
+                          context.colors.textOnQuestion.withValues(alpha: 0.6),
                         ),
                       ),
-                    ],
-                  ],
-                ),
+                    ]),
               ),
               SizedBox(width: AppThemeSpacing.s8.w),
               ScoreBadge(score: score),
