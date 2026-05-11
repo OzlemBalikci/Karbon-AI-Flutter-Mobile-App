@@ -138,7 +138,7 @@ main()
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/karbon.git
+git clone <REPO_URL>
 cd karbon
 
 # Install dependencies
@@ -167,10 +167,10 @@ The API base URL is provided at build time via `--dart-define`:
 
 ```bash
 # Development
-flutter run --dart-define=API_BASE_URL=https://api-dev.example.com
+flutter run --dart-define=API_BASE_URL=<YOUR_DEV_API_URL>
 
 # Production
-flutter build apk --dart-define=API_BASE_URL=https://api.example.com
+flutter build apk --dart-define=API_BASE_URL=<YOUR_PROD_API_URL>
 ```
 
 Defined in `lib/core/networks/api_config.dart`:
@@ -188,13 +188,13 @@ abstract final class ApiConfig {
 
 ```bash
 # Debug
-flutter run
+flutter run --dart-define=API_BASE_URL=<YOUR_DEV_API_URL>
 
 # Release — Android
-flutter build apk --release --dart-define=API_BASE_URL=https://api.example.com
+flutter build apk --release --dart-define=API_BASE_URL=<YOUR_PROD_API_URL>
 
 # Release — iOS
-flutter build ipa --release --dart-define=API_BASE_URL=https://api.example.com
+flutter build ipa --release --dart-define=API_BASE_URL=<YOUR_PROD_API_URL>
 ```
 
 ---
