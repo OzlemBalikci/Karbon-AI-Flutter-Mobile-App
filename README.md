@@ -39,6 +39,14 @@
 
 ---
 
+## Screenshots
+
+<div align="center">
+  <img src="assets/images/readme.png" alt="Karbon AI App Preview" width="100%"/>
+</div>
+
+---
+
 ## Features
 
 | Feature | Description |
