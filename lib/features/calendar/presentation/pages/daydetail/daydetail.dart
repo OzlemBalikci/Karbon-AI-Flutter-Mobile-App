@@ -35,7 +35,6 @@ class DayDetailPage extends StatefulWidget {
     required this.date,
   });
 
-  /// `yyyy-MM-dd` veya ISO 8601 string
   final String date;
 
   @override

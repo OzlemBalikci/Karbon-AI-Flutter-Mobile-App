@@ -1,6 +1,5 @@
 part of '../../../profile.dart';
 
-/// Bağış açıklaması HTML’i; içerik `html` ile dışarıdan verilir.
 class TreeDonationInfo extends StatelessWidget {
   const TreeDonationInfo({super.key, required this.html});
 

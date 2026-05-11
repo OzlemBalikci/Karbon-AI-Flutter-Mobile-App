@@ -37,10 +37,9 @@ class LeaderRankSelector
     extends LeaderofmonthSelector<List<LeaderboardLeaderEntity>> {
   LeaderRankSelector({
     super.key,
-    required Widget Function(List<LeaderboardLeaderEntity>) builder,
+    required super.builder,
   }) : super(
           selector: (state) => [...state.podium, ...state.leaders],
-          builder: builder,
         );
 }
 
@@ -48,9 +47,6 @@ class CurrentUserRankSelector
     extends LeaderofmonthSelector<CurrentUserRankEntity?> {
   CurrentUserRankSelector({
     super.key,
-    required Widget Function(CurrentUserRankEntity?) builder,
-  }) : super(
-          selector: (state) => state.currentUserRank,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: (state) => state.currentUserRank);
 }

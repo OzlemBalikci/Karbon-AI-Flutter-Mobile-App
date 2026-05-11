@@ -22,7 +22,6 @@ class QuestionChain {
     required DailyQuestionEntity question,
     required DailyQuestionOptionEntity option,
   }) {
-    // bu sorudan sonrakileri temizle
     final idx = visibleQuestions.indexOf(question);
     final newVisible = visibleQuestions.sublist(0, idx + 1);
     final newSelected =
@@ -30,7 +29,6 @@ class QuestionChain {
           ..removeWhere((id, _) => !newVisible.map((q) => q.id).contains(id))
           ..[question.id] = option;
 
-    // nextQuestionId varsa soruyu bul ve ekle
     if (option.nextQuestionId != null && option.nextQuestionId!.isNotEmpty) {
       final next = _all.firstWhere((q) => q.id == option.nextQuestionId);
       newVisible.add(next);

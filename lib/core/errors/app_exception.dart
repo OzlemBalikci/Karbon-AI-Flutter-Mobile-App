@@ -1,6 +1,3 @@
-//Bu kod, uygulamadaki tüm hataları tek bir standart yapıda toplamak ve yönetmek
-// için yazılmış bir **custom exception (özel hata sınıfı)**dır.
-
 import 'package:karbon/core/errors/api_error.dart';
 
 class AppException implements Exception {
@@ -47,15 +44,10 @@ class AppException implements Exception {
   final int statusCode;
   final AppExceptionType type;
   final List<ApiError> errors;
-
-//errors listesinde isShow == true olan tüm ApiError kayıtlarını süzüp,
-//her birinin message alanını alarak yeni bir List<String> üretir.
   List<String> get visibleMessages =>
       errors.where((e) => e.isShow).map((e) => e.message).toList();
 
   bool hasCode(int code) => errors.any((e) => e.code == code);
-
-  // ── Private helpers ───────────────────────────────────────────────────────
 
   static AppExceptionType _typeFromStatus(int code) => switch (code) {
         400 => AppExceptionType.badRequest,
@@ -94,6 +86,5 @@ enum AppExceptionType {
   server,
   network,
 
-  /// Parse hatası veya hiçbir kategoriye girmeyen beklenmeyen durum.
   unexpected,
 }

@@ -1,6 +1,5 @@
 import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
 
-/// [ProfileRemoteImpl] `ApiConfig.baseUrl` boşken kullanır.
 final DateTime mockBirthUtc = DateTime.utc(1998, 2, 12);
 
 final UserProfileEntity kMockUserProfile = UserProfileEntity(

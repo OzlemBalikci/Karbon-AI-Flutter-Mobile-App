@@ -28,7 +28,6 @@ class QuestionFeature extends StatelessWidget {
                 );
               }
 
-              // Aktif adım → etkileşimli dropdown
               return DropdownItem(
                 question: step,
                 selectedOptionId: ui.selectedOptions[step.id]?.id,

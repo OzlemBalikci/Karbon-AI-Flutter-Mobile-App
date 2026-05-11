@@ -4,9 +4,6 @@ import 'package:karbon/features/auth/data/datasources/auth_launch_local.dart';
 import 'package:karbon/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:karbon/router/navigation.dart';
 
-/// Auth durumu zaten belirlenmiş ise (AppBootstrapGate'de önceden hesaplandı)
-/// SplashPage'i hiç mount etmeden direkt doğru sayfaya yönlendirir.
-/// Auth hâlâ sessionChecking ise SplashPage normal akışla devam eder.
 class AppStartupGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {

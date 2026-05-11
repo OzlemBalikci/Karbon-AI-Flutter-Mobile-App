@@ -7,12 +7,9 @@ class CustomFirstOpenSelector<T>
     extends BlocSelector<CustomFirstOpenCubit, CustomFirstOpenState, T> {
   CustomFirstOpenSelector({
     super.key,
-    required T Function(CustomFirstOpenState) selector,
+    required super.selector,
     required Widget Function(T value) builder,
-  }) : super(
-          selector: selector,
-          builder: (_, value) => builder(value),
-        );
+  }) : super(builder: (_, value) => builder(value));
 }
 
 class CustomFirstOpenStatusSelector

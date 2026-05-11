@@ -1,6 +1,5 @@
 import 'package:karbon/features/dailyactivites/domain/entities/daily_activities_entities.dart';
 
-/// `ApiConfig.baseUrl` boşken [DailyActivitiesRemoteImpl] tarafından kullanılan sabit veriler.
 abstract final class DailyActivitiesRemoteMocks {
   DailyActivitiesRemoteMocks._();
 

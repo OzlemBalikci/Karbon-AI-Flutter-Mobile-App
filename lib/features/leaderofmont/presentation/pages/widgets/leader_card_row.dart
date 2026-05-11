@@ -6,7 +6,6 @@ import 'package:karbon/features/leaderofmont/presentation/pages/widgets/leader_c
 import 'package:karbon/features/leaderofmont/presentation/widgetvariant/leader_card_variant.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// Üst lider kartları; veri üstteki [LeaderRankSelector] / [HomeTopLeadersSelector] ile sağlanır.
 class LeaderCardRow extends StatelessWidget {
   const LeaderCardRow({
     super.key,

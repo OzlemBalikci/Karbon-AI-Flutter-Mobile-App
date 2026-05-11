@@ -10,8 +10,6 @@ import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entit
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote.dart';
 import 'package:karbon/core/networks/response_ext.dart';
 
-/// Canlı API implementasyonu.
-/// Geliştirme ortamında [CarbonCalculateRemoteMock] aktifken bu sınıf `@Injectable()` kalır.
 @Injectable()
 class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
   CarbonCalculateRemoteImpl(this._dio, this._local);
@@ -58,5 +56,4 @@ class CarbonCalculateRemoteImpl implements CarbonCalculateRemote {
     final data = res.dataMap();
     return PollMapper.toScoreEntity(PollSubmissionResultDto.fromJson(data));
   }
-
 }

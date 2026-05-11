@@ -26,11 +26,8 @@ class UsefulinfoListSelector
     extends UsefulinfoSelector<List<UsefulInfoEntity>> {
   UsefulinfoListSelector({
     super.key,
-    required Widget Function(List<UsefulInfoEntity> infos) builder,
-  }) : super(
-          selector: (state) => state.infos,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: (state) => state.infos);
 }
 
 class UsefulinfoErrorSelector extends UsefulinfoSelector<String?> {

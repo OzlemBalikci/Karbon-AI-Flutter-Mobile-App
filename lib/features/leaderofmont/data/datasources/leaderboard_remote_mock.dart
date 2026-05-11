@@ -4,8 +4,6 @@ import 'package:karbon/features/leaderofmont/data/dtos/leaderboard_data_dto.dart
 import 'package:karbon/features/leaderofmont/data/mapper/leaderboard_mapper.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
-/// Geliştirme: örnek liderlik verisi.
-/// Canlı API için [LeaderboardRemoteImpl] `@LazySingleton(as: LeaderboardRemote)` ile kayıtlıdır.
 @LazySingleton(as: LeaderboardRemote)
 class LeaderboardRemoteMock implements LeaderboardRemote {
   @override

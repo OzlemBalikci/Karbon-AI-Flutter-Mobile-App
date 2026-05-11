@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/leaderofmont/domain/usecases/get_leaderboard_data_usecase.dart';
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_event.dart';

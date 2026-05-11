@@ -4,7 +4,6 @@ import 'package:karbon/widgets/bottom_navigation_bar.dart' as app_nav;
 import 'package:auto_route/auto_route.dart';
 import 'package:karbon/router/navigation.dart';
 
-// Sabit set: tam ekran açılan, alt barı gizlemesi gereken rotalar
 const _fullScreenRoutes = <String>{
   SelectedQuestionRoute.name,
   SeeAllRoute.name,

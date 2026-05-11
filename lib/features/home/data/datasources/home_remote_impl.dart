@@ -6,7 +6,6 @@ import 'package:karbon/features/home/data/mapper/dto_mapper.dart';
 import 'package:karbon/features/home/domain/entities/home_dashboard_entity.dart';
 import 'package:karbon/core/networks/response_ext.dart';
 
-/// Canlı API. Mock için [HomeRemoteMock] kayıtlıyken bu sınıf `@Injectable()` kalL
 @Injectable()
 class HomeRemoteImpl implements HomeRemote {
   HomeRemoteImpl(this._dio);

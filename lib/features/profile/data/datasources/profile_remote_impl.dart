@@ -10,10 +10,6 @@ import 'package:karbon/features/profile/data/mapper/profile_mapper.dart';
 import 'package:karbon/features/profile/domain/entities/profile_entities.dart';
 import 'package:karbon/core/networks/response_ext.dart';
 
-/// GET `/api/v1/users/me/profile`, `/api/v1/users/me/donations`; bağış için POST aynı donations yolu.
-///
-/// [ApiConfig.profileUseMock] `true` veya [ApiConfig.baseUrl] boşken
-/// [profile_mock_data] kullanılır. Mock için: `--dart-define=PROFILE_USE_MOCK=true`.
 @LazySingleton(as: ProfileRemote)
 class ProfileRemoteImpl implements ProfileRemote {
   ProfileRemoteImpl(this._dio);

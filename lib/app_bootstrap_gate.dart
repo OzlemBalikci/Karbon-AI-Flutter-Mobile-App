@@ -10,11 +10,6 @@ import 'package:karbon/features/auth/presentation/bloc/splash/splash_event.dart'
 import 'package:karbon/features/auth/presentation/pages/splash/widgets/splash_background.dart';
 import 'package:karbon/router/navigation.dart';
 
-/// Bootstrap aşamasını yönetir:
-///  1. [SplashBloc] üzerinden asenkron başlatma işlemlerini tetikler.
-///  2. Başlatma tamamlanınca [AuthBloc] oturum kontrolü yapar.
-///  3. Her ikisi de tamamlanana kadar (veya minimum süre dolana kadar)
-///     splash ekranını gösterir; sonrasında ana uygulamaya geçer.
 class AppBootstrapGate extends StatefulWidget {
   const AppBootstrapGate({super.key});
 

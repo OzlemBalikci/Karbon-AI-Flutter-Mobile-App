@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 enum LeaderCardVariant {
-  compact, //Home
-  expanded, // leaderofmonth
+  compact,
+  expanded,
 }
 
 extension LeaderCardVariantExtension on LeaderCardVariant {

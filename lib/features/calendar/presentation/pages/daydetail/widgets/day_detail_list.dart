@@ -1,6 +1,5 @@
 part of '../daydetail.dart';
 
-/// [HistorySection] ile aynı üst başlık ve kart düzeni; veri [DailyDayActivityEntity] listesinden gelir.
 class DayDetailHistorySection extends StatelessWidget {
   const DayDetailHistorySection({
     super.key,

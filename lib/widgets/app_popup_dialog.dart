@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:karbon/core/constants/spacing.dart';
 
-/// Şeffaf [Dialog] sarmalayıcısı — yatay inset ve kart dışında ortak stil.
 Future<T?> showAppPopup<T>(
   BuildContext context, {
   required Widget child,
@@ -22,7 +21,6 @@ Future<T?> showAppPopup<T>(
   );
 }
 
-/// Beyaz, yuvarlatılmış popup kartı (yükseklik ve iç padding özelleştirilebilir).
 class AppPopupCard extends StatelessWidget {
   const AppPopupCard({
     super.key,

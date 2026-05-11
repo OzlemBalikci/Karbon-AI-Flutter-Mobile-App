@@ -19,7 +19,6 @@ class TextFieldWidget extends StatefulWidget {
 
   final String hintText;
 
-  /// Dışarıdan verilmezse widget kendi controller'ını oluşturup dispose eder.
   final TextEditingController? controller;
   final bool obscureText;
   final Widget? suffixIcon;

@@ -35,10 +35,6 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
   static DateTime _dateOnly(DateTime d) => DateTime(d.year, d.month, d.day);
 
-  // ---------------------------------------------------------------------------
-  // Handlers
-  // ---------------------------------------------------------------------------
-
   Future<void> _onStarted(
     CalendarStarted event,
     Emitter<CalendarState> emit,
@@ -184,10 +180,6 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
       selectedQuestionError: null,
     ));
   }
-
-  // ---------------------------------------------------------------------------
-  // Yükleme yardımcıları
-  // ---------------------------------------------------------------------------
 
   Future<void> _loadCalendarAndMonthDetail(
     Emitter<CalendarState> emit, {

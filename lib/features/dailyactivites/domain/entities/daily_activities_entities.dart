@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-/// GET `/api/v1/daily-activities?status=pending` — bekleyen soru özeti.
 class DailyPendingEntity extends Equatable {
   const DailyPendingEntity({
     required this.hasPending,
@@ -14,7 +13,6 @@ class DailyPendingEntity extends Equatable {
   List<Object?> get props => [hasPending, pendingCount];
 }
 
-/// GET `/api/v1/daily-activities/questions` — soru seçeneği.
 class DailyQuestionOptionEntity extends Equatable {
   const DailyQuestionOptionEntity({
     required this.id,
@@ -35,7 +33,6 @@ class DailyQuestionOptionEntity extends Equatable {
       [id, text, carbonValue, nextQuestionId, nextQuestion];
 }
 
-/// GET `/api/v1/daily-activities/questions` — günlük soru.
 class DailyQuestionEntity extends Equatable {
   const DailyQuestionEntity({
     required this.id,
@@ -56,7 +53,6 @@ class DailyQuestionEntity extends Equatable {
       [id, text, displayOrder, options, remainingSeconds];
 }
 
-/// POST `/api/v1/daily-activities/answers` — `answers[]` içindeki tek satır.
 class DailySelectedAnswerEntity extends Equatable {
   const DailySelectedAnswerEntity({
     required this.questionId,
@@ -70,7 +66,6 @@ class DailySelectedAnswerEntity extends Equatable {
   List<Object?> get props => [questionId, selectedOptionId];
 }
 
-/// POST yanıtındaki `answers[]` elemanı.
 class DailySubmittedAnswerLineEntity extends Equatable {
   const DailySubmittedAnswerLineEntity({
     required this.questionText,
@@ -86,7 +81,6 @@ class DailySubmittedAnswerLineEntity extends Equatable {
   List<Object?> get props => [questionText, selectedOptionText, carbonValue];
 }
 
-/// POST `/api/v1/daily-activities/answers` — `data` içi özet.
 class DailyAnswerResultEntity extends Equatable {
   const DailyAnswerResultEntity({
     required this.totalCarbonScore,
@@ -102,7 +96,6 @@ class DailyAnswerResultEntity extends Equatable {
   List<Object?> get props => [totalCarbonScore, isFlowCompleted, answers];
 }
 
-/// GET `/api/v1/daily-activities/previous-answers` — önceki cevaplar (son cevaplanan gün).
 class DailyPreviousAnswerItemEntity extends Equatable {
   const DailyPreviousAnswerItemEntity({
     required this.questionText,
@@ -120,7 +113,6 @@ class DailyPreviousAnswerItemEntity extends Equatable {
   List<Object?> get props => [questionText, answerText, score, date];
 }
 
-/// GET `/api/v1/daily-activities/previous-answers` — tarihe göre gruplanmış önceki cevaplar.
 class DailyPreviousAnswersByDateEntity extends Equatable {
   const DailyPreviousAnswersByDateEntity({
     required this.date,

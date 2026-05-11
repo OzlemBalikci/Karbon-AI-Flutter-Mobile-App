@@ -14,7 +14,7 @@ class SeeOtherLeaderCard extends StatelessWidget {
       ),
       child: GestureDetector(
         onTap: () => context.router.push(const LeaderofmonthRoute()),
-        child: Container(
+        child: SizedBox(
           height: 117.h,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

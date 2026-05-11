@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-/// Earth loading animation from [assetPath].
 class AppLoadingLottie extends StatelessWidget {
   const AppLoadingLottie({
     super.key,

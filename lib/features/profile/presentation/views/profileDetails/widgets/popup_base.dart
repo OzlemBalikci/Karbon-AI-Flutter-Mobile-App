@@ -81,7 +81,6 @@ enum ProfilePopupKind {
   deleteAccount,
 }
 
-/// Oturum aksiyonları [AuthBloc] üzerinden gider; popup sadece onayı iletip kapanır.
 void _dispatchSignOutAndCloseDialog(BuildContext context) {
   context.read<AuthBloc>().add(const AuthEvent.signOutRequested());
   context.router.pop();

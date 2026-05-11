@@ -1,7 +1,3 @@
-//Bu dosya, Dio’daki Response tipine iki uzantı (extension) metot ekler.
-// Amaç: response.data türünü tekrar tekrar elle kontrol etmek yerine,
-//liste veya map beklediğinizde hızlı ve net doğrulama + dönüşüm sağlamak.
-
 import 'package:dio/dio.dart';
 
 extension ResponseDataX on Response {
@@ -17,7 +13,6 @@ extension ResponseDataX on Response {
     return d.whereType<Map<String, dynamic>>().toList();
   }
 
-  /// `data` alanının `Map<String, dynamic>` olduğunu doğrular.
   Map<String, dynamic> dataMap() {
     final d = data;
     if (d is! Map<String, dynamic>) {

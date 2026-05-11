@@ -1,6 +1,5 @@
 import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 
-/// `project_docs/poll.md` ve [ActivePollSetEntity] yapısına uygun geliştirme verisi (13 soru).
 abstract final class ActivePollSetMock {
   static const String pollSetId = 'mock-poll-set-001';
 
@@ -12,7 +11,6 @@ abstract final class ActivePollSetMock {
         questions: questions,
       );
 
-  /// 13 soru; `displayOrder` 1..13.
   static final List<PollQuestionEntity> questions =
       List<PollQuestionEntity>.unmodifiable([
     _q(

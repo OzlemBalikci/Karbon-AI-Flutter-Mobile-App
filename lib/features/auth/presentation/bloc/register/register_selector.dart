@@ -7,10 +7,7 @@ class RegisterSelector<T>
     extends BlocSelector<RegisterCubit, RegisterState, T> {
   RegisterSelector({
     super.key,
-    required T Function(RegisterState) selector,
+    required super.selector,
     required Widget Function(T value) builder,
-  }) : super(
-          selector: selector,
-          builder: (_, value) => builder(value),
-        );
+  }) : super(builder: (_, value) => builder(value));
 }

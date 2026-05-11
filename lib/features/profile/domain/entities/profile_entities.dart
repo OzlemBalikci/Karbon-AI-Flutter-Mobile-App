@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-/// GET `/api/v1/users/me/profile`
 class UserProfileEntity extends Equatable {
   const UserProfileEntity({
     required this.identityNumber,
@@ -31,7 +30,6 @@ class UserProfileEntity extends Equatable {
       ];
 }
 
-/// GET `/api/v1/users/me/donations` — `donations` listesindeki öğe.
 class DonationItemEntity extends Equatable {
   const DonationItemEntity({
     required this.treeCount,
@@ -46,7 +44,6 @@ class DonationItemEntity extends Equatable {
   List<Object?> get props => [treeCount, pointsSpent, donationDate];
 }
 
-/// GET `/api/v1/users/me/donations`
 class DonationHistoryEntity extends Equatable {
   const DonationHistoryEntity({
     required this.totalDonatedTreeCount,
@@ -59,7 +56,6 @@ class DonationHistoryEntity extends Equatable {
   List<Object?> get props => [totalDonatedTreeCount, donations];
 }
 
-/// POST `/api/v1/users/me/donations`
 class DonateTreesResultEntity extends Equatable {
   const DonateTreesResultEntity({
     required this.donatedTreeCount,

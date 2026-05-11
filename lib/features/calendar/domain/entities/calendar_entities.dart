@@ -1,9 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:karbon/core/utils/formatters.dart';
 
-/// [project_docs/calendar.md] ile uyumlu domain modelleri.
-
-/// GET `/api/v1/daily-activities?date=` — gün içi aktivite satırı.
 class DailyDayActivityEntity extends Equatable {
   const DailyDayActivityEntity({
     this.activityQuestionId,
@@ -29,7 +26,6 @@ class DailyDayActivityEntity extends Equatable {
       ];
 }
 
-/// GET `/api/v1/daily-activities?date=` — seçilen günün detayı.
 class DailyDayDetailEntity extends Equatable {
   const DailyDayDetailEntity({
     required this.date,
@@ -45,7 +41,6 @@ class DailyDayDetailEntity extends Equatable {
   List<Object?> get props => [date, totalScore, activities];
 }
 
-/// GET `/api/v1/daily-activities/calendar` — takvim günü özeti.
 class DailyCalendarItemEntity extends Equatable {
   const DailyCalendarItemEntity({
     required this.date,
@@ -63,7 +58,6 @@ class DailyCalendarItemEntity extends Equatable {
   List<Object?> get props => [date, score, hasDetails];
 }
 
-/// GET `/api/v1/daily-activities/calendar` — takvim özeti.
 class DailyCalendarEntity extends Equatable {
   const DailyCalendarEntity({
     required this.totalScore,
@@ -77,7 +71,6 @@ class DailyCalendarEntity extends Equatable {
   List<Object?> get props => [totalScore, items];
 }
 
-/// GET `/api/v1/daily-activities/monthly` — aylık / dönem özeti.
 class DailyMonthlyDayScoreEntity extends Equatable {
   const DailyMonthlyDayScoreEntity({
     required this.date,
@@ -91,7 +84,6 @@ class DailyMonthlyDayScoreEntity extends Equatable {
   List<Object?> get props => [date, totalScore];
 }
 
-/// GET `/api/v1/daily-activities/monthly` — aylık aktiviteler (Tümünü Gör).
 class DailyMonthlyActivitiesEntity extends Equatable {
   const DailyMonthlyActivitiesEntity({
     required this.totalMonthlyScore,
@@ -107,7 +99,6 @@ class DailyMonthlyActivitiesEntity extends Equatable {
   List<Object?> get props => [totalMonthlyScore, totalPeriodScore, dailyScores];
 }
 
-/// GET `/api/v1/activity-questions/{id}` — seçenek satırı.
 class ActivityQuestionOptionEntity extends Equatable {
   const ActivityQuestionOptionEntity({
     required this.id,
@@ -128,7 +119,6 @@ class ActivityQuestionOptionEntity extends Equatable {
       [id, text, carbonValue, nextQuestionId, nextQuestion];
 }
 
-/// GET `/api/v1/activity-questions/{id}` — soru detayı.
 class ActivityQuestionDetailEntity extends Equatable {
   const ActivityQuestionDetailEntity({
     required this.id,

@@ -32,7 +32,6 @@ class SaveDraftRequestDto {
       };
 }
 
-/// POST /api/v1/polls/answers
 class SubmitPollRequestDto {
   final String pollSetId;
   final List<PollAnswerRequestItemDto> answers;

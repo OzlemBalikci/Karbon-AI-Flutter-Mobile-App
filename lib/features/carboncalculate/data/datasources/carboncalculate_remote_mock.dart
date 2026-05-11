@@ -3,8 +3,6 @@ import 'package:karbon/features/carboncalculate/data/mocks/active_poll_set_mock.
 import 'package:karbon/features/carboncalculate/domain/entities/poll_items_entity.dart';
 import 'package:karbon/features/carboncalculate/data/datasources/carboncalculate_remote.dart';
 
-/// Geliştirme: [ActivePollSetMock] ile örnek anket döner.
-/// Canlı API için [CarbonCalculateRemoteImpl] kullanılacaksa bu kayıt değiştirilebilir.
 @LazySingleton(as: CarbonCalculateRemote)
 class CarbonCalculateRemoteMock implements CarbonCalculateRemote {
   @override

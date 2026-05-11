@@ -64,6 +64,5 @@ class PollMapper {
       SubmitPollRequestDto(
         pollSetId: pollSetId,
         answers: answers.map(toAnswerRequestItem).toList(),
-        // isDraft kasıtlı olarak eklenmedi — iş kuralı
       );
 }

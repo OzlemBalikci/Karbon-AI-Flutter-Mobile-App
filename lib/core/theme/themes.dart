@@ -3,7 +3,6 @@ import 'package:karbon/core/constants/fonts.gen.dart';
 import 'package:karbon/core/constants/colors.dart';
 import 'package:karbon/core/constants/typography.dart';
 
-/// Eski `AppThemeStyles.buttonLarge` ile aynı; tema düğmeleri için ortak taban.
 const _kAppButtonLargeStyle = ButtonStyle(
   minimumSize: WidgetStatePropertyAll(Size.zero),
   shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -95,9 +94,7 @@ class AppTheme extends ThemeExtension<AppTheme> {
                   : null;
             }),
             foregroundColor: WidgetStateProperty.resolveWith((states) {
-              return states.contains(WidgetState.disabled)
-                  ? colors.hint
-                  : null; // Defer to the widget's default.
+              return states.contains(WidgetState.disabled) ? colors.hint : null;
             }),
           ),
         ),
@@ -105,15 +102,11 @@ class AppTheme extends ThemeExtension<AppTheme> {
           style: _kAppButtonLargeStyle.copyWith(
             backgroundColor:
                 WidgetStateProperty.resolveWith((Set<WidgetState> states) {
-              return states.contains(WidgetState.disabled)
-                  ? colors.hint
-                  : null; // Defer to the widget's default.
+              return states.contains(WidgetState.disabled) ? colors.hint : null;
             }),
             foregroundColor:
                 WidgetStateProperty.resolveWith((Set<WidgetState> states) {
-              return states.contains(WidgetState.disabled)
-                  ? colors.hint
-                  : null; // Defer to the widget's default.
+              return states.contains(WidgetState.disabled) ? colors.hint : null;
             }),
           ),
         ),

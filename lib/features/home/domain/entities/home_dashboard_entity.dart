@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 
-/// GET `/api/v1/user-results/home` yanıtındaki `data` gövdesi (`project_docs/home.md`).
 class HomeDashboardEntity extends Equatable {
   const HomeDashboardEntity({
     required this.hasCompletedPoll,
@@ -24,7 +23,6 @@ class HomeDashboardEntity extends Equatable {
       ];
 }
 
-/// GET `/api/v1/user-results/home` → `data.globalTarget`
 class GlobalTargetEntity extends Equatable {
   const GlobalTargetEntity({
     required this.targetTreeCount,
@@ -43,7 +41,6 @@ class GlobalTargetEntity extends Equatable {
       [targetTreeCount, donatedTreeCount, remainingTreeCount, progressPercent];
 }
 
-/// GET `/api/v1/user-results/home` → `data.monthlyTarget`
 class MonthlyTargetEntity extends Equatable {
   const MonthlyTargetEntity({
     required this.month,

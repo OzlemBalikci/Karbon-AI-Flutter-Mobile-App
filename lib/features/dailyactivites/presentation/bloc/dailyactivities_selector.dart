@@ -28,26 +28,16 @@ class DailyActivitiesScreenStatusSelector extends BlocSelector<
     DailyActivitiesBloc, DailyActivitiesState, DailyActivitiesStatus> {
   DailyActivitiesScreenStatusSelector({
     super.key,
-    required Widget Function(
-      BuildContext context,
-      DailyActivitiesStatus status,
-    ) builder,
-  }) : super(
-          selector: (state) => state.status,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: (state) => state.status);
 }
 
 class DailyActivitiesQuestionsSelector
     extends DailyActivitiesSelector<List<DailyQuestionEntity>> {
   DailyActivitiesQuestionsSelector({
     super.key,
-    required Widget Function(List<DailyQuestionEntity> questions) builder,
-  }) : super(
-          // questions zaten Bloc'ta rootQuestions olarak filtrelendi
-          selector: (state) => state.questions,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: (state) => state.questions);
 }
 
 DailyActivitiesQuestionRowData? selectQuestionRow(
@@ -101,21 +91,14 @@ class DailyActivitiesBranchSelector
     extends DailyActivitiesSelector<DailyActivitiesBranchUi> {
   DailyActivitiesBranchSelector({
     super.key,
-    required Widget Function(DailyActivitiesBranchUi ui) builder,
-  }) : super(
-          selector: selectBranchUi,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: selectBranchUi);
 }
 
 class DailyActivitiesPreviousAnswersSelector
     extends DailyActivitiesSelector<List<DailyPreviousAnswersByDateEntity>> {
   DailyActivitiesPreviousAnswersSelector({
     super.key,
-    required Widget Function(List<DailyPreviousAnswersByDateEntity> data)
-        builder,
-  }) : super(
-          selector: (state) => state.previousAnswers,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: (state) => state.previousAnswers);
 }

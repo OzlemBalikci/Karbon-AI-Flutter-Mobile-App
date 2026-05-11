@@ -34,11 +34,8 @@ HomeShellSnapshot selectHomeShellSnapshot(HomeState s) {
 class HomeShellSelector extends HomeSelector<HomeShellSnapshot> {
   HomeShellSelector({
     super.key,
-    required Widget Function(HomeShellSnapshot snap) builder,
-  }) : super(
-          selector: selectHomeShellSnapshot,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: selectHomeShellSnapshot);
 }
 
 class HomeStatusSelector extends HomeSelector<HomeStatus> {
@@ -53,9 +50,6 @@ class HomeTopLeadersSelector
     extends HomeSelector<List<LeaderboardLeaderEntity>> {
   HomeTopLeadersSelector({
     super.key,
-    required Widget Function(List<LeaderboardLeaderEntity> leaders) builder,
-  }) : super(
-          selector: (state) => state.topLeaders,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: (state) => state.topLeaders);
 }

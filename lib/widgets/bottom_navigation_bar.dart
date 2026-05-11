@@ -28,7 +28,7 @@ class AppBottomNavigationBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s25.w),
       child: InnerShadow(
         blur: 5,
-        color: const Color(0x40000000), // %25 siyah
+        color: const Color(0x40000000),
         offset: const Offset(1, 1),
         child: Container(
           width: double.infinity,

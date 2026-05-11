@@ -36,7 +36,6 @@ double? _monthlyDayTotalScore(
   return null;
 }
 
-/// Skor kartları için hazır etiketler ([calendar.md] akışı).
 typedef CalendarScoreLabels = ({
   String monthTotal,
   String selectedDayScore,
@@ -172,14 +171,13 @@ class CalendarAsyncSelector<T>
     required CalendarAsyncStatus Function(CalendarState) statusSelector,
     required String? Function(CalendarState) errorSelector,
     required T? Function(CalendarState) dataSelector,
-    required Widget Function(CalendarAsyncSlice<T> slice) builder,
+    required super.builder,
   }) : super(
           selector: (s) => (
             status: statusSelector(s),
             error: errorSelector(s),
             data: dataSelector(s),
           ),
-          builder: builder,
         );
 }
 
@@ -235,9 +233,6 @@ class CalendarScoreLabelsSelector
     extends CalendarBlocSelector<CalendarScoreLabels> {
   CalendarScoreLabelsSelector({
     super.key,
-    required Widget Function(CalendarScoreLabels labels) builder,
-  }) : super(
-          selector: selectCalendarScoreLabels,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: selectCalendarScoreLabels);
 }

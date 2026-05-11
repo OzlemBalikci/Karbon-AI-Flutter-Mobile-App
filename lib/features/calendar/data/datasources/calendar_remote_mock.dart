@@ -3,8 +3,6 @@ import 'package:karbon/features/calendar/data/datasources/calendar_mock_data.dar
 import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 
-/// Geliştirme: [CalendarMockData] ile calendar verisi.
-/// Canlı API için [CalendarRemoteImpl] `@LazySingleton(as: CalendarRemote)` ile kayıtlıdır.
 @LazySingleton(as: CalendarRemote)
 class CalendarRemoteMock implements CalendarRemote {
   @override

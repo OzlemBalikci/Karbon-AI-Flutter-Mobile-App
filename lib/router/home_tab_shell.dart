@@ -9,8 +9,6 @@ import 'package:karbon/features/home/presentation/bloc/home_event.dart';
 import 'package:karbon/features/leaderofmont/presentation/bloc/leaderofmonth_bloc.dart';
 import 'package:karbon/features/usefulinfos/presentation/bloc/usefulinfo_bloc.dart';
 
-/// Ana sekmede [HomeRoute], [UsefulinfoRoute], [CarbonCalculateRoute],
-/// [LeaderofmonthRoute] yığını; ilgili bloc'lar bu sekme ağacında oluşturulur.
 @RoutePage()
 class HomeTabShellPage extends StatelessWidget {
   const HomeTabShellPage({super.key});

@@ -24,7 +24,6 @@ abstract class AuthRepository {
     required bool isKvkkApproved,
   });
 
-  /// SMS kodu gönderir. Başarıysa Unit döner.
   Future<Either<AppException, Unit>> forgotPassword({
     required String phoneNumber,
     String? deviceToken,

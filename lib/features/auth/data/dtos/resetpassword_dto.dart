@@ -8,7 +8,6 @@ class ResetPasswordDto {
 
   final String phoneNumber;
 
-  /// SMS ile gelen 5 haneli OTP kodu
   final String resetCode;
   final String newPassword;
   final String confirmNewPassword;

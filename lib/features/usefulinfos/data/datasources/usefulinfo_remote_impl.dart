@@ -4,9 +4,6 @@ import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.d
 import 'package:karbon/features/usefulinfos/data/dtos/usefulinfo_dto.dart';
 import 'package:karbon/core/networks/response_ext.dart';
 
-/// Gerçek HTTP uygulaması — GET `/api/v1/useful-information`.
-///
-/// [AppInterceptor] zarfı soyduktan sonra `data` bir JSON dizisi olmalıdır; tip doğrulaması [ResponseDataX.dataList] ile yapılır.
 @Injectable()
 class UsefulinfoRemoteImpl implements UsefulinfoRemote {
   UsefulinfoRemoteImpl(this._dio);

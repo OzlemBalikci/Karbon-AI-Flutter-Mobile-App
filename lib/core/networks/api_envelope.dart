@@ -1,5 +1,3 @@
-//Backendden gelen standart api responseunu (zarf/envelope) Flutter tarafında tek bir Model altında toplar.
-// errors listesinde nullCheck yapıp, ApiError'ları listeye çevirir.
 import 'package:karbon/core/errors/api_error.dart';
 
 class ApiEnvelope {

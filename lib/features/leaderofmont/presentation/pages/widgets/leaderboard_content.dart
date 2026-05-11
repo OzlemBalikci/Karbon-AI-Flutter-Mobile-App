@@ -1,6 +1,5 @@
 part of '../leaderofmonth.dart';
 
-// leader_list_item.dart veya leaderboard_content.dart
 class LeaderboardContent extends StatelessWidget {
   const LeaderboardContent({super.key, required this.leaders});
   final List<LeaderboardLeaderEntity> leaders;

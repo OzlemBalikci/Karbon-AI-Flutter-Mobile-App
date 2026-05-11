@@ -16,7 +16,6 @@ class KarbonApp extends StatefulWidget {
 }
 
 class _KarbonAppState extends State<KarbonApp> {
-  /// router.config() her rebuild'de yeni delegate oluşturmasın diye önbelleklenir.
   late final RouterConfig<Object> _routerConfig;
 
   @override

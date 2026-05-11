@@ -37,50 +37,45 @@ class CarbonPhaseSelector
     extends CarbonCalculateSelector<CarbonCalculatePhase> {
   CarbonPhaseSelector({
     super.key,
-    required Widget Function(CarbonCalculatePhase phase) builder,
-  }) : super(
-          selector: (state) => state.phase,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: (state) => state.phase);
 }
 
 class CarbonProgressSelector
     extends CarbonCalculateSelector<CarbonProgressData> {
   CarbonProgressSelector({
     super.key,
-    required Widget Function(CarbonProgressData) builder,
+    required super.builder,
   }) : super(
           selector: (state) => (
             current: state.questions.isNotEmpty ? state.answers.length : null,
             max: state.questions.isNotEmpty ? state.questions.length : null,
           ),
-          builder: builder,
         );
 }
 
 class CarbonInfoTextSelector extends CarbonCalculateSelector<String> {
   CarbonInfoTextSelector({
     super.key,
-    required Widget Function(String infoText) builder,
-  }) : super(
-          selector: (state) => state.pollDescription,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: (state) => state.pollDescription);
 }
 
 class CarbonQuestionContentSelector
     extends CarbonCalculateSelector<CarbonQuestionViewData?> {
   CarbonQuestionContentSelector({
     super.key,
-    required Widget Function(CarbonQuestionViewData?) builder,
+    required super.builder,
   }) : super(
           selector: (state) {
             final phase = state.phase;
-            if (phase is! CarbonQuestionPhase || state.questions.isEmpty)
+            if (phase is! CarbonQuestionPhase || state.questions.isEmpty) {
               return null;
+            }
             final questionIndex = phase.questionIndex;
-            if (questionIndex < 0 || questionIndex >= state.questions.length)
+            if (questionIndex < 0 || questionIndex >= state.questions.length) {
               return null;
+            }
             final q = state.questions[questionIndex];
             return (
               questionId: q.id,
@@ -90,7 +85,6 @@ class CarbonQuestionContentSelector
               questionIndex: questionIndex,
             );
           },
-          builder: builder,
         );
 }
 

@@ -28,7 +28,6 @@ FutureOr<void> configureDependencies() async {
 
 @module
 abstract class RegisterModule {
-  /// Token depolama — [AuthLocalImpl] ile auth.md Secure Storage akışına uygun.
   @singleton
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
 

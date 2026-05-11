@@ -39,7 +39,6 @@ class ErrorPopupWidget extends StatelessWidget {
   }
 }
 
-/// Root navigator + bir frame sonra; kapanınca [onDismissed] (ör. [resetError]).
 void showAppErrorDialog(
   BuildContext context, {
   required String message,

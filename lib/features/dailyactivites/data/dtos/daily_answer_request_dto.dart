@@ -1,4 +1,3 @@
-// dto/daily_selected_answer_dto.dart
 class DailySelectedAnswerDto {
   const DailySelectedAnswerDto({
     required this.questionId,

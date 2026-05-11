@@ -7,12 +7,9 @@ import 'package:karbon/core/constants/assets.gen.dart';
 class LoginSelector<T> extends BlocSelector<LoginCubit, LoginState, T> {
   LoginSelector({
     super.key,
-    required T Function(LoginState) selector,
+    required super.selector,
     required Widget Function(T value) builder,
-  }) : super(
-          selector: selector,
-          builder: (_, value) => builder(value),
-        );
+  }) : super(builder: (_, value) => builder(value));
 }
 
 class LoginObscurePasswordSelector extends LoginSelector<bool> {

@@ -1,13 +1,8 @@
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 
-/// Calendar feature'ındaki eski `_useMocks` verilerini ayrı bir dosyaya aldık.
-/// Bu sınıf; gerekirse başka bir `CalendarRemote` implementasyonunda kullanılabilir.
 class CalendarMockData {
   CalendarMockData._();
 
-  /// Nisan 2026 örnek akışı (negatif gün skorları dahil).
-  /// Cihaz ayı farklıysa grid’de görünmeyebilir.
-  /// Ulaşım zinciri: Q1 → Q2 → Q3 (kırılımlı yapı örneği)
   static const List<DailyDayDetailEntity> mockDayDetails = [
     DailyDayDetailEntity(
       date: '2026-04-03T00:00:00.000Z',
@@ -177,8 +172,6 @@ class CalendarMockData {
         ),
       ],
     ),
-
-    // ── Mayıs 2026 ─────────────────────────────────────────────────────────────
     DailyDayDetailEntity(
       date: '2026-05-02T00:00:00.000Z',
       totalScore: 20.0,
@@ -341,7 +334,6 @@ class CalendarMockData {
     ),
   ];
 
-  /// Yıl/ay bazlı filtrelenmiş mock takvim verisi.
   static DailyCalendarEntity calendarForMonth(int year, int month) {
     final days = mockDayDetails.where((d) {
       final dt = DateTime.tryParse(d.date);
@@ -358,7 +350,6 @@ class CalendarMockData {
     return DailyCalendarEntity(totalScore: total, items: items);
   }
 
-  /// Yıl/ay bazlı filtrelenmiş aylık skor verisi.
   static DailyMonthlyActivitiesEntity monthlyActivitiesForMonth(
     int year,
     int month,
@@ -403,12 +394,6 @@ class CalendarMockData {
     );
   }
 
-  // ---------------------------------------------------------------------------
-  // Zincirli soru detayları — [calendar.md §8] `option.nextQuestion` inline yapısı.
-  // Backend `GET /activity-questions/{id}` yanıtında bu yapıyı döner.
-  // Static const field'lar iç içe const referans için zorunlu (Dart sınırı).
-
-  /// Q3 — sefer sayısı (zincirin sonu, nextQuestion: null)
   static const mockQuestionTripCount = ActivityQuestionDetailEntity(
     id: 'question-trip-count',
     text: 'Sefer Sayısı',
@@ -448,7 +433,6 @@ class CalendarMockData {
     ],
   );
 
-  /// Q2 — araç tipi; nextQuestion: Q3 inline
   static const mockQuestionTransportVehicle = ActivityQuestionDetailEntity(
     id: 'question-transport-vehicle',
     text: 'Kullandığınız ulaşım aracını seçiniz.',
@@ -481,7 +465,6 @@ class CalendarMockData {
     ],
   );
 
-  /// Q1 — ulaşım aracı; nextQuestion: Q2 inline (Q2 de Q3'ü inline taşır)
   static const mockQuestionCommute = ActivityQuestionDetailEntity(
     id: 'question-commute',
     text: 'Bu sabah işe hangi ulaşım aracıyla gideceksiniz?',
@@ -520,8 +503,6 @@ class CalendarMockData {
       ),
     ],
   );
-
-  // ---------------------------------------------------------------------------
 
   static ActivityQuestionDetailEntity questionDetailForRequestedId(
     String id,
@@ -597,4 +578,3 @@ class CalendarMockData {
     );
   }
 }
-

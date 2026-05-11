@@ -23,7 +23,6 @@ class LogoutAndDelete extends StatelessWidget {
             ),
           ),
         ),
-        //SizedBox(height: AppThemeSpacing.s20.h),
       ],
     );
   }

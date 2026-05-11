@@ -2,8 +2,6 @@ import 'package:injectable/injectable.dart';
 import 'package:karbon/features/usefulinfos/data/datasources/usefulinfo_remote.dart';
 import 'package:karbon/features/usefulinfos/data/dtos/usefulinfo_dto.dart';
 
-/// Geliştirme için sahte veri.
-/// Canlı API için [UsefulinfoRemoteImpl] `@LazySingleton(as: UsefulinfoRemote)` ile kayıtlıdır.
 @LazySingleton(as: UsefulinfoRemote)
 class UsefulinfoRemoteMock implements UsefulinfoRemote {
   static const _mockInfos = [

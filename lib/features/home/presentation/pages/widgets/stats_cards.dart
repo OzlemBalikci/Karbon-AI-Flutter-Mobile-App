@@ -26,27 +26,24 @@ class StatsCards extends StatelessWidget {
 
   Color _resolveRowColor() {
     if (progressPercent == null || targetTreeCount == null) {
-      return const Color(0xFFF1FBF6); // varsayılan açık yeşil
+      return const Color(0xFFF1FBF6);
     }
 
     if (remainingTreeCount == 0) {
-      // Hedefe ulaşıldı → koyu yeşil
       return const Color(0xFFA9C5B8);
     }
 
     final double progress = progressPercent!.clamp(0.0, 100.0) / 100.0;
 
-    // 0% → açık/nötr, 100% → koyu yeşil
     return Color.lerp(
-      const Color(0xFFF1FBF6), // başlangıç: çok açık yeşil
-      const Color(0xFF4CAF82), // bitiş: orta-koyu yeşil
+      const Color(0xFFF1FBF6),
+      const Color(0xFF4CAF82),
       progress,
     )!;
   }
 
   Color resolveTextColor() {
     final double progress = (progressPercent ?? 0).clamp(0.0, 100.0) / 100.0;
-    // %50'nin üzerinde arka plan koyulaşınca yazıyı beyaza çek
     return progress > 0.5 ? Colors.white : const Color(0xFF2E7D5A);
   }
 

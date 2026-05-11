@@ -6,8 +6,6 @@ import 'package:karbon/features/leaderofmont/data/mapper/leaderboard_mapper.dart
 import 'package:karbon/features/leaderofmont/domain/entities/leaderboard_entity.dart';
 import 'package:karbon/core/networks/response_ext.dart';
 
-/// Canlı HTTP — GET `/api/v1/user-results/leaderboard`.
-/// Mock için [LeaderboardRemoteMock] kayıtlıyken bu sınıf `@Injectable()` kalır.
 @Injectable()
 class LeaderboardRemoteImpl implements LeaderboardRemote {
   LeaderboardRemoteImpl(this._dio);

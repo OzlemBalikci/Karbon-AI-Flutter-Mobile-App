@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-/// GET `/api/v1/polls/active` — aktif anket; data katmanı DTO → bu entity eşlemesi.
 class ActivePollSetEntity extends Equatable {
   const ActivePollSetEntity({
     required this.pollSetId,
@@ -17,7 +16,6 @@ class ActivePollSetEntity extends Equatable {
   List<Object?> get props => [pollSetId, name, description, questions];
 }
 
-/// GET `/api/v1/polls/active` — anket sorusu.
 class PollQuestionEntity extends Equatable {
   const PollQuestionEntity({
     required this.id,
@@ -33,10 +31,10 @@ class PollQuestionEntity extends Equatable {
   final String? selectedOptionId;
   final List<PollOptionEntity> options;
 
+  @override
   List<Object?> get props => [id, displayOrder, selectedOptionId];
 }
 
-/// GET `/api/v1/polls/active` — anket sorusu seçeneği.
 class PollOptionEntity extends Equatable {
   const PollOptionEntity({
     required this.id,
@@ -56,8 +54,6 @@ class PollOptionEntity extends Equatable {
   List<Object?> get props => [id, text, carbonValue, nextPollQuestionId];
 }
 
-/// POST `/api/v1/polls/draft` ve `/api/v1/polls/answers` — domain cevap satırı.
-
 class PollAnswerItemEntity extends Equatable {
   const PollAnswerItemEntity({
     required this.questionId,
@@ -71,7 +67,6 @@ class PollAnswerItemEntity extends Equatable {
   List<Object?> get props => [questionId, optionId];
 }
 
-/// POST `/api/v1/polls/draft` ve `/api/v1/polls/answers` — domain; JSON için [PollSubmissionResultEntity].
 class PollSubmissionResultEntity extends Equatable {
   const PollSubmissionResultEntity({
     required this.totalCarbonScore,

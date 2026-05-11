@@ -13,20 +13,16 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
   final Dio _dio;
   final AuthLocal _authLocal;
 
-  /// Refresh başarısız olduğunda tetiklenir — logout + login ekranına yönlendir.
   final void Function()? onSessionExpired;
 
   static const _refreshCall = '_refreshCall';
   static const _retried = '_retried';
-
-  // ── onRequest ─────────────────────────────────────────────────────────────
 
   @override
   Future<void> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    // Refresh isteğinin kendisi — token eklenmez, HttpOnly cookie otomatik gider.
     if (options.extra[_refreshCall] == true) {
       options.headers.remove('Authorization');
       handler.next(options);
@@ -40,14 +36,11 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
     handler.next(options);
   }
 
-  // ── onError ───────────────────────────────────────────────────────────────
-
   @override
   Future<void> onError(
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    // Yalnızca 401'leri yakala.
     if (err.response?.statusCode != 401) {
       handler.next(err);
       return;
@@ -55,14 +48,11 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
 
     final ro = err.requestOptions;
 
-    // Zaten yeniden denendi — sonsuz döngüyü önle.
     if (ro.extra[_retried] == true) {
       handler.next(err);
       return;
     }
 
-    // Auth endpoint'lerinde refresh denenmez.
-    // Refresh endpoint'i 401 dönerse oturum sona ermiştir.
     final path = ro.uri.path;
     final isAuthPath = path.contains('/users/token/refresh') ||
         path.contains('/users/login') ||
@@ -75,7 +65,6 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
     }
 
     try {
-      // AppInterceptor zarfı soyar → refreshRes.data = saf data.
       final refreshRes = await _dio.post<dynamic>(
         '/api/v1/users/token/refresh',
         options: Options(
@@ -89,7 +78,6 @@ class TokenRefreshInterceptor extends QueuedInterceptor {
       final tokens = AuthTokenResponse.fromJson(refreshRes.dataMap());
       await _authLocal.saveToken(tokens.accessToken);
 
-      // Orijinal isteği yeni token ile yeniden gönder.
       ro.headers['Authorization'] = 'Bearer ${tokens.accessToken}';
       ro.extra[_retried] = true;
 

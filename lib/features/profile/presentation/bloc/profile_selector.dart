@@ -20,14 +20,13 @@ class ProfileAsyncSelector<T> extends ProfileSelector<ProfileAsyncSlice<T>> {
     required AsyncStatus Function(ProfileState) statusSelector,
     required String? Function(ProfileState) errorSelector,
     required T? Function(ProfileState) dataSelector,
-    required Widget Function(ProfileAsyncSlice<T> slice) builder,
+    required super.builder,
   }) : super(
           selector: (s) => (
             status: statusSelector(s),
             error: errorSelector(s),
             data: dataSelector(s),
           ),
-          builder: builder,
         );
 }
 
@@ -69,9 +68,6 @@ class ProfileDonateAsyncSelector
 class ProfileTabSelector extends ProfileSelector<int> {
   ProfileTabSelector({
     super.key,
-    required Widget Function(int index) builder,
-  }) : super(
-          selector: (state) => state.selectedTab,
-          builder: builder,
-        );
+    required super.builder,
+  }) : super(selector: (state) => state.selectedTab);
 }

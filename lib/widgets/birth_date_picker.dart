@@ -17,7 +17,6 @@ class BirthDatePicker extends StatefulWidget {
 
   final String labelText;
 
-  /// Verilmezse widget kendi controller’ını oluşturur ve dispose eder.
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final TextInputAction? textInputAction;

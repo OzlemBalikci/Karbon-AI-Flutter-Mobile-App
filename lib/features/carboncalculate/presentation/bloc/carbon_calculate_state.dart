@@ -38,7 +38,6 @@ abstract class CarbonCalculateState with _$CarbonCalculateState {
     return const CarbonResultPhase();
   }
 
-  /// 0 = bilgi, 1..N = sorular, N+1 = sonuç
   int get maxStep => questions.isEmpty ? 14 : questions.length + 1;
 
   int get lastQuestionStep => questions.isEmpty ? 13 : questions.length;

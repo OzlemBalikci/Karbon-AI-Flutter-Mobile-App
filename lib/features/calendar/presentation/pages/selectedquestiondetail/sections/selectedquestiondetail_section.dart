@@ -12,27 +12,16 @@ class SelectedQuestionDetailSection extends StatelessWidget {
     required this.error,
   });
 
-  /// Gün detay listesinde tıklanan kartın `activityQuestionId`'si.
   final String rootQuestionId;
   final String questionText;
   final String answerText;
 
-  /// `state.dayDetail.activities` — zincirin tamamı buradan okunur.
   final List<DailyDayActivityEntity> activities;
 
   final ActivityQuestionDetailEntity? questionDetail;
   final bool loading;
   final String? error;
 
-  // ---------------------------------------------------------------------------
-  // Zincir inşası
-  // ---------------------------------------------------------------------------
-
-  /// Tıklanan sorudan başlayarak `nextQuestionId` linklerini takip eder
-  /// ve sıralı aktivite listesini döner.
-  ///
-  /// `questionDetail` varsa API'den gelen `options[].nextQuestionId` ile
-  /// aktiviteleri zincir sırasına dizer; yoksa activities'i sırasıyla kullanır.
   List<DailyDayActivityEntity> _buildChain(
     ActivityQuestionDetailEntity? detail,
   ) {
@@ -51,7 +40,6 @@ class SelectedQuestionDetailSection extends StatelessWidget {
       return const [];
     }
 
-    // activities Map: questionId → entity (hızlı lookup)
     final byId = <String, DailyDayActivityEntity>{
       for (final a in activities)
         if (a.activityQuestionId != null) a.activityQuestionId!: a,
@@ -59,8 +47,6 @@ class SelectedQuestionDetailSection extends StatelessWidget {
 
     final chain = <DailyDayActivityEntity>[];
 
-    // API detayı varsa zinciri ilerle:
-    //   önce option.nextQuestion (inline) → sonra option.nextQuestionId (id tabanlı)
     if (detail != null) {
       String? currentId = rootQuestionId;
       ActivityQuestionDetailEntity? currentDetail = detail;
@@ -70,7 +56,6 @@ class SelectedQuestionDetailSection extends StatelessWidget {
         if (activity == null) break;
         chain.add(activity);
 
-        // Kullanıcının seçtiği option'ı bul
         ActivityQuestionOptionEntity? selected;
         for (final o in currentDetail.options) {
           if (o.text == activity.selectedOptionText) {
@@ -84,21 +69,18 @@ class SelectedQuestionDetailSection extends StatelessWidget {
 
         if (selected == null) break;
 
-        // [calendar.md §8] option.nextQuestion → inline tam entity (tercih)
         if (selected.nextQuestion != null) {
           currentId = selected.nextQuestion!.id;
           currentDetail = selected.nextQuestion;
         } else if (selected.nextQuestionId != null) {
-          // Inline gelmemişse id ile arama yap (mock fallback)
           currentId = selected.nextQuestionId;
-          currentDetail = null; // id tabanlı: dış detay yok, zincir biter
+          currentDetail = null;
         } else {
           break;
         }
       }
     }
 
-    // API detayı yoksa veya zincir tek elemansa root'tan itibaren listele
     if (chain.isEmpty) {
       final rootIdx =
           activities.indexWhere((a) => a.activityQuestionId == rootQuestionId);
@@ -124,8 +106,6 @@ class SelectedQuestionDetailSection extends StatelessWidget {
         SizedBox(height: AppThemeSpacing.s20.h),
         InfoBanner(),
         SizedBox(height: AppThemeSpacing.s24.h),
-
-        // Zincir Q→A blokları
         if (loading && chain.isEmpty)
           const Center(child: CircularProgressIndicator())
         else if (error != null && chain.isEmpty)
@@ -140,20 +120,14 @@ class SelectedQuestionDetailSection extends StatelessWidget {
               activity: chain[i],
               isRoot: i == 0,
             ),
-            if (i < chain.length - 1)
-              SizedBox(height: AppThemeSpacing.s16.h),
+            if (i < chain.length - 1) SizedBox(height: AppThemeSpacing.s16.h),
           ],
         ],
-
         SizedBox(height: AppThemeSpacing.s16.h),
       ],
     );
   }
 }
-
-// ---------------------------------------------------------------------------
-// Zincirleki her Q→A bloğu
-// ---------------------------------------------------------------------------
 
 class _ChainQuestionAnswerBlock extends StatelessWidget {
   const _ChainQuestionAnswerBlock({
@@ -163,7 +137,6 @@ class _ChainQuestionAnswerBlock extends StatelessWidget {
 
   final DailyDayActivityEntity activity;
 
-  /// İlk (tıklanan) soru için renkler farklı
   final bool isRoot;
 
   @override
@@ -182,8 +155,7 @@ class _ChainQuestionAnswerBlock extends StatelessWidget {
       answerText: activity.selectedOptionText.isEmpty
           ? '—'
           : activity.selectedOptionText,
-      questionLabelColor:
-          context.colors.textOnQuestion.withValues(alpha: 0.6),
+      questionLabelColor: context.colors.textOnQuestion.withValues(alpha: 0.6),
       answerBg: answerBg,
       answerBorder: answerBorder,
       answerTextColor: answerTextColor,
