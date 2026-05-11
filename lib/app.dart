@@ -35,6 +35,7 @@ class _KarbonAppState extends State<KarbonApp> {
         selector: (state) => state.theme,
         builder: (theme) => MaterialApp.router(
           title: 'FlutterKarbon',
+          debugShowCheckedModeBanner: false,
           theme: theme.themeData,
           routerConfig: _routerConfig,
           scrollBehavior: AppScrollBehavior(),

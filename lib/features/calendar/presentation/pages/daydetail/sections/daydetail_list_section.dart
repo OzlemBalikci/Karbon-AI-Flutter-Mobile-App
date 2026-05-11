@@ -21,6 +21,7 @@ class DayDetailListSection extends StatelessWidget {
                 .withColor(context.colors.textBlack)
                 .copyWith(fontWeight: FontWeight.bold),
           ),
+          SizedBox(height: AppThemeSpacing.s20.h),
           if (detail != null)
             DayDetailHistorySection(activities: detail!.activities),
         ],
