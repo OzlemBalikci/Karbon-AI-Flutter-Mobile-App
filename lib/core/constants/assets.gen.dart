@@ -108,6 +108,9 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/app_review_logo.png
+  AssetGenImage get appReviewLogo => const AssetGenImage('assets/images/app_review_logo.png');
+
   /// File path: assets/images/App_logo.png
   AssetGenImage get appLogo => const AssetGenImage('assets/images/App_logo.png');
 

@@ -16,6 +16,7 @@ import 'package:karbon/router/home_shell.dart';
 import 'package:karbon/router/home_tab_shell.dart';
 import 'package:karbon/router/dailyactivities_tab_shell.dart';
 import 'package:karbon/features/auth/presentation/pages/splash/splash.dart';
+import 'package:karbon/router/app_startup_guard.dart';
 import 'package:karbon/router/calendar_tab_shell.dart';
 import 'package:karbon/router/profile_tab_shell.dart';
 import 'package:karbon/features/calendar/presentation/pages/calendarfirstopen/calendar_first_open_page.dart';
@@ -29,7 +30,12 @@ part 'navigation.gr.dart';
 class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(path: '/', page: SplashRoute.page, initial: true),
+        AutoRoute(
+          path: '/',
+          page: SplashRoute.page,
+          initial: true,
+          guards: [AppStartupGuard()],
+        ),
         AutoRoute(
           path: '/custom-first-open',
           page: CustomFirstOpenRoute.page,

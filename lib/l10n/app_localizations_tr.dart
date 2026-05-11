@@ -19,10 +19,10 @@ class AppLocalizationsTr extends AppLocalizations {
       'Geleceği Şekillendirin, \nKarbon Ayak İzinizi \nKüçültün!';
 
   @override
-  String get login_button_title_bizizmir => 'Bizizmir ile Giriş Yap';
+  String get login_button_title_bizizmir => 'Giriş Yap';
 
   @override
-  String get register_button_bizizmir => 'Bizizmir ile Kayıt Ol';
+  String get register_button_bizizmir => 'Kayıt Ol';
 
   @override
   String get login_info_text =>

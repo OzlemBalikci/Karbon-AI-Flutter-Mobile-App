@@ -115,13 +115,13 @@ abstract class AppLocalizations {
   /// No description provided for @login_button_title_bizizmir.
   ///
   /// In tr, this message translates to:
-  /// **'Bizizmir ile Giriş Yap'**
+  /// **'Giriş Yap'**
   String get login_button_title_bizizmir;
 
   /// No description provided for @register_button_bizizmir.
   ///
   /// In tr, this message translates to:
-  /// **'Bizizmir ile Kayıt Ol'**
+  /// **'Kayıt Ol'**
   String get register_button_bizizmir;
 
   /// No description provided for @login_info_text.

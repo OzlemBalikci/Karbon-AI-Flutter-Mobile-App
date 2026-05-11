@@ -6,10 +6,24 @@ import 'package:karbon/router/navigation.dart';
 import 'package:karbon/core/theme/themes.dart';
 import 'package:karbon/l10n/app_localizations.dart';
 
-class KarbonApp extends StatelessWidget {
-  //final AppRouter _router = AppRouter();
+class KarbonApp extends StatefulWidget {
   final AppRouter router;
+
   const KarbonApp({required this.router, super.key});
+
+  @override
+  State<KarbonApp> createState() => _KarbonAppState();
+}
+
+class _KarbonAppState extends State<KarbonApp> {
+  /// router.config() her rebuild'de yeni delegate oluşturmasın diye önbelleklenir.
+  late final RouterConfig<Object> _routerConfig;
+
+  @override
+  void initState() {
+    super.initState();
+    _routerConfig = widget.router.config();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +36,7 @@ class KarbonApp extends StatelessWidget {
         builder: (theme) => MaterialApp.router(
           title: 'FlutterKarbon',
           theme: theme.themeData,
-          routerConfig: router.config(),
+          routerConfig: _routerConfig,
           scrollBehavior: AppScrollBehavior(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
