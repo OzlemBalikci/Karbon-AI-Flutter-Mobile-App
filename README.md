@@ -2,10 +2,6 @@
 
 <img src="assets/images/app_review_logo.png" alt="Karbon AI Logo" width="120"/>
 
-<p align="center">
-  <img src="assets/images/app_showcase.png" alt="Karbon AI Showcase" width="1000"/>
-</p>
-
 # Karbon AI
 
 **Track your carbon footprint, improve your daily habits, protect the planet.**
