@@ -4,13 +4,14 @@ class ActivityQuestionOptionDto {
     required this.text,
     required this.carbonValue,
     this.nextQuestionId,
+    this.nextQuestion,
   });
 
   final String id;
   final String text;
   final double carbonValue;
   final String? nextQuestionId;
-
+  final ActivityQuestionDetailDto? nextQuestion;
   factory ActivityQuestionOptionDto.fromJson(Map<String, dynamic> json) {
     final rawCarbon = json['carbonValue'];
     return ActivityQuestionOptionDto(
@@ -20,6 +21,10 @@ class ActivityQuestionOptionDto {
           ? rawCarbon.toDouble()
           : double.tryParse('$rawCarbon') ?? 0,
       nextQuestionId: json['nextQuestionId'] as String?,
+      nextQuestion: json['nextQuestion'] is Map<String, dynamic>
+          ? ActivityQuestionDetailDto.fromJson(
+              json['nextQuestion'] as Map<String, dynamic>)
+          : null,
     );
   }
 }

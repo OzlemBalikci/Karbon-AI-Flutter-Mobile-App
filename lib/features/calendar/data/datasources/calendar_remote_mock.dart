@@ -1,6 +1,9 @@
 import 'package:injectable/injectable.dart';
-import 'package:karbon/features/calendar/data/datasources/calendar_mock_data.dart';
 import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart';
+import 'package:karbon/features/calendar/data/datasources/mocks/calendar_activity_question_detail_mock_data.dart';
+import 'package:karbon/features/calendar/data/datasources/mocks/calendar_calendar_mock_data.dart';
+import 'package:karbon/features/calendar/data/datasources/mocks/calendar_details_mock_data.dart';
+import 'package:karbon/features/calendar/data/datasources/mocks/calendar_monthly_activities_mock_data.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 
 @LazySingleton(as: CalendarRemote)
@@ -11,7 +14,7 @@ class CalendarRemoteMock implements CalendarRemote {
     required int month,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 80));
-    return CalendarMockData.calendarForMonth(year, month);
+    return CalendarCalendarMockData.forMonth(year, month);
   }
 
   @override
@@ -20,13 +23,13 @@ class CalendarRemoteMock implements CalendarRemote {
     required int month,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 80));
-    return CalendarMockData.monthlyActivitiesForMonth(year, month);
+    return CalendarMonthlyActivitiesMockData.forMonth(year, month);
   }
 
   @override
   Future<DailyDayDetailEntity> getDetails({required DateTime date}) async {
     await Future<void>.delayed(const Duration(milliseconds: 60));
-    return CalendarMockData.detailForRequestedDate(date.toIso8601String());
+    return CalendarDetailsMockData.forDate(date);
   }
 
   @override
@@ -34,6 +37,6 @@ class CalendarRemoteMock implements CalendarRemote {
     required String id,
   }) async {
     await Future<void>.delayed(const Duration(milliseconds: 60));
-    return CalendarMockData.questionDetailForRequestedId(id);
+    return CalendarActivityQuestionDetailMockData.forId(id);
   }
 }

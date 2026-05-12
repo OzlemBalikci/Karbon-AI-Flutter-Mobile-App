@@ -87,16 +87,14 @@ class DailyMonthlyDayScoreEntity extends Equatable {
 class DailyMonthlyActivitiesEntity extends Equatable {
   const DailyMonthlyActivitiesEntity({
     required this.totalMonthlyScore,
-    required this.totalPeriodScore,
     required this.dailyScores,
   });
 
   final double totalMonthlyScore;
-  final double totalPeriodScore;
   final List<DailyMonthlyDayScoreEntity> dailyScores;
 
   @override
-  List<Object?> get props => [totalMonthlyScore, totalPeriodScore, dailyScores];
+  List<Object?> get props => [totalMonthlyScore, dailyScores];
 }
 
 class ActivityQuestionOptionEntity extends Equatable {

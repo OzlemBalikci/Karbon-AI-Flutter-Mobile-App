@@ -51,7 +51,6 @@ class CalendarMapper {
   ) =>
       DailyMonthlyActivitiesEntity(
         totalMonthlyScore: dto.totalMonthlyScore,
-        totalPeriodScore: dto.totalPeriodScore,
         dailyScores: dto.dailyScores.map(toMonthlyDayScoreEntity).toList(),
       );
 

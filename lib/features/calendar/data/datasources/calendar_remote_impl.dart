@@ -64,7 +64,6 @@ class CalendarRemoteImpl implements CalendarRemote {
       if (e.response?.statusCode == 404) {
         return const DailyMonthlyActivitiesEntity(
           totalMonthlyScore: 0,
-          totalPeriodScore: 0,
           dailyScores: [],
         );
       }
