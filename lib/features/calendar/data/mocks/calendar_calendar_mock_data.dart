@@ -1,4 +1,4 @@
-import 'package:karbon/features/calendar/data/datasources/mocks/calendar_details_mock_data.dart';
+import 'package:karbon/features/calendar/data/mocks/calendar_details_mock_data.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 
 /// Mock verisi: GET /api/v1/daily-activities/calendar?year=&month=

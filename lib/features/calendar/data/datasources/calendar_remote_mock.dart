@@ -1,9 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:karbon/features/calendar/data/datasources/calendar_remote.dart';
-import 'package:karbon/features/calendar/data/datasources/mocks/calendar_activity_question_detail_mock_data.dart';
-import 'package:karbon/features/calendar/data/datasources/mocks/calendar_calendar_mock_data.dart';
-import 'package:karbon/features/calendar/data/datasources/mocks/calendar_details_mock_data.dart';
-import 'package:karbon/features/calendar/data/datasources/mocks/calendar_monthly_activities_mock_data.dart';
+import 'package:karbon/features/calendar/data/mocks/calendar_activity_question_detail_mock_data.dart';
+import 'package:karbon/features/calendar/data/mocks/calendar_calendar_mock_data.dart';
+import 'package:karbon/features/calendar/data/mocks/calendar_details_mock_data.dart';
+import 'package:karbon/features/calendar/data/mocks/calendar_monthly_activities_mock_data.dart';
 import 'package:karbon/features/calendar/domain/entities/calendar_entities.dart';
 
 @LazySingleton(as: CalendarRemote)
