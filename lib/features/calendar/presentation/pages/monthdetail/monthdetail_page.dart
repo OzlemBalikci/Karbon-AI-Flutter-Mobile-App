@@ -6,8 +6,8 @@ import 'package:karbon/features/calendar/presentation/pages/monthdetail/sections
 import 'package:karbon/widgets/back_icon_button.dart';
 
 @RoutePage()
-class SeeAllPage extends StatelessWidget {
-  const SeeAllPage({
+class MonthdetailPage extends StatelessWidget {
+  const MonthdetailPage({
     super.key,
     required this.year,
     required this.month,
@@ -25,7 +25,7 @@ class SeeAllPage extends StatelessWidget {
         children: [
           SafeArea(
             child: SingleChildScrollView(
-              child: SeeAllSection(
+              child: MonthdetailSection(
                 year: year,
                 month: month,
                 period: period,

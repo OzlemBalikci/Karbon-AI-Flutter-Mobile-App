@@ -22,8 +22,8 @@ String _formatMonthlyScore(double value) {
   return value.toStringAsFixed(1);
 }
 
-class SeeAllSection extends StatefulWidget {
-  const SeeAllSection({
+class MonthdetailSection extends StatefulWidget {
+  const MonthdetailSection({
     super.key,
     required this.year,
     required this.month,
@@ -35,10 +35,10 @@ class SeeAllSection extends StatefulWidget {
   final int period;
 
   @override
-  State<SeeAllSection> createState() => _SeeAllSectionState();
+  State<MonthdetailSection> createState() => _MonthdetailSectionState();
 }
 
-class _SeeAllSectionState extends State<SeeAllSection> {
+class _MonthdetailSectionState extends State<MonthdetailSection> {
   late final CalendarBloc _bloc;
   late int _period;
 

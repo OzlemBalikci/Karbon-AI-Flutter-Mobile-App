@@ -454,7 +454,7 @@ class SeeAllRoute extends PageRouteInfo<SeeAllRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<SeeAllRouteArgs>();
-      return SeeAllPage(
+      return MonthdetailPage(
         key: args.key,
         year: args.year,
         month: args.month,
