@@ -55,7 +55,6 @@ class StatsCards extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: 142.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
             boxShadow: hasShadow
@@ -73,13 +72,16 @@ class StatsCards extends StatelessWidget {
             image: DecorationImage(
               image: image.provider(),
               alignment: Alignment.bottomCenter,
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
             ),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(AppThemeSpacing.r15.r),
             child: Padding(
-              padding: EdgeInsets.only(top: AppThemeSpacing.s10.h),
+              padding: EdgeInsets.only(
+                top: AppThemeSpacing.s15.h,
+                bottom: AppThemeSpacing.s36.h,
+              ),
               child: _buildContent(context),
             ),
           ),
@@ -94,7 +96,6 @@ class StatsCards extends StatelessWidget {
               duration: const Duration(milliseconds: 500),
               curve: Curves.easeInOut,
               width: double.infinity,
-              height: 44.h,
               decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.all(Radius.circular(AppThemeSpacing.r10.r)),
@@ -102,13 +103,17 @@ class StatsCards extends StatelessWidget {
                 color: _resolveRowColor(),
               ),
               child: Center(
-                child: Text(
-                  remainingTreeCount != null
-                      ? '${formatTurkishDecimal(remainingTreeCount!)} ağaç kaldı'
-                      : context.text.home_stats_succeed_text,
-                  style: context.typographiesSp.bodyExtraSmall.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: context.colors.carbonQuestion,
+                child: Padding(
+                  padding:
+                      EdgeInsets.symmetric(vertical: AppThemeSpacing.s12.h),
+                  child: Text(
+                    remainingTreeCount != null
+                        ? '${formatTurkishDecimal(remainingTreeCount!)} ağaç kaldı'
+                        : context.text.home_stats_succeed_text,
+                    style: context.typographiesSp.bodyExtraSmall.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: context.colors.carbonQuestion,
+                    ),
                   ),
                 ),
               ),
@@ -120,33 +125,30 @@ class StatsCards extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: AppThemeSpacing.s10.h),
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
-            child: Text(
-              title,
-              style: context.typographiesSp.bodyMediumSmall.copyWith(
-                fontWeight: FontWeight.w600,
-                color: context.colors.carbonQuestion,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          SizedBox(height: AppThemeSpacing.s10.h),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: AppThemeSpacing.s30.sp,
-              fontWeight: FontWeight.w700,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppThemeSpacing.s10.w),
+          child: Text(
+            title,
+            style: context.typographiesSp.bodyMediumSmall.copyWith(
+              fontWeight: FontWeight.w600,
               color: context.colors.carbonQuestion,
             ),
             textAlign: TextAlign.center,
-          )
-        ],
-      ),
+          ),
+        ),
+        SizedBox(height: AppThemeSpacing.s6.h),
+        Text(
+          value,
+          style: context.typographiesSp.headingMedium.copyWith(
+            fontWeight: FontWeight.w700,
+            color: context.colors.carbonQuestion,
+          ),
+          textAlign: TextAlign.center,
+        )
+      ],
     );
   }
 }

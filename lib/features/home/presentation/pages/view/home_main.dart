@@ -3,8 +3,12 @@ part of '../home.dart';
 class HomeMainView extends StatelessWidget {
   const HomeMainView({super.key});
 
+  /// Header'ın ekranı kaplaması gereken oran (tasarım: 160 / 812 ≈ %20).
+  static const double _headerRatio = 140 / 812;
+
   @override
   Widget build(BuildContext context) {
+    final headerHeight = MediaQuery.sizeOf(context).height * _headerRatio;
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -18,13 +22,8 @@ class HomeMainView extends StatelessWidget {
           bottom: 0,
           left: 0,
           right: 0,
-          top: 130.h,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              HomeMainFeatureSection(),
-            ],
-          ),
+          top: headerHeight,
+          child: HomeMainFeatureSection(),
         )
       ],
     );

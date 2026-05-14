@@ -37,7 +37,7 @@ class HomeShellPage extends StatelessWidget {
           body: child,
           bottomNavigationBar: showBottomNav
               ? Padding(
-                  padding: const EdgeInsets.only(bottom: AppThemeSpacing.s12),
+                  padding: const EdgeInsets.only(bottom: AppThemeSpacing.s4),
                   child: SafeArea(
                     child: app_nav.AppBottomNavigationBar(
                       selectedIndex: tabsRouter.activeIndex,
