@@ -52,15 +52,12 @@ class _DailyActivitiesPageState extends State<DailyActivitiesPage> {
                 HeaderSection(),
                 SizedBox(height: AppThemeSpacing.s20.h),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const TodaySection(),
-                        SizedBox(height: AppThemeSpacing.s24.h),
-                        const HistorySection(),
-                      ],
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const TodaySection(),
+                      const HistorySection(),
+                    ],
                   ),
                 ),
               ],

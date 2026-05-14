@@ -47,7 +47,7 @@ class HistorySection extends StatelessWidget {
                         ...group.answers.map(
                           (a) => Padding(
                             padding:
-                                EdgeInsets.only(bottom: AppThemeSpacing.s20.h),
+                                EdgeInsets.only(bottom: AppThemeSpacing.s15.h),
                             child: QuestionCard(
                               variant: QuestionCardHistory(
                                 text: a.questionText,

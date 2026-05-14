@@ -32,10 +32,9 @@ class TodaySection extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 itemCount: questions.length,
                 itemBuilder: (context, index) => Padding(
-                  padding: EdgeInsets.only(bottom: AppThemeSpacing.s20.h),
+                  padding: EdgeInsets.only(bottom: AppThemeSpacing.s15.h),
                   child: QuestionCard(
-                    variant:
-                        QuestionCardToday(questionId: questions[index].id),
+                    variant: QuestionCardToday(questionId: questions[index].id),
                   ),
                 ),
               );

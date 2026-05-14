@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_frame/flutter_web_frame.dart';
 import 'package:karbon/features/auth/presentation/bloc/settings/settings_selector.dart';
@@ -37,8 +36,6 @@ class _KarbonAppState extends State<KarbonApp> {
         builder: (theme) => MaterialApp.router(
           title: 'FlutterKarbon',
           debugShowCheckedModeBanner: false,
-          locale: DevicePreview.locale(context),
-          builder: DevicePreview.appBuilder,
           theme: theme.themeData,
           routerConfig: _routerConfig,
           scrollBehavior: AppScrollBehavior(),

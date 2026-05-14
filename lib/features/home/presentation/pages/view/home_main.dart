@@ -3,7 +3,6 @@ part of '../home.dart';
 class HomeMainView extends StatelessWidget {
   const HomeMainView({super.key});
 
-  /// Header'ın ekranı kaplaması gereken oran (tasarım: 160 / 812 ≈ %20).
   static const double _headerRatio = 140 / 812;
 
   @override

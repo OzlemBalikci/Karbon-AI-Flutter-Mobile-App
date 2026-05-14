@@ -19,14 +19,14 @@ class CarbonCalculateFirstOpenInfo extends StatelessWidget {
                 style: context.typographiesSp.bodyLarge
                     .copyWith(color: context.colors.carbonQuestion),
                 textAlign: TextAlign.center),
-            SizedBox(height: AppThemeSpacing.s30.h),
+            SizedBox(height: AppThemeSpacing.s20.h),
             Text(
               context.text.carbon_calculate_info_text,
               style: context.typographiesSp.bodySmall
                   .copyWith(color: context.colors.textOnQuestion),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: AppThemeSpacing.s30.h),
+            SizedBox(height: AppThemeSpacing.s20.h),
             Text(
               context.text.carbon_calculate_idiom,
               style: context.typographiesSp.bodySmall

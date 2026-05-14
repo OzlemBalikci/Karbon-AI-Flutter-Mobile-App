@@ -14,9 +14,9 @@ class CarbonCalculateFeatureSection extends StatelessWidget {
                     AppHeaderTitle(
                       title: context.text.carbon_calculate_header_text,
                     ),
-                    SizedBox(height: AppThemeSpacing.s30.h),
+                    SizedBox(height: AppThemeSpacing.s20.h),
                     CarbonCalculateHero(),
-                    SizedBox(height: AppThemeSpacing.s30.h),
+                    SizedBox(height: AppThemeSpacing.s20.h),
                     CarbonCalculateFirstOpenInfo(),
                   ],
                 ),
